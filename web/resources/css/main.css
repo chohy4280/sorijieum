@@ -23,7 +23,15 @@ nav ul li {
 	height : 100%;
 }
 
-nav ul li a {
+div {
+	
+	width : 150px;
+	height : 35px;
+	margin : 3px;
+
+}
+
+div a {
 	text-decoration : none;
 	display : block;
 	width : 400px;
