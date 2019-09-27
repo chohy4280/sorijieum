@@ -8,6 +8,7 @@
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/main.css">
 </head>
 <body>
+  
 <nav>
 <ul>
      <li><a href= "/sori/"></a></li>         
@@ -18,5 +19,6 @@
    
 </ul>
 </nav>
+
 </body>
 </html>
