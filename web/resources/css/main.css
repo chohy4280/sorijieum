@@ -1,15 +1,15 @@
 @charset "UTF-8";
 
 * {
-	margin : 0;
-	padding : 0;
-	font-family : 'a타이틀고딕3';
+   margin : 0;
+   padding : 0;
+   font-family : 'a타이틀고딕3';
 }
 
 body { 
-	color : #af59d5;
-	}
-	
+   color : #af59d5;
+   }
+   
 hr { clear : left;}
 
 a { text-decoration : none;  }
@@ -19,39 +19,37 @@ nav { align : center; }
 nav ul { list-style : none; }
 
 nav ul li {
-	weight: 100%;
-	height : 100%;
+   weight: 100%;
+   height : 100%;
 }
 
 nav ul li a {
-	text-decoration : none;
-	display : block;
-	width : 400px;
-	height : 100%;
-	text-align : center;
-	color : #fff;
-	font-size : 14pt;
-	font-weight : bold;
+   text-decoration : none;
+   display : block;
+   width : 400px;
+   height : 100%;
+   text-align : center;
+   color : #fff;
+   font-size : 40pt;
+   font-weight : bold;
 }
 
 nav ul li a:hover {
-	background : #edb41b;	
+   background : #edb41b;   
 }
 
 table {
-	width:700px;
-	height: 500px;
-	margin-left: 150px;
-	border: 10px;
-	border-color: #fff;
-	border-radius: 10px;
-	background : #f1cb45;
+   width:700px;
+   height: 500px;
+   margin-left: 150px;
+   border: 10px;
+   border-color: #fff;
+   border-radius: 10px;
+   background : #f1cb45;
 }
 
 table tr td {
-	border: 20px;
+   border: 20px;
+   border-color: #fff;
 }
-
-
-
 
