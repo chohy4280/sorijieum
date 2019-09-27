@@ -44,7 +44,12 @@ table {
 	margin-left: 150px;
 	border: 10px;
 	border-color: #fff;
+	border-radius: 10px;
 	background : #f1cb45;
+}
+
+table tr td {
+	border: 20px;
 }
 
 
