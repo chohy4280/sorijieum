@@ -17,15 +17,14 @@ hr { clear : left;}
 a { text-decoration : none;  }
 
 nav { align : center; }
-nav ul { list-style : none; }
-nav ul li {
+div {
 	
 	width : 150px;
 	height : 35px;
 	margin : 3px;
 }
 
-nav ul li a {
+div a {
 	text-decoration : none;
 	display : block;
 	width : 300px;
