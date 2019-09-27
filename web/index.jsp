@@ -17,19 +17,20 @@
 
 <br>
 <br>
+
 <nav>
 <ul>
-	
-	<li><a href="/sori/index.jsp">홈</a></li>
-	<li><a href="#">사이트소개</a></li>
-	<li><a href="#">도서검색</a></li>
-	
-	<li><a href="#">도서제작</a></li>
-	<li><a href="#">도서신청</a></li>
-	<li><a href="#">게시판</a></li>
-	
+	<table>
+	<tr><td><li><a href="/sori/index.jsp">홈</a></li></td>
+	<td><li><a href="#">사이트소개</a></li></td>
+	<td><li><a href="#">도서검색</a></li></td></tr>
+	<tr><td><li><a href="#">도서제작</a></li></td>
+	<td><li><a href="#">도서신청</a></li></td>
+	<td><li><a href="#">게시판</a></li></td></tr>
+	</table>
 </ul>
 </nav>
+
 
 
 <section>
