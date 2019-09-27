@@ -1,1 +1,43 @@
 @charset "UTF-8";
+
+* {
+	margin : 0;
+	padding : 0;
+	font-family : 'a타이틀고딕3';
+}
+
+body { 
+	margin-left : 150px;  
+	margin-right : 150px; 
+	color : #af59d5;
+	}
+	
+hr { clear : left;}
+
+a { text-decoration : none;  }
+
+nav { align : center; }
+nav ul { list-style : none; }
+nav ul li {
+	
+	width : 150px;
+	height : 35px;
+	margin : 3px;
+}
+
+nav ul li a {
+	text-decoration : none;
+	display : block;
+	width : 300px;
+	height : 80px;
+	text-align : center;
+	background : #d1a0e7;
+	color : #fff;
+	font-size : 14pt;
+	font-weight : bold;
+	padding-top : 3px;
+}
+
+nav ul li a:hover {
+	background : #af59d5;	
+}

@@ -13,21 +13,24 @@
 <button onclick="">로그인</button> &nbsp;
 </div>
 <center><a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png"></a></center>
-
+</header>
 
 <br>
 <br>
 <nav>
 <ul>
+	
 	<li><a href="/sori/index.jsp">홈</a></li>
-	<li><a href="/sori/">사이트소개</a></li>
+	<li><a href="#">사이트소개</a></li>
 	<li><a href="#">도서검색</a></li>
+	
 	<li><a href="#">도서제작</a></li>
 	<li><a href="#">도서신청</a></li>
 	<li><a href="#">게시판</a></li>
+	
 </ul>
 </nav>
-</header>
+
 
 <section>
 <br><br>
