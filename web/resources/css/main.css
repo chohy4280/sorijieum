@@ -7,8 +7,6 @@
 }
 
 body { 
-	margin-left : 150px;  
-	margin-right : 150px; 
 	color : #af59d5;
 	}
 	
@@ -21,26 +19,34 @@ nav { align : center; }
 nav ul { list-style : none; }
 
 nav ul li {
-	width : 150px;
-	height : 35px;
+	weight: 100%;
+	height : 100%;
 }
 
 nav ul li a {
 	text-decoration : none;
 	display : block;
-	width : 300px;
-	height : 80px;
+	width : 400px;
+	height : 100%;
 	text-align : center;
-	background : #f1cb45;
 	color : #fff;
 	font-size : 14pt;
 	font-weight : bold;
 }
 
 nav ul li a:hover {
-	background : #af59d5;	
+	background : #edb41b;	
 }
 
-.listbox {
-	float: left;
+table {
+	width:700px;
+	height: 500px;
+	margin-left: 150px;
+	border: 10px;
+	border-color: #fff;
+	background : #f1cb45;
 }
+
+
+
+
