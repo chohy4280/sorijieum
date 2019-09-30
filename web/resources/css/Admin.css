@@ -1,0 +1,299 @@
+@charset "UTF-8";
+
+/* css 초기화*/
+
+body {
+	background-color: #eaeaea;
+	color:#444c57;
+	margin: 0;
+	padding: 0;
+	font-family: '맑은고딕'
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+
+list-style-type: none;
+
+}
+
+a {
+
+text-decoration: none;
+
+color: inherit;
+
+}
+
+
+
+
+/* Design Area */	/*여기서부터 실제 디자인 영역*/
+
+
+/* Header 시작 */
+.topbar {
+	width: 100%;
+	height: 60px;
+	background-color: #22242a;
+	color: #fff;
+	padding-left: 10px;
+	padding-right: 10px;
+	float:left;
+	position: fixed;
+}
+
+.topname {
+	line-height: 60px;
+	font-size: 20pt;
+	font-weight: 600;
+}
+
+#adminname{
+	align: right;
+	weight: 500;
+	float: right;
+	line-height: 60px;
+}
+
+/* Header 끝 */
+
+
+
+/* 사이드바 메뉴바 시작 */
+.menubar{
+	width:200px; 
+	height:100%;
+	background-color: #2f323a;
+	margin-top:60px;
+	position: fixed;
+
+}
+
+.vertical-menu {
+	width: 200px;
+	margin: 0 auto;	/*block 요소 가운데 정렬 / width 값이 반드시 지정되어야 함!*/
+	position: fixed;
+}
+
+.vertical-menu a {
+	display: block; /*사용자 입장에서 링크 버튼을 사용하기 편하도록 링크 영역을 확장시켜줌*/
+	background-color: #2f323a;
+	color: #aeb2b7;
+	padding-left: 20px;
+}
+
+
+.vertical-menu a:hover { /*가상클래스(hover) / 마우스를 해당 요소위에 얹었을 때 디자인을 변경할 수 있다*/
+	background-color: #4ecdc4;
+	color: #fff;
+	font-weight: 600;
+}
+
+
+.vertical-menu li {
+	display: block; /*사용자 입장에서 링크 버튼을 사용하기 편하도록 링크 영역을 확장시켜줌*/
+	height: 50px;
+	line-height: 50px; /*텍스트 요소의 높이와 동일한 값을 지정하면 텍스트를 세로 가운데 정렬을 할 수 있다 / 단, 이 방법은 텍스트가 한 줄일때만 가능하다*/
+	background: #2f323a;
+	color: #aeb2b7;
+}
+
+.vertical-menu ul li {
+	display: block; /*사용자 입장에서 링크 버튼을 사용하기 편하도록 링크 영역을 확장시켜줌*/
+	height: 30px;
+	line-height: 30px; /*텍스트 요소의 높이와 동일한 값을 지정하면 텍스트를 세로 가운데 정렬을 할 수 있다 / 단, 이 방법은 텍스트가 한 줄일때만 가능하다*/
+	background-color: #2f323a;
+}
+
+.vertical-menu ul li a {
+	height: 30px;
+	line-height: 30px;
+	color: #828791;
+}
+
+.vertical-menu li:hover ul {
+	display: block;
+}
+
+
+
+
+/* 사이드바 메뉴바 끝 */
+
+
+
+/*admainIndexView CSS 시작*/
+/* 메인 콘텐츠 시작 */
+
+
+.contentsection {
+	padding-top: 100px;
+	padding-left: 250px;
+	width: 100%;
+	height: 100%;
+}
+
+
+.base {
+	margin-left: 50px;
+}
+
+.sysdate {
+	font-size: 18px;
+	font-weight: 600;
+	color:#000;
+}
+
+.data {
+	margin: 10px;
+}
+
+.data-box {
+	margin: 30px;
+	padding: 30px;
+	background-color: #e1e1e1;
+	width: 500px;
+	height: 200px;
+	float: left;
+	
+}
+
+.data-title{
+	margin-top : 33px;
+	font-size: 23px;
+	font-weight: 800;
+}
+
+.data-section1{
+	margin-right: 15px;
+	float: left;
+	width: 17%;
+}
+
+.data-section2{
+	margin-right: 15px;
+	float: left;
+	width: 50%;
+	font-size: 23px;
+}
+
+.data-section2 div{
+	margin: 5px;
+}
+
+.data-section3{
+	text-align:right;
+	float: left;
+	width: 25%;
+	font-size: 23px;
+}
+
+.data-section3 div{
+	margin: 5px;
+}
+
+.todaybook{
+	color: #f2c61f;
+	font-weight: 800;
+	font-size: 23px;
+}
+
+.todayboard {
+	color: #d95c5c;
+	font-weight: 800;
+	font-size: 23px;
+}
+
+.todayuser1{
+	color: #5bbd72;
+	font-weight: 800;
+	font-size: 23px;
+}
+
+.todayuser2 {
+	color: #3b83c0;
+	font-weight: 800;
+	font-size: 23px;
+}
+/*admainIndexView CSS 끝*/
+
+
+
+/* adminBookList CSS 시작*/
+
+.greyBox{
+	background-color: #d8d8d8;
+	width: 90%;
+	margin-left: 40px;
+	float: left;
+}
+
+.greyBox * {
+	font-size: 14px;
+	color: #4f4f4f;
+	font-weight: 500;
+	padding: 10px 20px;
+}
+
+.listBoxBG{
+	background-color: #eaeaea;
+	width: 90%;
+	margin-left: 40px;
+	margin-bottom:100px;
+	font-size: 13px;
+	color: #4f4f4f;
+	padding: 20px 20px;
+}
+
+
+
+.listTable{
+	border-top: 1px solid #4ecdc4;
+	border-bottom: 1px solid #4ecdc4;
+	cellspacing: 10px;
+	width: 100%;
+	height: 100%;
+}
+
+.listTable th{
+	height: 30px;
+	background: #4ecdc4;
+	color: #fff;
+}
+
+.listTable td{
+	height: 30px;
+	border-bottom: 1px solid #4ecdc4;
+	background: #f9f9f9;
+	color: #6d6d6d;
+	text-align: center;
+}
+
+
+
+
+/* 메인 콘텐츠 끝 */
+
+
+/* footer 시작 */
+.site-footer {
+    background: #4ECDC4;
+    color: #fff;
+    width: 90%;
+   	height:70px;
+    padding: 15px 0;
+    position: fixed;
+	bottom: 0;
+	margin-left: 200px;
+	text-align: center;
+}
+
+.site-footer p {
+  margin-bottom: 5px;
+}
+/* footer 끝 */
