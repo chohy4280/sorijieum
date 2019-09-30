@@ -15,7 +15,8 @@
 <body>
 <header>
 <div align="right"><button onclick="">회원가입</button>
-<button onclick="">로그인</button> &nbsp;
+<button>
+<a href="/sori/views/member/memberLoginView.jsp">로그인</a></button> &nbsp;
 </div>
 <center><a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="10%" height="10%"></a></center>
 </header>
@@ -26,6 +27,7 @@
 <button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서제작</button>
 <button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서신청</button>
 <button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">게시판</button>
+
 </div>
 <section>
 <br><br>
