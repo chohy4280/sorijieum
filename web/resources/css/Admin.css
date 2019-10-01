@@ -251,7 +251,6 @@ color: inherit;
 }
 
 
-
 .listTable{
 	border-top: 1px solid #4ecdc4;
 	border-bottom: 1px solid #4ecdc4;
@@ -275,7 +274,48 @@ color: inherit;
 }
 
 
+/* adminBookList CSS 끝*/
 
+
+/* adminAddBook CSS 시작*/
+
+.lightgreyBox{
+	background-color: #eaeaea;
+	width: 60%;
+	margin-left: 200px;
+	margin-bottom:100px;
+	color: #4f4f4f;
+}
+
+
+.addform{
+	border-top: 1px solid #4ecdc4;
+	border-bottom: 1px solid #4ecdc4;
+	cellspacing: 10px;
+	width: 100%;
+	font-size: 14px;
+}
+
+.addform th{
+	height: 30px;
+	background: #4ecdc4;
+	color: #fff;
+}
+
+.addform td{
+	height: 30px;
+	border-bottom: 1px solid #4ecdc4;
+	background: #f9f9f9;
+	color: #6d6d6d;
+	padding: 5px;
+	padding-left: 15px;
+}
+
+.ui input {
+	align: left;
+	width: 300px;
+	height:30px;
+}
 
 /* 메인 콘텐츠 끝 */
 

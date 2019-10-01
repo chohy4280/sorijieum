@@ -29,22 +29,22 @@
 <div class="menubar">
 <nav>
 	<ul class="vertical-menu">
-		<li style="font-weight: 600; font-size:12pt"><a href="/sori/views/admin/adminIndexView.jsp"><i class="home icon"></i>HOME</a></li>
+		<li style="font-weight: 600; font-size:12pt"><a href="/sori/views/admin/adminIndexView.jsp"><i class="home icon"></i>MAIN</a></li>
 		<li style="font-weight: 600; font-size:12pt"><a href="javascript:;"><i class="book icon"></i>도서</a></li>
 			<ul>
-				<li><a href="/sori/views/admin/adminBookList.jsp">　도서목록</a></li>
-				<li><a href="">　도서추가</a></li>
-				<li><a href="">　도서신청내역</a></li>
+				<li><a href="/sori/views/admin/adminBookListView.jsp">　도서목록</a></li>
+				<li><a href="/sori/views/admin/adminAddBookForm.jsp">　도서추가</a></li>
+				<li><a href="/sori/views/admin/adminBookRequestListView.jsp">　도서신청내역</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="user icon"></i>사용자</a></li>
 			<ul>
 				<li><a href="/sori/views/admin/adminUserListView.jsp">　회원정보조회</a></li>
-				<li><a href="">　회원탈퇴관리</a></li>
-				<li><a href="">　권한관리</a></li>
+				<li><a href="/sori/views/admin/adminQuitUserView.jsp">　회원탈퇴관리</a></li>
+				<li><a href="/sori/views/admin/adminListView.jsp">　권한관리</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="clipboard list icon"></i>게시판</a></li>
 			<ul>
-				<li><a href="">　게시물관리</a></li>
+				<li><a href="/sori/views/admin/adminBoardListView.jsp">　게시물관리</a></li>
 			</ul>
 	</ul>
 </nav>
@@ -60,10 +60,7 @@
           &copy; Copyrights <strong>sorijieum</strong>. All Rights Reserved<br>
           Created with sorijieum by @minyoung</a>
         </p>
-        
-        <a href="index.html#" class="go-top">
-          <i class="fa fa-angle-up"></i>
-          </a>
     </footer>
+    <script src="lib/jquery/jquery.min.js"></script>
 </body>
 </html>

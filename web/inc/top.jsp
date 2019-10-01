@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <head>
  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
@@ -20,7 +21,7 @@ ul li a{font-size:16px;color:black;font-weight:bold;text-decoration:none}
 ul li a:hover{background:#ccc;color#fff;}
 
 footer{
-     position: fixed;
+     position:fixed;
      left:0;
      bottom : 0;
      width: 100%;
