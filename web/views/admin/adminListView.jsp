@@ -59,7 +59,7 @@
 				</table>
 				
 				<br>
-				<div style="float:left"><button class="mini ui black button" onclick="">추가</button>
+				<div style="float:left"><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddForm.jsp'">추가</button>
 				<button class="mini ui black button" onclick="">삭제</button></div>
 				</div>
 			</div>
