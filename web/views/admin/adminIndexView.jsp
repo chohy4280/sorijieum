@@ -33,9 +33,9 @@
 	            		<div>완료도서</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todaybook">8</span> 권</div>
-	            		<div><span class="todaybook">8</span> 권</div>
-	            		<div><span class="todaybook">333</span> 권</div>
+	            		<div><span class="todaybook"><a href="">8</span></a> 권</div>
+	            		<div><span class="todaybook"><a href="">8</span></a> 권</div>
+	            		<div><span class="todaybook"><a href="">333</span></a> 권</div>
 	            	</div>
 	            </div>
 	            
@@ -51,8 +51,8 @@
 	            		<div>미답변 문의</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayboard">10</span> 건</div>
-	            		<div><span class="todayboard">6</span> 건</div>
+	            		<div><span class="todayboard"><a href="">10</span></a> 건</div>
+	            		<div><span class="todayboard"><a href="">6</span></a> 건</div>
 	            	</div>
 	            </div>
 	            
@@ -70,9 +70,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser1">50</span> 명</div>
-	            		<div><span class="todayuser1">4</span> 명</div>
-	            		<div><span class="todayuser1">254</span> 명</div>
+	            		<div><span class="todayuser1"><a href="">50</span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="">4</span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="">254</span></a> 명</div>
 	            	</div>
 	            </div>
 	            
@@ -89,9 +89,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser2">50</span> 명</div>
-	            		<div><span class="todayuser2">4</span> 명</div>
-	            		<div><span class="todayuser2">254</span> 명</div>
+	            		<div><span class="todayuser2"><a href="">50</span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="">4</span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="">254</span></a> 명</div>
 	            	</div>
 	            </div>
 	            

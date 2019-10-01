@@ -29,7 +29,7 @@
 						<option value="notice">공지사항</option>
 						<option value="qna">Q&A</option>
 						<option value="faq">FAQ</option>
-					</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</select>　　　　　　　　　　　　　　　　　　　　　　
 					
 				<a class="ui large teal label">검색조건</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 130px;">
@@ -39,16 +39,19 @@
 						<option value="userid">아이디</option>
 					</select>
 					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
 
+					<br><br>
+					
+				<a class="ui large teal label">조회기간</a>&nbsp;
+					<input type="date" name="searchdate" value="from"> ~ <input type="date" name="searchdate" value="to"> 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
 				<a class="ui large teal label">답변여부</a>&nbsp;
 					<input type="checkbox" name="replystate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="checkbox" name="replystate" value="bookwait"> 답변전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="checkbox" name="replystate" value="bookmake"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<br>
 					
-				<a class="ui large teal label">조회기간</a>&nbsp;
-					<input type="date" name="searchdate" value="from"> ~ <input type="date" name="searchdate" value="to"> 
 					<center><input type="submit" value="검색"></center>
 				</div>
 				</form>
