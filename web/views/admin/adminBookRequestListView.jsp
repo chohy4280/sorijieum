@@ -1,47 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/../inc/adminTemplate.jsp" %>
+   <%@ include file="/../inc/adminTemplate.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보조회</title>
+<title>도서신청내역</title>
 </head>
 <body>
 
 <!-- Content 시작! -->
 <section class="contentsection">
 
-	<!--회원 목록 시작-->
-		<i class="big user icon"></i><span style="font:black; font-size:17pt; padding:10px;">회원정보조회</span>
+	<!--신청도서 목록 시작-->
+		<i class="big book icon"></i><span style="font:black; font-size:17pt; padding:10px;">도서신청내역</span>
         <br><br>
         
         <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 180px;">
             <form action="" method="post">
 				<div>
-				<a class="ui large teal label">개인정보</a>&nbsp;
-					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
+				<a class="ui large teal label">상세검색</a>&nbsp;
+					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 150px;">
 						<option value="">==조건선택==</option>
-						<option value="userid">아이디</option>
-						<option value="username">이름</option>
-						<option value="phone">전화번호</option>
+						<option value="bookname">도서명</option>
+						<option value="username">신청자명</option>
+						<option value="userid">신청자ID</option>
 					</select>
 					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
 					<br><br>
-
-
-				<a class="ui large teal label">성　　별</a>&nbsp;
-					<input type="radio" name="gender" value="A"> 전체 &nbsp;&nbsp;&nbsp;
-					<input type="radio" name="gender" value="F"> 여성&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="gender" value="M"> 남성
-					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
-				<a class="ui large teal label">회원유형</a>&nbsp;
-					<input type="radio" name="usertype" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="usertype" value="wait"> 이용대기자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="usertype" value="hear"> 이용자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="usertype" value="make"> 제작자
+			<a class="ui large teal label">처리상태</a>&nbsp;
+					<input type="checkbox" name="bookstate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" name="bookstate" value="wait"> 승인대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" name="bookstate" value="done"> 승인완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" name="bookstate" value="rjct"> 반려
+
 					<center><input type="submit" value="검색"></center>
 				</div>
 				</form>
