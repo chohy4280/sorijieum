@@ -45,17 +45,6 @@
 			<tr>
 				<th>신청일</th><td>2019/01/15</td>
 			</tr>
-			<tr>
-				<th>좋아요 수</th>
-				<td>
-				  <div class="ui red button">
-				    <i class="heart icon" onclick=""></i> Like
-				  </div>
-				  <a class="ui basic red left pointing label">
-				    1,048
-				  </a>
-				</td>
-			</tr>
 		</table>
 	</center>
 	<!-- 도서신청 상세 내역 끝-->

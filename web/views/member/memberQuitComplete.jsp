@@ -15,7 +15,7 @@
 <section class="my-section" style="margin-top:15%">
 <div class="ui raised very padded text container segment" style="width:500px;height:150px;margin-left:35%;display:table;">
 	<div style="display:table-cell;vertical-align:middle;text-align:center;font-size:15pt;">
-	탈퇴가 완료되었습니다.<br><br>OOO 님<br>그동안 소리지음을 이용해주셔서 감사합니다.
+	탈퇴가 완료되었습니다.<br><br>그동안 소리지음을 이용해주셔서 감사합니다.
 	</div>
 </div>
 <center>

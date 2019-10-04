@@ -12,7 +12,7 @@
 <%@ include file="/inc/top.jsp" %>
 </head>
 <body>
-<section class="my-section" style="margin-top:15%">
+<section class="my-section" style="margin-top:10%">
 <div class="ui raised very padded text container segment" style="width:400px;height:150px;margin-left:40%;display:table;">
 	<div style="display:table-cell;vertical-align:middle;text-align:center;font-size:15pt;">
 	입력하신 정보와 일치하는<br><br>회원 정보가 존재하지 않습니다.

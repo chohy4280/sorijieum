@@ -52,12 +52,11 @@ $(function(){
 		<table class="my-listTable" align="center">
 			<tr>
 				<th width="5%">No</th>
-				<th width="40%">도서명</th>
+				<th width="45%">도서명</th>
 				<th width="15%">저자명</th>
 				<th width="15%">신청자ID</th>
 				<th width="10%">신청일</th>
 				<th width="10%">진행사항</th>
-				<th width="5%">좋아요</th>
 			</tr>
 			<tr>
 				<td>1</td>
@@ -66,7 +65,6 @@ $(function(){
 				<td>user003</td>
 				<td>2019/01/12</td>
 				<td>승인</td>
-				<td>7</td>
 			</tr>
 		</table>
 	<!--도서신청 목록 끝-->

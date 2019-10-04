@@ -29,7 +29,7 @@ footer{
      background-color: #fbbe09;
 }
 
-div a {font-size:1pt;}
+
 
 </style>
 </head>
