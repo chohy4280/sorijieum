@@ -4,8 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>sorijieum</title>
+<title>소리지음 메인페이지</title>
+<style>
+@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
+			 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
+			 font-weight: normal; 
+			 font-style: normal; }
 
+* { font-family: 'S-CoreDream-7ExtraBold';}
+</style>
   <!-- 시맨틱유아이 cdn -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -56,8 +63,8 @@
    <button class="ui brown button" onclick="location.href='/sori/views/member/memberLoginView.jsp'">로그인</button>
    <button class="ui brown button" onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'">회원가입</button> &nbsp;
 </div>
-
 </header>
+
 
 <div class="ui four doubling cards" style="margin:5% 5% 0 5%">
   <div class="card">
