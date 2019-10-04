@@ -14,15 +14,15 @@
 </head>
 <body>
 <header>
-<div align="right"><button onclick="">회원가입</button>
-<button>
-<a href="/sori/views/member/memberLoginView.jsp">로그인</a></button> &nbsp;
+<div align="right">
+<button onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'">회원가입</button>
+<button onclick="location.href='/sori/views/member/memberLoginView.jsp'">로그인</a></button> &nbsp;
 </div>
 <center><a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="10%" height="10%"></a></center>
 </header>
 
 <div align="center">
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">홈</button>
+<button class="ui yellow button" onclick="location.href='/sori/index.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">홈</button>
 <button class="ui yellow button" onclick="location.href='/sori/views/sorijieumIntro.jsp'"style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">사이트소개</button>
 <button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서검색</button><br>
 <button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서제작</button>
