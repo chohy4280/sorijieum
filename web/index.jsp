@@ -11,34 +11,100 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/main.css">
+<style type="text/css">
+@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
+			 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
+			 font-weight: normal; 
+			 font-style: normal; }
+
+* { font-family: 'S-CoreDream-7ExtraBold';}
+
+.wrapper {
+	z-index:1;
+	position:relative;
+	width:100%;
+	height:100%;
+	}
+	.wrapper:after{
+	width:100%;
+	height:100%;
+	z-index:-1;
+	position:absolute;
+	top:0;
+	left:0;
+	content:"";
+	background-image: url('/sori/resources/images/mainbook.jpg') ;
+	background-repeat:no-repeat;
+	background-position:center;
+	background-origin:content-box;
+	background-size: 100%;
+	 
+	opacity: 0.5;
+	}
+
+.ui.button {
+	font-family: 'S-CoreDream-7ExtraBold'
+}
+
+</style>
 </head>
 <body>
+<div class="wrapper">
 <header>
+<br>
 <div align="right">
-<button onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'">회원가입</button>
-<button onclick="location.href='/sori/views/member/memberLoginView.jsp'">로그인</a></button> &nbsp;
+   <button class="ui brown button" onclick="location.href='/sori/views/member/memberLoginView.jsp'">로그인</button>
+   <button class="ui brown button" onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'">회원가입</button> &nbsp;
 </div>
-<center><a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="10%" height="10%"></a></center>
+
 </header>
 
-<div align="center">
-
-<button class="ui yellow button" onclick="location.href='/sori/index.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">홈</button>
-<button class="ui yellow button" onclick="location.href='/sori/views/sorijieumIntro.jsp'"style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">사이트소개</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;"><a href= "/sori/views/booksearch/bookSearchList.jsp">도서검색</button></a><br>
-<button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서제작</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서신청</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">게시판</button>
+<div class="ui four doubling cards" style="margin:5% 5% 0 5%">
+  <div class="card">
+    <div class="image">
+      <img src="/sori/resources/images/logo.png">
+    </div>
+  </div>
+  <div class="card">
+    <div>
+      	사이트소개
+    </div>
+  </div>
+  <div class="card">
+    <div>
+      도서검색
+    </div>
+  </div>
+  <div class="card">
+    <div>
+      도서제작
+    </div>
+  </div>  
+</div>
+<div class="ui four doubling cards" style="margin:0 5% 0 5%">
+  <div class="card">
+    <div>
+     도서신청
+    </div>
+  </div>
+  <div class="card">
+    <div>
+      	공지사항
+    </div>
+  </div>
+  <div class="card">
+    <div>
+      Q & A
+    </div>
+  </div>
+  <div class="card">
+    <div>
+      도서제작
+    </div>
+  </div>  
+</div>
 
 </div>
-<section>
-<br><br>
 
-</section>
-<br><br><br><br>
-
-<footer>
-
-</footer>
 </body>
 </html>
