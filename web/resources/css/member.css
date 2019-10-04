@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+* {
+	font-family: 'S-Core Dream 6';
+}
+
+.my-section{
+   padding-top: 10%;
+   padding-bottom: 70px;
+   padding-left: 30px;
+   padding-right: 30px;
+}

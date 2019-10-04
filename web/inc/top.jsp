@@ -29,11 +29,8 @@ footer{
      background-color: #fbbe09;
 }
 
-<<<<<<< HEAD
 div a {font-size:1pt;}
-=======
 
->>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum.git
 </style>
 </head>
 
