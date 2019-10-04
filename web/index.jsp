@@ -14,9 +14,10 @@
 * { font-family: 'S-CoreDream-7ExtraBold';}
 </style>
   <!-- 시맨틱유아이 cdn -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/main.css">
 <style type="text/css">
 @font-face { font-family: 'S-CoreDream-7ExtraBold'; 
