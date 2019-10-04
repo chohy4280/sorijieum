@@ -1,0 +1,111 @@
+@charset "UTF-8";
+/* body {
+	background-color: #eaeaea;
+	color:#444c57;
+	margin: 0;
+	padding: 0;
+	font-family: '맑은고딕'
+} */
+
+ul {
+	margin: 0;
+	padding: 0;
+
+}
+
+li {
+
+list-style-type: none;
+
+}
+
+a {
+
+text-decoration: none;
+
+color: inherit;
+
+}
+
+.input{/*검색 창  */
+	
+	margin-Left : 600px;
+	
+}
+
+
+.my-section{
+   padding-top: 130px;
+   padding-bottom: 70px;
+   padding-left: 30px;
+   padding-right: 30px;
+   
+}
+.yu-top5{/*신간도서5개 추천영역  */
+    
+    margin-top:10px;
+    text-align:center;
+	
+}
+
+.yu-booklist{/* 책 목록 10개 */
+    text-align:center;
+}
+
+.yu-bookdetailimg{/* 도서상세보기에 들어갈 책 이미지 */
+
+     padding : 50px;
+     text-align:center;
+}
+
+.yu-bookdetailinfo{/* 도서상세보기에 들어갈 제목,저자,출판사,출판일,옮긴이 */
+   padding : 50px;
+   text-align: center;
+    
+}
+.yu-booktitle{/* yu-bookdetailinfo div 안에 들어갈 책제목 */
+   
+}
+
+.yu-bookauthor{/*yu-bookdetailinfo div 안에 들어갈  저자명  */
+}
+
+.yu-bookpublish{/* yu-bookdetailinfo div 안에 들어갈  출판사 */
+}
+
+.yu-bookdate{/* yu-bookdetailinfo div 안에 들어갈  출판날짜 */
+}
+
+.yu-bookdetailintro{/* 도서상세보기에 들어갈 도서소개 */
+   
+   padding : 50px;
+   text-align: center;
+}
+
+.ui buttons{
+	margin-left:500px;
+}
+
+.yu-likebutton{/*관심도서 추가버튼  */
+  width:50px;
+  height: 50px;
+  margin-left: 1100px;
+}
+.yu-palybutton{
+	margin-right:1100px;
+	margin-bottom:500px;
+}
+
+.yu-textbook{
+	width:500px;
+	height:500px;
+}
+
+.ui left labeled icon button{
+	margin-top: 600px;
+}
+
+
+
+
+
