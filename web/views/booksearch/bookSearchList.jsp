@@ -57,20 +57,19 @@
     <td><a href="/sori/views/booksearch/bookSearchDetail.jsp"><img src="/sori/resources/images/harry2.jpg"></a><br>&nbsp;해리포터</td>
 </tr>
 </table>
-<div class="ui buttons" align="center";>
-  <button class="ui labeled icon button">
-    <i class="angle double left"></i>
-    Back
-  </button>
-  <button class="ui button">
-    <i class="stop icon"></i>
-    Stop
-  </button>
-  <button class="ui right labeled icon button">
-    Forward
-    <i class="angle double right"></i>
-  </button>
-</div>
+<center>
+			<div class="yu-ui buttons">
+		  <button class="ui labeled icon button">
+		    <i class="left chevron icon"></i>
+		    이전글
+		  </button>
+		  <button class="ui right labeled icon button">
+		    다음글
+		    <i class="right chevron icon"></i>
+		  </button>
+		</div>
+		</center>
+
  </section>
 </body>
 </html>

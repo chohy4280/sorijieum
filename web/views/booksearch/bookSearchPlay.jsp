@@ -12,14 +12,16 @@
 </head>
 <body>
 <section class="my-section">
-<div class="yu.textbook" style="border: 3px solid; width:500px; heigth:400px;">
+<center>
+<div class="yu.textbook" style="border: 3px solid;">
+도서제작이 완료된 파일을 불러온다. 
 </div>
 
 <button onclick ="location='bookSearchDetail.jsp'" class="ui left labeled icon button">
   <i class="left arrow icon"></i>
   이전
 </button>
-
+</center>
 
 </section>
 </body>

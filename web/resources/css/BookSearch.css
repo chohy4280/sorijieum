@@ -82,8 +82,8 @@ color: inherit;
    text-align: center;
 }
 
-.ui buttons{
-	margin-left:500px;
+.yu-ui buttons{
+	
 }
 
 .yu-likebutton{/*관심도서 추가버튼  */
@@ -96,9 +96,9 @@ color: inherit;
 	margin-bottom:500px;
 }
 
-.yu-textbook{
-	width:500px;
-	height:500px;
+.yu.textbook{
+   width : 300px;
+	height: 1500px auto;
 }
 
 .ui left labeled icon button{
