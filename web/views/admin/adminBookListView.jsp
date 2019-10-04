@@ -34,10 +34,10 @@
 					<br><br>
 
 				<a class="ui large teal label">도서상태</a>&nbsp;
-					<input type="checkbox" name="bookstate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" name="bookstate" value="bookwait"> 제작대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" name="bookstate" value="bookmake"> 제작중 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" name="bookstate" value="bookdone"> 제작완료
+					<input type="radio" name="bookstate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="bookstate" value="bookwait"> 제작대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="bookstate" value="bookmake"> 제작중 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="bookstate" value="bookdone"> 제작완료
 					<center><input type="submit" value="검색"></center>
 				</div>
 				</form>
@@ -49,7 +49,7 @@
 			<!-- 도서검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600">30</span> 권</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">30</span> 권</div>
 				<br>
 				<table class="listTable">
 					<tr>
@@ -66,8 +66,8 @@
 					<tr>
 						<td><input type="checkbox" name="RowCheck" value="getBookcode"></td>
 						<td>1</td>
-						<td><a href="">8982934052</a></td>
-						<td><a href="">여행의 이유</a></td>
+						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp">8982934052</a></td>
+						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp">여행의 이유</a></td>
 						<td>김영하</td>
 						<td>문학동네</td>
 						<td>제작완료</td>

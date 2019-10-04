@@ -70,9 +70,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser1"><a href="">50</span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="">4</span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="">254</span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="">2</span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="">0</span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="">43</span></a> 명</div>
 	            	</div>
 	            </div>
 	            

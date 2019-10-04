@@ -26,10 +26,14 @@ footer{
      bottom : 0;
      width: 100%;
      height: 50px;
-     background-color: #ECB93E;
+     background-color: #fbbe09;
 }
 
+<<<<<<< HEAD
 div a {font-size:1pt;}
+=======
+
+>>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum.git
 </style>
 </head>
 
@@ -37,13 +41,18 @@ div a {font-size:1pt;}
   <div class="item">
 	<a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="100px" height="100px" align="left"></a>
   </div>
-  <a class="item">사이트 소개</a>
+  <a class="item" href="/sori/views/sorijieumIntro.jsp">사이트 소개</a>
   <a class="item">도서 검색</a>
-  <a class="item">도서 제작</a>
-  <a class="item">도서 신청</a>
-  <a class="item">게시판</a>
+  <a class="item" href="/sori/views/bookmaking/bmmain.jsp">도서 제작</a>
+  <a class="item" href="/sori/views/boardwishbook/wishbookListView.jsp">도서 신청</a>
+  <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
+  <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>
+  <a class="item" href="/sori/views/boardqna/qnaListView.jsp">Q&A</a>
 </div>
 
-<footer>
-THis is a footer
+<footer style="text-align: center;">
+		<p>
+          &copy; Copyrights <strong>sorijieum</strong>.<br>
+          All Rights Reserved Created with sorijieum</a>
+        </p>
 </footer>

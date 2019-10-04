@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+.my-section{
+	padding-top: 130px;
+	padding-bottom: 70px;
+	padding-left: 30px;
+	padding-right: 30px;
+	height:auto;
+}
+
+.my-content {
+	/*background: #e7e7e7;*/
+	width: 90%;
+	height: auto;
+	padding: 40px 40px;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 70px;
+}
+
+.my-listTable {
+	border-top: 1px solid #fbbe09;
+	border-bottom: 1px solid #fbbe09;
+	cellspacing: 10px;
+	width: 100%;
+}
+
+.my-listTable th{
+	height: 30px;
+	background: #fbbe09;
+	color: #fff;
+}
+
+.my-listTable td{
+	height: 30px;
+	border-bottom: 1px solid #fbbe09;
+	background: #f9f9f9;
+	color: #6d6d6d;
+	text-align: center;
+}
+
+/* Q&A 댓글창 용 테이블 */
+.my-listTable2 {
+	border: 1px solid #fbbe09;
+	cellspacing: 10px;
+	width: 100%;
+}
+
+.my-listTable2 th{
+	height: 30px;
+	background: #fbbe09;
+	color: #fff;
+}
+
+.my-listTable2 td{
+	height: 30px;
+	border: 1px solid #fbbe09;
+	background: #f9f9f9;
+	color: #6d6d6d;
+	text-align: left;
+	padding: 20px 20px;
+}
+
+
+/* 오시는길 용 테이블 */
+
+.my-listTable3 {
+	border: 1px solid #fbbe09;
+	cellspacing: 10px;
+	width: 100%;
+}
+
+.my-listTable3 th{
+	height: 20px;
+	background: #fbbe09;
+	color: #fff;
+}
+
+.my-listTable3 td{
+	height: 20px;
+	border: 1px solid #fbbe09;
+	background: #ffffff;
+	color: #6d6d6d;
+	font-size: 11pt;
+	text-align: left;
+	padding: 10px 10px;
+}
+
+
+
+/* 신청도서 상세 내역용 테이블*/
+
+
+.my-listTable4 {
+	text-align: center;
+	border: 1px solid #fbbe09;
+	cellspacing: 10px;
+	margin-top: 30px;
+	margin-bottom: 70px;
+}
+
+.my-listTable4 th{
+	height: 50px;
+	background: #fbbe09;
+	color: #fff;
+}
+
+.my-listTable4 td{
+	height: 50px;
+	border: 1px solid #fbbe09;
+	background: #ffffff;
+	color: #6d6d6d;
+	font-size: 13pt;
+	padding: 10px 10px;
+}
+
+
+
+.my-boardcontent {
+	widht: 100%;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top:50px;
+	padding-bottom: 50px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid #fbbe09;
+}
+
+
+.ui input {
+	width: 300px;
+}
+
+
+/* FAQ Toggle css*/
+
+#box_qna{
+	width: 100%;
+	margin-botton: 100px;
+}
+
+.question{
+	width: 1000px;
+	height: 70px;
+	line-height: 70px;
+	margin: 10px;
+	color: #fff;
+	background: #fbbe09;
+	font-size: 25pt;
+	font-weight: 600;
+	padding-left:15px;
+	margin-left: 15%;
+}
+
+.answer{
+	display: none;
+	width: 1000px;
+	height: auto;
+	margin: 10px;
+	border: 1px solid #fbbe09;
+	padding: 30px 30px;
+	margin-left: 15%;
+	line-height: 1.8em;
+}
+
+
+#box_faq ul {
+	position: relative;
+	width: 1000px;
+	margin: 0px;
+	padding: 0px;
+}
