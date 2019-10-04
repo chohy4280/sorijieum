@@ -30,7 +30,7 @@
 						<option value="qna">Q&A</option>
 						<option value="faq">FAQ</option>
 					</select>　　　　　　　　　　　　　　　　　　　　　　
-					
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a class="ui large teal label">검색조건</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 130px;">
 						<option value="">==선택==</option>
@@ -48,9 +48,9 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 				<a class="ui large teal label">답변여부</a>&nbsp;
-					<input type="checkbox" name="replystate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" name="replystate" value="bookwait"> 답변전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" name="replystate" value="bookmake"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="replystate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="replystate" value="bookwait"> 답변전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="replystate" value="bookmake"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 					<center><input type="submit" value="검색"></center>
 				</div>
@@ -63,7 +63,7 @@
 			<!-- 게시글 검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:220px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600">30</span> 건</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">30</span> 건</div>
 				<br>
 				<table class="listTable">
 				<tr>

@@ -132,7 +132,7 @@
 					</table><br>
 					<h4>메모 작성</h4>
 					<form action="" method="post">
-						<textarea name="adminmemo" cols="160" rows="5" placeholder="관리자 메모 내용을 입력하세요." style="border-radius: 10px"></textarea>
+						<textarea name="adminmemo" cols="150" rows="5" placeholder="관리자 메모 내용을 입력하세요." style="border-radius: 10px"></textarea>
 						<input type="submit" value="저장">
 					</form>
 			
