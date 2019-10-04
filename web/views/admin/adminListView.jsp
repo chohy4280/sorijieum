@@ -36,7 +36,7 @@
 			<!-- 회원검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:90px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600">5</span> 명</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">5</span> 명</div>
 				<br>
 				<table class="listTable">
 					<tr>
@@ -49,8 +49,8 @@
 					</tr>
 					<tr>
 						<td><input type="checkbox" name="RowCheck" value="getBookcode"></td>
-						<td><a href="">admin01</a></td>
-						<td><a href="">최민영</a></td>
+						<td><a href="/sori/views/admin/adminUpdateForm.jsp">admin01</a></td>
+						<td><a href="/sori/views/admin/adminUpdateForm.jsp">최민영</a></td>
 						<td>my_choe@naver.com</td>
 						<td>010-3330-3358</td>
 						<td>대표관리자</td>
