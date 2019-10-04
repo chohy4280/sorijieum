@@ -21,6 +21,13 @@
             <div class="greyBox" style="height: 85px;">
             <form action="" method="post">
 				<div style="float:left">
+				<a class="ui large teal label">회원유형</a>&nbsp;
+					<select class="search" name="usertype" id="usertype" style="border-radius: 10px; width: 160px;">
+						<option value="user">이용자</option>
+						<option value="maker">제작자</option>
+					</select>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
 				<a class="ui large teal label">아이디</a>&nbsp;
 					<input type="text" class="search" name="searchuserid" id="userid" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -31,8 +38,7 @@
 						<option value="G">일반탈퇴</option>
 						<option value="F">강제탈퇴</option>
 					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" value="검색">
 				</div>
 				</form>

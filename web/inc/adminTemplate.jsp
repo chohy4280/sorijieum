@@ -53,7 +53,7 @@
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="clipboard list icon"></i>게시판</a></li>
 			<ul>
-				<li><a href="/sori/views/admin/adminBoardListView.jsp">　게시물관리</a></li>
+				<li><a href="/sori/views/admin/adminQnaListView.jsp">　문의글관리</a></li>
 			</ul>
 	</ul>
 </nav>
