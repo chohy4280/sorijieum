@@ -33,7 +33,7 @@ footer{
 </style>
 </head>
 
-<div class="ui top fixed menu" style="height:100px">
+<div class="ui top fixed menu" style="height:100px; overflow:hidden;">
   <div class="item">
 	<a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="100px" height="100px" align="left"></a>
   </div>
