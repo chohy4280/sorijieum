@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- favicon 위치 -->
+<link rel="shortcut icon" href="/sori/resources/images/favicon.ico">
+<link rel="icon" href="/sori/resources/images/favicon.ico">
 <meta charset="UTF-8">
 <title>sorijieum</title>
 
@@ -21,12 +24,12 @@
 <center><a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="10%" height="10%"></a></center>
 </header>
 <div align="center">
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">홈</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">사이트소개</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서검색</button><br>
-<button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서제작</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">도서신청</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;">게시판</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">홈</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">사이트소개</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서검색</button><br>
+<button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서제작</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서신청</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">게시판</button>
 
 </div>
 <section>

@@ -3,94 +3,173 @@
 * {
 	font-family: 'S-Core Dream 6';
 }
-
+/***************/
 /* bmmain.css */
-.bookstatus{
-	margin-top:10px;
-	margin-left: 30px;
-	padding: 30px;
-	position:absolute;
-	width: 100%
-}
-
-.bookstatus_title{
-	float: left;
-	font-family: 'S-Core Dream 6';
-	margin-top:10px;
-	margin-left: 20px;
+/**************/
+.ye-bookstatus {
+	margin-top: 10px;
+	margin-left: 10px;
 	padding: 20px;
 }
 
-.guide{
-	margin-top:0px;
-	padding:10px;	
-	margin-right:20px;
-	width:1350px;
+.ye-bookstatus-title {
+	float: left;
+	font-family: 'S-Core Dream 6';
+	margin-top: 10px;
+	margin-left: 10px;
+	padding: 20px;
+}
+
+.ye-guide {
+	margin-top:15px;
+	padding: 10px;
+	margin-right: 20px;
+	width: 1350px;
 	float: none;
 }
 
-.book a {
+.ye-book a {
 	text-decoration: none;
 	font-size: 14pt;
-	color : black;
+	color: black;
 }
 
-.book {
+.ye-book {
 	margin-left: 40px;
 	margin-right: 10px;
 	margin-bottom: 10px;
-	margin-top:10px;
+	margin-top: 10px;
 	padding: 20px;
 	float: none;
 }
 
-.bookwait{
-	float:left;
+.ye-bookwait {
+	margin-top: -10px;
+	float: left;
 }
 
-.bookmaking{
-	margin-top:20px;
+.ye-bookmaking {
+	margin-top: 15px;
 }
 
-.book img {
+#mbutton {
+	padding-top: 10px;
+}
+
+.ye-book img {
 	width: 150px;
 	height: 210px;
 }
 
-.bw{
-	float:left;
-	margin-right:20px;
+.ye-bw {
+	float: left;
+	margin-right: 30px;
 }
 
-.bm{
-	float:left;
-	margin-right: 20px;
+.ye-bm {
+	float: left;
+	margin-right: 30px;
 }
 
+.ye-bm .progress {
+	margin-top: -10px;
+}
+
+/****************/
 /* bookinfo.css */
-.bookimg{
-	margin-top : -15px;
+/****************/
+.ye-bookimg {
+	margin-top: 10px;
 	margin-left: 40px;
-	padding: 10px;
+	padding: 5px;
 }
 
-.bookimg img{
-	width:90%;
-	height:90%;
+.ye-bookimg img {
+	width: 90%;
+	height: 90%;
 }
 
-#bookinfo{
-	float:left;
-	margin-top : -20px;
+#ye-bookinfo {
+	float: left;
+	margin-top: -20px;
+	margin-left: 20px;
 }
 
-.make_button{
+.ye-make-button {
 	position: relative;
-	bottom: -470px;
-	margin-right : 80px;
+	bottom: -350px;
+	margin-right: 80px;
 }
+
+.ye-book-count {
+	position: relative;
+	bottom: -410px;
+	left: 200px;
+	align: right;
+}
+
+.ye-book-count img {
+	width: 15%;
+	height: 15%;
+	position: relative;
+	bottom: 30px;
+}
+/*************/
 /* guide.css */
+/*************/
+.ye-bookguide {
+	float: left;
+	font-family: 'S-Core Dream 6';
+	margin-top: 10px;
+	margin-left: 20px;
+	padding: 20px;
+}
 
+.ye-bookguide2 {
+	margin-top: 5px;
+	margin-left: 40px;
+	padding: 20px;
+	width: 1350px;
+	background-color: #f7f7f7
+}
 
+.ye-bookguide2 p {
+	font-family: 'S-Core Dream 4';
+}
 
+.ye-bookguide h3 {
+	margin-top: -20px;
+	margin-left: 0px;
+	padding-left: 0px;
+}
 
+.ye-make-button2 {
+	position: relative;
+	bottom: 80px;
+	margin-right: 80px;
+}
+
+/*************/
+/* bookmakingmain.css */
+/*************/
+.ui.yellow.button{
+	font-family:'S-Core Dream 6';
+}
+
+.ui.button a{
+	color: black;
+}
+
+#ui-tooltip-content {
+    /* tooltip content */
+    white-space: pre-line;
+}
+
+#guidetooltip{
+	margin-top:-5px;
+	padding-top:-5px;
+}
+
+#up{
+	font-size: 14px;
+}
