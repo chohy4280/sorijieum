@@ -28,7 +28,7 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 			 
  ul{width:650px;height:20px;list-style:none;padding-left:150px;} /*position fixed는 스크롤이 내려가도 상단고정  */
 ul li{float:left;/* margin-right:8px; *//* padding-left:30px; */}
-ul li a{font-size:16px;color:black;font-weight:bold;text-decoration:none}
+ul li a{font-size:20px;color:black;font-weight:bold;text-decoration:none}
 ul li a:hover{background:#ccc;color#fff;}
 
 footer{
@@ -37,27 +37,33 @@ footer{
      bottom : 0;
      width: 100%;
      height: 50px;
-     background-color: #ECB93E;
+     background-color: #fbbe09;
 }
 
-div a {font-size:100pt;}
+
+
 </style>
 </head>
 
-<div class="ui top fixed menu" style="height:100px; overflow:hidden;">
+<div class="ui top fixed menu" style="height:100px;overflow:hidden;">
   <div class="item">
 	<a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="100px" height="100px" align="left"></a>
   </div>
-  <a class="item">사이트 소개</a>
+  <a class="item" href="/sori/views/sorijieumIntro.jsp">사이트 소개</a>
   <a class="item">도서 검색</a>
   <a class="item" href="/sori/views/bookmaking/bmmain.jsp">도서 제작</a>
-  <a class="item">도서 신청</a>
-  <a class="item">게시판</a>
+  <a class="item" href="/sori/views/boardwishbook/wishbookListView.jsp">도서 신청</a>
+  <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
+  <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>
+  <a class="item" href="/sori/views/boardqna/qnaListView.jsp">Q&A</a>
 </div>
 <br><br><br>
 <body>
 
-<footer>
-THis is a footer
+<footer style="text-align: center;">
+		<p>
+          &copy; Copyrights <strong>sorijieum</strong>.<br>
+          All Rights Reserved Created with sorijieum</a>
+        </p>
 </footer>
 </body>

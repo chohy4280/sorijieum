@@ -90,28 +90,7 @@
 				</table>
 			<!-- 도서정보 섹션 끝 -->
 				<br><br><hr><br><br>			
-			<!-- 최근문의 섹션 시작 -->
-			<a class="ui large teal label">최근 문의</a>&nbsp;&nbsp;<button class="mini ui grey button">더보기</button><br><br>
-					<table class="listTable">
-					<tr>
-						<th width="5%">No</th>
-						<th width="30">제목</th>
-						<th width="15%">작성자</th>
-						<th width="20%">작성일</th>
-						<th width="15%">처리여부</th>
-						<th width="15%">처리자(ID)</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>팩스 보냈습니다 확인하여 이용자로 변경해주세요</td>
-						<td>홍길동</td>
-						<td>2019/04/02</td>
-						<td>답변완료</td>
-						<td>최민영(admin01)</td>
-					</tr>
-					</table>
-			<!-- 최근문의 섹션 끝 -->
-				<br><br><hr><br><br>			
+			
 			<!-- 관리자메모 섹션 시작 -->
 			<a class="ui large teal label">관리자메모</a><br><br>
 					<table class="listTable">
@@ -132,7 +111,7 @@
 					</table><br>
 					<h4>메모 작성</h4>
 					<form action="" method="post">
-						<textarea name="adminmemo" cols="160" rows="5" placeholder="관리자 메모 내용을 입력하세요." style="border-radius: 10px"></textarea>
+						<textarea name="adminmemo" cols="150" rows="5" placeholder="관리자 메모 내용을 입력하세요." style="border-radius: 10px"></textarea>
 						<input type="submit" value="저장">
 					</form>
 			

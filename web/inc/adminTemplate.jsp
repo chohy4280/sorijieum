@@ -4,12 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <!-- Semantic UI CND -->
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+<!-- 시맨틱 UI -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
-  <!-- CUSTOM CSS -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+ <!-- Custom CSS -->
 	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/Admin.css">
+<!-- 폰트변경 -->
+	<style>
+		@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
+					 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
+					 font-weight: normal; 
+					 font-style: normal; }
+		
+		* { font-family: 'S-CoreDream-7ExtraBold';}
+	</style>
 </head>
 <body>
 
@@ -34,7 +43,7 @@
 			<ul>
 				<li><a href="/sori/views/admin/adminBookListView.jsp">　도서목록</a></li>
 				<li><a href="/sori/views/admin/adminAddBookForm.jsp">　도서추가</a></li>
-				<li><a href="/sori/views/admin/adminBookRequestListView.jsp">　도서신청내역</a></li>
+				<li><a href="/sori/views/admin/adminWishBookListView.jsp">　도서신청내역</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="user icon"></i>사용자</a></li>
 			<ul>
@@ -44,7 +53,7 @@
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="clipboard list icon"></i>게시판</a></li>
 			<ul>
-				<li><a href="/sori/views/admin/adminBoardListView.jsp">　게시물관리</a></li>
+				<li><a href="/sori/views/admin/adminQnaListView.jsp">　문의글관리</a></li>
 			</ul>
 	</ul>
 </nav>

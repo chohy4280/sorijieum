@@ -52,7 +52,7 @@
 			<!-- 회원검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600">30</span> 명</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">30</span> 명</div>
 				<br>
 				<table class="listTable">
 					<tr>
@@ -68,8 +68,8 @@
 					<tr>
 						<td><input type="checkbox" name="RowCheck" value="getBookcode"></td>
 						<td>이용자</td>
-						<td><a href="">홍길동</a></td>
-						<td><a href="">user01</a></td>
+						<td><a href="/sori/views/admin/adminUserDetailView.jsp">홍길동</a></td>
+						<td><a href="/sori/views/admin/adminUserDetailView.jsp">user01</a></td>
 						<td>남</td>
 						<td>hgildong@naver.com</td>
 						<td>010-1234-5678</td>
