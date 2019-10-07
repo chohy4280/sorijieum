@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- favicon 위치 -->
+<link rel="shortcut icon" href="/sori/resources/images/favicon.ico">
+<link rel="icon" href="/sori/resources/images/favicon.ico">
 <meta charset="UTF-8">
 <title>소리지음 메인페이지</title>
 <style>
@@ -65,6 +68,14 @@
    <button class="ui brown button" onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'">회원가입</button> &nbsp;
 </div>
 </header>
+
+<div align="center">
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">홈</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">사이트소개</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서검색</button><br>
+<button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서제작</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서신청</button>
+<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">게시판</button>
 
 
 <div class="ui four doubling cards" style="margin:5% 5% 0 5%">
