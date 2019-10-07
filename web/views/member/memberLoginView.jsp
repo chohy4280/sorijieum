@@ -31,7 +31,7 @@
 <br>
 <input type="checkbox" name="autoLogin" checked>&nbsp;자동로그인
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="/sori/views/member/memberSearchIdPw.jsp">아이디|비밀번호 찾기</a>
+<a href="/sori/views/member/memberSearchIdPwd.jsp">아이디|비밀번호 찾기</a>
 <br><br>
 
 <div>

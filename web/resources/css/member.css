@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
+@font-face {
+	font-family: 'S-CoreDream-6Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+	}
+
 * {
-	font-family: 'S-Core Dream 6';
+	font-family: 'S-CoreDream-6Bold';
 }
 
 .my-section{
@@ -9,4 +16,9 @@
    padding-bottom: 70px;
    padding-left: 30px;
    padding-right: 30px;
+}
+
+.hy-section{
+	padding-left:300px;
+	padding-top:200px;
 }
