@@ -8,11 +8,7 @@
 <%@ include file="/../inc/top.jsp"%>
 <%@ include file="/../inc/cdn.jsp"%>
 <script type="text/javascript">
-$(function(){
-	
-});
 
-$(".ye-book-count").transition("drop");
 </script>
 </head>
 <br>
@@ -25,7 +21,7 @@ $(".ye-book-count").transition("drop");
 <i class="yellow big info circle icon" style="margin-left:10px;"></i>
 <button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/guide.jsp'"
 style="width:150px; height:10px;font-size:10pt;text-align:center;font-family:'S-Core Dream 5';
-padding:10px 5px 23px; margin:20px 40px 10px 10px;">제작가이드라인 안내</button></div><br><br>
+padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</button></div><br><br>
 <!-- 도서 이미지 -->
 <div class="ye-bookimg" style="float:left;">
 <img id="보건교사 안은영" src="/sori/resources/book_images/201908191645.jpg">
@@ -37,19 +33,19 @@ padding:10px 5px 23px; margin:20px 40px 10px 10px;">제작가이드라인 안내
       <label>도서명</label>
       <input type="text" readonly value="보건교사 안은영" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
-  </div><br>
+  </div>
   <div class="fields">
     <div class="field">
       <label>저자명</label>
       <input type="text" readonly value="정세랑" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
-  </div><br>
+  </div>
   <div class="fields">
     <div class="field">
       <label>출판사</label>
       <input type="text" readonly value="민음사" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
-  </div><br>
+  </div>
   <div class="fields">
     <div class="field">
     <label>책 소개</label>
@@ -64,9 +60,14 @@ padding:10px 5px 23px; margin:20px 40px 10px 10px;">제작가이드라인 안내
   	<div class="progress-bar" role="progressbar" 
   	style="font-size:8pt; background: orange; width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="280">1%</div>
 	</div>
-  </div> <br><br> <!-- bookinfo 끝 -->
+  </div> <!-- bookinfo 끝 -->
 </div> <!-- content 끝 -->
+&nbsp;&nbsp;&nbsp;
 <!-- process donut -->
+<div class="chart x-60">
+  <p id="donut">1%</p>
+</div>
+
 <div class="ye-make-button" align="right">
 <button onclick="location.href='/sori/views/bookmaking/bookmakingmain.jsp'" class="big ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
 </div><br>
@@ -82,8 +83,6 @@ padding:10px 5px 23px; margin:20px 40px 10px 10px;">제작가이드라인 안내
 </div>
   <img src="/sori/views/bookmaking/images/books.png">
 </div><!-- book count 끝 -->
-
-<br><br><br><br><br><br><br><br>
 </body>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 </html>
