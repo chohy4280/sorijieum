@@ -26,7 +26,7 @@ public class wishbookResultServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// 관리자 신청도서 승인반려처리용
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

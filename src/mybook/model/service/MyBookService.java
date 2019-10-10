@@ -1,7 +1,9 @@
 package mybook.model.service;
 
+import java.util.ArrayList;
+
 import mybook.model.dao.MyBookDao;
-import static common.JDBCTemplate.*;
+import mybook.model.vo.MyBook;
 
 public class MyBookService {
 	
@@ -9,5 +11,12 @@ public class MyBookService {
 	public MyBookDao mbDao = new MyBookDao();
 	
 	public MyBookService() {}
+	
+	//관리자 서비스****************************************
+	// 이용자 읽은 도서 조회용
+	public ArrayList<MyBook> selectUserReadbookList(String userid){
+		return null;
+	}
+
 
 }
