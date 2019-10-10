@@ -488,17 +488,17 @@ $(document).ready(function(){
 		<i class="hourglass half icon"></i>
 		</div>
 		<div style="float: left; height: 35px; width: 190px">
-			<font style="vertical-align: middle;font-family:'S-Core Dream 7';">제작시간 :</font> <font id="hour"
+			<font style="vertical-align: middle;font-family:'S-Core Dream 6';">제작시간 :</font> <font id="hour"
 				style="vertical-align: middle;"></font><font
-				style="vertical-align: middle;font-family:'S-Core Dream 5';">시간&nbsp;</font>
+				style="vertical-align: middle;font-family:'S-Core Dream 6';">시간&nbsp;</font>
 		</div>
 		<div style="float: left; width: 70px; height: 35px;">
 			<font id="min" style="vertical-align: middle;"></font><font
-				style="vertical-align: middle;font-family:'S-Core Dream 5';">분</font>
+				style="vertical-align: middle;font-family:'S-Core Dream 6';">분</font>
 		</div>
 		<div style="float: left; width: 60px; height: 35px;">
 			<font id="second" style="vertical-align: middle;"></font><font
-				style="vertical-align: middle;font-family:'S-Core Dream 5';">초</font>
+				style="vertical-align: middle;font-family:'S-Core Dream 6';">초</font>
 		</div>&nbsp;
 		<button id="completebtn" class="ui yellow button"
 			onclick="javascript:complete(12407)" disabled="disabled">
@@ -5358,7 +5358,7 @@ $(document).ready(function(){
 								'width' : '100'
 							},
 						// Add js and css urls to cropper.js
-						});
+					});
 	</script>
 </div>
 <div class="makeclass-box" id="makeclass"
@@ -5370,8 +5370,8 @@ $(document).ready(function(){
 	</div>
 <!-- yecontent 끝 -->
 <!-- up -->						
-<div id="up" style="font-size: 14px; font-weight: bold;" align="right">
-	<a href="#" style="color: black;"><i class="arrow alternate circle up icon"></i>위로가기</a>
+<div id="up" style="margin-top:10px;margin-right:10px;font-size:14px;font-weight:bold;" align="right">
+	<a href="#" style="color: black;"><i class="big yellow chevron circle up icon"></i>위로가기</a>
 </div>
 <br><br><br>
 </body>
