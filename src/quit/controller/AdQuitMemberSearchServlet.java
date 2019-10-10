@@ -1,4 +1,4 @@
-package adminmemo.controller;
+package quit.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdMemoInsertServlet
+ * Servlet implementation class quitMemberSearchServlet
  */
-@WebServlet("/mminsert.ad")
-public class AdMemoInsertServlet extends HttpServlet {
+@WebServlet("/qmslist.ad")
+public class AdQuitMemberSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdMemoInsertServlet() {
+    public AdQuitMemberSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class AdMemoInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 관리자 메모 등록용
+		// 관리자 탈퇴화원 검색 조회용
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

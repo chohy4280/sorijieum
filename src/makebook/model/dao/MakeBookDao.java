@@ -1,6 +1,6 @@
 package makebook.model.dao;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.util.ArrayList;
 
 import makebook.model.vo.MakeBook;
@@ -19,4 +19,10 @@ public class MakeBookDao {
 		return 0;
 	}
 
+	
+	// 관리자 Dao *******************************************
+	// 제작자 제작도서 조회용
+	public ArrayList<MakeBook> selectMakerMakebookList(Connection conn, String userid){
+		return null;
+	}
 }

@@ -11,7 +11,7 @@ public class MakeBookService {
 	public MakeBookDao mbDao = new MakeBookDao();
 	
 	public MakeBookService() {}
-	
+
 	//참여도서 목록
 	public ArrayList<MakeBook> selectMakeBookList(String userid){
 		return null;
@@ -20,6 +20,12 @@ public class MakeBookService {
 	//참여도서 삭제
 	public int deleteMakeBook(String userid, int bookCode) {
 		return 0;
+	}
+  
+	// 관리자 서비스 *******************************************
+	// 제작자 제작도서 조회용
+	public ArrayList<MakeBook> selectMakerMakebookList(String userid){
+		return null;
 	}
 
 }

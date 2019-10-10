@@ -26,7 +26,7 @@ public class AdMemoListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// 관리자 메모 전체보기
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
