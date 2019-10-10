@@ -17,12 +17,11 @@
         <br><br>
         
         <!-- 검색창 시작!-->
-            <div class="greyBox" style="height: 180px;">
+            <div class="greyBox" style="height: 180px; overflow: hidden;">
             <form action="" method="post">
 				<div>
 				<a class="ui large teal label">개인정보</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
-						<option value="">==조건선택==</option>
 						<option value="userid">아이디</option>
 						<option value="username">이름</option>
 						<option value="phone">전화번호</option>
@@ -32,13 +31,13 @@
 
 
 				<a class="ui large teal label">성　　별</a>&nbsp;
-					<input type="radio" name="gender" value="A"> 전체 &nbsp;&nbsp;&nbsp;
+					<input type="radio" name="gender" value="A" checked> 전체 &nbsp;&nbsp;&nbsp;
 					<input type="radio" name="gender" value="F"> 여성&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="gender" value="M"> 남성
 					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 				<a class="ui large teal label">회원유형</a>&nbsp;
-					<input type="radio" name="usertype" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="usertype" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="usertype" value="wait"> 이용대기자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="usertype" value="hear"> 이용자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="usertype" value="make"> 제작자
