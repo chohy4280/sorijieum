@@ -1,4 +1,4 @@
-package member.controller;
+package likebook.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
