@@ -39,5 +39,40 @@ public class WishBookDao {
 	public WishBook insertWishBookResult(Connection conn, int wishno) {
 		return null;
 	}
+	
+	public int getListCount(){
+		return 0;
+	}
+	
+	public ArrayList<WishBook> selectWishBookList(int startnum, int endnum){
+		return null;
+	}
 
+	public WishBook selectWishBookOne(Connection conn, int wishno){
+		return null;
+	}
+
+	public int updateWishBook(Connection conn, WishBook wishbook){
+		return 0;
+	}
+	
+	public int insertWishBook(Connection conn, WishBook wishbook){
+		return 0;
+	}
+	
+	public int deleteWishBook(Connection conn, WishBook wishbook){
+		return 0;
+	}
+	
+	public WishBook selectMyWishBook(Connection conn, int wishno, String wishwriter){
+		return null;
+	}
+	
+	public ArrayList<WishBook> selectTitleWishBook(Connection conn, String wishbooktitle){
+		return null;
+	}
+	
+	public ArrayList<WishBook> selectWriterWishBook(Connection conn, String wishbooktitle){
+		return null;
+	}
 }

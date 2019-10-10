@@ -3,7 +3,7 @@ package likebook.model.service;
 import java.util.ArrayList;
 
 import likebook.model.dao.LikeBookDao;
-import mybook.model.vo.MyBook;
+import likebook.model.vo.LikeBook;
 
 public class LikeBookService {
 	
@@ -11,11 +11,20 @@ public class LikeBookService {
 	public LikeBookDao lbDao = new LikeBookDao();
 	
 	public LikeBookService() {}
+
+	//관심도서 목록
+	public ArrayList<LikeBook> selectLikeBookList(String userid) {
+		return null;
+	}
 	
-	
-	// 관리자 서비스 *******************************************
+	//관심도서 삭제
+	public int deleteLikeBook(String userid, String bookCode) {
+		return 0;
+	}
+
+  // 관리자 서비스 *******************************************
 	// 이용자 관심도서 조회용
-	public ArrayList<MyBook> selectUserLikebookList(String userid){
+	public ArrayList<LikeBook> selectUserLikebookList(String userid){
 		return null;
 	}
 
