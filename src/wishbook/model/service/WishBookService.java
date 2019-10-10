@@ -36,7 +36,7 @@ public class WishBookService {
 	
 	
 	// 관리자 신청도서 한 개 불러오기 용
-	public WishBook selectWishBookOne(int wishno) {
+	public WishBook selectWishBookOneAdmin(int wishno) {
 		return null;
 	}
 	
@@ -45,6 +45,8 @@ public class WishBookService {
 	public WishBook insertWishBookResult(int wishno) {
 		return null;
 	}
+	
+	//*********************************************************************
 	
 	//도서신청 게시물 카운트
 	public int getListCount(){

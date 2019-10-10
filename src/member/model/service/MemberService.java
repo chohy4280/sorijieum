@@ -103,12 +103,12 @@ public class MemberService {
 	}
 	
 	// 관리자 회원 정보 수정용
-	public int updateMember(Member member) {
+	public int updateMemberAdmin(Member member) {
 		return 0;
 	}
 	
 	// 관리자 회원 삭제(강제탈퇴)용
-	public int deleteMember(String userid) {
+	public int deleteMemberAdmin(String userid) {
 		return 0;
 	}
 	

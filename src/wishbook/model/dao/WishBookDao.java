@@ -30,7 +30,7 @@ public class WishBookDao {
 	
 	
 	// 관리자 신청도서 한 개 불러오기 용
-	public WishBook selectWishBookOne(Connection conn, int wishno) {
+	public WishBook selectWishBookOneAdmin(Connection conn, int wishno) {
 		return null;
 	}
 	
@@ -39,6 +39,9 @@ public class WishBookDao {
 	public WishBook insertWishBookResult(Connection conn, int wishno) {
 		return null;
 	}
+	
+	
+	//************************************************************
 	
 	public int getListCount(){
 		return 0;
