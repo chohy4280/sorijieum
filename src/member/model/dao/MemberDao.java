@@ -57,6 +57,9 @@ public class MemberDao {
 	public Member selectMemberSearchPwd(Connection conn, String userId, String email) {
 		return null;
 	}
+	
+	
+	
   
   	// 관리자용 dao************************************************************************************************
 	// 관리자 전체 조회용
@@ -75,7 +78,7 @@ public class MemberDao {
 	}
 	
 	// 관리자 삭제용
-	public int deleteAmin(Connection conn, String userid) {
+	public int deleteAdmin(Connection conn, String userid) {
 		return 0;
 	}
 	
@@ -100,12 +103,12 @@ public class MemberDao {
 	}
 	
 	// 관리자 회원 정보 수정용
-	public int updateMember(Connection conn, Member member) {
+	public int updateMemberAdmin(Connection conn, Member member) {
 		return 0;
 	}
 	
 	// 관리자 회원 삭제(강제탈퇴)용
-	public int deleteMember(Connection conn, String userid) {
+	public int deleteMemberAdmin(Connection conn, String userid) {
 		return 0;
 	}
 	

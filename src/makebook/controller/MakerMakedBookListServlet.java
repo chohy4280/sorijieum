@@ -1,4 +1,4 @@
-package member.controller;
+package makebook.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
