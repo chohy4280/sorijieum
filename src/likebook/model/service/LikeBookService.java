@@ -1,7 +1,9 @@
 package likebook.model.service;
 
+import java.util.ArrayList;
+
 import likebook.model.dao.LikeBookDao;
-import static common.JDBCTemplate.*;
+import likebook.model.vo.LikeBook;
 
 public class LikeBookService {
 	
@@ -9,5 +11,15 @@ public class LikeBookService {
 	public LikeBookDao lbDao = new LikeBookDao();
 	
 	public LikeBookService() {}
+	
+	//관심도서 목록
+	public ArrayList<LikeBook> selectLikeBookList(String userid) {
+		return null;
+	}
+	
+	//관심도서 삭제
+	public int deleteLikeBook(String userid, String bookCode) {
+		return 0;
+	}
 
 }
