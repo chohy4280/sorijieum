@@ -70,7 +70,6 @@
 				</table>
 				
 				<br>
-				<div><button class="mini ui black button" onclick="">삭제</button></div>
 				</div>
 			</div>
 				

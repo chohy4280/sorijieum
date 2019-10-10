@@ -10,6 +10,7 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
  <!-- Custom CSS -->
 	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/Admin.css">
+	  <script src="/sori/resources/js/jquery-3.4.1.min.js"></script>
 <!-- 폰트변경 -->
 	<style>
 		@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
@@ -25,7 +26,7 @@
 
 <!-- 상단 바 시작! -->
 	<header>
-		<div class="topbar">
+		<div class="topbar" style="overflow:hidden;">
 			<span class="topname"><a href="/sori/index.jsp" target="_blank"><i class="home icon"></i></a>SORIJIEUM <span style="color:#4ecdc4">ADMIN</span></span>
 			<div id="adminname"><a href="">최민영</a> 님!&nbsp;&nbsp;&nbsp;<button class="ui mini teal button">Logout</button></div>
 		</div>
@@ -35,7 +36,7 @@
 
 <!-- 사이드 메뉴 바 시작!-->
 <aside>
-<div class="menubar">
+<div class="menubar" style="overflow:hidden;">
 <nav>
 	<ul class="vertical-menu">
 		<li style="font-weight: 600; font-size:12pt"><a href="/sori/views/admin/adminIndexView.jsp"><i class="home icon"></i>MAIN</a></li>
@@ -64,12 +65,10 @@
 
 
 
- <footer class="site-footer">
+ <footer class="site-footer" style="overflow:hidden;">
         <p>
-          &copy; Copyrights <strong>sorijieum</strong>. All Rights Reserved<br>
-          Created with sorijieum by @minyoung</a>
+          &copy; Copyrightⓒ 2019 <strong>sorijieum @minyoung.</strong> All Rights Reserved.<br>
         </p>
     </footer>
-    <script src="lib/jquery/jquery.min.js"></script>
 </body>
 </html>

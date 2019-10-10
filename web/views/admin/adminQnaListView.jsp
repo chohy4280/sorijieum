@@ -20,7 +20,7 @@
             
             
             <!-- 검색창 시작!-->
-            <div class="greyBox" style="height: 180px;">
+            <div class="greyBox" style="height: 80px;">
             <form action="" method="post">
 				<div>
 				<a class="ui large teal label">검색조건</a>&nbsp;
@@ -31,16 +31,12 @@
 					</select>
 					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-				<a class="ui large teal label">조회기간</a>&nbsp;
-					<input type="date" name="searchdate" value="from"> ~ <input type="date" name="searchdate" value="to"> 
-					<br><br>
 					
 				<a class="ui large teal label">답변여부</a>&nbsp;
-					<input type="radio" name="replystate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="replystate" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="replystate" value="bookwait"> 답변전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="replystate" value="bookmake"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<center><input type="submit" value="검색"></center>
+					<input type="radio" name="replystate" value="bookmake"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="submit" value="검색">
 				</div>
 				</form>
 			</div>
@@ -49,7 +45,7 @@
 			
 			
 			<!-- 게시글 검색 결과 리스트 시작! -->
-			<div class="listBoxBG" style="height: 1500px; margin-top:220px;">
+			<div class="listBoxBG" style="height: 1500px; margin-top:90px;">
 				<div class="listBox">
 				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">30</span> 건</div>
 				<br>

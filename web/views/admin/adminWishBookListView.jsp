@@ -22,20 +22,15 @@
 				<div>
 				<a class="ui large teal label">상세검색</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 150px;">
-						<option value="">==조건선택==</option>
 						<option value="bookname">도서명</option>
 						<option value="username">신청자명</option>
 						<option value="userid">신청자ID</option>
 					</select>
 					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
 					<br><br>
-				<a class="ui large teal label">신 청 일</a>&nbsp;
-					<input type="date" name="searchdate" value="from"> ~ <input type="date" name="searchdate" value="to">
-				
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 					<a class="ui large teal label">처리상태</a>&nbsp;
-					<input type="radio" name="bookstate" value="all"> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="bookstate" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="bookstate" value="wait"> 승인대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="bookstate" value="done"> 승인완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="bookstate" value="rjct"> 반려

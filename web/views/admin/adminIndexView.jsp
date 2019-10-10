@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/../inc/adminTemplate.jsp" %>
+<%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook, java.util.Date, java.text.SimpleDateFormat"%>
+
+<%
+	Date sysdate = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+	ArrayList<WishBook> wbWaitList = (ArrayList<WishBook>)request.getAttribute("wbWaitList");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +25,7 @@
 	<!--오늘의 차트 시작-->
             <div class="base">
 	            <i class="large blue check circle icon"></i>
-	            <span class="sysdate">9월 20일 수요일</span>
+	            <span class="sysdate"><%= sdf.format(sysdate) %></span>
 	            
 	            <div class="data">
 	            
@@ -33,7 +41,7 @@
 	            		<div>완료도서</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todaybook"><a href="">8</span></a> 권</div>
+	            		<div><span class="todaybook"><a href=""><%= wbWaitList %></span></a> 권</div>
 	            		<div><span class="todaybook"><a href="">8</span></a> 권</div>
 	            		<div><span class="todaybook"><a href="">333</span></a> 권</div>
 	            	</div>

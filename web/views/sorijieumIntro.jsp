@@ -19,7 +19,7 @@
 
 <!-- Content 시작! -->
 	<section class="my-section">
-	<div align="center" style="background:#fff; widht:auto; height:3600px;">
+	<div align="center" style="background:#fff; widht:auto; height:3700px;">
 		<img src="/sori/resources/images/siteintro1.png">
 		<p style="color:#fbbe09; font-size:30pt;">안녕하세요, 소리지음입니다.</p>
 		<p style="color:#404040; font-size:20pt;">'소리지음'은 '소리를 짓다(만들다)'라는 의미와,<br>
@@ -93,17 +93,26 @@
 		<br>
 		<table class="my-listTable3" style="width:700px;">
 		<tr>
-			<th widht="20%">주소&연락처</th><td width="80%">서울특별시 강남구 테헤란로 14길 6 남도빌딩 2F, 3F, 4F, 5F
+			<th style="widht:20%; text-align:center;">주소&연락처</th><td width="80%">서울특별시 강남구 테헤란로 14길 6 남도빌딩 2F, 3F, 4F, 5F
 													<br>(T: 1544-9970 / F: 02-562-2378)</td>
 		</tr>
 		<tr>
-			<th widht="20%">버스</th><td width="80%">역삼역.포스코P&S타워 정류장<br>
+			<th style="widht:20%; text-align:center;">버스</th><td width="80%">역삼역.포스코P&S타워 정류장<br>
 												지선 146 / 740 / 341 / 360　　간선 1100 / 1700 / 2000 / 7007 / 8001</td>
 		</tr>
 		<tr>
-			<th widht="20%">지하철</th><td width="80%">지하철 2호선 역삼역 3번출구 100m</td>
+			<th style="widht:20%; text-align:center;">지하철</th><td width="80%">지하철 2호선 역삼역 3번출구 100m</td>
 		</tr>
 		</table>
+		</div>
+		<br><br>
+		<div>연관사이트
+		<select name="jump" onchange="location.href=this.value">
+			<option>선택</option>
+			<option value="http://www.kbuwel.or.kr">한국시각장애인연합회</option>
+			<option value="http://www.soriview.or.kr/sori">소리가보이는도서관</option>
+			<option value="http://www.itlo.org/">IT로</option>
+			</select>
 		</div>
 	</div>
 	</section>
