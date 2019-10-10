@@ -1,7 +1,9 @@
 package mybook.model.service;
 
+import java.util.ArrayList;
+
 import mybook.model.dao.MyBookDao;
-import static common.JDBCTemplate.*;
+import mybook.model.vo.MyBook;
 
 public class MyBookService {
 	
@@ -9,5 +11,14 @@ public class MyBookService {
 	public MyBookDao mbDao = new MyBookDao();
 	
 	public MyBookService() {}
-
+	
+	//내서재 목록
+	public ArrayList<MyBook> selectMyBookList(String userId) {
+		return null;
+	}
+	
+	//내서재 삭제
+	public int deleteMyBook(String userid, String bookCode) {
+		return 0;
+	}
 }
