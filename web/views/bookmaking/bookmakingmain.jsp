@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>도서제작</title>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="crossorigin="anonymous"></script>
 <!-- 에디터 cdn 링크 -->
 <script src="//cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
 <%@ include file="/../inc/top.jsp"%>
@@ -439,11 +440,32 @@ $(document).ready(function(){
 							$("#completebtn").css('color','black');
 						 }
 	}
+	
+	var resizePopup = function(){$('#guide2').css('max-height', $(window).height());};
+	$(window).resize(function(e){
+	    resizePopup();
+	});
+	
+	$(function($){
+		  $("#guide1").popup({
+		       on    : 'hover',
+		       position : "bottom center"
+		    });
+		  
+		  $('#ui-tooltip-content').popup({
+		    	popup : $("#guide2"),
+		        on: 'click',
+		        position : "bottom right",
+		        lastResort: "bottom right"
+		    });
 
-
-		$(function(){
-			$(".tabular.menu .item").tab();
-		});
+		  $('.item').on('click', function() {
+		      $('.item').removeClass('active');
+		      $(this).addClass('active');
+		   });  
+		  
+	});
+		
 
 </script>
 </head>
@@ -461,23 +483,23 @@ $(document).ready(function(){
 	<!-- content 시작 -->
 	<div id="yecontent">	
 	<!-- timer -->
-	<div style="float: right; font-size: 20px; margin-right:40px;">
-		<div style="float: left;">
-		<i class="hourglass half icon" style="margin-top:3px;"></i>
+	<div style="float: right; font-size: 24px; margin-right:25px; margin-top:-10px;">
+		<div style="float: left;margin-top:3px;">
+		<i class="hourglass half icon"></i>
 		</div>
-		<div style="float: left; height: 35px; width: 150px">
-			<font style="vertical-align: middle;">남은시간 :</font> <font id="hour"
+		<div style="float: left; height: 35px; width: 190px">
+			<font style="vertical-align: middle;font-family:'S-Core Dream 7';">제작시간 :</font> <font id="hour"
 				style="vertical-align: middle;"></font><font
-				style="vertical-align: middle;">시간</font>
+				style="vertical-align: middle;font-family:'S-Core Dream 5';">시간&nbsp;</font>
+		</div>
+		<div style="float: left; width: 70px; height: 35px;">
+			<font id="min" style="vertical-align: middle;"></font><font
+				style="vertical-align: middle;font-family:'S-Core Dream 5';">분</font>
 		</div>
 		<div style="float: left; width: 60px; height: 35px;">
-			<font id="min" style="vertical-align: middle;"></font><font
-				style="vertical-align: middle;">분</font>
-		</div>
-		<div style="float: left; width: 50px; height: 35px;">
 			<font id="second" style="vertical-align: middle;"></font><font
-				style="vertical-align: middle;">초</font>
-		</div>
+				style="vertical-align: middle;font-family:'S-Core Dream 5';">초</font>
+		</div>&nbsp;
 		<button id="completebtn" class="ui yellow button"
 			onclick="javascript:complete(12407)" disabled="disabled">
 			제출
@@ -485,99 +507,95 @@ $(document).ready(function(){
 	</div><!-- timer end -->
 	<!-- 쪽수 탭버튼 시작 -->
 	<div id="yetabs" >	
-	<div class="ui big yellow tabular menu">
-	  <a class="item active" data-tab="yetabs-1">1</a>
-	  <a class="item" data-tab="yetabs-2">2</a>
-	  <a class="item" data-tab="yetabs-3">3</a>
-	  <a class="item" data-tab="yetabs-4">4</a>
-	  <a class="item" data-tab="yetabs-5">5</a>
-	  <a class="item" data-tab="yetabs-6">6</a>
-	  <a class="item" data-tab="yetabs-7">7</a>
-	  <a class="item" data-tab="yetabs-8">8</a>
-	  <a class="item" data-tab="yetabs-9">9</a>
-	  <a class="item" data-tab="yetabs-10">10</a>
+	<div class="ui big tabular menu">
+	  <a class="active yellow item" data-tab="yetabs-1">1</a>
+	  <a class="yellow item" data-tab="yetabs-2">2</a>
+	  <a class="yellow item" data-tab="yetabs-3">3</a>
+	  <a class="yellow item" data-tab="yetabs-4">4</a>
+	  <a class="yellow item" data-tab="yetabs-5">5</a>
+	  <a class="yellow item" data-tab="yetabs-6">6</a>
+	  <a class="yellow item" data-tab="yetabs-7">7</a>
+	  <a class="yellow item" data-tab="yetabs-8">8</a>
+	  <a class="yellow item" data-tab="yetabs-9">9</a>
+	  <a class="yellow item" data-tab="yetabs-10">10</a>
 	</div>
 </div>
 <div class="table-responsive">
-	<div class="ui bottom attached active tab segment" id="yetabs-1" data-tab="yetabs-1">
+	<div class="ui bottom attached tab segment active" id="yetabs-1" data-tab="yetabs-1">
 		<table class="table">
 			<tr style="background-color: #f2f2f2">
 				<td width="60%" align="center">
 					<button name="if2_1189710"
-						class="ui yellow button"
+						class="ui yellow icon button"
 						onclick="javascript:changeImgSize(2,1189710)">
-						<span class="ui-icon" style="margin-top: 0;"><i class="large zoom-out icon"></i></span>
+						<i class="large zoom-out icon"></i>
 					</button>
 					<button name="if1_1189710"
-						class="ui yellow button"
+						class="ui yellow icon button"
 						onclick="javascript:changeImgSize(1,1189710)">
-						<span class="ui-icon" style="margin-top: 0;"><i class="large zoom-in icon"></i></span>
+						<i class="large zoom-in icon"></i>
 					</button>
 				</td>
 				<td width="40%" align="center">
-
 					<button id="txt5_1189710" class="ui yellow button"
 						onclick="javascript:ocrtext(1189710)">
 						본문초기화
 					</button>
 					<button id="txt3_1189710" class="ui yellow button"
-						onclick="javascript:clickrepage(1189710)" disabled="disabled">
+						onclick="javascript:clickrepage(1189710)">
 						되돌리기
 					</button>
 
 					<button id="txt4_1189710" class="ui yellow button"
-						onclick="javascript:input(1189710,10,12407)" disabled="disabled"
-						>
+						onclick="javascript:input(1189710,10,12407)" disabled="disabled">
 						저장
 					</button>
-			<div class="tiny ui basic yellow icon button" data-html="true"
-			data-tooltip="가이드라인을 반드시 숙지 후 꼼꼼히 제작해주시기 바랍니다. 
-			 				페이지별로 제작을 완료하신 후 저장 버튼을 눌러주세요.
-			 				모든 페이지 저장하신 후, 제출 버튼을 누르셔야 작업이 완료됩니다." 
-			 data-position="bottom right"><i class="yellow large info circle icon"></i>
+			<div class="ui icon button" id="guide1">
+				<i class="yellow large info circle icon"></i>
 				</div>
-			<div class="ui yellow teal button" id="ui-tooltip-content" data-html="true"
-				data-tooltip="1-1. 오탈자를 확인해 주세요.
-				1-2. 정확한 띄어쓰기를 해 주세요.
-				1-3. 한자, 영어만 입력하고 나머지 외국어는 생략해 주세요.
-				1-4. 로마 숫자, 라틴 문자(불어, 독어 등), 그리스 문자는 편집도구를 통해 입력해 주세요.
-				2-1. 표 편집도구를 통해 표를 삽입하고 제목을 입력해 주세요.
-				2-2. 이미지 편집도구를 통해 이미지를 자른 후 객관적인 설명과 텍스트를 입력해 주세요.
-				2-3. 특수문자 편집도구를 통해 특수기호를 입력해 주세요.
-				2-4. 쉼표와 소괄호는 특수기호를 사용하지 마시고 키보드 상에서 입력해 주세요.
-				2-5. 사칙연산 입력시, 키보드 상에 하이픈과 알파벳 X를 쓰지 마시고 특수기호 편집도구를 통해 입력해 주세요.
-				3-1. 목차로 추정되는 각 장의 제목과 소제목에 목차 지정을 해주세요.
-				4-1. 빈 줄은 띄지 말아주세요. 단 인용 문구 같은 경우는 띄어 주세요.
-				4-2. 이미지와 같이 줄 바꾸지 말고 문단 형식대로 줄 바꿔서 사용해 주세요.
-				4-3. 문단 시작 시 들여쓰기를 하지 마세요.
-				4-1. 빈 줄은 띄지 말아주세요. 단 인용 문구 같은 경우는 띄어 주세요.
-				5-1. 주석번호는 해당 문자 뒤에 (주 해당숫자) 형식으로 변경해주세요. Ex) (주1), (주*) 
-				5-2. 주석내용은 본문의 내용과 구분되도록 한 줄을 띄어준 후, 주 1: , 주 *: 형식으로 입력해 주세요.
-				6-1. 오른쪽 텍스트 페이지 상단, 또는 하단에 나와 있는 쪽번호 및 제목을 삭제해 주세요. 
-				6-2. 페이지 번호가 2개 있는 경우에는, 뒤에 있는 더 큰 숫자 하나만 페이지 입력란에 입력해 주세요.
-				6-3. 페이지 넘버 입력칸에는 '원본' 페이지의 번호를 입력해 주세요."
-				data-position="bottom center">제작가이드라인
-			</div> 
-		<script>
-						$('#makeclassid_' + 1189710).click(function(e) {
-
-							var x = document.getElementById("makeclass");
-
-							if (x.style.display === "none") {
-
-								x.style.display = "block";
-							} else {
-								x.style.display = "none";
-							}
-
-						});
+				<div class="ui custom popup transition hidden"
+				style="padding:18px;margin-left:739px;margin-top:22px;font-size:10pt;text-align:left;
+				font-family:'S-Core Dream 5';white-space:nowrap;"> 
+				<strong>1.</strong> 가이드라인을 반드시 숙지하신 후 꼼꼼히 제작해주시기 바랍니다.<br/>
+				<strong>2.</strong> 페이지별로 제작을 완료하신 후 저장 버튼을 눌러주세요.<br/>
+				<strong>3.</strong> 모든 페이지를 저장하신 후 제출 버튼을 누르셔야 작업이 완료됩니다.
+				</div>
+			<div class="ui yellow button" id="ui-tooltip-content">
+			<div class="ui custom popup transition hidden" id="guide2"
+			style="padding:24px;max-width:500px;margin-top:25px;margin-right:-740px;
+			text-align:left;font-size:11pt;font-family:'S-Core Dream 5';white-space:nowrap;">
+				<strong>1-1.</strong> 오탈자를 확인해 주세요.<br/>
+				<strong>1-2.</strong> 정확한 띄어쓰기를 해 주세요.<br/>
+				<strong>1-3.</strong> 한자, 영어만 입력하고 나머지 외국어는 생략해 주세요.<br/>
+				<strong>1-4.</strong> 로마 숫자, 라틴 문자(불어, 독어 등), 그리스 문자는 편집도구를 통해 입력해 주세요.<br/>
+				<strong>2-1.</strong> 표 편집도구를 통해 표를 삽입하고 제목을 입력해 주세요.<br/>
+				<strong>2-2.</strong> 이미지 편집도구를 통해 이미지를 자른 후 객관적인 설명과 텍스트를 입력해 주세요.<br/>
+				<strong>2-3.</strong> 특수문자 편집도구를 통해 특수기호를 입력해 주세요.<br/>
+				<strong>2-4.</strong> 쉼표와 소괄호는 특수기호를 사용하지 마시고 키보드 상에서 입력해 주세요.<br/>
+				<strong>2-5.</strong> 사칙연산 입력시, 키보드 상에 하이픈과 알파벳 X를 쓰지 마시고 특수기호 편집도구를 통해 입력해 주세요.<br/>
+				<strong>3-1.</strong> 목차로 추정되는 각 장의 제목과 소제목에 목차 지정을 해주세요.<br/>
+				<strong>4-1.</strong> 빈 줄은 띄지 말아주세요. 단 인용 문구 같은 경우는 띄어 주세요.<br/>
+				<strong>4-2.</strong> 이미지와 같이 줄 바꾸지 말고 문단 형식대로 줄 바꿔서 사용해 주세요.<br/>
+				<strong>4-3.</strong> 문단 시작 시 들여쓰기를 하지 마세요.<br/>
+				<strong>4-1.</strong> 빈 줄은 띄지 말아주세요. 단 인용 문구 같은 경우는 띄어 주세요.<br/>
+				<strong>5-1.</strong> 주석번호는 해당 문자 뒤에 (주 해당숫자) 형식으로 변경해주세요. 예)(주1), (주*) <br/>
+				<strong>5-2.</strong> 주석내용은 본문의 내용과 구분되도록 한 줄을 띄어준 후, 주 1:, 주 *: 형식으로 입력해 주세요.<br/>
+				<strong>6-1.</strong> 오른쪽 텍스트 페이지 상단, 또는 하단에 나와 있는 쪽번호 및 제목을 삭제해 주세요. <br/>
+				<strong>6-2.</strong> 페이지 번호가 2개 있는 경우에는, 뒤에 있는 더 큰 숫자 하나만 페이지 입력란에 입력해 주세요.<br/>
+				<strong>6-3.</strong> 페이지 넘버 입력칸에는 '원본' 페이지의 번호를 입력해 주세요.<br/></div>제작가이드라인</div> 
+			<script>
+				$('#makeclassid_' + 1189710).click(function(e) {
+					var x = document.getElementById("makeclass");
+					if (x.style.display === "none") {
+						x.style.display = "block";
+					} else {
+						x.style.display = "none";
+					}
 					</script>
-
 				</td>
 			</tr>
 			<tr style="background-color: #f2f2f2">
 				<td width="50%" align="center">
-
 					<div
 						style="width: 100%; height: 565px; overflow: auto; align: center">
 						<img src="/sori/views/bookmaking/images/보건교사안은영표지.jpg" id="inputimg_1189710"
@@ -591,11 +609,9 @@ $(document).ready(function(){
 						오늘의 젊은 작가
 						정세랑 장편소설
 						</textarea>
-
 					<link href="/resources/ckeditor/image-list/css/sample.css"
 						rel="stylesheet" type="text/css"> <script
 						src="/resources/ckeditor/image-list/js/style.js"></script> <!-- 에디터 cdn 링크, 이미지 리스트 css,이미지 표현 js -->
-
 					<div class="window">
 						<ul class="image-list" id="image-list_1189710"
 							style="margin-top: 0px; position: relative;">
@@ -607,10 +623,7 @@ $(document).ready(function(){
 					onclick="javascript:checkpage(1189710)"> 페이지 번호 없음</td>
 			</tr>
 		</table>
-
 	</div>
-
-
 	<script>
 		function noIdTagReset1189710() {
 			var tagmake = document.createElement("div");
@@ -641,77 +654,7 @@ $(document).ready(function(){
 		};
 	</script>
 	<script>
-		var path = location.href.substring(0, location.href.lastIndexOf('/'));
-		path = path.substring(0, path.lastIndexOf('/') + 1);
-		/* CKEDITOR.plugins.addExternal('cwjdsjcsconfineselection', 'http://www.itlo.org/resources/ckeditor/plugins/cwjdsjcsconfineselection/plugin.js'); */
-		CKEDITOR.plugins
-				.addExternal('image2',
-						'http://www.itlo.org/resources/ckeditor/plugins/image2/plugin.js');
-		CKEDITOR.plugins
-				.addExternal('imagecrop',
-						'http://www.itlo.org/resources/ckeditor/plugins/image-crop/plugin.js');
-		CKEDITOR.plugins
-				.addExternal('symbol',
-						'http://www.itlo.org/resources/ckeditor/plugins/symbol/plugin.js');
-		CKEDITOR.plugins
-				.addExternal('table2',
-						'http://www.itlo.org/resources/ckeditor/plugins/table/plugin.js');
-		CKEDITOR.plugins
-				.addExternal('zoom',
-						'http://www.itlo.org/resources/ckeditor/plugins/zoom/plugin.js');
-		/*  CKEDITOR.plugins.addExternal('about', 'http://www.itlo.org/resources/ckeditor/plugins/about/plugin.js'); */
-		CKEDITOR.plugins
-				.addExternal('justify',
-						'http://www.itlo.org/resources/ckeditor/plugins/justify/plugin.js');
-		CKEDITOR.plugins
-				.addExternal('simplebox',
-						'http://www.itlo.org/resources/ckeditor/plugins/title/title.js');
-		CKEDITOR.plugins
-				.addExternal('tableresize',
-						'http://www.itlo.org/resources/ckeditor/plugins/tableresize/plugin.js');
-		/*        CKEDITOR.plugins.addExternal('dragresize', 'http://www.itlo.org/resources/ckeditor/plugins/dragresize/plugin.js'); */
-		CKEDITOR.plugins
-				.addExternal('stylesheetparser',
-						'http://www.itlo.org/resources/ckeditor/plugins/stylesheetparser/plugin.js');
-		CKEDITOR.plugins
-				.addExternal('format2',
-						'http://www.itlo.org/resources/ckeditor/plugins/format/plugin.js');
-		/*    CKEDITOR.plugins.addExternal('divarea', 'http://www.itlo.org/resources/ckeditor/plugins/divarea/plugin.js'); */
-		/*     CKEDITOR.plugins.addExternal('imagerotate', 'http://www.itlo.org/resources/ckeditor/plugins/imagerotate-master/plugin.js'); */
-		/*  CKEDITOR.plugins.addExternal('onchange', 'http://www.itlo.org/resources/ckeditor/plugins/onchange/plugin.js'); */
-
-		CKEDITOR.plugins
-				.addExternal('removebtn',
-						'http://www.itlo.org/resources/ckeditor/plugins/removebtn/plugin.js');
-
-		CKEDITOR.on('dialogDefinition', function(ev) {
-			var dialogName = ev.data.name;
-			var dialogDefinition = ev.data.definition;
-
-			if (dialogName == 'table' || dialogName == 'tableProperties') {
-				var info = dialogDefinition.getContents('info');
-				//	info.remove('txtCellSpace');
-
-				info.get('txtCellSpace')['default'] = '2';
-				info.get('txtWidth')['default'] = '50%'; // Set default width to 100%
-				//  info.get( 'txtBorder' )[ 'default' ] = '2';        //  Set default border to 0
-				info.get('txtCellSpace').style = 'display: none';
-				info.get('txtCellPad').style = 'display: none';
-				info.get('txtSummary').style = 'display: none';
-				info.get('selHeaders').style = 'display: none';
-				info.get('txtBorder').style = 'display: none';
-				info.get('cmbAlign').style = 'display: none';
-				info.get('txtHeight').style = 'display: none';
-				info.get('txtWidth').style = 'display: none';
-				info.get('txtCaption')['label'] = '표제';
-				//	https://stackoverflow.com/questions/24405171/hide-or-remove-the-urltext-field-on-the-ckeditor-upload-dialogue
-
-			}
-		});
-		var imgSelect = false;
-
-		CKEDITOR
-				.replace(
+		CKEDITOR.replace(
 						'1189710',
 						{
 							'height' : '390',
@@ -974,8 +917,7 @@ $(document).ready(function(){
 						// Add js and css urls to cropper.js
 						});
 	</script>
-
-
+	
 	<div class="ui bottom attached tab segment" id="yetabs-2" data-tab="yetabs-2">
 		<table class="table">
 			<tr style="background-color: #f2f2f2">
@@ -4952,8 +4894,6 @@ $(document).ready(function(){
 						// Add js and css urls to cropper.js
 						});
 	</script>
-
-
 	<div class="ui bottom attached tab segment" id="yetabs-10" data-tab="yetabs-10">
 		<table class="table">
 			<tr style="background-color: #f2f2f2">
@@ -5014,16 +4954,12 @@ $(document).ready(function(){
 			</div> 
 					 <script>
 						$('#makeclassid_' + 1189719).click(function(e) {
-
 							var x = document.getElementById("makeclass");
-
 							if (x.style.display === "none") {
-
 								x.style.display = "block";
 							} else {
 								x.style.display = "none";
 							}
-
 						});
 					</script>
 
@@ -5031,33 +4967,18 @@ $(document).ready(function(){
 			</tr>
 			<tr style="background-color: #f2f2f2">
 				<td width="50%" align="center">
-
-					<div
-						style="width: 100%; height: 565px; overflow: auto; align: center">
-
-
+					<div style="width: 100%; height: 565px; overflow: auto; align: center">
 						<img src="/sori/views/bookmaking/images/보건교사안은영10.jpg" id="inputimg_1189719"
 							width=" 495px" style="padding: 0px;" alt="" />
-
-
 					</div>
 				</td>
 				<td align="center" width="50%"><textarea id="1189719"
 						name="1189719" cols="66" rows="6"
 						style="overflow: visible; width: 430px; height: 465px; font-size: 14px;">
-						선생님이 뭔가 만류하는 듯 웅얼거렸지만, 가시인지 뭔지를 뺏으니 됐다. 오늘은 선생님들이 유난히 귀찮았다.
-						
+						선생님이 뭔가 만류하는 듯 웅얼거렸지만, 가시인지 뭔지를 뺏으니 됐다. 오늘은 선생님들이 유난히 귀찮았다.				
 						보건교사 안은영은, 자잘한 일은 있어도 큰 사고는 일어나지 않는 학교생활에 만족하고 있었다. 오늘까지는.
 						은영은 남학생의 목에서 뽑아낸, 동물성 물질을 내려다보며 작게 끓는 소리를 냈다. 욕이 되다 만 소리였다. 학교라서 매번 삼킬 뿐, 사실 은영은 욕을 잘하는 편이었다. 학생이 놀랄까 봐 차마 말을 못했지만 그것은 어떤 알 수 없는 동물의 손톱, 비늘, 뼈 중 하나인 것 같았다. 그 애의 목덜미에 핏줄을 타고 독기가 번져 가는 걸 보았는데 얼마나 나쁜게 들러붙은 건지는 짐작하기 어려웠다. 소독이라도 했어야 하나. 하지만 어차피 알코올로 어떻게 할 수 있는 종류는 아니었다. 본체를 잡을 때까지 괜찮아야 할 텐데, 은영은 걱정스러웠다. 본체로부터 멀리 보내는 게 나을 것 같았다.
 						</textarea>
-
-
-
-
-
-
-
-
 
 					<link href="/resources/ckeditor/image-list/css/sample.css"
 						rel="stylesheet" type="text/css"> <script
@@ -5076,20 +4997,6 @@ $(document).ready(function(){
 		</table>
 
 	</div>
-	<!-- http://alik.info/p/155 -->
-
-
-
-
-
-
-
-
-
-	<!--  -->
-
-
-
 	<script>
 		function noIdTagReset1189719() {
 			var tagmake = document.createElement("div");
@@ -5453,8 +5360,6 @@ $(document).ready(function(){
 						// Add js and css urls to cropper.js
 						});
 	</script>
-
-
 </div>
 <div class="makeclass-box" id="makeclass"
 	style="display: none; z-index: 50000; position: absolute; height: 70%; width: 800px; top: 120px; right: 10px;">
@@ -5468,7 +5373,6 @@ $(document).ready(function(){
 <div id="up" style="font-size: 14px; font-weight: bold;" align="right">
 	<a href="#" style="color: black;"><i class="arrow alternate circle up icon"></i>위로가기</a>
 </div>
-<footer>
-</footer>
+<br><br><br>
 </body>
 </html>

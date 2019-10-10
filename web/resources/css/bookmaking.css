@@ -91,21 +91,26 @@
 
 #ye-bookinfo {
 	float: left;
-	margin-top: -20px;
+	margin-top: -10px;
 	margin-left: 20px;
 }
 
 .ye-make-button {
 	position: relative;
-	bottom: -350px;
+	bottom: -90px;
 	margin-right: 80px;
 }
 
 .ye-book-count {
 	position: relative;
-	bottom: -410px;
-	left: 200px;
-	align: right;
+	bottom: -130px;
+	left: 215px;	
+}
+
+.ye-book-count .statistic{
+	position: relative;
+	left: 10px;
+	bottom: 15px;
 }
 
 .ye-book-count img {
@@ -113,7 +118,49 @@
 	height: 15%;
 	position: relative;
 	bottom: 30px;
+	left:10px;
 }
+
+:root {
+  --size: 300px;
+  --bord: 50px;
+}
+
+.chart {
+  width: var(--size);
+  height: var(--size);
+  margin: -1em auto;
+  border-radius: 60%;
+  background-image: conic-gradient(#ffa500 var(--value), lightgrey var(--value));
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--bord));
+  height: calc(100% - var(--bord));
+  background: white;
+  border-radius: inherit;
+}
+
+#donut {
+  position: relative;
+  z-index: 1;
+  font-size: 4em;
+}
+
+.x-60 {
+  --value: 2%;
+}
+
+
 /*************/
 /* guide.css */
 /*************/
@@ -149,27 +196,31 @@
 	margin-right: 80px;
 }
 
-/*************/
+/**********************/
 /* bookmakingmain.css */
-/*************/
+/**********************/
 .ui.yellow.button{
+	font-family:'S-Core Dream 6';
+	color:white;
+}
+
+.ui.button{
 	font-family:'S-Core Dream 6';
 }
 
-.ui.button a{
-	color: black;
-}
-
-#ui-tooltip-content {
-    /* tooltip content */
-    white-space: pre-line;
-}
-
-#guidetooltip{
-	margin-top:-5px;
-	padding-top:-5px;
+#guide1{
+	background-color: transparent !important;
 }
 
 #up{
 	font-size: 14px;
 }
+
+/**********************/
+/* bookmakinglist.css */
+/**********************/
+
+
+/**********************/
+/* bookwaitnglist.css */
+/**********************/

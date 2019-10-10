@@ -38,8 +38,8 @@ footer{
      width: 100%;
      height: 50px;
      background-color: #fbbe09;
+     overflow:hidden;"
 }
-
 
 
 </style>
@@ -50,7 +50,7 @@ footer{
 	<a href="/sori/index.jsp"><img src="/sori/resources/images/logo.png" width="100px" height="100px" align="left"></a>
   </div>
   <a class="item" href="/sori/views/sorijieumIntro.jsp">사이트 소개</a>
-  <a class="item">도서 검색</a>
+  <a class="item" href="/sori/views/booksearch/bookSearchList.jsp">도서 검색</a>
   <a class="item" href="/sori/views/bookmaking/bmmain.jsp">도서 제작</a>
   <a class="item" href="/sori/views/boardwishbook/wishbookListView.jsp">도서 신청</a>
   <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
@@ -61,9 +61,9 @@ footer{
 <body>
 
 <footer style="text-align: center;">
-		<p>
-          &copy; Copyrights <strong>sorijieum</strong>.<br>
-          All Rights Reserved Created with sorijieum</a>
+		<p style="margin-top:1%;">
+          &copy; Copyrights <strong>sorijieum</strong>.
+          All Rights Reserved Created with sorijieum
         </p>
 </footer>
 </body>

@@ -47,83 +47,75 @@
 	background-image: url('/sori/resources/images/mainbook.jpg') ;
 	background-repeat:no-repeat;
 	background-position:center;
-	background-origin:content-box;
-	background-size: 100%;
-	 
-	opacity: 0.5;
+	background-size: 100%; 
+	opacity: 1;
 	}
 
-.ui.button {
-	font-family: 'S-CoreDream-7ExtraBold'
+.ui.cards {
+	font-family: 'S-CoreDream-7ExtraBold';
 }
 
+.ui.cards .card:hover{
+	background: #fbc21b; 
+	background-opacity:0.4;
+}
 </style>
 </head>
 <body>
 <div class="wrapper">
 <header>
 <br>
-<div align="right">
-   <button class="ui brown button" onclick="location.href='/sori/views/member/memberLoginView.jsp'">로그인</button>
-   <button class="ui brown button" onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'">회원가입</button> &nbsp;
+<div align="right" style="margin-top:10px;">
+   <button class="ui yellow button" onclick="location.href='/sori/views/member/memberLoginView.jsp'" style="font-family:'S-Core Dream 6';">로그인</button>
+   <button class="ui yellow button" onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'" style="font-family:'S-Core Dream 6';">회원가입</button> &nbsp;
 </div>
 </header>
-
-<div align="center">
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">홈</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">사이트소개</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서검색</button><br>
-<button class="ui yellow button" onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서제작</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">도서신청</button>
-<button class="ui yellow button" style="width: 400px; height: 300px; margin: 10px 10px; font-size: 50px; font-weight:600;font-family: 'S-Core Dream 6';">게시판</button>
-
-
-<div class="ui four doubling cards" style="margin:5% 5% 0 5%">
+<br>
+<div class="ui four cards" style="margin:10px 5% 0 5%">
   <div class="card">
     <div class="image">
-      <img src="/sori/resources/images/logo.png">
+    	<img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png">
     </div>
   </div>
   <div class="card">
-    <div>
-      	사이트소개
+    <div class="image">
+      	<img onclick="location.href='/sori/views/sorijieumIntro.jsp'" src="/sori/resources/images/사이트소개.png">
     </div>
   </div>
   <div class="card">
-    <div>
-      도서검색
+    <div class="image">
+      	<img onclick="location.href='/sori/views/booksearch/bookSearchList.jsp'" src="/sori/resources/images/도서검색.png">
     </div>
   </div>
   <div class="card">
-    <div>
-      도서제작
+    <div class="image">
+      	<img onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" src="/sori/resources/images/도서제작.png">
     </div>
   </div>  
 </div>
-<div class="ui four doubling cards" style="margin:0 5% 0 5%">
+<div class="ui four cards" style="margin:0 5% 0 5%">
   <div class="card">
-    <div>
-     도서신청
+    <div class="image">
+      	<img onclick="location.href='/sori/views/boardwishbook/wishbookListView.jsp'" src="/sori/resources/images/도서신청.png">
     </div>
   </div>
   <div class="card">
-    <div>
-      	공지사항
+    <div class="image">
+      	<img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png">
     </div>
   </div>
   <div class="card">
-    <div>
-      Q & A
+    <div class="image">
+      	<img onclick="location.href='/sori/views/boardqna/qnaListView.jsp'" src="/sori/resources/images/QNA.png">
     </div>
   </div>
   <div class="card">
-    <div>
-      도서제작
+    <div class="image">
+      	<img onclick="location.href='/sori/views/boardfaq/faqListView.jsp'" src="/sori/resources/images/FAQ.png">
     </div>
   </div>  
 </div>
-
+<br><br>
 </div>
-
 </body>
 </html>
