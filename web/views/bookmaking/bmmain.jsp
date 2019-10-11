@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="book.model.vo.Book" %>
+<%@ page import="book.model.vo.Book, java.util.ArrayList" %>
 <%
 	Book book = (Book)request.getAttribute("book");
+	ArrayList<Book> makelist = (ArrayList<Book>)request.getAttribute("makelist");
+	ArrayList<Book> waitlist = (ArrayList<Book>)request.getAttribute("waitlist");	
 %>
 <!DOCTYPE html>
 <html>
@@ -41,14 +43,11 @@
   				더보기 <i class="angle right icon" style="width:10%;height:10%"></i>
 				</button>
 				<br><br>
+			<% for(int i = 0; i < waitlist.size(); i++){ %>
 			<div class="ye-bw">
-			<a href="/sori/views/bookmaking/bookinfo.jsp"> 
-			<img id="연금술사" src="/sori/resources/book_images/201909261556.jpg"></a>
+			<a href=""><img src="/sori/resources/book_images/<%= waitlist.get(i).getBookRimg() %>"></a>
 			</div>
-			<div class="ye-bw">
-			<a href="/sori/views/bookmaking/bookinfo.jsp"> 
-			<img id="보건교사 안은영" src="/sori/resources/book_images/201908191645.jpg"></a>
-			</div>
+			<% } %>
 			</div><!-- bookwait -->
 			<br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<div class="ye-bookmaking">

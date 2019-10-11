@@ -94,4 +94,38 @@ public class BookDao {
 		public ArrayList<Book> selectDoneBook(Connection conn){
 			return null;
 		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		// bookSearch 도서전체목록
+		public ArrayList<Book> selectAll2(Connection conn){
+	        ArrayList<Book> list = new ArrayList<Book>();
+			
+			
+			return list;
+		}
+		
+		// bookSearch 도서한권만 검색
+		
+		public Book selectOne(Connection conn, int bookcode) {
+			Book book = null;
+			
+			return book;
+		}
+		
+		// bookSearch 도서제목명 검색
+		public ArrayList<Book> selectTitleSearch(Connection conn, String keyword){
+			ArrayList<Book> list = new ArrayList<Book>();
+			
+			return list;
+		}
+		
+		//도서저자명검색
+		
+		public ArrayList<Book> selectAuthorSearch(Connection conn, String keyword){
+			ArrayList<Book> list = new ArrayList<Book>();
+			
+			return list;
+		}
 }

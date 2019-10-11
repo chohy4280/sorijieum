@@ -1,5 +1,6 @@
 package member.model.service;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import static common.JDBCTemplate.*;
@@ -7,10 +8,12 @@ import static common.JDBCTemplate.*;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
 
+import static common.JDBCTemplate.*;
+
 public class MemberService {
 	
 	//의존성 주입
-	public MemberDao mDao = new MemberDao();
+	public MemberDao mdao = new MemberDao();
 	
 	public MemberService() {}
 	
@@ -22,6 +25,14 @@ public class MemberService {
 	//가입
 	public int insertMember(Member member) {
 		return 0;
+	}
+	
+	//가입시 아이디 중복체크
+	public int checkUserId(String userid) {
+		Connection conn = getConnection();
+		int result = mdao.checkUserId(conn,userid);
+		
+		return result;
 	}
 	
 	//탈퇴

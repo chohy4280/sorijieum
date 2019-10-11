@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import book.model.vo.Book;
 
@@ -14,21 +13,22 @@ public class BookMakingDao {
 
 	public BookMakingDao() {}
 	
-	public ArrayList<Book> selectMakingBook(Connection conn, String bookcode){
-		ArrayList<Book> list = new ArrayList<Book>();
+	
+	public ArrayList<Book> selectWaitingBook(Connection conn){
+		ArrayList<Book> waitlist = new ArrayList<Book>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book where bookcode = ?";
+		String query = "select * from book where makestatus = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "WAIT");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				Book book = new Book();
-				book.setBookCode(rset.getString("bookcode"));
-				book.setBookOimg(rset.getString("bookoimg"));
-				list.add(book);
+				book.setBookRimg(rset.getString("bookrimg"));
+				waitlist.add(book);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -36,7 +36,33 @@ public class BookMakingDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return waitlist;
+	}
+	
+	public ArrayList<Book> selectMakingBook(Connection conn){
+		ArrayList<Book> makelist = new ArrayList<Book>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book where makestatus = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "MAKE");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Book book = new Book();
+				book.setBookRimg(rset.getString("bookrimg"));
+				makelist.add(book);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return makelist;
 	}
 	
 	public int getListCountWaiting(Connection conn){
