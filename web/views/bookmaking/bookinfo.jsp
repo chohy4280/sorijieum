@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="book.model.vo.Book, bookmaking.model.vo.BookMaking" %>
+<%
+	Book book = (Book)request.getAttribute("book");
+	BookMaking bm = (BookMaking)request.getAttribute("bm");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,35 +36,34 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
   <div class="fields">
     <div class="field">
       <label>도서명</label>
-      <input type="text" readonly value="보건교사 안은영" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= book.getBookTitle() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>저자명</label>
-      <input type="text" readonly value="정세랑" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= book.getAuthor() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>출판사</label>
-      <input type="text" readonly value="민음사" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= book.getPublisher() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
     <label>책 소개</label>
     <textarea rows="2" cols="55" style="font-size:0.9rem;" readonly>
-    소설은 제목 그대로 사립 M고의 보건교사 '안은영'을 주인공으로 한다. 특별한 것 없는 직업과 평범한 이름이지만 안은영은 보통의 보건교사가 아니다. 복 중의 복, 일복 하나는 타고난 그녀는 직업으로 '보건교사' 역할에 열심히면서 동시에 자신만이 볼 수 있는 것들을 처치하고 쫓아내며, 또는 위로하는 '퇴마사'의 운명에도 충실히 복무한다. 
-    여기에 사립 M고의 한문교사이자 학교 설립자의 후손인 홍인표에게 흐르는 거대한 에너지는 안은영의 활약을 돕는 필수적인 영양제 역할을 한다. 에너지(기)를 보충하기 위해, 학교의 평화를 지키기 위해 둘은 내 거 아닌 내 것 같은 사이가 되어 힘을 합한다. 
-    둘 앞에 나타나는 기이한 괴물들, 학생들에게 보이는 미스터리한 현상들, 학교 곳곳에 숨은 괴상한 힘들…… 사립 M고에는 어떤 비밀이 있는 것일까. 무엇보다 안은영과 홍인표의 썸(some)은 어떻게 마무리될까?</textarea>
+    <%= book.getBookInfo() %>
+    </textarea>
   </div>
 </div>
 <!-- progress bar  -->
   <div class="progress" align="left" style="width:429px;height:20px;margin-left:-5px;">
   	<div class="progress-bar" role="progressbar" 
   	style="font-size:8pt; background: orange; width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="280">1%</div>
-	</div>
+	</div><strong>제작상태 :</strong> 1/280 진행중
   </div> <!-- bookinfo 끝 -->
 </div> <!-- content 끝 -->
 &nbsp;&nbsp;&nbsp;

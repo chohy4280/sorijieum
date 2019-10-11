@@ -6,7 +6,7 @@ public class BookMaking implements java.io.Serializable{
 
 	private static final long serialVersionUID = 222L;
 	
-	private int bookcode;
+	private String bookcode;
 	private java.sql.Date makestart;
 	private java.sql.Date makefin;
 	private String bookotxt;
@@ -15,7 +15,7 @@ public class BookMaking implements java.io.Serializable{
 	
 	public BookMaking() {}
 
-	public BookMaking(int bookcode, Date makestart, Date makefin, String bookotxt, String bookrtxt, int makepage) {
+	public BookMaking(String bookcode, Date makestart, Date makefin, String bookotxt, String bookrtxt, int makepage) {
 		super();
 		this.bookcode = bookcode;
 		this.makestart = makestart;
@@ -25,11 +25,11 @@ public class BookMaking implements java.io.Serializable{
 		this.makepage = makepage;
 	}
 
-	public int getBookcode() {
+	public String getBookcode() {
 		return bookcode;
 	}
 
-	public void setBookcode(int bookcode) {
+	public void setBookcode(String bookcode) {
 		this.bookcode = bookcode;
 	}
 

@@ -1,7 +1,10 @@
 package bookmaking.model.service;
 
-import java.util.ArrayList;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.getConnection;
 
+import java.sql.Connection;
+import java.util.ArrayList;
 import book.model.vo.Book;
 import bookmaking.model.dao.BookMakingDao;
 
@@ -12,8 +15,11 @@ public class BookMakingService {
 	public BookMakingService() {}
 	
 	//도서제작 메인 리스트
-	public ArrayList<Book> selectMakingBook(int bookcode){
-		return null;
+	public ArrayList<Book> selectMakingBook(String bookcode){
+		Connection conn = getConnection();
+		ArrayList<Book> list = bmDao.selectMakingBook(conn, bookcode);
+		close(conn);
+		return list;
 	}
 	
 	//제작해야할 도서 게시물 카운트
@@ -22,7 +28,7 @@ public class BookMakingService {
 	}
 	
 	//제작해야할 도서 리스트
-	public ArrayList<Book> selectWaitingBookList(int bookcode){
+	public ArrayList<Book> selectWaitingBookList(String bookcode){
 		return null;
 	}
 	
@@ -32,13 +38,16 @@ public class BookMakingService {
 	}
 	
 	//제작중 도서 리스트
-	public ArrayList<Book> selectMakingBookList(int bookcode){
+	public ArrayList<Book> selectMakingBookList(String bookcode){
 		return null;
 	}
 	
 	//도서 상세정보 
-	public Book selectMakingBookOne(int bookcode){
-		return null;
+	public Book selectMakingBookOne(String bookcode){
+		Connection conn = getConnection();
+		Book book = bmDao.selectMakingBookOne(conn, bookcode);
+		close(conn);
+		return book;
 	}
 	
 	//불러올 pdf 리스트

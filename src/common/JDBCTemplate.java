@@ -1,9 +1,9 @@
 package common;
 
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
@@ -12,15 +12,15 @@ public class JDBCTemplate {
 	public static Connection getConnection() {
 		Properties prop = new Properties();
 		Connection conn = null;
+		
 		try {
-			prop.load(new FileReader("properties/dbserver.properties"));
-			String url = prop.getProperty("url");
-			String user = prop.getProperty("user");
-			String passwd = prop.getProperty("passwd");
-			Class.forName(prop.getProperty("driver"));
-			conn = DriverManager.getConnection(url, user, passwd);
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection
+					("jdbc:oracle:thin:@127.0.0.1:1521:xe", "SORI", "JIEUM");
 			conn.setAutoCommit(false);
-		} catch (Exception e) {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return conn;
