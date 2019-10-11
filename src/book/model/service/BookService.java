@@ -66,4 +66,61 @@ public class BookService {
 	public ArrayList<Book> selectDoneBook(){
 		return null;
 	}
-}
+	////////////////////////////////////////////////////////////////////
+	
+	//도서검색 전체목록
+		 public ArrayList<Book> selectAll2(){
+		      Connection conn = getConnection();
+		      ArrayList<Book> list = bDao.selectAll2(conn);
+		      close(conn);
+		      return list;
+		   }
+		 //도서검색 한개만 불러오기
+		 public Book selectOne(int bookcode) {
+			 Connection conn = getConnection();
+			 Book book = bDao.selectOne(conn,bookcode);
+			 close(conn);
+			 return book;
+		 }
+		 //도서검색 제목명 검색
+		 public ArrayList<Book> selectTitleSearch(String keyword){
+		      Connection conn = getConnection();
+		      ArrayList<Book> list = bDao.selectTitleSearch(conn, keyword);
+		      close(conn);
+		      return list;
+		   }
+	             //도서검색 저자명 검색
+		 public ArrayList<Book> selectAuthorSearch(String keyword){
+		      Connection conn = getConnection();
+		      ArrayList<Book> list = bDao.selectTitleSearch(conn, keyword);
+		      close(conn);
+		      return list;
+		   }
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
