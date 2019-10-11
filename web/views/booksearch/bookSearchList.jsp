@@ -16,18 +16,17 @@
 <body>
 <section class="my-section">
 
-<div class="ui right action left icon input">
-  <i class="search icon"></i>
-  <input type="text" placeholder="Search">
-  <div class="ui basic floating dropdown button">
-    <div class="text">This Page</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      <div class="item">This Organization</div>
-      <div class="item">Entire Site</div>
-    </div>
-  </div>
+<div class="ui action input">
+  <input type="text" placeholder="Search...">
+  <select class="ui compact selection dropdown">
+    <option value="title">제목명</option>
+    <option value="writer">저자명</option>
+  </select>
+  <div class="ui button">Search</div>
 </div>
+<script>
+$('.ui.dropdown').dropdown({direction:'auto'});
+</script>
 <table class= "yu-top5"align = "center" width="500" height= "30" border= "3">
 <tr>
 <td><a href="/sori/views/booksearch/bookSearchDetail.jsp">해리포터</td></a> 
@@ -56,6 +55,7 @@
     <td><a href="/sori/views/booksearch/bookSearchDetail.jsp"><img src="/sori/resources/images/harry2.jpg"></a><br>&nbsp;해리포터</td>
     <td><a href="/sori/views/booksearch/bookSearchDetail.jsp"><img src="/sori/resources/images/harry2.jpg"></a><br>&nbsp;해리포터</td>
 </tr>
+
 </table>
 <center>
 			<div class="yu-ui buttons">
@@ -69,6 +69,7 @@
 		  </button>
 		</div>
 		</center>
+<br>
 
  </section>
 </body>
