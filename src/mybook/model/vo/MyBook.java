@@ -7,14 +7,14 @@ public class MyBook implements java.io.Serializable{
 	private static final long serialVersionUID = 777L;
 	
 	private String userId;
-	private int bookCode;
+	private String bookCode;
 	private int readPage;
 	private java.sql.Date readSdate;
 	private java.sql.Date readRdate;
 	
 	public MyBook() {}
 
-	public MyBook(String userId, int bookCode, int readPage, Date readSdate, Date readRdate) {
+	public MyBook(String userId, String bookCode, int readPage, Date readSdate, Date readRdate) {
 		super();
 		this.userId = userId;
 		this.bookCode = bookCode;
@@ -31,11 +31,11 @@ public class MyBook implements java.io.Serializable{
 		this.userId = userId;
 	}
 
-	public int getBookCode() {
+	public String getBookCode() {
 		return bookCode;
 	}
 
-	public void setBookCode(int bookCode) {
+	public void setBookCode(String bookCode) {
 		this.bookCode = bookCode;
 	}
 
