@@ -5,12 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 public class JDBCTemplate {
 	
 	public static Connection getConnection() {
-		Properties prop = new Properties();
 		Connection conn = null;
 		
 		try {
@@ -23,7 +21,9 @@ public class JDBCTemplate {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return conn;
+
 	}
 	
 	public static void close(Connection conn) {

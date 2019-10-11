@@ -42,7 +42,7 @@
 		<li style="font-weight: 600; font-size:12pt"><a href="/sori/views/admin/adminIndexView.jsp"><i class="home icon"></i>MAIN</a></li>
 		<li style="font-weight: 600; font-size:12pt"><a href="javascript:;"><i class="book icon"></i>도서</a></li>
 			<ul>
-				<li><a href="/sori/views/admin/adminBookListView.jsp">　도서목록</a></li>
+				<li><a href="/sori/blist.ad">　도서목록</a></li>
 				<li><a href="/sori/views/admin/adminAddBookForm.jsp">　도서추가</a></li>
 				<li><a href="/sori/views/admin/adminWishBookListView.jsp">　도서신청내역</a></li>
 			</ul>
