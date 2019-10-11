@@ -14,12 +14,20 @@ public class BookMakingService {
 	
 	public BookMakingService() {}
 	
-	//도서제작 메인 리스트
-	public ArrayList<Book> selectMakingBook(String bookcode){
+	//도서제작 메인 제작해야할 도서 리스트
+	public ArrayList<Book> selectWaitingBook(){
 		Connection conn = getConnection();
-		ArrayList<Book> list = bmDao.selectMakingBook(conn, bookcode);
+		ArrayList<Book> waitlist = bmDao.selectWaitingBook(conn);
 		close(conn);
-		return list;
+		return waitlist;
+	}
+	
+	//도서제작 메인 제작중 도서 리스트
+	public ArrayList<Book> selectMakingBook(){
+		Connection conn = getConnection();
+		ArrayList<Book> makelist = bmDao.selectMakingBook(conn);
+		close(conn);
+		return makelist;
 	}
 	
 	//제작해야할 도서 게시물 카운트
@@ -28,7 +36,7 @@ public class BookMakingService {
 	}
 	
 	//제작해야할 도서 리스트
-	public ArrayList<Book> selectWaitingBookList(String bookcode){
+	public ArrayList<Book> selectWaitingBookList(String bookcode, String makestatus){
 		return null;
 	}
 	
@@ -38,7 +46,7 @@ public class BookMakingService {
 	}
 	
 	//제작중 도서 리스트
-	public ArrayList<Book> selectMakingBookList(String bookcode){
+	public ArrayList<Book> selectMakingBookList(String bookcode, String makestatus){
 		return null;
 	}
 	

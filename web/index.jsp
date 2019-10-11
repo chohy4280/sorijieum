@@ -89,7 +89,7 @@
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" src="/sori/resources/images/도서제작.png">
+      	<img onclick="location.href='/sori/bmkmain'" src="/sori/resources/images/도서제작.png">
     </div>
   </div>  
 </div>
