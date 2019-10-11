@@ -20,6 +20,7 @@ public class WishBook implements java.io.Serializable {
 	private String wishTop;
 	private String wishbookAdmin;
 	
+	
 
 	public WishBook() {}
 
