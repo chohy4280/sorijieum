@@ -32,16 +32,18 @@ public class BookMakingMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bookcode = request.getParameter("bookcode");
-		
-		ArrayList<Book> list = new BookMakingService().selectMakingBook(bookcode);
+		ArrayList<Book> makelist = new BookMakingService().selectMakingBook();
+		ArrayList<Book> waitlist = new BookMakingService().selectWaitingBook();
 		RequestDispatcher view = null;
-		if(list.size() > 0) {
+		if(makelist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bmmain.jsp");
-			request.setAttribute("list", list);
+			request.setAttribute("makelist", makelist);
+		}else if(waitlist.size() > 0) {
+			view = request.getRequestDispatcher("views/bookmaking/bmmain.jsp");
+			request.setAttribute("waitlist", waitlist);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "공지사항 조회 실패!");
+			request.setAttribute("message", "도서제작 접근 실패!");
 		}
 		view.forward(request, response);
 	}
