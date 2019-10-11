@@ -1,9 +1,8 @@
 package member.model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+
 import java.util.ArrayList;
 
 import member.model.vo.Member;
@@ -122,6 +121,11 @@ public class MemberDao {
 	
 	// 관리자 전체회원 조회용
 	public ArrayList<Member> selectAll(Connection conn){
+		ArrayList<Member> list = new ArrayList<Member>();
+		Statement stmt = null;
+		ResultSet rset= null;
+		
+		String query = "select * from member where member";
 		return null;
 	}
 	

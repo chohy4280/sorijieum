@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ include file="/../inc/adminTemplate.jsp" %>
+<%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook" %>
+<%@ include file="/../inc/adminTemplate.jsp" %>
+<%
+	ArrayList<WishBook> list = (ArrayList<WishBook>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +50,7 @@
 			<!-- 회원검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">1</span> 건</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 건</div>
 				<br>
 				<table class="listTable">
 					<tr>
@@ -59,15 +63,18 @@
 						<th width="15%">처리자</th>
 					</tr>
 					<tr>
-						<td>1</td>
-						<td>2019/10/03</td>
-						<td><a href="/sori/views/admin/adminWishBookDetailView.jsp">보건교사 안은영</a></td>
-						<td>박공주(user003)</td>
-						<td>승인</td>
-						<td>2019/10/04</td>
-						<td>최민영(admin01)</td>
-
+						<% for(int i = list.size()-1; i >= 0 ; i--) {
+							WishBook wb = list.get(i);
+						%>
+						<td><%= i+1 %></td>
+						<td><%= wb.getWishDate() %></td>
+						<td><a href="/sori/views/admin/adminWishBookDetailView.jsp"><%= wb.getWishBookTitle() %></a></td>
+						<td><%= wb.getWishWriter() %></td>
+						<td><%= wb.getWishStatus() %></td>
+						<td><%= wb.getWishStatusDate() %></td>
+						<td><%= wb.getWishbookAdmin() %></td>
 					</tr>
+					<% } %>
 				</table>
 				
 				</div>

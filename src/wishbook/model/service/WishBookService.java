@@ -1,8 +1,7 @@
 package wishbook.model.service;
 
-import static common.JDBCTemplate.*;
-
 import java.sql.*;
+import static common.JDBCTemplate.*;
 import java.util.ArrayList;
 
 import wishbook.model.dao.WishBookDao;
@@ -19,7 +18,10 @@ public class WishBookService {
 	//관리자 서비스****************************************
 	// 관리자 신청도서(대기) 조회용
 	public ArrayList<WishBook> selectWaitWishBook(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<WishBook> list = wbDao.selectAll(conn);
+		close(conn);
+		return list;
 	}
 	
 	

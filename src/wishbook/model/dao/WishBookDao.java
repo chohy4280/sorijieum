@@ -13,7 +13,38 @@ public class WishBookDao {
 	// 관리자용 dao************************************************************************************************
 	// 관리자 신청도서(대기) 조회용
 	public ArrayList<WishBook> selectWaitWishBook(Connection conn){
-		return null;
+		ArrayList<WishBook> list = new ArrayList<WishBook>();
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from wishbook";
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				WishBook wb = new WishBook();
+				
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishWriter(rset.getString("wishwriter"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setWishStatusDate(rset.getDate("wishstatusdate"));
+				wb.setWishbookAdmin(rset.getString("wishbookadmin"));
+				
+				list.add(wb);
+				
+				System.out.println(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return list;
 	}
 	
 	
