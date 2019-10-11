@@ -5,11 +5,11 @@ public class LikeBook implements java.io.Serializable{
 	private static final long serialVersionUID = 444L;
 	
 	private String userId;
-	private int bookCode;
+	private String bookCode;
 
 	public LikeBook() {}
 
-	public LikeBook(String userId, int bookCode) {
+	public LikeBook(String userId, String bookCode) {
 		super();
 		this.userId = userId;
 		this.bookCode = bookCode;
@@ -23,11 +23,11 @@ public class LikeBook implements java.io.Serializable{
 		this.userId = userId;
 	}
 
-	public int getBookCode() {
+	public String getBookCode() {
 		return bookCode;
 	}
 
-	public void setBookCode(int bookCode) {
+	public void setBookCode(String bookCode) {
 		this.bookCode = bookCode;
 	}
 

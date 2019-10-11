@@ -7,12 +7,12 @@ public class MakeBook implements java.io.Serializable{
 	private static final long serialVersionUID = 555L;
 	
 	private String userId;
-	private int bookCode;
+	private String bookCode;
 	private java.sql.Date makeDate;
 
 	public MakeBook() {}
 
-	public MakeBook(String userId, int bookCode, Date makeDate) {
+	public MakeBook(String userId, String bookCode, Date makeDate) {
 		super();
 		this.userId = userId;
 		this.bookCode = bookCode;
@@ -27,11 +27,11 @@ public class MakeBook implements java.io.Serializable{
 		this.userId = userId;
 	}
 
-	public int getBookCode() {
+	public String getBookCode() {
 		return bookCode;
 	}
 
-	public void setBookCode(int bookCode) {
+	public void setBookCode(String bookCode) {
 		this.bookCode = bookCode;
 	}
 
