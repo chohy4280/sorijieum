@@ -9,7 +9,7 @@ public class WishBook implements java.io.Serializable {
 	private int wishNo;
 	private String wishWriter;
 	private String wishBookTitle;
-	private String wishBookWriter;
+	private String wishBookAuthor;
 	private String wishPublisher;
 	private java.sql.Date wishPublishDate;
 	private java.sql.Date wishDate;
@@ -18,19 +18,20 @@ public class WishBook implements java.io.Serializable {
 	private String rjctReason;
 	private java.sql.Date wishStatusDate;
 	private String wishTop;
+	private String wishbookAdmin;
 	
 
 	public WishBook() {}
 
 
-	public WishBook(int wishNo, String wishWriter, String wishBookTitle, String wishBookWriter, String wishPublisher,
+	public WishBook(int wishNo, String wishWriter, String wishBookTitle, String wishBookAuthor, String wishPublisher,
 			Date wishPublishDate, Date wishDate, int wishViews, String wishStatus, String rjctReason,
-			Date wishStatusDate, String wishTop) {
+			Date wishStatusDate, String wishTop, String wishbookAdmin) {
 		super();
 		this.wishNo = wishNo;
 		this.wishWriter = wishWriter;
 		this.wishBookTitle = wishBookTitle;
-		this.wishBookWriter = wishBookWriter;
+		this.wishBookAuthor = wishBookAuthor;
 		this.wishPublisher = wishPublisher;
 		this.wishPublishDate = wishPublishDate;
 		this.wishDate = wishDate;
@@ -39,6 +40,7 @@ public class WishBook implements java.io.Serializable {
 		this.rjctReason = rjctReason;
 		this.wishStatusDate = wishStatusDate;
 		this.wishTop = wishTop;
+		this.wishbookAdmin = wishbookAdmin;
 	}
 
 
@@ -72,13 +74,13 @@ public class WishBook implements java.io.Serializable {
 	}
 
 
-	public String getWishBookWriter() {
-		return wishBookWriter;
+	public String getWishBookAuthor() {
+		return wishBookAuthor;
 	}
 
 
-	public void setWishBookWriter(String wishBookWriter) {
-		this.wishBookWriter = wishBookWriter;
+	public void setWishBookAuthor(String wishBookAuthor) {
+		this.wishBookAuthor = wishBookAuthor;
 	}
 
 
@@ -160,14 +162,23 @@ public class WishBook implements java.io.Serializable {
 	public void setWishTop(String wishTop) {
 		this.wishTop = wishTop;
 	}
+	
+	public String getWishbookAdmin() {
+		return wishbookAdmin;
+	}
+
+
+	public void setWishbookAdmin(String wishbookAdmin) {
+		this.wishbookAdmin = wishbookAdmin;
+	}
 
 
 	@Override
 	public String toString() {
 		return "WishBook [wishNo=" + wishNo + ", wishWriter=" + wishWriter + ", wishBookTitle=" + wishBookTitle
-				+ ", wishBookWriter=" + wishBookWriter + ", wishPublisher=" + wishPublisher + ", wishPublishDate="
+				+ ", wishBookWriter=" + wishBookAuthor + ", wishPublisher=" + wishPublisher + ", wishPublishDate="
 				+ wishPublishDate + ", wishDate=" + wishDate + ", wishViews=" + wishViews + ", wishStatus=" + wishStatus
-				+ ", rjctReason=" + rjctReason + ", wishStatusDate=" + wishStatusDate + ", wishTop=" + wishTop + "]";
+				+ ", rjctReason=" + rjctReason + ", wishStatusDate=" + wishStatusDate + ", wishTop=" + wishTop + ", wishbookAdmin=" + wishbookAdmin +"]";
 	}
 	
 	

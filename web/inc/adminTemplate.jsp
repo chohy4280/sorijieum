@@ -44,11 +44,11 @@
 			<ul>
 				<li><a href="/sori/blist.ad">　도서목록</a></li>
 				<li><a href="/sori/views/admin/adminAddBookForm.jsp">　도서추가</a></li>
-				<li><a href="/sori/views/admin/adminWishBookListView.jsp">　도서신청내역</a></li>
+				<li><a href="/sori/wblist.ad">　도서신청내역</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="user icon"></i>사용자</a></li>
 			<ul>
-				<li><a href="/sori/views/admin/adminUserListView.jsp">　회원정보조회</a></li>
+				<li><a href="/sori/mlist.ad">　회원정보조회</a></li>
 				<li><a href="/sori/views/admin/adminQuitUserView.jsp">　회원탈퇴관리</a></li>
 				<li><a href="/sori/views/admin/adminListView.jsp">　권한관리</a></li>
 			</ul>

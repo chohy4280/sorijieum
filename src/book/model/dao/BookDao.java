@@ -17,7 +17,6 @@ public class BookDao {
 			ArrayList<Book> list = new ArrayList<Book>();
 			Statement stmt = null;
 			ResultSet rset = null;
-			
 			String query = "select * from book";
 			try {
 				stmt = conn.createStatement();

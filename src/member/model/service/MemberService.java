@@ -1,6 +1,8 @@
 package member.model.service;
 
+import java.sql.*;
 import java.util.ArrayList;
+import static common.JDBCTemplate.*;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
@@ -89,7 +91,10 @@ public class MemberService {
 	
 	// 관리자 전체회원 조회용
 	public ArrayList<Member> selectAll(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Member> list = mDao.selectAll(conn);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 회원 검색용
