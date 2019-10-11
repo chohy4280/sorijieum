@@ -1,10 +1,13 @@
 package member.model.dao;
 
-import java.sql.*;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import member.model.vo.Member;
+import static common.JDBCTemplate.*;
 
 public class MemberDao {
 	
@@ -18,6 +21,36 @@ public class MemberDao {
 	//가입
 	public int insertMember(Connection conn, Member member) {
 		return 0;
+	}
+	
+	//아이디 중복체크
+	public int checkUserId(Connection conn, String userid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) 
+				result = 1;
+			else
+				result = 0;
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	//탈퇴
@@ -141,5 +174,7 @@ public class MemberDao {
 		public ArrayList<Member> selectAllMaker(Connection conn){
 			return null;
 		}
+
+		
 
 }
