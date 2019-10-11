@@ -2,11 +2,13 @@ package adminmemo.model.service;
 
 import java.util.ArrayList;
 
+import adminmemo.model.dao.AdminMemoDao;
 import adminmemo.model.vo.AdminMemo;
+
 
 public class AdminMemoService {
 	//의존성 주입
-	public AdminMemo admemoDao = new AdminMemo();
+	public AdminMemoDao admemoDao = new AdminMemoDao();
 	
 	public AdminMemoService() {}
 	

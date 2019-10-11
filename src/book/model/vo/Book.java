@@ -6,7 +6,7 @@ public class Book implements java.io.Serializable {
 
 	private static final long serialVersionUID = 222L;
 	
-	private int bookCode;
+	private String bookCode;
 	private String bookTitle;
 	private String author;
 	private String publisher;
@@ -25,7 +25,7 @@ public class Book implements java.io.Serializable {
 	public Book() {}
 
 
-	public Book(int bookCode, String bookTitle, String author, String publisher, Date publishDate, int bookPage,
+	public Book(String bookCode, String bookTitle, String author, String publisher, Date publishDate, int bookPage,
 			String bookInfo, String bookOimg, String bookRimg, String bookOpdf, String bookRpdf, Date bookDate,
 			int bookViews, String makeStatus) {
 		super();
@@ -46,12 +46,12 @@ public class Book implements java.io.Serializable {
 	}
 
 
-	public int getBookCode() {
+	public String getBookCode() {
 		return bookCode;
 	}
 
 
-	public void setBookCode(int bookCode) {
+	public void setBookCode(String bookCode) {
 		this.bookCode = bookCode;
 	}
 

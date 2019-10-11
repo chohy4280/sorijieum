@@ -1,6 +1,6 @@
 package book.model.service;
 
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +19,10 @@ public class BookService {
 	//관리자 서비스****************************************
 	// 관리자 도서 전체 목록 조회용
 	public ArrayList<Book> selectAll(){	
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Book> list = bDao.selectAll(conn);
+		close(conn);
+		return list;
 	}
 	
 	

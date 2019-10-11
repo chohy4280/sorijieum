@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ include file="/../inc/adminTemplate.jsp" %>
+<%@ page import = "java.util.ArrayList, book.model.vo.Book" %>
+<%@ include file="/../inc/adminTemplate.jsp" %>
+<%
+	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,31 +52,40 @@
 			<!-- 도서검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">30</span> 권</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 권</div>
 				<br>
 				<table class="listTable">
 					<tr>
 						<th width="2%"><input type="checkbox" id="allCheck" onclick="allChk(this);"/></th>
 						<th width="5%">No</th>
-						<th width="13%">도서코드</th>
-						<th width="20%">도서명</th>
+						<th width="10%">도서코드</th>
+						<th width="25%">도서명</th>
 						<th width="12%">저자명</th>
-						<th width="15%">출판사명</th>
+						<th width="13%">출판사명</th>
 						<th width="8%">도서상태</th>
 						<th width="10%">도서등록일</th>
-						<th width="10%">최종수정일</th>
 					</tr>
+					<% for(int i = list.size()-1; i >= 0 ; i--) {
+						Book b = list.get(i);
+					%>
 					<tr>
-						<td><input type="checkbox" name="RowCheck" value="getBookcode"></td>
-						<td>1</td>
-						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp">8982934052</a></td>
-						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp">여행의 이유</a></td>
-						<td>김영하</td>
-						<td>문학동네</td>
-						<td>제작완료</td>
-						<td>2019/04/27</td>
-						<td>2019/04/30</td>
+						<td><input type="checkbox" name="RowCheck" value="<%= b.getBookCode() %>"></td>
+						<td><%= i+1 %> </td>
+						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp"><%= b.getBookCode() %></a></td>
+						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp"><%= b.getBookTitle() %></a></td>
+						<td><%= b.getAuthor() %></td>
+						<td><%= b.getPublisher() %></td>
+						<td><% if(b.getMakeStatus().equals("WAIT")) {%>
+							제작대기
+							<% }else if(b.getMakeStatus().equals("MAKE")) {%>
+							제작중
+							<% }else{%>
+							제작완료
+							<% } %>
+						</td>
+						<td><%= b.getBookDate() %></td>
 					</tr>
+					<% } %>
 				</table>
 				
 				<br>
