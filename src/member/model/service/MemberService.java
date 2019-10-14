@@ -13,13 +13,16 @@ import static common.JDBCTemplate.*;
 public class MemberService {
 	
 	//의존성 주입
-	public MemberDao mdao = new MemberDao();
+	public MemberDao mDao = new MemberDao();
 	
 	public MemberService() {}
 	
 	//로그인
-	public Member loginCheck(String userId, String userPwd) {
-		return null;
+	public Member loginCheck(String userid, String userpwd) {
+		Connection conn = getConnection();
+		Member member = mDao.loginCheck(conn, userid, userpwd);
+		close(conn);
+		return member;
 	}
 	
 	//가입
@@ -30,8 +33,8 @@ public class MemberService {
 	//가입시 아이디 중복체크
 	public int checkUserId(String userid) {
 		Connection conn = getConnection();
-		int result = mdao.checkUserId(conn,userid);
-		
+		int result = mDao.checkUserId(conn,userid);
+		close(conn);
 		return result;
 	}
 	

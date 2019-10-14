@@ -13,37 +13,22 @@
 <script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
-function validation(){
-	return true;	//전송함
-}
-
-
 
 $(function(){
 	$("#checkid").click(function(){
-		//jQuery.get() or jQuery.ajax() 두가지중 선택 사용
-		//$.get() 사용시
-	/* 	$.get("test2.do",{userid:$("#userid").val(), userpwd:$("#userpwd").val()},
-				function(data){
-					$("#p2").text(data);
-		}); */
-		
-		//$.ajax()사용시
 		$.ajax({
-			url:"enroll",
+			url:"/sori/idcheck",
 			type:"post",
 			data:{userid:$("#userid").val()},
 			success: function(result){  // 만약 성공적으로 수행되었다면 result로 값반환
 
-				if(result == 0)  // 중복되는 아이디가 없을 때
-					alert("사용가능");
-				else			// 이미 사용중인 아이디일 때
-					alert("이미 있는 아이디");
+				alert(result);
 
 			} 
-		});	//$.ajax()
+		});	
+		return false;
 	});
-});	//document ready
+});	
 </script>
 
 </head>
@@ -61,17 +46,26 @@ $(function(){
 	<td><label>&nbsp;&nbsp;<input type="radio" name="typenumber" value="1" checked> 이용자</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<label><input type="radio" name="typenumber" value="2" required> 제작자</label></td>
 </tr>
+
 <tr><th>이 름</th><td>&nbsp;&nbsp;<input type="text" name="username"></td></tr>	<!-- required : 필수 입력항목 -->
+
 <tr><th>아이디</th><td>&nbsp;&nbsp;<input type="text" name="userid" id="userid" > &nbsp;
-					<button id="checkid">중복체크</button></td></tr>
+				  <button id="checkid">중복체크</button></td></tr>
+					
 <tr><th>암 호</th><td>&nbsp;&nbsp;<input type="password" name="userpwd" id="userpwd" ></td></tr>
+
 <tr><th>암호확인</th><td>&nbsp;&nbsp;<input type="password" id="userpwd2" ></td></tr>
+
 <tr><th>전화번호</th><td>&nbsp;&nbsp;<input type="tel" name="phone" maxlength="11" placeholder="ex)01012345678" ></td></tr>
+
 <tr><th>이메일</th><td>&nbsp;&nbsp;<input type="email" name="email" placeholder="ex)abc@example.com" ></td></tr>
+
 <tr><th>성 별</th>
 <td>&nbsp;&nbsp;<label><input type="radio" name="gender" value="M" > 남자</label> &nbsp;
 				<label><input type="radio" name="gender" value="F" > 여자</label></td></tr>
+				
 <tr><th>생년월일</th><td>&nbsp;&nbsp;<input type="date" name="birth" ></td></tr>
+
 <tr><th colspan="2">
 <a href="/sori/views/member/memberLoginView.jsp"><input type="button" value="가입하기"></a> &nbsp;
 <input type="reset" value="다시작성"> &nbsp;
