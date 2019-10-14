@@ -10,7 +10,29 @@
 <head>
 <meta charset="UTF-8">
 <title>도서 목록</title>
- 
+<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+// 체크박스 전체선택 및 전체해제
+$("#allCheck").click(function(){
+	if($(this).is(":checked")){
+		$(".chk").prop("checked", true);
+	} else {
+		$(".chk").prop("checked", false);
+	}
+});
+
+// 한개 체크박스 선택 해제시 전체선텍 체크박스도 해제
+$(".chk").click(function(){
+	if($("input[name='RowCheck']:checked").length == <%= list.size() %>){
+		$("#allCheck").prop("checked", true);
+	}else{
+		$("#allCheck").prop("checked", false);
+	}	
+});
+
+}); // document.ready...
+</script>
 
 <!-- Content 시작! -->
 <section class="contentsection">
@@ -56,7 +78,7 @@
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="2%"><input type="checkbox" id="allCheck" onclick="allChk(this);"/></th>
+						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
 						<th width="5%">No</th>
 						<th width="10%">도서코드</th>
 						<th width="25%">도서명</th>
@@ -69,7 +91,7 @@
 						Book b = list.get(i);
 					%>
 					<tr>
-						<td><input type="checkbox" name="RowCheck" value="<%= b.getBookCode() %>"></td>
+						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= b.getBookCode() %>"></td>
 						<td><%= i+1 %> </td>
 						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp"><%= b.getBookCode() %></a></td>
 						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp"><%= b.getBookTitle() %></a></td>
@@ -89,7 +111,8 @@
 				</table>
 				
 				<br>
-				<div><button class="mini ui black button" onclick="">삭제</button></div>
+				<div><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddBookForm.jsp'">추가</button>&nbsp;
+					<button class="mini ui black button" onclick="fn_bookDelete();">삭제</button></div>
 				</div>
 			</div>
 				

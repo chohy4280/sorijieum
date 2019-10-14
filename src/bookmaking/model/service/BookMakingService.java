@@ -2,10 +2,9 @@ package bookmaking.model.service;
 
 import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.getConnection;
-
 import java.sql.Connection;
 import java.util.ArrayList;
-import book.model.vo.Book;
+import book.model.vo.BookMakingProgress;
 import bookmaking.model.dao.BookMakingDao;
 
 public class BookMakingService {
@@ -14,58 +13,73 @@ public class BookMakingService {
 	
 	public BookMakingService() {}
 	
-	//도서제작 메인 제작해야할 도서 리스트
-	public ArrayList<Book> selectWaitingBook(){
+	//도서제작상세정보용 전체리스트
+	public ArrayList<BookMakingProgress> selectWaitMakeBookAll(){
 		Connection conn = getConnection();
-		ArrayList<Book> waitlist = bmDao.selectWaitingBook(conn);
+		ArrayList<BookMakingProgress> list = bmDao.selectWaitMakeBookAll(conn);
+		close(conn);
+		return list;
+	}
+	
+	//도서제작 메인 제작해야할 도서 리스트
+	public ArrayList<BookMakingProgress> selectWaitingBook(){
+		Connection conn = getConnection();
+		ArrayList<BookMakingProgress> waitlist = bmDao.selectWaitingBook(conn);
 		close(conn);
 		return waitlist;
 	}
 	
 	//도서제작 메인 제작중 도서 리스트
-	public ArrayList<Book> selectMakingBook(){
+	public ArrayList<BookMakingProgress> selectMakingBook(){
 		Connection conn = getConnection();
-		ArrayList<Book> makelist = bmDao.selectMakingBook(conn);
+		ArrayList<BookMakingProgress> makelist = bmDao.selectMakingBook(conn);
 		close(conn);
 		return makelist;
 	}
 	
 	//제작해야할 도서 게시물 카운트
 	public int getListCountWaiting(){
-		return 0;
+		Connection conn = getConnection();
+		int wcount = bmDao.getListCountWaiting(conn);
+		close(conn);
+		return wcount;
 	}
 	
 	//제작해야할 도서 리스트
-	public ArrayList<Book> selectWaitingBookList(String bookcode, String makestatus){
-		return null;
+	public ArrayList<BookMakingProgress> selectWaitingBookList(int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<BookMakingProgress> list = bmDao.selectWaitingBookList(conn, startRow, endRow);
+		close(conn);
+		return list;
 	}
 	
 	//제작중 도서 게시물 카운트
 	public int getListCountMaking(){
-		return 0;
+		Connection conn = getConnection();
+		int mcount = bmDao.getListCountMaking(conn);
+		close(conn);
+		return mcount;
 	}
 	
-	//제작중 도서 리스트
-	public ArrayList<Book> selectMakingBookList(String bookcode, String makestatus){
-		return null;
+	//제작중 도서 리스트용, 제작중 도서 카운트용
+	public ArrayList<BookMakingProgress> selectMakingBookList(int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<BookMakingProgress> list = bmDao.selectMakingBookList(conn, startRow, endRow);
+		close(conn);
+		return list;
 	}
 	
 	//도서 상세정보 
-	public Book selectMakingBookOne(String bookcode){
+	public BookMakingProgress selectMakingBookOne(String bookrimg){
 		Connection conn = getConnection();
-		Book book = bmDao.selectMakingBookOne(conn, bookcode);
+		BookMakingProgress book = bmDao.selectMakingBookOne(conn, bookrimg);
 		close(conn);
 		return book;
 	}
 	
 	//불러올 pdf 리스트
-	public ArrayList<Book> selectBookPdfLoad(){
+	public ArrayList<BookMakingProgress> selectBookPdfLoad(){
 		return null;
-	}
-	
-	//제작완료 도서  카운트
-	public int getMakedBookCount(){
-		return 0;
 	}
 	
 }

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="book.model.vo.Book, bookmaking.model.vo.BookMaking" %>
+<%@ page import="java.util.ArrayList, book.model.vo.BookMakingProgress" %>
 <%
-	Book book = (Book)request.getAttribute("book");
-	BookMaking bm = (BookMaking)request.getAttribute("bm");
+	BookMakingProgress bmp = (BookMakingProgress)request.getAttribute("bmp");
+	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
+	ArrayList<BookMakingProgress> list = (ArrayList<BookMakingProgress>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,9 @@
 <%@ include file="/../inc/top.jsp"%>
 <%@ include file="/../inc/cdn.jsp"%>
 <script type="text/javascript">
-
+$(function(){
+	
+});
 </script>
 </head>
 <br>
@@ -29,57 +32,74 @@ style="width:150px; height:10px;font-size:10pt;text-align:center;font-family:'S-
 padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</button></div><br><br>
 <!-- 도서 이미지 -->
 <div class="ye-bookimg" style="float:left;">
-<img id="보건교사 안은영" src="/sori/resources/book_images/201908191645.jpg">
+<img id="보건교사 안은영" src="/sori/resources/book_images/<%= bmp.getBookRimg() %>">
+</div>
+<div class="ui compact message" style="position:relative;bottom:-350px;left:-715px;text-align:center;width:18%;height:5.5%">
+  제작은  10페이지씩입니다!
 </div>
 <!-- bookinfo 시작 -->
 <div class="ui form" id="ye-bookinfo">
   <div class="fields">
     <div class="field">
       <label>도서명</label>
-      <input type="text" readonly value="<%= book.getBookTitle() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= bmp.getBookTitle() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>저자명</label>
-      <input type="text" readonly value="<%= book.getAuthor() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= bmp.getAuthor() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>출판사</label>
-      <input type="text" readonly value="<%= book.getPublisher() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= bmp.getPublisher() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
     <label>책 소개</label>
-    <textarea rows="2" cols="55" style="font-size:0.9rem;" readonly>
-    <%= book.getBookInfo() %>
+    <textarea rows="3" cols="55" style="font-size:0.9rem;" readonly>
+    <%= bmp.getBookInfo() %>
     </textarea>
   </div>
 </div>
 <!-- progress bar  -->
+<%  int make = (bmp.getMakepage());
+	int book = (bmp.getBookPage());
+	int pwidth = (int)(((double)make / book) * 100);%>
   <div class="progress" align="left" style="width:429px;height:20px;margin-left:-5px;">
   	<div class="progress-bar" role="progressbar" 
-  	style="font-size:8pt; background: orange; width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="280">1%</div>
-	</div><strong>제작상태 :</strong> 1/280 진행중
+  	style="font-size:8pt; background: orange; width:<%= pwidth %>%;" aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= bmp.getBookPage() %>"><%= pwidth %>%</div>
+	</div><strong>제작상태 :</strong> <%= bmp.getMakepage() %>/<%= bmp.getBookPage() %>쪽 진행중
   </div> <!-- bookinfo 끝 -->
-</div> <!-- content 끝 -->
-&nbsp;&nbsp;&nbsp;
-<!-- process donut -->
-<div class="chart x-60">
-  <p id="donut">1%</p>
-</div>
+</div>  <!-- content 끝 -->
 
+<!-- process donut -->
+<% for(int i = 0; i < list.size(); i++){ 
+	int makep = (list.get(i).getMakepage());
+	int bookp = (list.get(i).getBookPage());
+	int value = (int)(((double)makep / bookp) * 100);
+	if(list.get(i).getMakepage() != 0 && list.get(i).getBookTitle().equals(bmp.getBookTitle())){
+	%>
+<div class="chart x-60" style="--value:<%= value %>%;">
+  <p id="donut" style="color:#ffa500;"><%= value %>%</p>
+</div>
+<%  }else if(list.get(i).getMakepage() == 0 && list.get(i).getBookTitle().equals(bmp.getBookTitle())){ %>
+<div class="chart x-60" style="--value:<%= value %>%;">
+  <p id="donut" style="color:lightgrey;"><%= value %>%</p>
+</div>
+<%  } } %>
+<!-- process donut 끝 -->
 <div class="ye-make-button" align="right">
 <button onclick="location.href='/sori/views/bookmaking/bookmakingmain.jsp'" class="big ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
-</div><br>
+</div><br><br><br><br><br>
 <!-- book count -->
 <div class="ye-book-count">
 <div class="orange ui statistic">
     <div class="value" style="font-family:'S-Core Dream 7'">
-      2
+      <%= makelist.size() %>
     </div>
     <div class="label" style="font-family:'S-Core Dream 6'">
       	우리가 함께 제작한 책
@@ -88,5 +108,5 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
   <img src="/sori/views/bookmaking/images/books.png">
 </div><!-- book count 끝 -->
 </body>
-<br><br><br><br><br><br><br><br>
+<br><br><br><br>
 </html>

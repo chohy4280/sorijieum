@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, quit.model.vo.Quit" %>
  <%@ include file="/../inc/adminTemplate.jsp" %>
+
+<%
+	ArrayList<Quit> list = (ArrayList<Quit>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,24 +54,30 @@
 			<!-- 회원검색 결과 리스트 시작! -->
 			<div class="listBoxBG" style="height: 1500px; margin-top:90px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">5</span> 명</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 명</div>
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="2%"><input type="checkbox" id="allCheck" onclick="allChk(this);"/></th>
-						<th width="10%">아이디</th>
-						<th width="13%">탈퇴유형</th>
-						<th width="15%">탈퇴사유</th>
-						<th width="10%">회원탈퇴일</th>
+						<th width="15%">아이디</th>
+						<th width="15%">탈퇴유형</th>
+						<th width="55%">탈퇴사유</th>
+						<th width="15%">회원탈퇴일</th>
 					</tr>
+					<% for(int i = 0 ; i < list.size() ; i++){
+						Quit q = list.get(i);
+						%>
 					<tr>
-						<td><input type="checkbox" name="RowCheck" value="getBookcode"></td>
-						<td>user02</td>
-						<td>일반탈퇴</td>
-						<td>기타</td>
-						<td>2019/05/02</td>
-
+						<td><%= q.getUserId() %></td>
+						<td><% if(q.getQuitType().equals("F")) { %>
+							강제탈퇴
+							<% } else { %>
+							일반탈퇴
+							<% } %>
+						</td>
+						<td><%= q.getQuitReason() %></td>
+						<td><%= q.getQuitDate() %></td>
 					</tr>
+					<% } %>
 				</table>
 				
 				<br>
