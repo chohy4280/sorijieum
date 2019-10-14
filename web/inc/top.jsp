@@ -51,7 +51,7 @@ footer{
   </div>
   <a class="item" href="/sori/views/sorijieumIntro.jsp">사이트 소개</a>
   <a class="item" href="/sori/views/booksearch/bookSearchList.jsp">도서 검색</a>
-  <a class="item" href="/sori/views/bookmaking/bmmain.jsp">도서 제작</a>
+  <a class="item" href="/sori/bmkmain">도서 제작</a>
   <a class="item" href="/sori/views/boardwishbook/wishbookListView.jsp">도서 신청</a>
   <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
   <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>

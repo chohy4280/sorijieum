@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, book.model.vo.BookMakingProgress" %>
+<%
+	BookMakingProgress bmp = (BookMakingProgress)request.getAttribute("bmp");
+	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
+	ArrayList<BookMakingProgress> waitlist = (ArrayList<BookMakingProgress>)request.getAttribute("waitlist");
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,24 +40,44 @@
 		<div class="ye-book">
 			<div class="ye-bookwait">
 			<a style="font-weight: bold;">제작중인 도서</a><br><br>
+			<% for(int i = 0; i < waitlist.size(); i++){ %>
 			<div class="ye-bw">
 			<a href="/sori/views/bookmaking/bookinfo.jsp"> 
-			<img id="연금술사" src="/sori/resources/book_images/201909261556.jpg"></a>
+			<img src="/sori/resources/book_images/<%= waitlist.get(i).getBookRimg() %>"></a>
 			</div>
-			<div class="ye-bw">
-			<a href="/sori/views/bookmaking/bookinfo.jsp"> 
-			<img id="보건교사 안은영" src="/sori/resources/book_images/201908191645.jpg"></a>
-			</div>
-				</div>
-				
+			<% } %>
+				</div>				
 		</div><!-- bookwait -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
-	<!-- book count -->
+	<br>
+<!-- 페이징 -->
+<div id="pagebox" align="center">
+	<a href="/sori/bwlist?page=1"><i class="angle double left icon"></i></a>&nbsp;
+<% if((beginPage - 10) < 1){ %>
+	<a href="/sori/bwlist?page=1"><i class="angle left icon"></i></a>
+<% }else{ %>
+	<a href="/sori/bwlist?page=<%= beginPage - 10 %>"><i class="angle left icon"></i></a>
+<% } %>&nbsp;
+<% for(int p = beginPage; p <= endPage; p++){ 
+		if(p == currentPage){
+%>
+	<a href="/sori/bwlist?page=<%= p %>"><font color="skyblue"><b>[<%= p %>]</b></font></a>
+<% }else{ %>
+	<a href="/sori/bwlist?page=<%= p %>"><font color="skyblue"><b><%= p %></b></font></a>
+<% }} %>&nbsp;
+<% if((endPage +  10) < maxPage){ %>
+	<a href="/sori/bwlist?page=<%= maxPage %>"><i class="angle right icon"></i></a>
+<% }else{ %>
+	<a href="/sori/bwlist?page=<%= endPage + 10 %>"><i class="angle right icon"></i></a>
+<% } %>&nbsp;
+<a href="/sori/bwlist?page=<%= maxPage %>"><i class="angle double right icon"></i></a>&nbsp;
+</div><!-- 페이징 -->
+<!-- book count -->
 <div class="ye-book-count" style="float:right;bottom:-200px;left: 500px;align:right;padding:50px;">
 <div class="orange ui statistic" >
     <div class="value" style="font-family:'S-Core Dream 7'">
-      2
+      <%= makelist.size() %>
     </div>
     <div class="label" style="font-family:'S-Core Dream 6'">
       	우리가 함께 제작한 책

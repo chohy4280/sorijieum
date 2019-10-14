@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, book.model.vo.BookMakingProgress" %>
+<%
+	BookMakingProgress bmp = (BookMakingProgress)request.getAttribute("bmp");
+	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
+	ArrayList<BookMakingProgress> waitlist = (ArrayList<BookMakingProgress>)request.getAttribute("waitlist");
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,22 +40,17 @@
 		<div class="ye-book">
 			<div class="ye-bookmaking">
 			<a style="font-weight: bold;">제작중인 도서</a><br><br>
+			<% for(int i = 0; i < makelist.size(); i++){ %>
 			<div class="ye-bm">
 			<a href="/sori/views/bookmaking/bookinfo.jsp">
-			<img id="여행의 이유" src="/sori/resources/book_images/201902041944.jpg"></a><br><br>
-			<div class="progress" style="width:150px;height:20px;"> 
+			<img id="여행의 이유" src="/sori/resources/book_images/<%= makelist.get(i).getBookRimg() %>"></a><br><br>
+			<div class="progress" style="width:170px;height:25px;"> 
   			<div class="progress-bar" role="progressbar" 
-  			style="font-size:8pt; background: orange; width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="216">20%</div>
+  			style="font-size:8pt; background: orange; width: 20%;" 
+  			aria-valuenow="20" aria-valuemin="0" aria-valuemax="216">20%</div>
 			</div>
 				</div>
-			<div class="ye-bm">
-			<a href="/sori/views/bookmaking/bookinfo.jsp">
-			<img id="쇼코의 미소" src="/sori/resources/book_images/201811241328.jpg"></a><br><br>
-			<div class="progress" style="width:150px;height:20px;">
-  			<div class="progress-bar" role="progressbar" 
-  			style="font-size:8pt; background: orange; width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="296">25%</div>
-			</div>
-				</div>
+				<% } %>
 				
 		</div><!-- bookmaking -->
 		</div> <!-- book끝 -->
@@ -54,7 +59,7 @@
 <div class="ye-book-count" style="float:right;bottom:-160px;left: 500px;align:right;padding:50px;">
 <div class="orange ui statistic" >
     <div class="value" style="font-family:'S-Core Dream 7'">
-      2
+      <%= makelist.size() %>
     </div>
     <div class="label" style="font-family:'S-Core Dream 6'">
       	우리가 함께 제작한 책

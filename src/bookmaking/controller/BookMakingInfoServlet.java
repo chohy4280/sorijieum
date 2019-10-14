@@ -1,6 +1,7 @@
 package bookmaking.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import book.model.vo.Book;
+import book.model.vo.BookMakingProgress;
 import bookmaking.model.service.BookMakingService;
 
 /**
@@ -31,18 +32,23 @@ public class BookMakingInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bookcode = request.getParameter("bookcode");
-		Book book = new BookMakingService().selectMakingBookOne(bookcode);
-		
+		//도서정보 상세보기 처리용 컨트롤러
+		String bookrimg = request.getParameter("bookrimg");
+		BookMakingProgress bmp = new BookMakingService().selectMakingBookOne(bookrimg);
+		ArrayList<BookMakingProgress> makelist = new BookMakingService().selectMakingBook();
+		ArrayList<BookMakingProgress> list = new BookMakingService().selectWaitMakeBookAll();
 		RequestDispatcher view = null;
-		if(book != null) {
+		if(bmp != null && makelist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookinfo.jsp");
-			request.setAttribute("book", book);
+			request.setAttribute("bmp", bmp);
+			request.setAttribute("makelist", makelist);
+			request.setAttribute("list", list);
+			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", bookcode + "번 도서정보 보기 실패!");
-		}
-		view.forward(request, response);	
+			request.setAttribute("message", "도서정보 보기 실패!");
+			view.forward(request, response);
+		}		
 	}
 
 	/**

@@ -103,7 +103,7 @@ public class MemberService {
 	// 관리자 전체회원 조회용
 	public ArrayList<Member> selectAll(){
 		Connection conn = getConnection();
-		ArrayList<Member> list = mDao.selectAll(conn);
+		ArrayList<Member> list = mdao.selectAll(conn);
 		close(conn);
 		return list;
 	}

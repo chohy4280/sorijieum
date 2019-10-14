@@ -6,30 +6,60 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import book.model.vo.Book;
+import book.model.vo.BookMakingProgress;
 
 public class BookMakingDao {
 
 	public BookMakingDao() {}
 	
-	
-	public ArrayList<Book> selectWaitingBook(Connection conn){
-		ArrayList<Book> waitlist = new ArrayList<Book>();
+	public ArrayList<BookMakingProgress> selectWaitMakeBookAll(Connection conn) {
+		ArrayList<BookMakingProgress> list = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
-		String query = "select * from book where makestatus = ?";
-		
+		String query = "select * from book join bookmaking using(bookcode)";
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "WAIT");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				Book book = new Book();
-				book.setBookRimg(rset.getString("bookrimg"));
-				waitlist.add(book);
+				BookMakingProgress bookmp = new BookMakingProgress();
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookCode(rset.getString("bookcode"));
+				bookmp.setBookPage(rset.getInt("bookpage"));
+				bookmp.setMakepage(rset.getInt("makepage"));
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookTitle(rset.getString("booktitle"));
+				bookmp.setAuthor(rset.getString("author"));
+				bookmp.setBookInfo(rset.getString("bookinfo"));
+				bookmp.setPublisher(rset.getString("publisher"));
+				list.add(bookmp);
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<BookMakingProgress> selectWaitingBook(Connection conn){
+		ArrayList<BookMakingProgress> waitlist = new ArrayList<BookMakingProgress>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from book join bookmaking using(bookcode) where makestatus = 'WAIT'";
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				BookMakingProgress bookmp = new BookMakingProgress();
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookCode(rset.getString("bookcode"));
+				waitlist.add(bookmp);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -39,21 +69,23 @@ public class BookMakingDao {
 		return waitlist;
 	}
 	
-	public ArrayList<Book> selectMakingBook(Connection conn){
-		ArrayList<Book> makelist = new ArrayList<Book>();
+	public ArrayList<BookMakingProgress> selectMakingBook(Connection conn){
+		ArrayList<BookMakingProgress> makelist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book where makestatus = ?";
+		String query = "select * from book join bookmaking using(bookcode) where makestatus = 'MAKE'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "MAKE");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				Book book = new Book();
-				book.setBookRimg(rset.getString("bookrimg"));
-				makelist.add(book);
+				BookMakingProgress bookmp = new BookMakingProgress();
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookCode(rset.getString("bookcode"));
+				bookmp.setBookPage(rset.getInt("bookpage"));
+				bookmp.setMakepage(rset.getInt("makepage"));
+				makelist.add(bookmp);
 			}
 			
 		} catch (SQLException e) {
@@ -66,40 +98,130 @@ public class BookMakingDao {
 	}
 	
 	public int getListCountWaiting(Connection conn){
-		return 0;
+		int wcount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select count(*) from book where makestatus = 'WAIT'";
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				wcount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return wcount;
 	}
 	
-	public ArrayList<Book> selectWaitingBookList(Connection conn, String bookcode){
-		return null;
+	public ArrayList<BookMakingProgress> selectWaitingBookList(Connection conn, int startRow, int endRow){
+		ArrayList<BookMakingProgress> wlist = new ArrayList<BookMakingProgress>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG " 
+						+ " FROM (SELECT * FROM BOOK " 
+						+ " WHERE MAKESTATUS = 'WAIT'" 
+						+ "	ORDER BY BOOKDATE ASC)) " 
+						+ "	WHERE RNUM >= ? AND RNUM <= ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				BookMakingProgress bookmp = new BookMakingProgress();
+				bookmp.setBookCode(rset.getString("bookcode"));
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				wlist.add(bookmp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return wlist;
 	}
 	
 	public int getListCountMaking(Connection conn){
-		return 0;
+		int mcount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select count(*) from book where makestatus = 'MAKE'";
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				mcount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return mcount;
 	}
 	
-	public ArrayList<Book> selectMakingBookList(Connection conn, String bookcode){
-		return null;
+	public ArrayList<BookMakingProgress> selectMakingBookList(Connection conn, int startRow, int endRow){
+		ArrayList<BookMakingProgress> mlist = new ArrayList<BookMakingProgress>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG " 
+						+ " FROM (SELECT * FROM BOOK " 
+						+ " WHERE MAKESTATUS = 'MAKE'" 
+						+ "	ORDER BY BOOKDATE ASC)) " 
+						+ "	WHERE RNUM >= ? AND RNUM <= ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				BookMakingProgress bookmp = new BookMakingProgress();
+				bookmp.setBookCode(rset.getString("bookcode"));
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				mlist.add(bookmp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return mlist;
 	}
 	
-	public Book selectMakingBookOne(Connection conn, String bookcode){
-		Book book = null;
+	public BookMakingProgress selectMakingBookOne(Connection conn, String bookrimg){
+		BookMakingProgress bookmp = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book where bookcode = ?";
+		String query = "select * from book join bookmaking using(bookcode) where bookrimg = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bookcode);
+			pstmt.setString(1, bookrimg);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				book = new Book();
-				book.setBookTitle(rset.getString("booktitle"));
-				book.setAuthor(rset.getString("author"));
-				book.setPublisher(rset.getString("publisher"));
-				book.setBookInfo(rset.getString("bookinfo"));
-				book.setBookOimg(rset.getString("bookoimg"));
-				book.setBookRimg(rset.getString("bookrimg"));
+				bookmp = new BookMakingProgress();
+				bookmp.setBookCode(rset.getString("bookcode"));
+				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookTitle(rset.getString("booktitle"));
+				bookmp.setAuthor(rset.getString("author"));
+				bookmp.setBookInfo(rset.getString("bookinfo"));
+				bookmp.setPublisher(rset.getString("publisher"));
+				bookmp.setBookPage(rset.getInt("bookpage"));
+				bookmp.setMakepage(rset.getInt("makepage"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,14 +229,15 @@ public class BookMakingDao {
 			close(rset);
 			close(pstmt);
 		}
-		return book;
+		return bookmp;
 	}
 	
-	public ArrayList<Book> selectBookPdfLoad(Connection conn){
+	public ArrayList<BookMakingProgress> selectBookPdfLoad(Connection conn){
 		return null;
 	}
+
+
 	
-	public int getMakedBookCount(Connection conn){
-		return 0;
-	}
+	
+
 }

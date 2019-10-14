@@ -57,18 +57,18 @@
 }
 
 .ye-book img {
-	width: 150px;
-	height: 210px;
+	width: 170px;
+	height: 240px;
 }
 
 .ye-bw {
 	float: left;
-	margin-right: 30px;
+	margin-right: 35px;
 }
 
 .ye-bm {
 	float: left;
-	margin-right: 30px;
+	margin-right: 35px;
 }
 
 .ye-bm .progress {
@@ -79,32 +79,33 @@
 /* bookinfo.css */
 /****************/
 .ye-bookimg {
-	margin-top: 10px;
+	margin-top: -25px;
 	margin-left: 40px;
 	padding: 5px;
 }
 
 .ye-bookimg img {
-	width: 90%;
-	height: 90%;
+	width: 240px;
+	height: 360px;
 }
 
 #ye-bookinfo {
 	float: left;
-	margin-top: -10px;
-	margin-left: 20px;
+	margin-top: -25px;
+	margin-left: 45px;
 }
 
 .ye-make-button {
 	position: relative;
-	bottom: -90px;
+	bottom: -70px;
 	margin-right: 80px;
 }
 
 .ye-book-count {
 	position: relative;
-	bottom: -130px;
-	left: 215px;	
+	bottom: -30px;
+	left: 1010px;
+	display: auto;
 }
 
 .ye-book-count .statistic{
@@ -122,14 +123,15 @@
 }
 
 :root {
-  --size: 300px;
-  --bord: 50px;
+  --size: 310px;
+  --bord: 55px;
 }
 
 .chart {
   width: var(--size);
   height: var(--size);
   margin: -1em auto;
+  margin-top: -5.5em;
   border-radius: 60%;
   background-image: conic-gradient(#ffa500 var(--value), lightgrey var(--value));
   position: relative;
@@ -153,11 +155,7 @@
 #donut {
   position: relative;
   z-index: 1;
-  font-size: 4em;
-}
-
-.x-60 {
-  --value: 1%;
+  font-size: 4.3em;
 }
 
 
