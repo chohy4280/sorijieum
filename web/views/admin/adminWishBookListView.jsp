@@ -21,13 +21,12 @@
         <br><br>
         
         <!-- 검색창 시작!-->
-            <div class="greyBox" style="height: 200px;">
+            <div class="greyBox" style="height: 180px;">
             <form action="" method="post">
 				<div>
 				<a class="ui large teal label">상세검색</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 150px;">
 						<option value="bookname">도서명</option>
-						<option value="username">신청자명</option>
 						<option value="userid">신청자ID</option>
 					</select>
 					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
@@ -55,24 +54,41 @@
 				<table class="listTable">
 					<tr>
 						<th width="5%">No</th>
-						<th width="15%">신청일</th>
-						<th width="25%">도서명</th>
-						<th width="15%">신청자(ID)</th>
+						<th width="10%">신청자ID</th>
+						<th width="45%">도서명</th>
+						<th width="10%">신청일</th>
 						<th width="10%">처리상태</th>
-						<th width="15%">처리일시</th>
-						<th width="15%">처리자</th>
+						<th width="10%">처리자</th>
+						<th width="10%">처리일시</th>
 					</tr>
 					<tr>
 						<% for(int i = list.size()-1; i >= 0 ; i--) {
 							WishBook wb = list.get(i);
 						%>
 						<td><%= i+1 %></td>
-						<td><%= wb.getWishDate() %></td>
-						<td><a href="/sori/views/admin/adminWishBookDetailView.jsp"><%= wb.getWishBookTitle() %></a></td>
 						<td><%= wb.getWishWriter() %></td>
-						<td><%= wb.getWishStatus() %></td>
-						<td><%= wb.getWishStatusDate() %></td>
-						<td><%= wb.getWishbookAdmin() %></td>
+						<td><a href="/sori/views/admin/adminWishBookDetailView.jsp"><%= wb.getWishBookTitle() %></a></td>
+						<td><%= wb.getWishDate() %></td>
+						<td><% if(wb.getWishStatus().equals("WAIT")) {%>
+							승인대기
+							<% } else if(wb.getWishStatus().equals("DONE")) {%>
+							승인완료
+							<% } else { %>
+							반려
+							<% } %>
+						</td>
+						<td><% if(wb.getWishbookAdmin() == null) { %>
+							-
+							<% } else { %>
+							<%= wb.getWishbookAdmin() %>
+							<% } %>
+						</td>
+						<td><% if(wb.getWishStatusDate() == null) { %>
+							-
+							<% } else { %>
+							<%= wb.getWishStatusDate() %>
+							<% } %>
+						</td>
 					</tr>
 					<% } %>
 				</table>

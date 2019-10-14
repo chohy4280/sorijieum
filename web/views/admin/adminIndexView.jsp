@@ -1,12 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/../inc/adminTemplate.jsp" %>
-<%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook, java.util.Date, java.text.SimpleDateFormat"%>
+<%@ page import="java.util.ArrayList, java.util.Date, java.text.SimpleDateFormat, wishbook.model.vo.WishBook, book.model.vo.Book, qna.model.vo.Qna,
+				member.model.vo.Member, quit.model.vo.Quit "%>
 
 <%
 	Date sysdate = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-	ArrayList<WishBook> wbWaitList = (ArrayList<WishBook>)request.getAttribute("wbWaitList");
+	ArrayList<WishBook> wishbList = (ArrayList<WishBook>)request.getAttribute("wishbList");
+	ArrayList<Book> wbList = (ArrayList<Book>)request.getAttribute("wbList");
+	ArrayList<Book> mbList = (ArrayList<Book>)request.getAttribute("mbList");
+	ArrayList<Book> dbList = (ArrayList<Book>)request.getAttribute("dbList");
+	ArrayList<Qna> newQList = (ArrayList<Qna>)request.getAttribute("newQList");
+	ArrayList<Qna> uaQList = (ArrayList<Qna>)request.getAttribute("uaQList");
+	ArrayList<Member> newUList = (ArrayList<Member>)request.getAttribute("newUList");
+	ArrayList<Member> totalUList = (ArrayList<Member>)request.getAttribute("totalUList");
+	ArrayList<Member> newMList = (ArrayList<Member>)request.getAttribute("newMList");
+	ArrayList<Member> totalMList = (ArrayList<Member>)request.getAttribute("totalMList");
+	ArrayList<Quit> quitUList = (ArrayList<Quit>)request.getAttribute("quitUList");
+	ArrayList<Quit> quitMList = (ArrayList<Quit>)request.getAttribute("quitMList");
 %>
 
 <!DOCTYPE html>
@@ -37,13 +49,15 @@
 	            	</div>
 	            	<div class="data-section2">
 	            		<div>신청도서</div>
+	            		<div>제작대기도서</div>
 	            		<div>제작중도서</div>
 	            		<div>완료도서</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todaybook"><a href=""><%= wbWaitList %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="">8</span></a> 권</div>
-	            		<div><span class="todaybook"><a href="">333</span></a> 권</div>
+	            		<div><span class="todaybook"><a href=""><%= wishbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href=""><%= wbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href=""><%= mbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href=""><%= dbList.size() %></span></a> 권</div>
 	            	</div>
 	            </div>
 	            
@@ -59,8 +73,8 @@
 	            		<div>미답변 문의</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayboard"><a href="">10</span></a> 건</div>
-	            		<div><span class="todayboard"><a href="">6</span></a> 건</div>
+	            		<div><span class="todayboard"><a href=""><%= newQList.size() %></span></a> 건</div>
+	            		<div><span class="todayboard"><a href=""><%= uaQList.size() %></span></a> 건</div>
 	            	</div>
 	            </div>
 	            
@@ -78,9 +92,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser1"><a href="">2</span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="">0</span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="">43</span></a> 명</div>
+	            		<div><span class="todayuser1"><a href=""><%= newUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href=""><%= quitUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href=""><%= totalUList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            
@@ -97,9 +111,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser2"><a href="">50</span></a> 명</div>
-	            		<div><span class="todayuser2"><a href="">4</span></a> 명</div>
-	            		<div><span class="todayuser2"><a href="">254</span></a> 명</div>
+	            		<div><span class="todayuser2"><a href=""><%= newMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href=""><%= quitMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href=""><%= totalMList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            

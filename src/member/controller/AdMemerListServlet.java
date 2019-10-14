@@ -37,7 +37,7 @@ public class AdMemerListServlet extends HttpServlet {
 		
 		RequestDispatcher view = null;
 		if(list.size() > 0) {
-			view = request.getRequestDispatcher("views/admin/adminUserListView.jsp");
+			view = request.getRequestDispatcher("views/admin/adminMemberListView.jsp");
 			request.setAttribute("list", list);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

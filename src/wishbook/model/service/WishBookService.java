@@ -19,15 +19,17 @@ public class WishBookService {
 	// 관리자 신청도서(대기) 조회용
 	public ArrayList<WishBook> selectWaitWishBook(){
 		Connection conn = getConnection();
-		ArrayList<WishBook> list = wbDao.selectAll(conn);
-		close(conn);
-		return list;
+		ArrayList<WishBook> wishbList = wbDao.selectWaitWishBook(conn);
+		return wishbList;
 	}
 	
 	
 	// 관리자 신청도서(전체) 조회용
 	public ArrayList<WishBook> selectAll(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<WishBook> list = wbDao.selectAll(conn);
+		close(conn);
+		return list;
 	}
 	
 	

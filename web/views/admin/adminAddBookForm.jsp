@@ -17,11 +17,11 @@
             <i class="big plus square outline icon"></i><span style="font:black; font-size:17pt; padding:10px;">도서 추가</span>
             <br><br>
             <div class="lightgreyBox" style="height: 700px; align: center;">
-            <form action="" method="post" enctype="">
+            <form action="/sori/binsert.ad" method="post" enctype="multipart/form-data">
             	<table class="addform">
 					<tr>
 						<th width="30%">도서명</th>
-						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode" placeholder="책 제목 입력" required></div></td>
+						<td><div class="ui input"><input type="text" name="booktitle" id="booktitle" placeholder="책 제목 입력" required></div></td>
 					</tr>
 					
 					<tr>
@@ -51,12 +51,12 @@
 					
 					<tr>
 						<th width="30%">책 소개</th>
-						<td><div class="ui input"><textarea name="bookintro" id="bookintro" placeholder="내용을 입력해주세요" cols="50" rows="10" required></textarea></div></td>
+						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="50" rows="10" required></textarea></div></td>
 					</tr>
 					
 					<tr>
 						<th width="30%">도서이미지</th>
-						<td><input type="file" name="bookimg" id="bookimg" required></td>
+						<td><input type="file" name="bookoimg" id="bookoimg" required></td>
 					</tr>
 					
 					<tr>

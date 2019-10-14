@@ -39,7 +39,7 @@
 <div class="menubar" style="overflow:hidden;">
 <nav>
 	<ul class="vertical-menu">
-		<li style="font-weight: 600; font-size:12pt"><a href="/sori/views/admin/adminIndexView.jsp"><i class="home icon"></i>MAIN</a></li>
+		<li style="font-weight: 600; font-size:12pt"><a href="/sori/admain.ad"><i class="home icon"></i>MAIN</a></li>
 		<li style="font-weight: 600; font-size:12pt"><a href="javascript:;"><i class="book icon"></i>도서</a></li>
 			<ul>
 				<li><a href="/sori/blist.ad">　도서목록</a></li>
@@ -49,12 +49,12 @@
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="user icon"></i>사용자</a></li>
 			<ul>
 				<li><a href="/sori/mlist.ad">　회원정보조회</a></li>
-				<li><a href="/sori/views/admin/adminQuitUserView.jsp">　회원탈퇴관리</a></li>
-				<li><a href="/sori/views/admin/adminListView.jsp">　권한관리</a></li>
+				<li><a href="/sori/qmlist.ad">　회원탈퇴관리</a></li>
+				<li><a href="/sori/adlist.ad">　권한관리</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="clipboard list icon"></i>게시판</a></li>
 			<ul>
-				<li><a href="/sori/views/admin/adminQnaListView.jsp">　문의글관리</a></li>
+				<li><a href="/sori/bodlist.ad">　문의글관리</a></li>
 			</ul>
 	</ul>
 </nav>
