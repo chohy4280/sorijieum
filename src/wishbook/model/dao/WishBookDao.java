@@ -2,6 +2,7 @@ package wishbook.model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import static common.JDBCTemplate.*;
 
 import wishbook.model.vo.WishBook;
@@ -11,8 +12,8 @@ public class WishBookDao {
 	public WishBookDao() {}
 
 	// 관리자용 dao************************************************************************************************
-	// 관리자 신청도서(대기) 조회용
-	public ArrayList<WishBook> selectWaitWishBook(Connection conn){
+	// 관리자 신청도서(전체)
+	public ArrayList<WishBook> selectAll(Connection conn){
 		ArrayList<WishBook> list = new ArrayList<WishBook>();
 		
 		Statement stmt = null;
@@ -35,8 +36,6 @@ public class WishBookDao {
 				wb.setWishbookAdmin(rset.getString("wishbookadmin"));
 				
 				list.add(wb);
-				
-				System.out.println(wb);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -48,9 +47,32 @@ public class WishBookDao {
 	}
 	
 	
-	// 관리자 신청도서(전체) 조회용
-	public ArrayList<WishBook> selectAll(Connection conn){
-		return null;
+	//  조회용관리자 신청도서(대기) 조회용
+	public ArrayList<WishBook> selectWaitWishBook(Connection conn){
+		ArrayList<WishBook> wishbList = new ArrayList<WishBook>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select * from wishbook where wishstatus = 'WAIT'";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				WishBook wb= new WishBook();
+				
+				wb.setWishNo(rset.getInt("wishno"));
+				
+				wishbList.add(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return wishbList;
 	}
 	
 	

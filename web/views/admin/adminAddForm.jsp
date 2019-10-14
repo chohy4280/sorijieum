@@ -18,7 +18,7 @@
             <i class="big user plus icon"></i><span style="font:black; font-size:17pt; padding:10px;">관리자 추가</span>
             <br><br>
             <div class="lightgreyBox" style="height: 700px; align: center;">
-            <form action="" method="post" enctype="">
+            <form action="/adinsert.ad" method="post">
             	<table class="addform">
 					<tr>
 						<th width="30%">아이디</th>

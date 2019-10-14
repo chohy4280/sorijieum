@@ -1,6 +1,8 @@
 package qna.model.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
+import static common.JDBCTemplate.*;
 
 import qna.model.dao.QnaDao;
 import qna.model.vo.Qna;
@@ -50,7 +52,10 @@ public class QnaService {
 	//관리자 서비스****************************************
 	// 관리자 Q&A 전체조회용
 	public ArrayList<Qna> selectAll(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.selectAll(conn);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 Q&A 검색용
@@ -60,11 +65,17 @@ public class QnaService {
 	
 	// 관리자 Q&A 새문의글(Sysdate) 조회용
 	public ArrayList<Qna> selectAllSystdate(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Qna> newQList = qDao.selectAllSystdate(conn);
+		close(conn);
+		return newQList;
 	}
 	
 	// 관리자 Q&A 미답변 목록 전체 조회용
 	public ArrayList<Qna> selectAllUnanswer(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Qna> uaQList = qDao.selectAllUnanswer(conn);
+		close(conn);
+		return uaQList;
 	}
 }

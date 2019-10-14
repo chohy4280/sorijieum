@@ -51,20 +51,40 @@ public class BookService {
 	
 	
 	// 관리자 도서 추가용
-	public int insertBook(Book book) {
-		return 0;
+	public int insertBook(Book b) {
+		Connection conn = getConnection();
+		int result = bDao.insertBook(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);		
+		return result;
 	}
 	
+	// 관리자 제작대기 도서 조회용
+	public ArrayList<Book> seletWaitBook() {
+		Connection conn = getConnection();
+		ArrayList<Book> wbList = bDao.selectWaitBook(conn);
+		close(conn);
+		return wbList;
+	}
 	
 	// 관리자 제작중인 도서 조회용
 	public ArrayList<Book> selectMakeBook(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Book> mbList = bDao.selectMakeBook(conn);
+		close(conn);
+		return mbList;
 	}
 	
 	
 	// 관리자 제작 완료 도서 조회용
 	public ArrayList<Book> selectDoneBook(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Book> dbList = bDao.selectDoneBook(conn);
+		close(conn);
+		return dbList;
 	}
 	////////////////////////////////////////////////////////////////////
 	
@@ -96,6 +116,7 @@ public class BookService {
 		      close(conn);
 		      return list;
 		   }
+
 	}
 
 	

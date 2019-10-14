@@ -13,7 +13,7 @@ import static common.JDBCTemplate.*;
 public class MemberService {
 	
 	//의존성 주입
-	public MemberDao mdao = new MemberDao();
+	public MemberDao mDao = new MemberDao();
 	
 	public MemberService() {}
 	
@@ -30,7 +30,7 @@ public class MemberService {
 	//가입시 아이디 중복체크
 	public int checkUserId(String userid) {
 		Connection conn = getConnection();
-		int result = mdao.checkUserId(conn,userid);
+		int result = mDao.checkUserId(conn,userid);
 		
 		return result;
 	}
@@ -77,7 +77,10 @@ public class MemberService {
 	//관리자 서비스****************************************
 	// 관리자 전체 조회용
 	public ArrayList<Member> selectAdminAll(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Member> list = mDao.selectAdminAll(conn);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 추가용
@@ -130,31 +133,33 @@ public class MemberService {
 	
 	// 관리자 이용자 신규회원(Sysdate) 검색용
 	public ArrayList<Member> selectNewUserSystdate(){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<Member> newUList = mDao.selectNewUserSystdate(conn);
+		close(conn);
+		return newUList;
 	}
 	
 	// 관리자 제작자 신규회원(Sysdate) 검색용
 		public ArrayList<Member> selectNewMakerSystdate(){
-			return null;
-		}
-		
-	// 관리자 이용자 탈퇴회원 신규회원(Sysdate) 검색용
-		public ArrayList<Member> selectQuitUserSysdate(){
-			return null;
-		}
-		
-	// 관리자 제작자 탈퇴회원 신규회원(Sysdate) 검색용
-		public ArrayList<Member> selectQuitMakerSysdate(){
-			return null;
+			Connection conn = getConnection();
+			ArrayList<Member> newMList = mDao.selectNewMakerSystdate(conn);
+			close(conn);
+			return newMList;
 		}
 
-	// 관리자 이용자 전체회원 조회용
+	// 관리자 이용자 전체회원 조회용Connection conn = getConnection();
 		public ArrayList<Member> selectAllUser(){
-			return null;
+			Connection conn = getConnection();
+			ArrayList<Member> totalUList = mDao.selectAllUser(conn);
+			close(conn);
+			return totalUList;
 		}
 		
 	// 관리자 제작자 전체회원 조회용
 		public ArrayList<Member> selectAllMaker(){
-			return null;
+			Connection conn = getConnection();
+			ArrayList<Member> totalMList = mDao.selectAllMaker(conn);
+			close(conn);
+			return totalMList;
 		}
 }

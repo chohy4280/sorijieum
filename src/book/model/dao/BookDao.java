@@ -42,7 +42,6 @@ public class BookDao {
 					
 					list.add(b);	
 					
-					System.out.println(b);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -79,20 +78,115 @@ public class BookDao {
 		
 		
 		// 관리자 도서 추가용
-		public int insertBook(Connection conn, Book book) {
-			return 0;
+		public int insertBook(Connection conn, Book b) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "insert into book values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, b.getBookCode());
+				pstmt.setString(2, b.getBookTitle());
+				pstmt.setString(3, b.getAuthor());
+				pstmt.setString(4, b.getPublisher());
+				pstmt.setDate(5, b.getPublishDate());
+				pstmt.setInt(6, b.getBookPage());
+				pstmt.setString(7, b.getBookInfo());
+				pstmt.setString(8, b.getBookOimg());
+				pstmt.setString(9, b.getBookRimg());
+				pstmt.setString(10, b.getBookOpdf());
+				pstmt.setString(11, b.getBookRpdf());
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
 		}
 		
+		// 관리자 제작대기 도서 조회용
+		public ArrayList<Book> selectWaitBook(Connection conn) {
+			ArrayList<Book> wbList = new ArrayList<Book>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from book where makestatus = 'WAIT'";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Book b = new Book();
+					b.setBookCode(rset.getString("bookcode"));
+					
+					wbList.add(b);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return wbList;
+		}
 		
 		// 관리자 제작중인 도서 조회용
 		public ArrayList<Book> selectMakeBook(Connection conn){
-			return null;
+			ArrayList<Book> mbList = new ArrayList<Book>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from book where makestatus = 'MAKE'";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Book b = new Book();
+					b.setBookCode(rset.getString("bookcode"));
+					
+					mbList.add(b);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return mbList;
 		}
 		
 		
 		// 관리자 제작 완료 도서 조회용
 		public ArrayList<Book> selectDoneBook(Connection conn){
-			return null;
+			ArrayList<Book> dbList = new ArrayList<Book>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from book where makestatus = 'DONE'";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Book b = new Book();
+					b.setBookCode(rset.getString("bookcode"));
+					
+					dbList.add(b);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return dbList;
 		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -128,4 +222,6 @@ public class BookDao {
 			
 			return list;
 		}
+
+
 }

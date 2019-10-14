@@ -1,12 +1,16 @@
 package member.model.dao;
 
 
-import java.sql.*;
+import static common.JDBCTemplate.close;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import member.model.vo.Member;
-import static common.JDBCTemplate.*;
 
 public class MemberDao {
 	
@@ -96,7 +100,34 @@ public class MemberDao {
   	// 관리자용 dao************************************************************************************************
 	// 관리자 전체 조회용
 	public ArrayList<Member> selectAdminAll(Connection conn){
-		return null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where typenumber between 4 and 5";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				Member m = new Member();
+				
+				m.setUserId(rset.getString("userid"));
+				m.setUserName(rset.getString("username"));
+				m.setEmail(rset.getString("email"));
+				m.setPhone(rset.getString("phone"));
+				m.setTypeNumber(rset.getInt("typenumber"));
+				
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return list;
 	}
 	
 	// 관리자 추가용
@@ -125,8 +156,32 @@ public class MemberDao {
 		Statement stmt = null;
 		ResultSet rset= null;
 		
-		String query = "select * from member where member";
-		return null;
+		String query = "SELECT * FROM MEMBER WHERE TYPENUMBER BETWEEN 1 AND 3 ORDER BY ENROLLDATE DESC";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				Member m = new Member();
+				
+				m.setTypeNumber(rset.getInt("typenumber"));
+				m.setUserName(rset.getString("username"));
+				m.setUserId(rset.getString("userid"));
+				m.setGender(rset.getString("gender"));
+				m.setPhone(rset.getString("phone"));
+				m.setEmail(rset.getString("email"));
+				m.setEnrollDate(rset.getDate("enrolldate"));
+				
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return list;
 	}
 	
 	// 관리자 회원 검색용
@@ -151,32 +206,112 @@ public class MemberDao {
 	
 	// 관리자 이용자 신규회원(Sysdate) 검색용
 	public ArrayList<Member> selectNewUserSystdate(Connection conn){
-		return null;
+		ArrayList<Member> newUList = new ArrayList<Member>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where typenumber between 1 and 2 and enrolldate = sysdate";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				Member m = new Member();
+				
+				m.setUserId(rset.getString("userid"));
+				newUList.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return newUList;
 	}
 	
 	// 관리자 제작자 신규회원(Sysdate) 검색용
 		public ArrayList<Member> selectNewMakerSystdate(Connection conn){
-			return null;
+			ArrayList<Member> newMList = new ArrayList<Member>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from member where typenumber = 3 and enrolldate = sysdate";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Member m = new Member();
+					
+					m.setUserId(rset.getString("userid"));
+					newMList.add(m);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return newMList;
 		}
 		
-	// 관리자 이용자 탈퇴회원(Sysdate) 검색용
-		public ArrayList<Member> selectQuitUserSysdate(Connection conn){
-			return null;
-		}
-		
-	// 관리자 제작자 탈퇴회원(Sysdate) 검색용
-		public ArrayList<Member> selectQuitMakerSysdate(Connection conn){
-			return null;
-		}
 
 	// 관리자 이용자 전체회원 조회용
 		public ArrayList<Member> selectAllUser(Connection conn){
-			return null;
+			ArrayList<Member> totalUList = new ArrayList<Member>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from member where typenumber between 1 and 2 and quityn = 'N'";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Member m = new Member();
+					
+					m.setUserId(rset.getString("userid"));
+					totalUList.add(m);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return totalUList;
 		}
 		
 	// 관리자 제작자 전체회원 조회용
 		public ArrayList<Member> selectAllMaker(Connection conn){
-			return null;
+			ArrayList<Member> totalMList = new ArrayList<Member>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from member where typenumber = 3 and quityn = 'N'";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Member m = new Member();
+					
+					m.setUserId(rset.getString("userid"));
+					
+					totalMList.add(m);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return totalMList;
 		}
 
 		

@@ -1,11 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/../inc/adminTemplate.jsp" %>
+<%@ page import="java.util.ArrayList, member.model.vo.Member" %>
+ <%@ include file="/../inc/adminTemplate.jsp" %>
+ 
+<%
+	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원정보조회</title>
+<script type="text/javascript">
+$(function(){
+	// 체크박스 전체선택 및 전체해제
+	$("#allCheck").click(function(){
+		if($(this).is(":checked")){
+			$(".chk").prop("checked", true);
+		} else {
+			$(".chk").prop("checked", false);
+		}
+	});
+
+	// 한개 체크박스 선택 해제시 전체선텍 체크박스도 해제
+	$(".chk").click(function(){
+		if($("input[name='RowCheck']:checked").length == <%= list.size() %>){
+			$("#allCheck").prop("checked", true);
+		}else{
+			$("#allCheck").prop("checked", false);
+		}	
+	});
+
+	}); // document.ready...
+</script>
 </head>
 <body>
 
@@ -49,32 +76,47 @@
 			<!-- 검색창 끝! -->
 			
 			<!-- 회원검색 결과 리스트 시작! -->
-			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
+			<div class="listBoxBG" style="height: 1500px; margin-top:180px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4">30</span> 명</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 명</div>
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="2%"><input type="checkbox" id="allCheck" onclick="allChk(this);"/></th>
+						<th width="5%"><input type="checkbox" class="chk" id="allCheck" onclick="allChk();"/></th>
 						<th width="10%">회원유형</th>
 						<th width="13%">이름</th>
-						<th width="15%">아이디</th>
-						<th width="10%">성별</th>
+						<th width="17%">아이디</th>
+						<th width="5%">성별</th>
 						<th width="20%">이메일</th>
 						<th width="20%">전화번호</th>
 						<th width="10%">가입일</th>
 					</tr>
+					<% for(int i = 0 ; i < list.size() ; i++){
+						Member m = list.get(i);
+					%>
 					<tr>
-						<td><input type="checkbox" name="RowCheck" value="getBookcode"></td>
-						<td>이용자</td>
-						<td><a href="/sori/views/admin/adminUserDetailView.jsp">홍길동</a></td>
-						<td><a href="/sori/views/admin/adminUserDetailView.jsp">user01</a></td>
-						<td>남</td>
-						<td>hgildong@naver.com</td>
-						<td>010-1234-5678</td>
-						<td>2019/04/27</td>
-
+						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= m.getUserId() %>"></td>
+						<td><% if(m.getTypeNumber() == Integer.parseInt("1") ) { %>
+						이용대기자
+						<% } else if(m.getTypeNumber() == Integer.parseInt("2")) {%>
+						이용자
+						<%} else { %>
+						제작자
+						<% } %>
+						</td>
+						<td><a href="/sori/views/admin/adminMemberDetailView.jsp"><%= m.getUserName() %></a></td>
+						<td><a href="/sori/views/admin/adminMemberDetailView.jsp"><%= m.getUserId() %></a></td>
+						<td><% if(m.getGender().equals("F"))  {%>
+						여
+						<%} else { %>
+						남
+						<%} %>
+						</td>
+						<td><%= m.getEmail() %></td>
+						<td><%= m.getPhone() %></td>
+						<td><%= m.getEnrollDate() %></td>
 					</tr>
+					<% } %>
 				</table>
 				
 				<br>
