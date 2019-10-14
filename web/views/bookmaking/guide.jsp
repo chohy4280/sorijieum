@@ -38,7 +38,7 @@
 <p>6-3. 페이지 넘버 입력칸에는 '원본' 페이지의 번호를 입력해 주세요. </p>
 </div>
 <div class="ye-make-button2" align="right">
-<button onclick="location.href='/sori/views/bookmaking/bmmain.jsp'" class="big ui yellow button" style="font-family:'S-Core Dream 6'";>제작하러 가기</button>
+<button onclick="location.href='/sori/bmkmain'" class="big ui yellow button" style="font-family:'S-Core Dream 6'";>제작하러 가기</button>
 </div>
 </body>
 <br><br>

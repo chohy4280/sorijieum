@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="book.model.vo.Book, java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList, book.model.vo.BookMakingProgress" %>
 <%
-	Book book = (Book)request.getAttribute("book");
-	ArrayList<Book> makelist = (ArrayList<Book>)request.getAttribute("makelist");
-	ArrayList<Book> waitlist = (ArrayList<Book>)request.getAttribute("waitlist");	
+	BookMakingProgress bmp = (BookMakingProgress)request.getAttribute("bmp");
+	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
+	ArrayList<BookMakingProgress> waitlist = (ArrayList<BookMakingProgress>)request.getAttribute("waitlist");	
 %>
 <!DOCTYPE html>
 <html>
@@ -14,11 +14,15 @@
 <%@ include file="/../inc/top.jsp"%>
  <%@ include file="/../inc/cdn.jsp"%>
 <script type="text/javascript">
+$(function(){
+
+});
 
 </script>
 </head>
 <body>
 	<!-- content 시작 -->
+	<br>
 	<div class="ye-bookstatus">
 		<div class="ye-bookstatus-title">
 			<h2 style="font-family: 'S-Core Dream 6';">
@@ -45,11 +49,12 @@
 				<br><br>
 			<% for(int i = 0; i < waitlist.size(); i++){ %>
 			<div class="ye-bw">
-			<a href=""><img src="/sori/resources/book_images/<%= waitlist.get(i).getBookRimg() %>"></a>
+			<a href="/sori/bminfo?bookrimg=<%= waitlist.get(i).getBookRimg() %>">
+			<img src="/sori/resources/book_images/<%= waitlist.get(i).getBookRimg() %>"></a>
 			</div>
 			<% } %>
 			</div><!-- bookwait -->
-			<br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<div class="ye-bookmaking">
 			<a style="font-weight: bold;">제작중인 도서</a>&nbsp;&nbsp;
 			<button class="mini ui icon button" id="mbutton" 
@@ -58,30 +63,33 @@
   				더보기 <i class="angle right icon" style="width:10%;height:10%"></i>
 				</button>
 			<br><br>
+			<% for(int i = 0; i < makelist.size(); i++){ 
+				int makep = (makelist.get(i).getMakepage());
+				int bookp = (makelist.get(i).getBookPage());
+				int pwidth = (int)(((double)makep / bookp) * 100);
+			%>
 			<div class="ye-bm">
-			<a href="/sori/views/bookmaking/bookinfo.jsp">
-			<img id="여행의 이유" src="/sori/resources/book_images/201902041944.jpg"></a><br><br>
-			<div class="progress" style="width:150px;height:20px;"> 
+			<a href="/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>">
+			<img src="/sori/resources/book_images/<%= makelist.get(i).getBookRimg() %>"></a>
+			<br><br>
+			<div class="progress" style="width:170px;height:25px;border-radius:7px 7px 7px 7px;"> 
   			<div class="progress-bar" role="progressbar" 
-  			style="font-size:8pt; background: orange; width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="216">20%</div>
+  			style="font-size:0.8rem;font-align:center;background:orange;width:<%= pwidth %>%;"
+  			aria-valuenow="<%= pwidth %>" 
+  			aria-valuemin="0" aria-valuemax="<%= makelist.get(i).getBookPage() %>">
+  			<%= pwidth %>%</div>
 			</div>
-				</div>
-			<div class="ye-bm">
-			<a href="/sori/views/bookmaking/bookinfo.jsp">
-			<img id="쇼코의 미소" src="/sori/resources/book_images/201811241328.jpg"></a><br><br>
-			<div class="progress" style="width:150px;height:20px;">
-  			<div class="progress-bar" role="progressbar" 
-  			style="font-size:8pt; background: orange; width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="296">25%</div>
 			</div>
-				</div>
+			<% } %>
+				
 		</div><!-- bookmaking -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
 	<!-- book count -->
-<div class="ye-book-count" style="float:right;bottom:-160px;left: 500px;align:right;padding:50px;">
+<div class="ye-book-count" style="float:right;bottom:30px;left:500px;align:right;padding:50px;">
 <div class="orange ui statistic" >
     <div class="value" style="font-family:'S-Core Dream 7'">
-      2
+      <%= makelist.size() %>
     </div>
     <div class="label" style="font-family:'S-Core Dream 6'">
       	우리가 함께 제작한 책
