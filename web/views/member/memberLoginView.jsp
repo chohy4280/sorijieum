@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+<% 
+	Member loginMember =(Member)session.getAttribute("loginMember");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,16 +19,16 @@
 <section class="my-section">
 <center>
 
-<form>
+<form action="/sori/memberLogin">
 
 <div class="ui form" style="margin-top:10px;">
   <div class="inline field">
     <label>아 이 디</label>&nbsp;&nbsp;&nbsp;
-    <input type="text" placeholder="아이디" style="width:300px;height:50px;">
+    <input type="text" placeholder="아이디" name="userid" style="width:300px;height:50px;">
   </div>
   <div class="inline field">
     <label>비밀번호</label>&nbsp;&nbsp;
-    <input type="password" placeholder="비밀번호" style="width:300px;height:50px;">
+    <input type="password" placeholder="비밀번호" name="userpwd" style="width:300px;height:50px;">
   </div>
 </div>
 <br>

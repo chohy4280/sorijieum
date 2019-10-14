@@ -18,8 +18,11 @@ public class MemberService {
 	public MemberService() {}
 	
 	//로그인
-	public Member loginCheck(String userId, String userPwd) {
-		return null;
+	public Member loginCheck(String userid, String userpwd) {
+		Connection conn = getConnection();
+		Member member = mDao.loginCheck(conn, userid, userpwd);
+		close(conn);
+		return member;
 	}
 	
 	//가입
@@ -31,7 +34,7 @@ public class MemberService {
 	public int checkUserId(String userid) {
 		Connection conn = getConnection();
 		int result = mDao.checkUserId(conn,userid);
-		
+		close(conn);
 		return result;
 	}
 	

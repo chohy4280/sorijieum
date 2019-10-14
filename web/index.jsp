@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%
+	Member loginMember = (Member)session.getAttribute("loginMember");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +50,8 @@
 	background-image: url('/sori/resources/images/mainbook.jpg') ;
 	background-repeat:no-repeat;
 	background-position:center;
-	background-size: 100%; 
+	background-size: cover; 
+	background-attachment: scroll;
 	opacity: 1;
 	}
 
@@ -65,10 +69,22 @@
 <div class="wrapper">
 <header>
 <br>
+<% if(loginMember == null){ %>
 <div align="right" style="margin-top:10px;">
    <button class="ui yellow button" onclick="location.href='/sori/views/member/memberLoginView.jsp'" style="font-family:'S-Core Dream 6';">로그인</button>
    <button class="ui yellow button" onclick="location.href='/sori/views/member/memberEnrollAgree.jsp'" style="font-family:'S-Core Dream 6';">회원가입</button> &nbsp;
 </div>
+<% }else { %>
+<div align="right">
+<h2 class="ui header">
+	<img src="/sori/resources/images/error.png" class="ui circular image">
+	<a href="/sori/views/member/memberMyPage.jsp" style="color:white;"><%= loginMember.getUserName() %>님</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+	<a href="/sori/memberLogout" style="font-size:10pt;color:white;text-decoration:underline;">로그아웃</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</h2>
+</div>
+<% } %>
 </header>
 <br>
 <div class="ui four cards" style="margin:10px 5% 0 5%">

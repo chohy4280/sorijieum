@@ -3,11 +3,7 @@ package member.model.dao;
 
 import static common.JDBCTemplate.close;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import member.model.vo.Member;
@@ -17,8 +13,45 @@ public class MemberDao {
 	public MemberDao() {}
 	
 	//로그인
-	public Member loginCheck(Connection conn, String userId, String userPwd) {
-		return null;
+	public Member loginCheck(Connection conn, String userid, String userpwd) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where userid=? and userpwd=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, userpwd);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				member = new Member();
+				
+				member.setUserId(userid);
+				member.setTypeNumber(rset.getInt("typenumber"));
+				member.setUserName(rset.getString("username"));
+				member.setUserPwd(userpwd);
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setGender(rset.getString("gender"));
+				member.setBirth(rset.getDate("birth"));
+				member.setEnrollDate(rset.getDate("enrolldate"));
+				member.setUserOfile(rset.getString("userofile"));
+				member.setUserRfile(rset.getString("userrfile"));
+				member.setQuitYN(rset.getString("quityn"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
 	}
 	
 	//가입
@@ -55,6 +88,34 @@ public class MemberDao {
 		
 		return result;
 	}
+	
+/*	//아이디 중복체크
+	public String checkUserId2(Connection conn, String userid) {
+		String dbid = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) 
+				dbid = "adc"
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return dbid;
+	}*/
 	
 	//탈퇴
 	public int deleteMember(Connection conn, String userId) {

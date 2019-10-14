@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%-- <%
+	Member loginMember2 = (Member)session.getAttribute("loginMember");
+%>  --%>
+<!DOCTYPE html>  
 <head>
  <!-- favicon 위치 -->
 <link rel="shortcut icon" href="/sori/resources/images/favicon.ico">
@@ -56,6 +59,15 @@ footer{
   <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
   <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>
   <a class="item" href="/sori/views/boardqna/qnaListView.jsp">Q&A</a>
+  <%-- <div style="float:right;margin-right:0;margin-left:50%;position:absolute">
+	<h2 class="ui header">
+	<img src="/sori/resources/images/error.png" class="ui circular image">
+	<a href="/sori/views/member/memberMyPage.jsp" style="color:black;"><%= loginMember2.getUserName() %>님</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+	<a href="/sori/memberLogout" style="font-size:10pt;color:grey;text-decoration:underline;">로그아웃</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</h2>
+  </div> --%>
 </div>
 <br><br><br>
 <body>
