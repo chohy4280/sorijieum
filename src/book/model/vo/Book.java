@@ -25,30 +25,6 @@ public class Book implements java.io.Serializable {
 
 	public Book() {}
 
-
-	public Book(String bookCode, String bookTitle, String author, String publisher, Date publishDate, int bookPage,
-			String bookInfo, String bookOimg, String bookRimg, String bookOpdf, String bookRpdf, Date bookDate,
-			int bookViews, String makeStatus) {
-		super();
-		this.bookCode = bookCode;
-		this.bookTitle = bookTitle;
-		this.author = author;
-		this.publisher = publisher;
-		this.publishDate = publishDate;
-		this.bookPage = bookPage;
-		this.bookInfo = bookInfo;
-		this.bookOimg = bookOimg;
-		this.bookRimg = bookRimg;
-		this.bookOpdf = bookOpdf;
-		this.bookRpdf = bookRpdf;
-		this.bookDate = bookDate;
-		this.bookViews = bookViews;
-		this.makeStatus = makeStatus;
-	}
-	
-	
-
-
 	public Book(String bookCode, String bookTitle, String author, String publisher, Date publishDate, int bookPage,
 			String bookInfo, String bookOimg, String bookRimg, String bookOpdf, String bookRpdf, Date bookDate,
 			int bookViews, String makeStatus, String bookDelYN) {
@@ -210,7 +186,6 @@ public class Book implements java.io.Serializable {
 		this.makeStatus = makeStatus;
 	}
 
-
 	public String getBookDelYN() {
 		return bookDelYN;
 	}
@@ -229,9 +204,5 @@ public class Book implements java.io.Serializable {
 				+ bookRpdf + ", bookDate=" + bookDate + ", bookViews=" + bookViews + ", makeStatus=" + makeStatus
 				+ ", bookDelYN=" + bookDelYN + "]";
 	}
-	
-	
-	
-	
-
+		
 }
