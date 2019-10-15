@@ -37,12 +37,14 @@ public class BookMakingInfoServlet extends HttpServlet {
 		BookMakingProgress bmp = new BookMakingService().selectMakingBookOne(bookrimg);
 		ArrayList<BookMakingProgress> makelist = new BookMakingService().selectMakingBook();
 		ArrayList<BookMakingProgress> list = new BookMakingService().selectWaitMakeBookAll();
+		int dcount = new BookMakingService().getMakedBookCount();
 		RequestDispatcher view = null;
 		if(bmp != null && makelist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookinfo.jsp");
 			request.setAttribute("bmp", bmp);
 			request.setAttribute("makelist", makelist);
 			request.setAttribute("list", list);
+			request.setAttribute("dcount", dcount);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

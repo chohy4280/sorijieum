@@ -61,7 +61,7 @@ public class BookMakingService {
 		return mcount;
 	}
 	
-	//제작중 도서 리스트용, 제작중 도서 카운트용
+	//제작중 도서 리스트용
 	public ArrayList<BookMakingProgress> selectMakingBookList(int startRow, int endRow){
 		Connection conn = getConnection();
 		ArrayList<BookMakingProgress> list = bmDao.selectMakingBookList(conn, startRow, endRow);
@@ -81,5 +81,13 @@ public class BookMakingService {
 	public ArrayList<BookMakingProgress> selectBookPdfLoad(){
 		return null;
 	}
+	
+	//제작완료 카운트
+		public int getMakedBookCount(){
+			Connection conn = getConnection();
+			int dcount = bmDao.getMakedBookCount(conn);
+			close(conn);
+			return dcount;
+		}
 	
 }

@@ -60,6 +60,7 @@ public class BookMakingListServlet extends HttpServlet {
 		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기
 		ArrayList<BookMakingProgress> list = bservice.selectMakingBookList(startRow, endRow);
 		ArrayList<BookMakingProgress> makelist = bservice.selectMakingBook();
+		int dcount = new BookMakingService().getMakedBookCount();
 		RequestDispatcher view = null;
 		if(list.size() > 0 && makelist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakinglist.jsp");
@@ -69,6 +70,7 @@ public class BookMakingListServlet extends HttpServlet {
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("makelist", makelist);
+			request.setAttribute("dcount", dcount);
 			view.forward(request, response);
 			
 		}else {

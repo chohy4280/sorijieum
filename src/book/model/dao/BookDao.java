@@ -82,7 +82,7 @@ public class BookDao {
 			int result = 0;
 			PreparedStatement pstmt = null;
 			
-			String query = "insert into book values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default)";
+			String query = "insert into book values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default, default)";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -97,7 +97,7 @@ public class BookDao {
 				pstmt.setString(9, b.getBookRimg());
 				pstmt.setString(10, b.getBookOpdf());
 				pstmt.setString(11, b.getBookRpdf());
-				
+
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

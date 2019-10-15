@@ -57,6 +57,7 @@ public class BookMakingDao {
 				BookMakingProgress bookmp = new BookMakingProgress();
 				bookmp.setBookRimg(rset.getString("bookrimg"));
 				bookmp.setBookCode(rset.getString("bookcode"));
+				bookmp.setBookTitle(rset.getString("booktitle"));
 				waitlist.add(bookmp);
 			}
 			
@@ -85,6 +86,7 @@ public class BookMakingDao {
 				bookmp.setBookCode(rset.getString("bookcode"));
 				bookmp.setBookPage(rset.getInt("bookpage"));
 				bookmp.setMakepage(rset.getInt("makepage"));
+				bookmp.setBookTitle(rset.getString("booktitle"));
 				makelist.add(bookmp);
 			}
 			
@@ -122,7 +124,7 @@ public class BookMakingDao {
 		ArrayList<BookMakingProgress> wlist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG " 
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG, BOOKTITLE " 
 						+ " FROM (SELECT * FROM BOOK " 
 						+ " WHERE MAKESTATUS = 'WAIT'" 
 						+ "	ORDER BY BOOKDATE ASC)) " 
@@ -138,6 +140,7 @@ public class BookMakingDao {
 				BookMakingProgress bookmp = new BookMakingProgress();
 				bookmp.setBookCode(rset.getString("bookcode"));
 				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookTitle(rset.getString("booktitle"));
 				wlist.add(bookmp);
 			}
 		} catch (SQLException e) {
@@ -174,8 +177,8 @@ public class BookMakingDao {
 		ArrayList<BookMakingProgress> mlist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG " 
-						+ " FROM (SELECT * FROM BOOK " 
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG, BOOKPAGE, MAKEPAGE, BOOKTITLE " 
+						+ " FROM (SELECT * FROM BOOK JOIN BOOKMAKING USING(BOOKCODE) " 
 						+ " WHERE MAKESTATUS = 'MAKE'" 
 						+ "	ORDER BY BOOKDATE ASC)) " 
 						+ "	WHERE RNUM >= ? AND RNUM <= ?";
@@ -190,6 +193,9 @@ public class BookMakingDao {
 				BookMakingProgress bookmp = new BookMakingProgress();
 				bookmp.setBookCode(rset.getString("bookcode"));
 				bookmp.setBookRimg(rset.getString("bookrimg"));
+				bookmp.setBookPage(rset.getInt("bookpage"));
+				bookmp.setMakepage(rset.getInt("makepage"));
+				bookmp.setBookTitle(rset.getString("booktitle"));
 				mlist.add(bookmp);
 			}
 		} catch (SQLException e) {
@@ -234,6 +240,27 @@ public class BookMakingDao {
 	
 	public ArrayList<BookMakingProgress> selectBookPdfLoad(Connection conn){
 		return null;
+	}
+
+	public int getMakedBookCount(Connection conn) {
+		int dcount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select count(*) from book where makestatus = 'DONE'";
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				dcount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return dcount;
 	}
 
 
