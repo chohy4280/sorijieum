@@ -27,7 +27,16 @@ public class MemberService {
 	
 	//가입
 	public int insertMember(Member member) {
-		return 0;
+		Connection conn = getConnection();
+		int result = mDao.insertMember(conn, member);
+		
+		if(result > 0) 
+			commit(conn);
+		else
+			rollback(conn);
+		
+		close(conn);
+		return result;
 	}
 	
 	//가입시 아이디 중복체크
@@ -109,7 +118,7 @@ public class MemberService {
 	// 관리자 전체회원 조회용
 	public ArrayList<Member> selectAll(){
 		Connection conn = getConnection();
-		ArrayList<Member> list = mdao.selectAll(conn);
+		ArrayList<Member> list = mDao.selectAll(conn);
 		close(conn);
 		return list;
 	}
