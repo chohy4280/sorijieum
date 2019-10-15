@@ -2,18 +2,18 @@
 DROP TABLE MEMBER CASCADE CONSTRAINT;
 
 CREATE TABLE MEMBER (
-	USERID	VARCHAR2(20)		NOT NULL,
-	TYPENUMBER	NUMBER		NOT NULL,
-	USERNAME	VARCHAR2(20)		NOT NULL,
-	USERPWD	VARCHAR2(20)		NOT NULL,
-	PHONE	VARCHAR2(11)		NOT NULL,
-	EMAIL	VARCHAR2(50)		NOT NULL,
-	GENDER	VARCHAR2(1)		NOT NULL,
-	BIRTH	DATE		NOT NULL,
-	ENROLLDATE	DATE	DEFAULT SYSDATE	NOT NULL,
-	USEROFILE	VARCHAR2(100)		NULL,
-	USERRFILE	VARCHAR2(100)		NULL,
-	QUITYN	VARCHAR2(1)	DEFAULT 'N'	NOT NULL
+   USERID   VARCHAR2(20)      NOT NULL,
+   TYPENUMBER   NUMBER      NOT NULL,
+   USERNAME   VARCHAR2(20)      NOT NULL,
+   USERPWD   VARCHAR2(20)      NOT NULL,
+   PHONE   VARCHAR2(11)      NOT NULL,
+   EMAIL   VARCHAR2(50)      NOT NULL,
+   GENDER   VARCHAR2(1)      NOT NULL,
+   BIRTH   DATE      NOT NULL,
+   ENROLLDATE   DATE   DEFAULT SYSDATE   NOT NULL,
+   USEROFILE   VARCHAR2(100)      NULL,
+   USERRFILE   VARCHAR2(100)      NULL,
+   QUITYN   VARCHAR2(1)   DEFAULT 'N'   NOT NULL
 );
 
 COMMENT ON COLUMN MEMBER.USERID IS '회원아이디';
@@ -45,20 +45,21 @@ COMMENT ON COLUMN MEMBER.QUITYN IS '회원탈퇴여부';
 DROP TABLE BOOK CASCADE CONSTRAINT;
 
 CREATE TABLE BOOK (
-	BOOKCODE	VARCHAR2(15)		NOT NULL,
-	BOOKTITLE	VARCHAR2(200)		NOT NULL,
-	AUTHOR	VARCHAR2(100)		NOT NULL,
-	PUBLISHER	VARCHAR2(100)		NOT NULL,
-	PUBLISHDATE	DATE		NOT NULL,
-	BOOKPAGE	NUMBER		NOT NULL,
-	BOOKINFO	VARCHAR2(1500)		NOT NULL,
-	BOOKOIMG	VARCHAR2(300)		NOT NULL,
-	BOOKRIMG	VARCHAR2(300)		NOT NULL,
-	BOOKOPDF	VARCHAR2(1000)		NOT NULL,
-	BOOKRPDF	VARCHAR2(1000)		NOT NULL,
-	BOOKDATE	DATE	DEFAULT SYSDATE	NOT NULL,
-	BOOKVIEWS	NUMBER	DEFAULT 0	NOT NULL,
-	MAKESTATUS	VARCHAR2(4)	DEFAULT 'WAIT'	NOT NULL
+   BOOKCODE   VARCHAR2(15)      NOT NULL,
+   BOOKTITLE   VARCHAR2(200)      NOT NULL,
+   AUTHOR   VARCHAR2(100)      NOT NULL,
+   PUBLISHER   VARCHAR2(100)      NOT NULL,
+   PUBLISHDATE   DATE      NOT NULL,
+   BOOKPAGE   NUMBER      NOT NULL,
+   BOOKINFO   VARCHAR2(3000)      NOT NULL,
+   BOOKOIMG   VARCHAR2(300)      NOT NULL,
+   BOOKRIMG   VARCHAR2(300)      NOT NULL,
+   BOOKOPDF   VARCHAR2(1000)      NOT NULL,
+   BOOKRPDF   VARCHAR2(1000)      NOT NULL,
+   BOOKDATE   DATE   DEFAULT SYSDATE   NOT NULL,
+   BOOKVIEWS   NUMBER   DEFAULT 0   NOT NULL,
+   MAKESTATUS   VARCHAR2(4)   DEFAULT 'WAIT'   NOT NULL,
+   BOOKDELYN   VARCHAR2(2) DEFAULT 'N' NOT NULL
 );
 
 COMMENT ON COLUMN BOOK.BOOKCODE IS '도서코드';
@@ -89,22 +90,24 @@ COMMENT ON COLUMN BOOK.BOOKVIEWS IS '도서조회수';
 
 COMMENT ON COLUMN BOOK.MAKESTATUS IS '도서제작상태';
 
+COMMENT ON COLUMN BOOK.BOOKDELYN IS '도서삭제여부';
+
 
 
 --NOTICE 테이블 생성
 DROP TABLE NOTICE CASCADE CONSTRAINT;
 
 CREATE TABLE NOTICE (
-	NOTICENO	NUMBER		NOT NULL,
-	NOTICETITLE	VARCHAR2(200)		NOT NULL,
-	NOTICEWRITER	VARCHAR2(20)		NOT NULL,
-	NOTICECONTENT	VARCHAR2(4000)		NOT NULL,
-	NOTICEDATE	DATE	DEFAULT SYSDATE	NOT NULL,
-	NOTICEVIEWS	NUMBER	DEFAULT 0	NOT NULL,
-	NOTICEOFILE	VARCHAR2(1000)		NULL,
-	NOTICERFILE	VARCHAR2(1000)		NULL,
-	NOTICERDATE	DATE		NULL,
-	NOTICETOP	VARCHAR2(1)	DEFAULT 'N'	NOT NULL
+   NOTICENO   NUMBER      NOT NULL,
+   NOTICETITLE   VARCHAR2(200)      NOT NULL,
+   NOTICEWRITER   VARCHAR2(20)      NOT NULL,
+   NOTICECONTENT   VARCHAR2(4000)      NOT NULL,
+   NOTICEDATE   DATE   DEFAULT SYSDATE   NOT NULL,
+   NOTICEVIEWS   NUMBER   DEFAULT 0   NOT NULL,
+   NOTICEOFILE   VARCHAR2(1000)      NULL,
+   NOTICERFILE   VARCHAR2(1000)      NULL,
+   NOTICERDATE   DATE      NULL,
+   NOTICETOP   VARCHAR2(1)   DEFAULT 'N'   NOT NULL
 );
 
 COMMENT ON COLUMN NOTICE.NOTICENO IS '공지사항 번호';
@@ -132,16 +135,16 @@ COMMENT ON COLUMN NOTICE.NOTICETOP IS '공지사항 상단 고정 구분';
 DROP TABLE QNA CASCADE CONSTRAINT;
 
 CREATE TABLE QNA (
-	QNANO	NUMBER		NOT NULL,
-	QNATITLE	VARCHAR2(200)		NOT NULL,
-	QNAWRITER	VARCHAR2(20)		NOT NULL,
-	QNACONTENT	VARCHAR2(4000)		NOT NULL,
-	QNADATE	DATE	DEFAULT SYSDATE	NOT NULL,
-	QNAVIEWS	NUMBER	DEFAULT 0	NOT NULL,
-	QNASTATUS	VARCHAR2(1)	DEFAULT 'N'	NOT NULL,
-	QNAOFILE	VARCHAR2(1000)		NULL,
-	QNARFILE	VARCHAR2(1000)		NULL,
-	QNATOP	VARCHAR2(1)	DEFAULT 'N'	NOT NULL
+   QNANO   NUMBER      NOT NULL,
+   QNATITLE   VARCHAR2(200)      NOT NULL,
+   QNAWRITER   VARCHAR2(20)      NOT NULL,
+   QNACONTENT   VARCHAR2(4000)      NOT NULL,
+   QNADATE   DATE   DEFAULT SYSDATE   NOT NULL,
+   QNAVIEWS   NUMBER   DEFAULT 0   NOT NULL,
+   QNASTATUS   VARCHAR2(1)   DEFAULT 'N'   NOT NULL,
+   QNAOFILE   VARCHAR2(1000)      NULL,
+   QNARFILE   VARCHAR2(1000)      NULL,
+   QNATOP   VARCHAR2(1)   DEFAULT 'N'   NOT NULL
 );
 
 COMMENT ON COLUMN QNA.QNANO IS 'QNA  번호';
@@ -168,19 +171,19 @@ COMMENT ON COLUMN QNA.QNATOP IS 'QNA 상단 고정구분';
 DROP TABLE WISHBOOK CASCADE CONSTRAINT;
 
 CREATE TABLE WISHBOOK (
-	WISHNO	NUMBER		NOT NULL,
-	WISHWRITER	VARCHAR2(20)		NOT NULL,
-	WISHBOOKTITLE	VARCHAR2(200)		NOT NULL,
-	WISHBOOKAUTHOR	VARCHAR2(100)		NOT NULL,
-	WISHPUBLISHER	VARCHAR2(100)		NULL,
-	WISHPUBLISHDATE	DATE		NULL,
-	WISHDATE	DATE	DEFAULT SYSDATE	NOT NULL,
-	WISHVIEWS	NUMBER	DEFAULT 0	NOT NULL,
-	WISHSTATUS	VARCHAR2(4)	DEFAULT 'WAIT'	NOT NULL,
-	RJCTREASON	VARCHAR2(300)		NULL,
-	WISHSTATUSDATE	DATE		NULL,
-	WISHTOP	 VARCHAR2(1)	DEFAULT 'N'	NOT NULL,
-	WISHBOOKADMIN VARCHAR2(20)	NULL
+   WISHNO   NUMBER      NOT NULL,
+   WISHWRITER   VARCHAR2(20)      NOT NULL,
+   WISHBOOKTITLE   VARCHAR2(200)      NOT NULL,
+   WISHBOOKAUTHOR   VARCHAR2(100)      NOT NULL,
+   WISHPUBLISHER   VARCHAR2(100)      NULL,
+   WISHPUBLISHDATE   DATE      NULL,
+   WISHDATE   DATE   DEFAULT SYSDATE   NOT NULL,
+   WISHVIEWS   NUMBER   DEFAULT 0   NOT NULL,
+   WISHSTATUS   VARCHAR2(4)   DEFAULT 'WAIT'   NOT NULL,
+   RJCTREASON   VARCHAR2(300)      NULL,
+   WISHSTATUSDATE   DATE      NULL,
+   WISHTOP    VARCHAR2(1)   DEFAULT 'N'   NOT NULL,
+   WISHBOOKADMIN VARCHAR2(20)   NULL
 );
 
 COMMENT ON COLUMN WISHBOOK.WISHNO IS '글번호';
@@ -213,8 +216,8 @@ COMMENT ON COLUMN WISHBOOK.WISHBOOKADMIN IS '처리관리자';
 DROP TABLE LIKEBOOK CASCADE CONSTRAINT;
 
 CREATE TABLE LIKEBOOK (
-	USERID	VARCHAR2(20)		NOT NULL,
-	BOOKCODE	VARCHAR2(15)		NOT NULL
+   USERID   VARCHAR2(20)      NOT NULL,
+   BOOKCODE   VARCHAR2(15)      NOT NULL
 );
 
 COMMENT ON COLUMN LIKEBOOK.USERID IS '회원아이디';
@@ -226,9 +229,9 @@ COMMENT ON COLUMN LIKEBOOK.BOOKCODE IS '도서코드';
 DROP TABLE MAKEDBOOK CASCADE CONSTRAINT;
 
 CREATE TABLE MAKEDBOOK (
-	USERID	VARCHAR2(20)		NOT NULL,
-	BOOKCODE	VARCHAR2(15)		NOT NULL,
-	MAKEDATE	DATE	DEFAULT SYSDATE	NOT NULL
+   USERID   VARCHAR2(20)      NOT NULL,
+   BOOKCODE   VARCHAR2(15)      NOT NULL,
+   MAKEDATE   DATE   DEFAULT SYSDATE   NOT NULL
 );
 
 COMMENT ON COLUMN MAKEDBOOK.USERID IS '회원아이디';
@@ -242,11 +245,11 @@ COMMENT ON COLUMN MAKEDBOOK.MAKEDATE IS '제작 참여 날짜';
 DROP TABLE MYBOOK CASCADE CONSTRAINT;
 
 CREATE TABLE MYBOOK (
-	USERID	VARCHAR2(20)		NOT NULL,
-	BOOKCODE	VARCHAR2(15)		NOT NULL,
-	READPAGE	NUMBER		NOT NULL,
-	READSDATE	DATE	DEFAULT SYSDATE	NOT NULL,
-	READRDATE	DATE	DEFAULT SYSDATE	NOT NULL
+   USERID   VARCHAR2(20)      NOT NULL,
+   BOOKCODE   VARCHAR2(15)      NOT NULL,
+   READPAGE   NUMBER      NOT NULL,
+   READSDATE   DATE   DEFAULT SYSDATE   NOT NULL,
+   READRDATE   DATE   DEFAULT SYSDATE   NOT NULL
 );
 
 COMMENT ON COLUMN MYBOOK.USERID IS '회원아이디';
@@ -264,11 +267,11 @@ COMMENT ON COLUMN MYBOOK.READRDATE IS '최근 읽은 날짜';
 DROP TABLE ADMINMEMO CASCADE CONSTRAINT;
 
 CREATE TABLE ADMINMEMO (
-	MEMONO	NUMBER	NOT NULL,
-	USERID	VARCHAR2(20)		NOT NULL,
-	ADMINID	VARCHAR2(20)		NOT NULL,
-	ADMINMEMO	VARCHAR2(300)		NOT NULL,
-	MEMODATE	DATE	DEFAULT SYSDATE	NOT NULL
+   MEMONO   NUMBER   NOT NULL,
+   USERID   VARCHAR2(20)      NOT NULL,
+   ADMINID   VARCHAR2(20)      NOT NULL,
+   ADMINMEMO   VARCHAR2(300)      NOT NULL,
+   MEMODATE   DATE   DEFAULT SYSDATE   NOT NULL
 );
 
 COMMENT ON COLUMN ADMINMEMO.USERID IS '회원아이디';
@@ -284,10 +287,10 @@ COMMENT ON COLUMN ADMINMEMO.MEMODATE IS '메모작성일';
 DROP TABLE QUIT CASCADE CONSTRAINT;
 
 CREATE TABLE QUIT (
-	USERID	VARCHAR2(20)		NOT NULL,
-	QUITTYPE	VARCHAR2(1)		NOT NULL,
-	QUITREASON	VARCHAR2(1000)		NOT NULL,
-	QUITDATE	DATE	DEFAULT SYSDATE	NOT NULL
+   USERID   VARCHAR2(20)      NOT NULL,
+   QUITTYPE   VARCHAR2(1)      NOT NULL,
+   QUITREASON   VARCHAR2(1000)      NOT NULL,
+   QUITDATE   DATE   DEFAULT SYSDATE   NOT NULL
 );
 
 COMMENT ON COLUMN QUIT.USERID IS '탈퇴회원아이디';
@@ -303,12 +306,12 @@ COMMENT ON COLUMN QUIT.QUITDATE IS '탈퇴일자';
 DROP TABLE BOOKMAKING CASCADE CONSTRAINT;
 
 CREATE TABLE BOOKMAKING (
-	BOOKCODE	VARCHAR2(15)		NOT NULL,
-	MAKESTART	DATE	DEFAULT SYSDATE	NOT NULL,
-	MAKEFIN	DATE		NULL,
-	BOOKOTXT	VARCHAR2(1000)		NULL,
-	BOOKRTXT	VARCHAR2(1000)		NULL,
-	MAKEPAGE	NUMBER	DEFAULT 0	NOT NULL
+   BOOKCODE   VARCHAR2(15)      NOT NULL,
+   MAKESTART   DATE   DEFAULT SYSDATE   NOT NULL,
+   MAKEFIN   DATE      NULL,
+   BOOKOTXT   VARCHAR2(1000)      NULL,
+   BOOKRTXT   VARCHAR2(1000)      NULL,
+   MAKEPAGE   NUMBER   DEFAULT 0   NOT NULL
 );
 
 COMMENT ON COLUMN BOOKMAKING.BOOKCODE IS '도서코드';
@@ -328,10 +331,10 @@ COMMENT ON COLUMN BOOKMAKING.MAKEPAGE IS '현재까지 제작된 쪽수';
 DROP TABLE QNACOMMENT CASCADE CONSTRAINT;
 
 CREATE TABLE QNACOMMENT (
-	QNANO	NUMBER		NOT NULL,
-	QNACOMWRITER	VARCHAR2(20)		NOT NULL,
-	QNACOMMENTS	VARCHAR2(1000)		NOT NULL,
-	QNACOMDATE	DATE	DEFAULT SYSDATE	NOT NULL
+   QNANO   NUMBER      NOT NULL,
+   QNACOMWRITER   VARCHAR2(20)      NOT NULL,
+   QNACOMMENTS   VARCHAR2(1000)      NOT NULL,
+   QNACOMDATE   DATE   DEFAULT SYSDATE   NOT NULL
 );
 
 COMMENT ON COLUMN QNACOMMENT.QNANO IS 'QNA 질문글 번호';
@@ -347,8 +350,8 @@ COMMENT ON COLUMN QNACOMMENT.QNACOMDATE IS 'QNA 답변 작성시간';
 DROP TABLE MEMBERTYPE CASCADE CONSTRAINT;
 
 CREATE TABLE MEMBERTYPE (
-	TYPENUMBER	NUMBER		NOT NULL,
-	MEMBERTYPE	VARCHAR2(20)		NOT NULL
+   TYPENUMBER   NUMBER      NOT NULL,
+   MEMBERTYPE   VARCHAR2(20)      NOT NULL
 );
 
 COMMENT ON COLUMN MEMBERTYPE.TYPENUMBER IS '회원구분(숫자)';
@@ -358,171 +361,171 @@ COMMENT ON COLUMN MEMBERTYPE.MEMBERTYPE IS '회원종류(글자)';
 
 --제약조건 설정
 ALTER TABLE MEMBER ADD CONSTRAINT PK_MEMBER PRIMARY KEY (
-	USERID
+   USERID
 );
 
 ALTER TABLE BOOK ADD CONSTRAINT PK_BOOK PRIMARY KEY (
-	BOOKCODE
+   BOOKCODE
 );
 
 ALTER TABLE NOTICE ADD CONSTRAINT PK_NOTICE PRIMARY KEY (
-	NOTICENO
+   NOTICENO
 );
 
 ALTER TABLE QNA ADD CONSTRAINT PK_QNA PRIMARY KEY (
-	QNANO
+   QNANO
 );
 
 ALTER TABLE WISHBOOK ADD CONSTRAINT PK_WISHBOOK PRIMARY KEY (
-	WISHNO
+   WISHNO
 );
 
 ALTER TABLE LIKEBOOK ADD CONSTRAINT PK_LIKEBOOK PRIMARY KEY (
-	USERID,
-	BOOKCODE
+   USERID,
+   BOOKCODE
 );
 
 ALTER TABLE MAKEDBOOK ADD CONSTRAINT PK_MAKEDBOOK PRIMARY KEY (
-	USERID,
-	BOOKCODE
+   USERID,
+   BOOKCODE
 );
 
 ALTER TABLE MYBOOK ADD CONSTRAINT PK_MYBOOK PRIMARY KEY (
-	USERID,
-	BOOKCODE
+   USERID,
+   BOOKCODE
 );
 
 ALTER TABLE ADMINMEMO ADD CONSTRAINT PK_ADMINMEMO PRIMARY KEY (
-	USERID,
-	ADMINID
+   USERID,
+   ADMINID
 );
 
 ALTER TABLE QUIT ADD CONSTRAINT PK_QUIT PRIMARY KEY (
-	USERID
+   USERID
 );
 
 ALTER TABLE BOOKMAKING ADD CONSTRAINT PK_BOOKMAKING PRIMARY KEY (
-	BOOKCODE
+   BOOKCODE
 );
 
 ALTER TABLE QNACOMMENT ADD CONSTRAINT PK_QNACOMMENT PRIMARY KEY (
-	QNANO
+   QNANO
 );
 
 ALTER TABLE MEMBERTYPE ADD CONSTRAINT PK_MEMBERTYPE PRIMARY KEY (
-	TYPENUMBER
+   TYPENUMBER
 );
 
 ALTER TABLE MEMBER ADD CONSTRAINT FK_MEMBERTYPE_TO_MEMBER_1 FOREIGN KEY (
-	TYPENUMBER
+   TYPENUMBER
 )
 REFERENCES MEMBERTYPE (
-	TYPENUMBER
+   TYPENUMBER
 );
 
 ALTER TABLE NOTICE ADD CONSTRAINT FK_MEMBER_TO_NOTICE_1 FOREIGN KEY (
-	NOTICEWRITER
+   NOTICEWRITER
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE QNA ADD CONSTRAINT FK_MEMBER_TO_QNA_1 FOREIGN KEY (
-	QNAWRITER
+   QNAWRITER
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE WISHBOOK ADD CONSTRAINT FK_MEMBER_TO_WISHBOOK_1 FOREIGN KEY (
-	WISHWRITER
+   WISHWRITER
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE LIKEBOOK ADD CONSTRAINT FK_MEMBER_TO_LIKEBOOK_1 FOREIGN KEY (
-	USERID
+   USERID
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE LIKEBOOK ADD CONSTRAINT FK_BOOK_TO_LIKEBOOK_1 FOREIGN KEY (
-	BOOKCODE
+   BOOKCODE
 )
 REFERENCES BOOK (
-	BOOKCODE
+   BOOKCODE
 );
 
 ALTER TABLE MAKEDBOOK ADD CONSTRAINT FK_MEMBER_TO_MAKEDBOOK_1 FOREIGN KEY (
-	USERID
+   USERID
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE MAKEDBOOK ADD CONSTRAINT FK_BOOK_TO_MAKEDBOOK_1 FOREIGN KEY (
-	BOOKCODE
+   BOOKCODE
 )
 REFERENCES BOOK (
-	BOOKCODE
+   BOOKCODE
 );
 
 ALTER TABLE MYBOOK ADD CONSTRAINT FK_MEMBER_TO_MYBOOK_1 FOREIGN KEY (
-	USERID
+   USERID
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE MYBOOK ADD CONSTRAINT FK_BOOK_TO_MYBOOK_1 FOREIGN KEY (
-	BOOKCODE
+   BOOKCODE
 )
 REFERENCES BOOK (
-	BOOKCODE
+   BOOKCODE
 );
 
 ALTER TABLE ADMINMEMO ADD CONSTRAINT FK_MEMBER_TO_ADMINMEMO_1 FOREIGN KEY (
-	USERID
+   USERID
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE ADMINMEMO ADD CONSTRAINT FK_MEMBER_TO_ADMINMEMO_2 FOREIGN KEY (
-	ADMINID
+   ADMINID
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE QUIT ADD CONSTRAINT FK_MEMBER_TO_QUIT_1 FOREIGN KEY (
-	USERID
+   USERID
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE BOOKMAKING ADD CONSTRAINT FK_BOOK_TO_BOOKMAKING_1 FOREIGN KEY (
-	BOOKCODE
+   BOOKCODE
 )
 REFERENCES BOOK (
-	BOOKCODE
+   BOOKCODE
 );
 
 ALTER TABLE QNACOMMENT ADD CONSTRAINT FK_QNA_TO_QNACOMMENT_1 FOREIGN KEY (
-	QNANO
+   QNANO
 )
 REFERENCES QNA (
-	QNANO
+   QNANO
 );
 
 ALTER TABLE QNACOMMENT ADD CONSTRAINT FK_MEMBER_TO_QNACOMMENT_1 FOREIGN KEY (
-	QNACOMWRITER
+   QNACOMWRITER
 )
 REFERENCES MEMBER (
-	USERID
+   USERID
 );
 
 ALTER TABLE MEMBER ADD CHECK (QUITYN IN('Y','N'));
@@ -638,44 +641,290 @@ INSERT INTO ADMINMEMO
 VALUES(SEQ_MEMONO.NEXTVAL,'user005','admin01','사이트 이용중 도서재생에서 강제종료 된다고 전화로 항의함',SYSDATE);
 
 --도서 데이터 입력
-INSERT INTO BOOK VALUES (8936434268, '아몬드', '손원평', '창비', '2017/03/31', 264, '영화보다 강렬하고 드라마처럼 팽팽한, 완전히 새로운 소설이 나타났다. 감정을 느끼지 못하는 소년의 특별한 성장 이야기로, 첫 장부터 강렬한 사건으로 시작해 다음 페이지가 궁금해지게 만드는 흡입력 강한 작품이다. 또한 타인의 감정에 무감각해진 공감 불능인 이 시대에 큰 울림을 주는 소설로, 작품 속 인물들이 타인과 관계 맺고 슬픔에 공감하며 성장해 나가는 과정을 탁월하게 묘사했다. 영화처럼 펼쳐지는 극적인 사건과 매혹적인 문체로 독자를 단숨에 사로잡을 것이다. 『완득이』, 『위저드 베이커리』를 잇는 제10회 창비청소년문학상 수상작.', '아몬드_손원평.jpg', '201901142208.jpg', '아몬드_손원평.pdf', '201901152110.pdf', '2019/01/15', 35, 'DONE');
+INSERT INTO BOOK VALUES ('8936434268', '아몬드', '손원평', '창비', '2017/03/31', 264, '영화보다 강렬하고 드라마처럼 팽팽한, 완전히 새로운 소설이 나타났다. 감정을 느끼지 못하는 소년의 특별한 성장 이야기로, 첫 장부터 강렬한 사건으로 시작해 다음 페이지가 궁금해지게 만드는 흡입력 강한 작품이다. 또한 타인의 감정에 무감각해진 공감 불능인 이 시대에 큰 울림을 주는 소설로, 작품 속 인물들이 타인과 관계 맺고 슬픔에 공감하며 성장해 나가는 과정을 탁월하게 묘사했다. 영화처럼 펼쳐지는 극적인 사건과 매혹적인 문체로 독자를 단숨에 사로잡을 것이다. 『완득이』, 『위저드 베이커리』를 잇는 제10회 창비청소년문학상 수상작.', '아몬드_손원평.jpg', '201901142208.jpg', '아몬드_손원평.pdf', '201901152110.pdf', '2019/01/15', 35, 'DONE', DEFAULT);
 
-INSERT INTO BOOK VALUES (8954641636, '쇼코의 미소', '최은영', '문학동네', '2016/07/04', 296, '등단작에 대해 흔히 우리가 걸게 되는 기대―기존 작품과 구별되는 ''낯섦''과 ''전위''에 대한 요구―로부터 물러나, 별다른 기교 없이 담백하게 이야기를 풀어나가고, 그 정통적인 방식을 통해 읽는 이의 마음을 움직였다는 것에 「쇼코의 미소」가 지닌 특별함이 담겨 있다. 그러니까, “고레에다 히로카즈나 이누도 잇신 감독의 어떤 영화들처럼 거의 모든 영역에서 ''진실하다''라는 느낌”(문학평론가 신형철)을 준다는 것, 그로부터 “소설이 주는 감동이란 무엇인가를 새삼 생각해보게 만들었다”(소설가 임철우)라는 것.', '쇼코의 미소_최은영.jpg', '201811241328.jpg', '쇼코의 미소_최은영.pdf', '201903031830.pdf', '2019/03/03', DEFAULT, 'MAKE');
+INSERT INTO BOOK VALUES ('8954641636', '쇼코의 미소', '최은영', '문학동네', '2016/07/04', 296, '등단작에 대해 흔히 우리가 걸게 되는 기대―기존 작품과 구별되는 ''낯섦''과 ''전위''에 대한 요구―로부터 물러나, 별다른 기교 없이 담백하게 이야기를 풀어나가고, 그 정통적인 방식을 통해 읽는 이의 마음을 움직였다는 것에 「쇼코의 미소」가 지닌 특별함이 담겨 있다. 그러니까, “고레에다 히로카즈나 이누도 잇신 감독의 어떤 영화들처럼 거의 모든 영역에서 ''진실하다''라는 느낌”(문학평론가 신형철)을 준다는 것, 그로부터 “소설이 주는 감동이란 무엇인가를 새삼 생각해보게 만들었다”(소설가 임철우)라는 것.', '쇼코의 미소_최은영.jpg', '201811241328.jpg', '쇼코의 미소_최은영.pdf', '201903031830.pdf', '2019/03/03', DEFAULT, 'MAKE', DEFAULT);
 
-INSERT INTO BOOK VALUES (8954655971, '여행의 이유', '김영하', '문학동네', '2019/04/17', 216, '『여행의 이유』는 작가 김영하가 처음 여행을 떠났던 순간부터 최근의 여행까지, 오랜 시간 여행을 하면서 느끼고 생각했던 것들을 아홉 개의 이야기로 풀어낸 산문이다. 여행지에서 겪은 경험을 풀어낸 여행담이기보다는, 여행을 중심으로 인간과 글쓰기, 타자와 삶의 의미로 주제가 확장되어가는 사유의 여행에 가깝다. 작품에 담긴 소설가이자 여행자로서 바라본 인간과 세상에 대한 이야기들은 놀랄 만큼 매혹적이다. 누구나 한번쯤은 떠올렸을 법한, 그러나 제대로 정리하지 못한 채 남겨두었던 상념의 자락들을 끄집어내 생기를 불어넣는 김영하 작가 특유의 (인)문학적 사유의 성찬이 담겼다.', '여행의 이유_김영하.jpg', '201902041944.jpg', '여행의 이유_김영하.pdf', '201904271126.pdf', '2019/04/27', DEFAULT, 'MAKE');
+INSERT INTO BOOK VALUES ('8954655971', '여행의 이유', '김영하', '문학동네', '2019/04/17', 216, '『여행의 이유』는 작가 김영하가 처음 여행을 떠났던 순간부터 최근의 여행까지, 오랜 시간 여행을 하면서 느끼고 생각했던 것들을 아홉 개의 이야기로 풀어낸 산문이다. 여행지에서 겪은 경험을 풀어낸 여행담이기보다는, 여행을 중심으로 인간과 글쓰기, 타자와 삶의 의미로 주제가 확장되어가는 사유의 여행에 가깝다. 작품에 담긴 소설가이자 여행자로서 바라본 인간과 세상에 대한 이야기들은 놀랄 만큼 매혹적이다. 누구나 한번쯤은 떠올렸을 법한, 그러나 제대로 정리하지 못한 채 남겨두었던 상념의 자락들을 끄집어내 생기를 불어넣는 김영하 작가 특유의 (인)문학적 사유의 성찬이 담겼다.', '여행의 이유_김영하.jpg', '201902041944.jpg', '여행의 이유_김영하.pdf', '201904271126.pdf', '2019/04/27', DEFAULT, 'MAKE', DEFAULT);
 
-INSERT INTO BOOK VALUES (8937473135, '82년생 김지영', '조남주', '민음사', '2016/10/14', 192, '슬하에 딸을 두고 있는 서른네 살 김지영 씨가 어느 날 갑자기 이상 증세를 보인다. 시댁 식구들이 모여 있는 자리에서 친정 엄마로 빙의해 속말을 뱉어 내고, 남편의 결혼 전 애인으로 빙의해 그를 식겁하게 만들기도 한다. 이를 이상하게 여긴 남편이 김지영 씨의 정신 상담을 주선하고, 지영 씨는 정기적으로 의사를 찾아가 자신의 삶을 이야기한다. 소설은 김지영 씨의 이야기를 들은 담당 의사가 그녀의 인생을 재구성해 기록한 리포트 형식이다. 리포트에 기록된 김지영 씨의 기억은 ''여성''이라는 젠더적 기준으로 선별된 에피소드로 구성된다.', '82년생 김지영_조남주.jpg', '201906131208.jpg', '82년생 김지영_조남주.pdf', '201906140908.pdf', '2019/06/14', DEFAULT, DEFAULT);
+INSERT INTO BOOK VALUES ('8937473135', '82년생 김지영', '조남주', '민음사', '2016/10/14', 192, '슬하에 딸을 두고 있는 서른네 살 김지영 씨가 어느 날 갑자기 이상 증세를 보인다. 시댁 식구들이 모여 있는 자리에서 친정 엄마로 빙의해 속말을 뱉어 내고, 남편의 결혼 전 애인으로 빙의해 그를 식겁하게 만들기도 한다. 이를 이상하게 여긴 남편이 김지영 씨의 정신 상담을 주선하고, 지영 씨는 정기적으로 의사를 찾아가 자신의 삶을 이야기한다. 소설은 김지영 씨의 이야기를 들은 담당 의사가 그녀의 인생을 재구성해 기록한 리포트 형식이다. 리포트에 기록된 김지영 씨의 기억은 ''여성''이라는 젠더적 기준으로 선별된 에피소드로 구성된다.', '82년생 김지영_조남주.jpg', '201906131208.jpg', '82년생 김지영_조남주.pdf', '201906140908.pdf', '2019/06/14', DEFAULT, DEFAULT, DEFAULT);
 
-INSERT INTO BOOK VALUES (8937473097, '보건교사 안은영', '정세랑', '민음사', '2015/12/07',	280, '소설은 제목 그대로 사립 M고의 보건교사 ''안은영''을 주인공으로 한다. 특별한 것 없는 직업과 평범한 이름이지만 안은영은 보통의 보건교사가 아니다. 복 중의 복, 일복 하나는 타고난 그녀는 직업으로 ''보건교사'' 역할에 열심히면서 동시에 자신만이 볼 수 있는 것들을 처치하고 쫓아내며, 또는 위로하는 ''퇴마사''의 운명에도 충실히 복무한다. 여기에 사립 M고의 한문교사이자 학교 설립자의 후손인 홍인표에게 흐르는 거대한 에너지는 안은영의 활약을 돕는 필수적인 영양제 역할을 한다. 에너지(기)를 보충하기 위해, 학교의 평화를 지키기 위해 둘은 내 거 아닌 내 것 같은 사이가 되어 힘을 합한다. 둘 앞에 나타나는 기이한 괴물들, 학생들에게 보이는 미스터리한 현상들, 학교 곳곳에 숨은 괴상한 힘들…… 사립 M고에는 어떤 비밀이 있는 것일까. 무엇보다 안은영과 홍인표의 썸(some)은 어떻게 마무리될까?', '보건교사 안은영_정세랑.jpg', '201908191645.jpg', '보건교사 안은영_정세랑.pdf', '201908201445pdf', '2019/08/20', DEFAULT, DEFAULT);
+INSERT INTO BOOK VALUES ('8937473097', '보건교사 안은영', '정세랑', '민음사', '2015/12/07',   280, '소설은 제목 그대로 사립 M고의 보건교사 ''안은영''을 주인공으로 한다. 특별한 것 없는 직업과 평범한 이름이지만 안은영은 보통의 보건교사가 아니다. 복 중의 복, 일복 하나는 타고난 그녀는 직업으로 ''보건교사'' 역할에 열심히면서 동시에 자신만이 볼 수 있는 것들을 처치하고 쫓아내며, 또는 위로하는 ''퇴마사''의 운명에도 충실히 복무한다. 여기에 사립 M고의 한문교사이자 학교 설립자의 후손인 홍인표에게 흐르는 거대한 에너지는 안은영의 활약을 돕는 필수적인 영양제 역할을 한다. 에너지(기)를 보충하기 위해, 학교의 평화를 지키기 위해 둘은 내 거 아닌 내 것 같은 사이가 되어 힘을 합한다. 둘 앞에 나타나는 기이한 괴물들, 학생들에게 보이는 미스터리한 현상들, 학교 곳곳에 숨은 괴상한 힘들…… 사립 M고에는 어떤 비밀이 있는 것일까. 무엇보다 안은영과 홍인표의 썸(some)은 어떻게 마무리될까?', '보건교사 안은영_정세랑.jpg', '201908191645.jpg', '보건교사 안은영_정세랑.pdf', '201908201445pdf', '2019/08/20', DEFAULT, DEFAULT, DEFAULT);
 
-INSERT INTO BOOK VALUES (8982814477, '연금술사', '파울로 코엘료', '문학동네', '2001/12/01', 278, '청년의 가슴속에서, 알 수 없는 기쁨이 솟구쳤다. 자신은 이제 자아의 신화를 위해서, 그리고 파티마를 위해서 죽게 되리라. 낯선 기쁨의 실체는 바로 그것이었다. 표지들이 보여준 것은 끝내 사실이었던 것이다. 눈앞에 칼을 든 적이 있었지만, 그는 죽음을 걱정할 필요가 없었다. 만물의 정기가 그를 기다리고 있었고, 잠시 후면 그 정기의 일부가 될 터였다."이방인이 낯선 땅에서 무엇을 하고 있는가?", "자아의 신화를 찾으러 왔습니다. 당신은 절대 이해하지 못할 어떤 것을 찾아서."',	'연금술사_파울로 코엘료.jpg', '201909261556.jpg', '연금술사_파울로 코엘료.pdf', '201909271556.pdf', '2019/09/27', DEFAULT, DEFAULT);
+INSERT INTO BOOK VALUES ('8982814477', '연금술사', '파울로 코엘료', '문학동네', '2001/12/01', 278, '청년의 가슴속에서, 알 수 없는 기쁨이 솟구쳤다. 자신은 이제 자아의 신화를 위해서, 그리고 파티마를 위해서 죽게 되리라. 낯선 기쁨의 실체는 바로 그것이었다. 표지들이 보여준 것은 끝내 사실이었던 것이다. 눈앞에 칼을 든 적이 있었지만, 그는 죽음을 걱정할 필요가 없었다. 만물의 정기가 그를 기다리고 있었고, 잠시 후면 그 정기의 일부가 될 터였다."이방인이 낯선 땅에서 무엇을 하고 있는가?", "자아의 신화를 찾으러 왔습니다. 당신은 절대 이해하지 못할 어떤 것을 찾아서."',   '연금술사_파울로 코엘료.jpg', '201909261556.jpg', '연금술사_파울로 코엘료.pdf', '201909271556.pdf', '2019/09/27', DEFAULT, DEFAULT, DEFAULT);
 
-INSERT INTO BOOK VALUES (8983925310, '해리포터와 마법사의 돌 1', 'J. K. 롤링', '문학수첩', '2014/12/18', 244, '어둠의 마왕 볼드모트에게 부모를 잃고 홀로 살아남은 아이, 해리는 안전을 위해 마법사가 아닌 사람인 ‘머글’ 페투니아 이모와 버논 이모부 손에 길러지며 불우한 어린 시절을 보낸다. 열한 번째 생일날, 해그리드를 통해 자신이 마법사라는 사실을 알게 된 해리는 호그와트 마법학교에 입학해 헤르미온느 그레인저, 론 위즐리라는 친구들과 함께 영생을 주는 마법사의 돌을 찾는 엄청난 모험을 시작하게 된다.', '해리포터와_마법사의_돌1.jpg', '201902142136.jpg', '해리포터와_마법사의_돌1.pdf', '201907252115.pdf', '2019/07/25', 55, 'DONE');
+INSERT INTO BOOK VALUES ('8983925310', '해리포터와 마법사의 돌 1', 'J. K. 롤링', '문학수첩', '2014/12/18', 244, '어둠의 마왕 볼드모트에게 부모를 잃고 홀로 살아남은 아이, 해리는 안전을 위해 마법사가 아닌 사람인 ‘머글’ 페투니아 이모와 버논 이모부 손에 길러지며 불우한 어린 시절을 보낸다. 열한 번째 생일날, 해그리드를 통해 자신이 마법사라는 사실을 알게 된 해리는 호그와트 마법학교에 입학해 헤르미온느 그레인저, 론 위즐리라는 친구들과 함께 영생을 주는 마법사의 돌을 찾는 엄청난 모험을 시작하게 된다.', '해리포터와_마법사의_돌1.jpg', '201902142136.jpg', '해리포터와_마법사의_돌1.pdf', '201907252115.pdf', '2019/07/25', 55, 'DONE', DEFAULT);
+
+INSERT INTO BOOK VALUES ('1162203625', '파과', '구병모', '위즈덤하우스', '2018/04/16', 344, '노인, 여성, 킬러. 도무지 어울릴 것 같지 않은 세 가지를 조합한 주인공 조각은 65세 여성 킬러다. 한국 소설 가운데 이토록 파격적인 주인공이 또 있을까. 그동안 아가미를 가진 소년([아가미]), 인간을 닮은 로봇([한 스푼의 시간]) 등 환상적인 상상력을 통해 독특한 주인공들을 탄생시킨 구병모 작가는 한국 소설에서 유례를 찾을 수 없는 ‘60대 여성 킬러’라는 독특한 캐릭터를 통해 새로운 여성 서사를 써내려가며 독자들에게 신선한 충격을 던져준다. 사회의 최약자로서 차별받아온 ‘노인’과 ‘여성’이라는 인물이 억압적이고 폭력적인 사회에 ‘킬러’라는 강렬한 이름으로 맞서 싸우는 것이다.
+자신을 치료해준 강 박사에게 남다른 감정을 품게 된 조각, 그런 조각을 경멸하는 투우, 킬러들에게서 가족을 지키려는 강 박사. 마침내 투우가 강 박사의 딸을 납치하고, 조각이 투우에게 총을 겨누며 생애 마지막 작업을 실행키로 결심하면서 소설은 절정으로 향한다. 읽는 내내 한 편의 액션 영화를 보는 듯 박진감과 긴장감이 넘치는 이 소설의 말미에서 조각과 투우가 벌이는 총격전은 그야말로 압권이다.
+[파과]는 내가 살아남기 위해 누군가를 죽여야만 하는 이 지독하고 잔혹한 현실 속에서 어떤 기대도 소망도 없이, 오늘도 눈을 떴기 때문에, 그저 살아 있기 때문에, 기꺼이 살아내는 모든 것들에게 따뜻한 응원과 위로를 전한다.', '파과.jpg', '201910072336.jpg', '파과.pdf', '201910072338.pdf', '2019/10/7', 0, 'WAIT', DEFAULT);
+
+INSERT INTO BOOK VALUES ('9791130620459', '철학은 어떻게 삶의 무기가 되는가', '야마구치 슈', '다산초당', '2019/01/22', 336, '삶과 비즈니스 현장에서 철학적으로 생각하고 답을 도출하는 법을 알려 주는 실용 철학서. 세계 1위 경영·인사 컨설팅 기업 콘페리헤이그룹의 시니어 파트너인 저자는 대학교에서 철학을 전공하고 대학원에서 미학미술사를 공부한 ‘문사철’ 출신이다. 경영에 관한 정식 교육은 한 번도 받지 않았지만 컨설턴트로서 경영 전반에 걸친 기업 문제를 해결하는 데 어려움을 겪은 적은 없다. 눈앞의 상황을 철학이나 심리학, 경제학 개념에 맞춰 생각하면 언제나 해결의 실마리가 보였기 때문이다.
+철학이 현실 세계와 동떨어진 학문이라는 말을 강하게 부정하는 저자는 사람들이 철학을 쓸모없다고 여기는 이유가 철학과 비즈니스를 연결시켜서 생각하는 법을 모르기 때문이라고 진단한다. 오히려 그는 본질을 꿰뚫고 최적의 솔루션을 찾아내는 철학적 사고법이야말로 현대인들에게 가장 필요한 무기라고 말한다. 그가 비즈니스 현장에서 유용하게 사용하는 50가지 철학·사상을 담은 『철학은 어떻게 삶의 무기가 되는가』는 철학의 쓸모를 새롭게 조명하는 세상에서 가장 실용적인 철학 사용 설명서다.', '철학은 어떻게 삶의 무기가 되는가.jpg', '201909121723.jpg', '철학은 어떻게 삶의 무기가 되는가.pdf', '201909121815.pdf', '2019/09/12', 0, 'MAKE', DEFAULT);
+
+INSERT INTO BOOK VALUES ('9788934972464', '사피엔스', '유발 하라리', '김영사', '2015/11/23', 640, '인간의 역사와 미래에 대한 가장 논쟁적인 대서사!
+문명의 배를 타고 진화의 바다를 항해한 인류는 이제 어디로 나아갈 것인가! 왜 사피엔스 종만이 지구상에 살아남았나? 인간은 왜 역사상 가장 치명적인 동물이 되었는가? 인간의 유효기간은 언제까지인가? 역사, 사회, 생물, 종교, 등 학문의 경계를 넘나들며 인류 역사의 시간을 종횡무진 써내려간 문명의 항해기가 우리 눈앞에 펼쳐진다!', '사피엔스.jpg', '201910131936.jpg', '사피엔스.pdf', '201910131856.pdf', '2019/10/13', 0, 'WAIT', DEFAULT);
+
+INSERT INTO BOOK VALUES ('8982816631', '자기 앞의 생', '에밀 아자르', '문학동네', '2003/05/06', 363, '자신에게 주어진 생을 완전히 만족하며 살아가는 사람이 몇이나 될까? 작가는 실제 나이보다 많은 나이를 살고 있는 열네 살 모모의 눈으로 이해하지 못할 세상을 바라본다. 모모의 눈에 비친 세상은 결코 꿈같이 아름다운 세상이 아니다. 인종 차별받는 아랍인, 감옥에 끌려갔다가 살아 돌아온 유태인, 성전환자 등... 세상 모든 사람들은 스승이라고 했듯이 모모의 눈에도 소설속 모든 이들이 인생의 굳은살을 단단하게 해주는 인생선배들이다. 작은 상처에도 아파하는 독자들이여, 온전히 삶을 보듬길 바란다면 지금 이 책 앞에 서라.', '자기 앞의 생.jpg', '201910021429.jpg', '자기 앞의 생.pdf', '201910021215.pdf', '2019/10/02', 0, 'MAKE', DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925329','해리포터와 마법사의 돌 2','J.K. 롤링','문학수첩','2014/12/18',244,'어둠의 마왕 볼드모트에게 부모를 잃고 홀로 살아남은 아이,해리는 안전을 위해 마법사가 아닌 사람인 ‘머글’ 페투니아 이모와 버논 이모부 손에 길러지며 불우한 어린 시절을 보낸다. 열한 번째 생일날, 해그리드를 통해 자신이 마법사라는 사실을 알게 된 해리는 호그와트 마법학교에 입학해 헤르미온느 그레인저, 론 위즐리라는 친구들과 함께 영생을 주는 마법사의 돌을 찾는 엄청난 모험을 시작하게 된다.'
+,'해리포터와_마법사의_돌2.jpg','201902142133.jpg','해리포터와_마법사의_돌2.pdf','201905112217.pdf','2019/05/11',3,'DONE', DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925337','해리포터와 비밀의 방 1','J.K. 롤링','문학수첩','2014/12/18',264,'더즐리 이모부네 집에서 끔찍한 방학을 보내던 해리에게 도비라는 집요정이 나타나 학교로 돌아가지 말라고 경고한다. 그 말을 무시하고 호그와트로 돌아간 해리는 머글 출신 아이들을 대상으로 한 의문의 습격 사건에 연루된다. 슬리데린의 후계자가 비밀의 방을 열고 괴물을 풀어줬다는 소문이 돌고 해리는 뱀의 말을 할 줄 안다는 이유로 습격사건의 범인으로 모함을 받는다. 헤르미온느마저 습격사건의 피해자가 되고 론의 동생 지니가 납치당해 사라지자 해리와 론은 직접 비밀의 방을 찾아 지니를 구해오기로 한다.',
+'해리포터와_비밀의_방1.jpg','201902152130.jpg','해리포터와_비밀의_방1.pdf','201905120137.pdf','2019/05/12',4,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925353','해리포터와 아즈카반의 죄수 1','J.K. 롤링','문학수첩','2014/12/18',328,
+'여느 때처럼 괴로운 여름방학을 보내던 해리는 심한 모욕을 받고 화가 난 나머지, 
+더즐리 이모부의 여동생에게 무단으로 마법을 건다. 집을 뛰쳐나온 해리는 퇴학당할지도 모른다는 생각에 상심하지만, 
+그를 기다리는 건 더 큰 문제다. 
+바로 12년 동안 아즈카반이라는 마법사 감옥에 수감되어 있던 악명 높은 살인자, 시리우스 블랙이 탈옥해 해리를 노린다는 소식이다. 
+론네 식구들에게 보호받으며 방학을 보낸 해리가 호그와트로 돌아가자, 시리우스 블랙이 침입한 흔적이 학교 곳곳에서 발견된다. 
+그가 부모님을 배신하여 죽음에 이르게 했다는 것을 알게 된 해리는 단짝 친구들과 함께 시리우스 블랙을 찾아나선다.',
+'해리포터와_아즈카반의_죄수1.jpg','201902162130.jpg','해리포터와_아즈카반의_죄수1.pdf','201905142111.pdf','2019/05/14',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925361','해리포터와 아즈카반의 죄수 2','J.K. 롤링','문학수첩','2014/12/18',300,
+'여느 때처럼 괴로운 여름방학을 보내던 해리는 심한 모욕을 받고 화가 난 나머지, 
+더즐리 이모부의 여동생에게 무단으로 마법을 건다. 집을 뛰쳐나온 해리는 퇴학당할지도 모른다는 생각에 상심하지만, 
+그를 기다리는 건 더 큰 문제다. 
+바로 12년 동안 아즈카반이라는 마법사 감옥에 수감되어 있던 악명 높은 살인자, 시리우스 블랙이 탈옥해 해리를 노린다는 소식이다. 
+론네 식구들에게 보호받으며 방학을 보낸 해리가 호그와트로 돌아가자, 시리우스 블랙이 침입한 흔적이 학교 곳곳에서 발견된다. 
+그가 부모님을 배신하여 죽음에 이르게 했다는 것을 알게 된 해리는 단짝 친구들과 함께 시리우스 블랙을 찾아나선다.',
+'해리포터와_아즈카반의_죄수2.jpg','201902172133.jpg','해리포터와_아즈카반의_죄수2.pdf','201905152122.pdf','2019/05/15',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('898392537X','해리포터와 불의 잔 1','J.K. 롤링','문학수첩','2014/12/18',328,
+'마법사 세계의 최대 게임인 퀴디치 월드컵 중 볼드모트의 상징인 어둠의 표식이 밤하늘에 떠오른다. 
+해리를 비롯한 마법사 세계가 다시 불안에 떠는 가운데 호그와트에서는 유럽의 유명한 세 마법학교에서각 한 명씩의 대표를 선발하여 겨루는 트리위저드 대회가 개최된다.
+17세 이하는 출전할 수 없을 정도로 위험한 이 대회에 이미 호그와트의 대표로 케드릭 디고리가 뽑혔는데도, 전례 없이 네 번째 대표로 아직 나이 어린 해리가 또 뽑혀 구설수에오른다. 
+누가 불의 잔을 조작해 해리가 뽑히게 된 것인지조차 모르는 상황에서 시합은 속행되고,
+마지막 시합 날 함께 우승컵을 잡은 케드릭과 해리는 볼드모트가 있는 곳으로 소환된다. 
+케드릭은 볼드모트에게 살해당하지만, 해리는 부모 영혼의 도움으로 그 자리를 간신히 탈출하여 다시 호그와트로 돌아온다.',
+'해리포터와_불의_잔1.jpg','201902182134.jpg','해리포터와_불의_잔1.pdf','201905162123.pdf','2019/05/16',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925388','해리포터와 불의 잔 2','J.K. 롤링','문학수첩','2014/12/18',328,
+'마법사 세계의 최대 게임인 퀴디치 월드컵 중 볼드모트의 상징인 어둠의 표식이 밤하늘에 떠오른다. 
+해리를 비롯한 마법사 세계가 다시 불안에 떠는 가운데 호그와트에서는 유럽의 유명한 세 마법학교에서 각 한 명씩의 대표를 선발하여 겨루는 트리위저드 대회가 개최된다.
+17세 이하는 출전할 수 없을 정도로 위험한 이 대회에 이미 호그와트의 대표로 케드릭 디고리가 뽑혔는데도, 
+전례 없이 네 번째 대표로 아직 나이 어린 해리가 또 뽑혀 구설수에 오른다. 
+누가 불의 잔을 조작해 해리가 뽑히게 된 것인지조차 모르는 상황에서 시합은 속행되고,
+마지막 시합 날 함께 우승컵을 잡은 케드릭과 해리는 볼드모트가 있는 곳으로 소환된다. 
+케드릭은 볼드모트에게 살해당하지만, 해리는 부모 영혼의 도움으로 그 자리를 간신히 탈출하여 
+다시 호그와트로 돌아온다.',
+'해리포터와_불의_잔2','201902192135.jpg','해리포터와_불의_잔2.pdf','201905172124.pdf','2019/05/17',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925396','해리포터와 불의 잔 3','J.K. 롤링','문학수첩','2014/12/18',312,
+'마법사 세계의 최대 게임인 퀴디치 월드컵 중 볼드모트의 상징인 어둠의 표식이 밤하늘에 떠오른다. 
+해리를 비롯한 마법사 세계가 다시 불안에 떠는 가운데 호그와트에서는 유럽의 유명한 세 마법학교에서
+각 한 명씩의 대표를 선발하여 겨루는 트리위저드 대회가 개최된다.
+17세 이하는 출전할 수 없을 정도로 위험한 이 대회에 이미 호그와트의 대표로 케드릭 디고리가 뽑혔는데도,
+전례 없이 네 번째 대표로 아직 나이 어린 해리가 또 뽑혀 구설수에 오른다. 
+누가 불의 잔을 조작해 해리가 뽑히게 된 것인지조차 모르는 상황에서 시합은 속행되고,
+마지막 시합 날 함께 우승컵을 잡은 케드릭과 해리는 볼드모트가 있는 곳으로 소환된다. 
+케드릭은 볼드모트에게 살해당하지만, 해리는 부모 영혼의 도움으로 그 자리를 간신히 탈출하여 다시 호그와트로 돌아온다.',
+'해리포터와_불의_잔3.jpg','201902192136.jpg','해리포터와_불의_잔3.pdf','201905182125.pdf','2019/05/18',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('898392540X','해리포터와 불의 잔 4','J.K. 롤링','문학수첩','2014/12/18',312,
+'마법사 세계의 최대 게임인 퀴디치 월드컵 중 볼드모트의 상징인 어둠의 표식이 밤하늘에 떠오른다. 
+해리를 비롯한 마법사 세계가 다시 불안에 떠는 가운데 호그와트에서는 유럽의 유명한 세 마법학교에서
+각 한 명씩의 대표를 선발하여 겨루는 트리위저드 대회가 개최된다.
+17세 이하는 출전할 수 없을 정도로 위험한 이 대회에 이미 호그와트의 대표로 케드릭 디고리가 뽑혔는데도, 
+전례 없이 네 번째 대표로 아직 나이 어린 해리가 또 뽑혀 구설수에 오른다. 
+누가 불의 잔을 조작해 해리가 뽑히게 된 것인지조차 모르는 상황에서 시합은 속행되고,
+마지막 시합 날 함께 우승컵을 잡은 케드릭과 해리는 볼드모트가 있는 곳으로 소환된다. 
+케드릭은 볼드모트에게 살해당하지만, 해리는 부모 영혼의 도움으로 그 자리를 간신히 탈출하여 다시 호그와트로 돌아온다.',
+'해리포터와_불의_잔4.jpg','201902212133.jpg','해리포터와_불의_잔4.pdf','201905192126.pdf','2019/05/19',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925418','해리포터와 불사조 기사단 1','J.K. 롤링','문학수첩','2014/12/18',328,
+'사사건건 해리를 괴롭히는 사촌 두들리와 다투다 디멘터의 습격을 받은 해리는 
+우여곡절 끝에 친구 론과 헤르미온느가 있는 불사조 기사단의 비밀 본부로 가게 된다. 
+볼드모트에 대항하는 비밀 단체였지만,
+정작 해리는 나이가 어리다는 이유로 기사단에 가입하지 못한다.
+한편 퍼지 마법부 장관의 심복인 돌로레스 제인 엄브릿지가 호그와트에 부임하여 
+어둠의 마법 방어술을 전혀 익히지 못하게 하자,
+해리는 론, 헤르미온느와 더불어 ‘덤블도어의 군대’라는 모임을 조직 몰래 마법을 익힌다.
+ 이 일로 해리가 퇴학당할 위기에 처하자 덤블도어는 대신 죄를 뒤집어쓰고 마법부의 감시를 피해 몸을 감춘다. 
+한편 해리는 대부 시리우스가 볼드모트에 의해 마법부의 미스터리 부서로 끌려가는 꿈을 꾸고 친구들과 구출 작전을 개시한다.',
+'해리포터와_불사조_기사단1.jpg','201902222237.jpg','해리포터와_불사조_기사단1.pdf','201905202127.pdf','2019/05/20',1,'DONE',DEFAULT);
+
+
+INSERT INTO BOOK VALUES('8983925426','해리포터와 불사조 기사단 2','J.K. 롤링','문학수첩','2014/12/18',328,
+'사사건건 해리를 괴롭히는 사촌 두들리와 다투다 디멘터의 습격을 받은 
+해리는 우여곡절 끝에 친구 론과 헤르미온느가 있는 불사조 기사단의 비밀 본부로 가게 된다. 
+볼드모트에 대항하는 비밀 단체였지만, 정작 해리는 나이가 어리다는 이유로 기사단에 가입하지 못한다. 
+한편 퍼지 마법부 장관의 심복인 돌로레스 제인 엄브릿지가 호그와트에 부임하여 어둠의 마법 방어술을 전혀 익히지 못하게 하자, 
+해리는 론, 헤르미온느와 더불어 ‘덤블도어의 군대’라는 모임을 조직 몰래 마법을 익힌다.
+이 일로 해리가 퇴학당할 위기에 처하자 덤블도어는 대신 죄를 뒤집어쓰고 마법부의 감시를 피해 몸을 감춘다. 
+한편 해리는 대부 시리우스가 볼드모트에 의해 마법부의 미스터리 부서로 끌려가는 꿈을 꾸고 친구들과 구출 작전을 개시한다.',
+'해리포터와_불사조_기사단2.jpg','201902232131.jpg','해리포터와_불사조_기사단2.pdf','201905212128.pdf','2019/05/21',1,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925434','해리포터와 불사조 기사단 3','J.K. 롤링','문학수첩','2014/12/18',324,
+'사사건건 해리를 괴롭히는 사촌 두들리와 다투다 디멘터의 습격을 받은 해리는 우여곡절 끝에 친구 론과 헤르미온느가 있는 불사조 기사단의 비밀 본부로 가게 된다. 
+볼드모트에 대항하는 비밀 단체였지만, 정작 해리는 나이가 어리다는 이유로 기사단에 가입하지 못한다. 
+ 한편 퍼지 마법부 장관의 심복인 돌로레스 제인 엄브릿지가 호그와트에 부임하여 어둠의 마법 방어술을 전혀 익히지 못하게 하자, 
+해리는 론, 헤르미온느와 더불어 ‘덤블도어의 군대’라는 모임을 조직 몰래 마법을 익힌다.
+이 일로 해리가 퇴학당할 위기에 처하자 덤블도어는 대신 죄를 뒤집어쓰고 마법부의 감시를 피해 몸을 감춘다. 
+한편 해리는 대부 시리우스가 볼드모트에 의해 마법부의 미스터리 부서로 끌려가는 꿈을 꾸고 친구들과 구출 작전을 개시한다.',
+'해리포터와_불사조_기사단3.jpg','201902242130.jpg','해리포터와_불사조_기사단3.pdf','201905222129.pdf','2019/05/22',21,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925442','해리포터와 불사조 기사단 4','J.K. 롤링','문학수첩','2014/12/18',356,
+'사사건건 해리를 괴롭히는 사촌 두들리와 다투다 디멘터의 습격을 받은 해리는 우여곡절 끝에 친구 론과 헤르미온느가 있는 불사조 기사단의 비밀 본부로 가게 된다.
+볼드모트에 대항하는 비밀 단체였지만, 정작 해리는 나이가 어리다는 이유로 기사단에 가입하지 못한다. 
+한편 퍼지 마법부 장관의 심복인 돌로레스 제인 엄브릿지가 호그와트에 부임하여 어둠의 마법 방어술을 전혀 익히지 못하게 하자, 
+해리는 론, 헤르미온느와 더불어 ‘덤블도어의 군대’라는 모임을 조직 몰래 마법을 익힌다.
+ 이 일로 해리가 퇴학당할 위기에 처하자 덤블도어는 대신 죄를 뒤집어쓰고 마법부의 감시를 피해 몸을 감춘다. 
+한편 해리는 대부 시리우스가 볼드모트에 의해 마법부의 미스터리 부서로 끌려가는 꿈을 꾸고 친구들과 구출 작전을 개시한다.',
+'해리포터와_불사조_기사단4.jpg','201902252131.jpg','해리포터와_불사조_기사단4.pdf','201905232120.pdf','2019/05/23',20,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925469','해리포터와 혼혈왕자 1','J.K. 롤링','문학수첩','2014/12/18',304,
+'볼드모트의 영향력이 커지는 가운데 마법사 세계와 머글 세계는 경계 상태에 들어가게 된다. 
+덤블도어와 해리의 설득으로 호그와트 교수로 취임한 슬러그혼은 마법약 과목을 가르치고, 
+스네이프는 어둠의 마법 방어술을 가르치게 된다. 
+슬러그혼의 첫 수업에서 해리는 혼혈 왕자라는 별칭을 가진 소년이 쓰던 책을 받게 되고,
+그 책의 도움으로 마법의 약 수업에서 두각을 보인다. 한편 덤블도어는 해리에게
+볼드모트와 관련된 과거의 기억들을 보여주며 볼드모트가 자신의 영혼을 7개의 호크룩스에 나누어 놓았다는 사실을 알려준다. 
+두 사람은 호크룩스를 찾기 위해 볼드모트가 어린 시절 들렀던 동굴을 찾지만 별 소득을 얻지 못한다. 
+지친 몸으로 학교에 돌아온 해리는 잠입한 볼드모트의 추종자들과 맞닥뜨리고, 뼈아픈 상실을 경험하게 된다.',
+'해리포터와_혼혈왕자1.jpg','201903012132.jpg','해리포터와_혼혈왕자1.pdf','201905242121.pdf','2019/05/24',19,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925477','해리포터와 혼혈왕자 2','J.K. 롤링','문학수첩','2014/12/18',320,
+'볼드모트의 영향력이 커지는 가운데 마법사 세계와 머글 세계는 경계 상태에 들어가게 된다
+덤블도어와 해리의 설득으로 호그와트 교수로 취임한 슬러그혼은 마법약 과목을 가르치고, 스네이프는 어둠의 마법 방어술을 가르치게 된다. 
+슬러그혼의 첫 수업에서 해리는 혼혈 왕자라는 별칭을 가진 소년이 쓰던 책을 받게 되고, 그 책의 도움으로 마법의 약 수업에서 두각을 보인다. 
+한편 덤블도어는 해리에게 볼드모트와 관련된 과거의 기억들을 보여주며 볼드모트가 자신의 영혼을 7개의 호크룩스에 나누어 놓았다는 사실을 알려준다. 
+두 사람은 호크룩스를 찾기 위해 볼드모트가 어린 시절 들렀던 동굴을 찾지만 별 소득을 얻지 못한다. 
+지친 몸으로 학교에 돌아온 해리는 잠입한 볼드모트의 추종자들과 맞닥뜨리고, 뼈아픈 상실을 경험하게 된다.',
+'해리포터와_혼혈왕자2.jpg','201903022133.jpg','해리포터와_혼혈왕자2.pdf','201905252122.pdf','2019/05/25',17,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925485','해리포터와 혼혈왕자 3','J.K. 롤링','문학수첩','2014/12/18',292,
+'볼드모트의 영향력이 커지는 가운데 마법사 세계와 머글 세계는 경계 상태에 들어가게 된다. 
+덤블도어와 해리의 설득으로 호그와트 교수로 취임한 슬러그혼은 마법약 과목을 가르치고, 
+스네이프는 어둠의 마법 방어술을 가르치게 된다. 슬러그혼의 첫 수업에서 해리는 혼혈 왕자라는 별칭을 가진 소년이 쓰던 책을 받게 되고,
+그 책의 도움으로 마법의 약 수업에서 두각을 보인다. 한편 덤블도어는 해리에게 볼드모트와 관련된 과거의 기억들을 보여주며 
+볼드모트가 자신의 영혼을 7개의 호크룩스에 나누어 놓았다는 사실을 알려준다. 두 사람은 호크룩스를 찾기 위해 
+볼드모트가 어린 시절 들렀던 동굴을 찾지만 별 소득을 얻지 못한다. 지친 몸으로 학교에 돌아온 해리는 잠입한 
+볼드모트의 추종자들과 맞닥뜨리고, 뼈아픈 상실을 경험하게 된다.',
+'해리포터와_혼혈왕자3.jpg','201903042134.jpg','해리포터와_혼혈왕자3.pdf','201905262123.pdf','2019/05/26',2,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925493','해리포터와 혼혈왕자 4','J.K. 롤링','문학수첩','2014/12/18',288,
+'볼드모트의 영향력이 커지는 가운데 마법사 세계와 머글 세계는 경계 상태에 들어가게 된다. 
+덤블도어와 해리의 설득으로 호그와트 교수로 취임한 슬러그혼은 마법약 과목을 가르치고, 
+스네이프는 어둠의 마법 방어술을 가르치게 된다. 슬러그혼의 첫 수업에서 해리는 혼혈 왕자라는 별칭을 가진 소년이 쓰던 책을 받게 되고,
+그 책의 도움으로 마법의 약 수업에서 두각을 보인다. 한편 덤블도어는 해리에게 볼드모트와 관련된 과거의 기억들을 보여주며 
+볼드모트가 자신의 영혼을 7개의 호크룩스에 나누어 놓았다는 사실을 알려준다. 두 사람은 호크룩스를 찾기 위해 
+볼드모트가 어린 시절 들렀던 동굴을 찾지만 별 소득을 얻지 못한다. 지친 몸으로 학교에 돌아온 해리는 잠입한 
+볼드모트의 추종자들과 맞닥뜨리고, 뼈아픈 상실을 경험하게 된다.',
+'해리포터와_혼혈왕자4.jpg','201903052135.jpg','해리포터와_혼혈왕자4.pdf','201905272124.pdf','2019/05/27',13,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925507','해리포터와 죽음의 성물 1','J.K. 롤링','문학수첩','2014/12/18',360,
+'열일곱 살이 되기 직전, 더즐리 가에 걸린 보호마법이 걷히기 전에 친구들의 미끼작전으로 은신처로 몸을 피한 해리는 론과 헤르미온느와 
+함께 덤블도어의 뜻을 이어 호크룩스를 찾기로 결심한다.
+덤블도어의 유품을 조사하던 중 죽음을 피하는 강력한 마법 물품인 
+‘죽음의 성물’이 실제로 존재하며 그중 하나인 딱총나무 지팡이는 볼드모트가, 나머지 하나인 투명 망토는 자신이 갖고 있다는 것을 알게 된다. 
+마지막 남은 죽음의 성물이 어디 있는지, 볼드모트와 대적할 방도는 무엇인지도 모른 채, 마지막 남은 호크룩스를 파괴하고 
+볼드모트와의 결전을 치르기 위해 해리와 친구들은 죽음을 먹는 자들이 장악하고 있는 호그와트로 잠입한다.',
+'해리포터와_죽음의_성물1.jpg','201903062119.jpg','해리포터와_죽음의_성물1.pdf','201905282125.pdf','2019/05/28',10,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925655','해리포터와 죽음의 성물 2','J.K. 롤링','문학수첩','2014/12/18',656,
+'열일곱살이 되기 직전, 더즐리 가에 걸린 보호마법이 걷히기 전에 친구들의 미끼작전으로 은신처로 몸을 피한 해리는 론과 헤르미온느와 
+함께 덤블도어의 뜻을 이어 호크룩스를 찾기로 결심한다. 
+덤블도어의 유품을 조사하던 중 죽음을 피하는 강력한 마법 물품인 
+‘죽음의 성물’이 실제로 존재하며 그중 하나인 딱총나무 지팡이는 볼드모트가, 나머지 하나인 투명 망토는 자신이 갖고 있다는 것을 알게 된다.
+마지막 남은 죽음의 성물이 어디 있는지, 볼드모트와 대적할 방도는 무엇인지도 모른 채, 마지막 남은 호크룩스를 파괴하고 
+볼드모트와의 결전을 치르기 위해 해리와 친구들은 죽음을 먹는 자들이 장악하고 있는 호그와트로 잠입한다.',
+'해리포터와_죽음의_성물2jpg','201903072137.jpg','해리포터와_죽음의_성물2.pdf','201905292126.pdf','2019/05/29',1,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925523','해리포터와 죽음의 성물 3','J.K. 롤링','문학수첩','2014/12/18',328,
+'열일곱 살이 되기 직전, 더즐리 가에 걸린 보호마법이 걷히기 전에 친구들의 미끼작전으로 은신처로 몸을 피한 해리는 론과 헤르미온느와 
+함께 덤블도어의 뜻을 이어 호크룩스를 찾기로 결심한다. 
+덤블도어의 유품을 조사하던 중 죽음을 피하는 강력한 마법 물품인 ‘죽음의 성물’이 실제로 존재하며 
+그중 하나인 딱총나무 지팡이는 볼드모트가, 나머지 하나인 투명 망토는 자신이 갖고 있다는 것을 알게 된다.
+마지막 남은 죽음의 성물이 어디 있는지, 볼드모트와 대적할 방도는 무엇인지도 모른 채, 마지막 남은 호크룩스를 파괴하고 
+볼드모트와의 결전을 치르기 위해 해리와 친구들은 죽음을 먹는 자들이 장악하고 있는 호그와트로 잠입한다.',
+'해리포터와_죽음의_성물3.jpg','201903082138.jpg','해리포터와_죽음의_성물3.pdf','201906012127.pdf','2019/06/01',1,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8983925531','해리포터와 죽음의 성물 4','J.K. 롤링','문학수첩','2014/12/18',336,
+'열일곱 살이 되기 직전, 더즐리 가에 걸린 보호마법이 걷히기 전에 친구들의 미끼작전으로 은신처로 몸을 피한 해리는 론과 헤르미온느와 
+함께 덤블도어의 뜻을 이어 호크룩스를 찾기로 결심한다.
+덤블도어의 유품을 조사하던 중 죽음을 피하는 강력한 마법 물품인 ‘죽음의 성물’이 실제로 존재하며 
+그중 하나인 딱총나무 지팡이는 볼드모트가, 나머지 하나인 투명 망토는 자신이 갖고 있다는 것을 
+알게 된다. 마지막 남은 죽음의 성물이 어디 있는지, 볼드모트와 대적할 방도는 무엇인지도 모른 채, 마지막 남은 호크룩스를 파괴하고 
+볼드모트와의 결전을 치르기 위해 해리와 친구들은 죽음을 먹는 자들이 장악하고 있는 호그와트로 잠입한다.',
+'해리포터와_죽음의_성물4.jpg','201903092139.jpg','해리포터와_죽음의_성물4.pdf','201906022128.pdf','2019/06/02',5,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8954616518','희랍어의 시간','한강','문학동네','2011/11/10',194,
+'200여 페이지 남짓의 짧은 장편소설, 그러나 이 짧은 소설이 던져주는 무게는 단단하다. 
+이 책은 소멸하는 삶 속에서 서로를 단 한순간 마주보는 사람들의 이야기다.
+점점 시력을 잃어가는 희랍어 강사와 지독한 침묵을 사이에 두고 수업을 듣는 말을 잃어가는 여자. 
+작가는 슬프지만 담담한 시선을 시종일관 유지한 채 조용한 이들의 일상을 따라간다. 
+희랍어라는 낯선 언어와 시력과 말을 잃어가는 주인공들, 
+어쩌면 다른 세상의 이야기인 듯 하지만 소멸하고 빛을 잃어가는 사람들을 그렸다는 점에서 결국 우리 모두의 자화상이다.',
+'희랍어의_시간.jpg','201907011111.jpg','희랍어의_시간.pdf','201909011221.pdf','2019/09/01',60,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8932034826','내 여자의 열매','한강','문학과지성사','2018/11/09',328,
+'첫 소설집 이후 5년 만에 출간한 두번째 소설집.
+채식주의자 연작의 씨앗이 된 내 여자의 열매 등을 포함한 단편 여덟 편의 배치를 바꾸고 표현과 문장을 다듬어 18년 만에 새롭게 선보인다.
+내 여자의 열매에서 인간은 작은 박새처럼 쉽게 파괴될 수 있는 연약한 존재인 동시에, 
+분열되고 찢긴 삶에 숨을 불어 넣어 다시 태어나고자 삶의 투쟁을 벌이기도 한다. 
+새로 해설을 맡은 문학평론가 강지희는 한강 소설 속 여성 인물에 주목한다.',
+'내_여자의_열매.jpg','201907021111.jpg','희랍어의_시간.pdf','201909021014.pdf','2019/09/02',73,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8936433598','채식주의자','한강','창비','2007/10/30',248,
+'세계 3대 문학상 중 하나인 맨부커 국제상 수상작으로 화제가 되고있는 작품이다. 
+이 소설은 맨부커선정위원회로부터 한국의 오늘에 대한 소설, 부끄러움과 욕망, 
+타인을 이해하려는 불안정한 시도를 다루고 있다라는 찬사를 받았다. 
+국제적 베스트셀러로 화제가 되고 있는 채식주의자.
+미약한 존재가 난폭하고 어두운 세상과 어떤 식으로 대결 하는지 그리고 있다. 
+약한 존재가 대항하는 법은 아이러니하게도 식물이 되는 것이라는데....
+제목은 약해보이지만 책을 읽고 나면, 육식을 먹은 것 같은 강한 메시지가 가슴을 울릴 것이다.',
+'채식주의자.jpg','201907030513.jpg','채식주의자.pdf','201909031014.pdf','2019/09/03',69,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8982811338','검은사슴','한강','문학동네','1998/08/19',440,
+'1994년 서울신문 신춘문예를 통해 등단한 이후 줄곧 화제작을 발표하며 문단의 각별한 주목을 받아왔던 한강이
+소설집 여수의 사랑을 발표한 직후부터 집필을 시작해 삼 년 만에 완성한 검은사슴. 
+이 소설은 서사적 견고함과 염결한 작가정신이 어우러진 탁월한 작품으로, 
+의심할 바 없이 90년대 문학이 거둔 가장 뛰어난 성과물 가운데 하나로 기록될 작품이다.',
+'검은사슴.jpg','201907041837.jpg','검은사슴.pdf','201909041434.pdf','2019/09/04',80,'DONE',DEFAULT);
+
+INSERT INTO BOOK VALUES('8932013047','그대의 차가운 손','한강','문학과지성사','2002/01/21',329,
+'이듬해에 내가 입학한 초등학교는 집에서부터 버스로 세 정거장 거리에 있었다.
+아버지의 승용차로 통학시켰으면 했던 어머니의 바람과 달리 아버지는 나를 걸어다니게 했다. 
+될 수 있으면 아이들을 검소하고 엄하게 키운다는 것이 당시 아버지의 훈육 방침이었다.
+어쨌든 나는 그 등학교 길을 좋아했다. 
+그때만 해도 도로에 차량의 통행이 많지 않아 공기가 상쾌했으며, 
+가다 보면 마음에 맞는 같은 반 아이들을 만날 수 있다는 것이 좋았다.
+그해 가을 어느날 , 아침부터 하늘이 흐려 있더니 하교할 때쯤 부터부슬 비가 뿌리기 시작했다. 
+마침 청소 당번이어서 시간을 지체한 것이 탈이었다. 
+책가방을 양쪽 어깨에 메고 친구 몇과 나와보니, 어느새 장대처럼 굵어진 빗살이 모래 운동장에 닐꽂히고 있었다.',
+'그대의_차가운_손.jpg','201907050945.jpg','그대의_차가운_손.pdf','201909052237.pdf','2019/09/05',76,'DONE',DEFAULT);
 
 --내서재 데이터 입력
-INSERT INTO MYBOOK VALUES ('user005', 8954655971, 7, DEFAULT, DEFAULT);
+INSERT INTO MYBOOK VALUES ('user005', '8954655971', 7, DEFAULT, DEFAULT);
 
 --관심도서 데이터 입력
-INSERT INTO LIKEBOOK VALUES ('user003', 8954655971);
-INSERT INTO LIKEBOOK VALUES ('user003', 8954641636);
-INSERT INTO LIKEBOOK VALUES ('user005', 8936434268);
-INSERT INTO LIKEBOOK VALUES ('user005', 8937473135);
-INSERT INTO LIKEBOOK VALUES ('user005', 8937473097);
+INSERT INTO LIKEBOOK VALUES ('user003', '8954655971');
+INSERT INTO LIKEBOOK VALUES ('user003', '8954641636');
+INSERT INTO LIKEBOOK VALUES ('user005', '8936434268');
+INSERT INTO LIKEBOOK VALUES ('user005', '8937473135');
+INSERT INTO LIKEBOOK VALUES ('user005', '8937473097');
 
 --제작도서 데이터 입력
-INSERT INTO MAKEDBOOK VALUES ('user001', 8954655971, DEFAULT);
-INSERT INTO MAKEDBOOK VALUES ('user001', 8954641636, DEFAULT);
-INSERT INTO MAKEDBOOK VALUES ('user001', 8936434268, DEFAULT);
-INSERT INTO MAKEDBOOK VALUES ('user002', 8937473135, DEFAULT);
-INSERT INTO MAKEDBOOK VALUES ('user007', 8937473097, DEFAULT);
+INSERT INTO MAKEDBOOK VALUES ('user001', '8954655971', DEFAULT);
+INSERT INTO MAKEDBOOK VALUES ('user001', '8954641636', DEFAULT);
+INSERT INTO MAKEDBOOK VALUES ('user001', '8936434268', DEFAULT);
+INSERT INTO MAKEDBOOK VALUES ('user002', '8937473135', DEFAULT);
+INSERT INTO MAKEDBOOK VALUES ('user007', '8937473097', DEFAULT);
 
 --도서제작 데이터 입력
-INSERT INTO BOOKMAKING VALUES (8954655971, '2019-04-29', NULL, NULL, NULL, 43);
-INSERT INTO BOOKMAKING VALUES (8954641636, '2019-03-03', NULL, NULL, NULL, 56);
-INSERT INTO BOOKMAKING VALUES (8936434268, '2019-01-15', '2019-01-31', '아몬드_손평원.txt', '201901312208.txt', 264);
-INSERT INTO BOOKMAKING VALUES (8937473135, SYSDATE, NULL, NULL, NULL, DEFAULT);
-INSERT INTO BOOKMAKING VALUES (8937473097, SYSDATE, NULL, NULL, NULL, DEFAULT);
-INSERT INTO BOOKMAKING VALUES (8982814477, SYSDATE, NULL, NULL, NULL, DEFAULT);
+INSERT INTO BOOKMAKING VALUES ('8954655971', '2019-04-29', NULL, NULL, NULL, 43);
+INSERT INTO BOOKMAKING VALUES ('8954641636', '2019-03-03', NULL, NULL, NULL, 121);
+INSERT INTO BOOKMAKING VALUES ('8983925310', '2019-07-26', '2019-08-01', '해리포터와 마법사의 돌 1.txt', '201908011508.txt', 244);
+INSERT INTO BOOKMAKING VALUES ('8936434268', '2019-01-15', '2019-01-31', '아몬드_손평원.txt', '201901312208.txt', 264);
+INSERT INTO BOOKMAKING VALUES ('8937473135', SYSDATE, NULL, NULL, NULL, DEFAULT);
+INSERT INTO BOOKMAKING VALUES ('8937473097', SYSDATE, NULL, NULL, NULL, DEFAULT);
+INSERT INTO BOOKMAKING VALUES ('8982814477', SYSDATE, NULL, NULL, NULL, DEFAULT);
+INSERT INTO BOOKMAKING VALUES ('1162203625', SYSDATE, NULL, NULL, NULL, DEFAULT);
+INSERT INTO BOOKMAKING VALUES ('9791130620459', '2019-09-14', null, null, null, 20);
+INSERT INTO BOOKMAKING VALUES ('9788934972464', sysdate, null, null, null, default);
+INSERT INTO BOOKMAKING VALUES ('8982816631', '2019-10-03', null, null, null, 84);
 
 --도서신청 데이터 입력
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user003', '아몬드', '손원평', '창비', '2017/03/31', '2019/01/12', 14, 'DONE', NULL, '2019/01/15', 'N', 'admin00');
