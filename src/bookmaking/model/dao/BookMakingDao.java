@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import book.model.vo.Book;
 import book.model.vo.BookMakingProgress;
 
 public class BookMakingDao {
@@ -261,6 +263,25 @@ public class BookMakingDao {
 			close(stmt);
 		}
 		return dcount;
+
+	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
+	public int insertBook(Connection conn, Book b) {
+		int result = 0;
+		Statement stmt = null;
+		
+		String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";
+				
+		try {
+			stmt = conn.createStatement();
+			
+			result = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		return result;
+
 	}
 
 

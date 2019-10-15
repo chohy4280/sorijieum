@@ -24,22 +24,25 @@
             
             <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 85px;">
-            <form action="" method="post">
+            <form action="/sori/qmslist.ad" method="post">
 				<div style="float:left">
-				<a class="ui large teal label">회원유형</a>&nbsp;
-					<select class="search" name="usertype" id="usertype" style="border-radius: 10px; width: 160px;">
-						<option value="user">이용자</option>
-						<option value="maker">제작자</option>
-					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					
 				<a class="ui large teal label">아이디</a>&nbsp;
-					<input type="text" class="search" name="searchuserid" id="userid" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
+					<input type="text" class="search" name="userid" id="userid" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				<a class="ui large teal label">회원유형</a>&nbsp;
+					<select class="search" name="typenumber" id="typenumber" style="border-radius: 10px; width: 160px;">
+						<option value="ALL">전체</option>
+						<option value="1">이용대기자</option>
+						<option value="2">이용자</option>
+						<option value="3">제작자</option>
+					</select>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	
 					
 				<a class="ui large teal label">탈퇴유형</a>&nbsp;
-					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
+					<select class="search" name="quittype" id="quittype" style="border-radius: 10px; width: 160px;">
+						<option value="ALL">전체</option>
 						<option value="G">일반탈퇴</option>
 						<option value="F">강제탈퇴</option>
 					</select>
@@ -58,15 +61,17 @@
 				<br>
 				<table class="listTable">
 					<tr>
+						<th width="5%">No</th>
 						<th width="15%">아이디</th>
 						<th width="15%">탈퇴유형</th>
 						<th width="55%">탈퇴사유</th>
-						<th width="15%">회원탈퇴일</th>
+						<th width="10%">회원탈퇴일</th>
 					</tr>
-					<% for(int i = 0 ; i < list.size() ; i++){
+					<% for(int i = list.size() -1 ; i >= 0 ; i--){
 						Quit q = list.get(i);
 						%>
 					<tr>
+						<td><%= i + 1 %></td>
 						<td><%= q.getUserId() %></td>
 						<td><% if(q.getQuitType().equals("F")) { %>
 							강제탈퇴

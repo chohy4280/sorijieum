@@ -1,10 +1,16 @@
 package book.model.dao;
 
-import java.sql.*;
+import static common.JDBCTemplate.close;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import static common.JDBCTemplate.*;
 
 import book.model.vo.Book;
+import book.model.vo.BookDV;
 
 public class BookDao {
 
@@ -17,7 +23,7 @@ public class BookDao {
 			ArrayList<Book> list = new ArrayList<Book>();
 			Statement stmt = null;
 			ResultSet rset = null;
-			String query = "select * from book";
+			String query = "select * from book where bookdelyn = 'N'";
 			try {
 				stmt = conn.createStatement();
 				rset = stmt.executeQuery(query);
@@ -39,6 +45,7 @@ public class BookDao {
 					b.setBookDate(rset.getDate("bookdate"));
 					b.setBookViews(rset.getInt("bookviews"));
 					b.setMakeStatus(rset.getString("makestatus"));
+					b.setBookDelYN(rset.getString("bookdelyn"));
 					
 					list.add(b);	
 					
@@ -54,25 +61,101 @@ public class BookDao {
 		
 		
 		// 관리자 도서 검색용
-		public ArrayList<Book> selectBookSearch(Connection conn, String searchtype, String keyword, String bookstatus){
-			return null;
+		public ArrayList<Book> selectBookSearch(Connection conn, String searchtype, String keyword, String makestatus){
+			ArrayList<Book> list = new ArrayList<Book>();
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = null;
+			if(keyword == null) {					// case1)검색어가 없고
+				if(makestatus.equals("ALL") == true)	// case1-1) 전체
+					query = "select * from (select * from book where bookdelyn = 'N') where makestatus in ('WAIT', 'MAKE', 'DONE')";
+				else									// case1-2) 상태선택
+					query = "select * from (select * from book where bookdelyn = 'N') where makestatus = '" + makestatus + "'";
+			} else {								// case2)검색어가 있고
+				if(makestatus.equals("ALL") == true)	// case2-1) 전체
+					query = "select * from (select * from book where bookdelyn = 'N') where " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE')";
+				else									// case2-2) 상태선택
+					query = "select * from (select * from book where bookdelyn = 'N') where " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "'";
+			}
+			
+
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				
+				while(rset.next()) {
+					Book b = new Book();
+					b.setBookCode(rset.getString("bookcode"));
+					b.setBookTitle(rset.getString("booktitle"));
+					b.setAuthor(rset.getString("author"));
+					b.setPublisher(rset.getString("publisher"));
+					b.setMakeStatus(rset.getString("makestatus"));
+					b.setBookDate(rset.getDate("bookdate"));
+					
+					list.add(b);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return list;
 		}
 		
 		
 		// 관리자 도서 삭제용
-		public int deleteBook(Connection conn, int bookcode) {
+		public int deleteBook(Connection conn, String bookcode) {
 			return 0;
 		}
 		
 		
 		// 관리자 도서 한개 정보 불러오기용
-		public Book selectBookOne(Connection conn, int bookcode) {
-			return null;
+		public BookDV selectBookOne(Connection conn, String bookcode) {
+			BookDV book = null;
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from (select * from book join bookmaking using(bookcode) where bookdelyn = 'N') where bookcode = '" + bookcode + "'";
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()) {
+					book = new BookDV();
+					
+					book.setBookTitle(rset.getString("booktitle"));
+					book.setAuthor(rset.getString("author"));
+					book.setPublisher(rset.getString("publisher"));
+					book.setPublishDate(rset.getDate("publishdate"));
+					book.setBookPage(rset.getInt("bookpage"));
+					book.setBookCode(bookcode);
+					book.setBookInfo(rset.getString("bookinfo"));
+					book.setBookOimg(rset.getString("bookoimg"));
+					book.setBookRimg(rset.getString("bookrimg"));
+					book.setBookOpdf(rset.getString("bookopdf"));
+					book.setBookRpdf(rset.getString("bookrpdf"));
+					book.setBookotxt(rset.getString("bookotxt"));
+					book.setBookrtxt(rset.getString("bookrtxt"));
+				
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			return book;
 		}
 		
 		
 		// 관리자 도서 정보 수정용
-		public Book updateBook(Connection conn, int bookcode) {
+		public Book updateBook(Connection conn, String bookcode) {
 			return null;
 		}
 		
@@ -113,7 +196,7 @@ public class BookDao {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
-			String query = "select * from book where makestatus = 'WAIT'";
+			String query = "select * from (select * from book where bookdelyn = 'N') where makestatus = 'WAIT'";
 			
 			try {
 				stmt = conn.createStatement();
@@ -140,7 +223,7 @@ public class BookDao {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
-			String query = "select * from book where makestatus = 'MAKE'";
+			String query = "select * from (select * from book where bookdelyn = 'N') where makestatus = 'MAKE'";
 			
 			try {
 				stmt = conn.createStatement();
@@ -168,7 +251,7 @@ public class BookDao {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
-			String query = "select * from book where makestatus = 'DONE'";
+			String query = "select * from (select * from book where bookdelyn = 'N') where makestatus = 'DONE'";
 			
 			try {
 				stmt = conn.createStatement();
@@ -201,8 +284,7 @@ public class BookDao {
 		}
 		
 		// bookSearch 도서한권만 검색
-		
-		public Book selectOne(Connection conn, int bookcode) {
+		public Book selectOne(Connection conn, String bookcode) {
 			Book book = null;
 			
 			return book;

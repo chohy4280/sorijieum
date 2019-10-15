@@ -59,8 +59,11 @@ public class QnaService {
 	}
 	
 	// 관리자 Q&A 검색용
-	public ArrayList<Qna> selectQnaSearch(String searchtype, String keyword, String answerstatus){
-		return null;
+	public ArrayList<Qna> selectQnaSearch(String searchtype, String keyword, String qnastatus){
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.selectQnaSearch(conn, searchtype, keyword, qnastatus);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 Q&A 새문의글(Sysdate) 조회용
