@@ -4,11 +4,11 @@
 <%
 	BookMakingProgress bmp = (BookMakingProgress)request.getAttribute("bmp");
 	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
-	ArrayList<BookMakingProgress> waitlist = (ArrayList<BookMakingProgress>)request.getAttribute("waitlist");
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	int dcount = ((Integer)request.getAttribute("dcount")).intValue();
 %>
 <!DOCTYPE html>
 <html>
@@ -37,29 +37,69 @@
 				text-align: center; font-family: 'S-Core Dream 5'; 
 				padding: 10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</button>
 		</div><!-- guide -->
-		<div class="ye-book">
-			<div class="ye-bookmaking">
-			<a style="font-weight: bold;">제작중인 도서</a><br><br>
-			<% for(int i = 0; i < makelist.size(); i++){ %>
-			<div class="ye-bm">
-			<a href="/sori/views/bookmaking/bookinfo.jsp">
-			<img id="여행의 이유" src="/sori/resources/book_images/<%= makelist.get(i).getBookRimg() %>"></a><br><br>
-			<div class="progress" style="width:170px;height:25px;"> 
+		<div class="ye-book2">
+			<div class="ye-bookmaking2">
+			<a style="font-weight: bold;margin-left:5px;">제작중인 도서</a><br><br>
+			<% for(int i = 0; i < 10; i++){ 
+				int makep = (makelist.get(i).getMakepage());
+				int bookp = (makelist.get(i).getBookPage());
+				int pwidth = (int)(((double)makep / bookp) * 100);
+			%>
+			<div class="ye-bm2">
+			<% if(makelist.get(i).getBookTitle().length() < 14){ %>
+			<div class="ui large grey basic label" align="center" style="width: 210px;">
+			<p style="text-align:center;font-size:10pt;">
+			<%= makelist.get(i).getBookTitle() %></p>
+			</div><br>
+			<% }else { %>
+			<div class="ui large grey basic label" align="center" style="width: 210px;">
+			<p style="text-align:center;font-size:10pt;">
+			<%= makelist.get(i).getBookTitle().substring(0, 15) %>..</p>
+			</div><br>
+			<% } %>
+			<a href="/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>">
+			<img id="여행의 이유" src="/sori/resources/book_upfiles/<%= makelist.get(i).getBookRimg() %>"></a><br><br>
+			<div class="progress" style="width:212px;height:27px;"> 
   			<div class="progress-bar" role="progressbar" 
-  			style="font-size:8pt; background: orange; width: 20%;" 
-  			aria-valuenow="20" aria-valuemin="0" aria-valuemax="216">20%</div>
+  			style="font-size:8pt; background: orange; width:<%= pwidth %>%;" 
+  			aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= makelist.get(i).getBookPage() %>"><%= pwidth %>%</div>
 			</div>
-				</div>
+			<br>
+			</div>
 				<% } %>
 				
 		</div><!-- bookmaking -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!-- 페이징 -->
+<div id="pagebox" align="center">
+	<a href="/sori/bwlist?page=1"><i class="angle black double left icon"></i></a>&nbsp;
+<% if((beginPage - 10) < 1){ %>
+	<a href="/sori/bwlist?page=1"><i class="angle black left icon"></i></a>
+<% }else{ %>
+	<a href="/sori/bwlist?page=<%= beginPage - 10 %>"><i class="angle left icon"></i></a>
+<% } %>&nbsp;
+<% for(int p = beginPage; p <= endPage; p++){ 
+		if(p == currentPage){
+%>
+	<a href="/sori/bwlist?page=<%= p %>"><font color="orange"><b>[<%= p %>]</b></font></a>
+<% }else{ %>
+	<a href="/sori/bwlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>
+<% }} %>&nbsp;
+<% if((endPage +  10) < maxPage){ %>
+	<a href="/sori/bwlist?page=<%= maxPage %>"><i class="angle black right icon"></i></a>
+<% }else{ %>
+	<a href="/sori/bwlist?page=<%= endPage + 10 %>"><i class="angle black right icon"></i></a>
+<% } %>&nbsp;
+<a href="/sori/bwlist?page=<%= maxPage %>"><i class="angle black double right icon"></i></a>&nbsp;
+</div><!-- 페이징 -->
 	<!-- book count -->
-<div class="ye-book-count" style="float:right;bottom:-160px;left: 500px;align:right;padding:50px;">
+<div class="ye-book-count" style="float:right;bottom:10px;left:500px;align:right;padding:50px;">
 <div class="orange ui statistic" >
     <div class="value" style="font-family:'S-Core Dream 7'">
-      <%= makelist.size() %>
+      <%= dcount %>
     </div>
     <div class="label" style="font-family:'S-Core Dream 6'">
       	우리가 함께 제작한 책
@@ -67,7 +107,7 @@
 </div>
   <img src="/sori/views/bookmaking/images/books.png" style="width: 25%;height: 25%;bottom: 10px;">
 </div><!-- book count 끝 -->
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 	<!-- content 끝 -->
 </body>
 </html>

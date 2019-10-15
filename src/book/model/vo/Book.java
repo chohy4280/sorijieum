@@ -20,15 +20,14 @@ public class Book implements java.io.Serializable {
 	private java.sql.Date bookDate;
 	private int bookViews;
 	private String makeStatus;
-	private String bookDelyn;
+	private String bookDelYN;
 	
 
 	public Book() {}
 
-
 	public Book(String bookCode, String bookTitle, String author, String publisher, Date publishDate, int bookPage,
 			String bookInfo, String bookOimg, String bookRimg, String bookOpdf, String bookRpdf, Date bookDate,
-			int bookViews, String makeStatus, String bookDelyn) {
+			int bookViews, String makeStatus, String bookDelYN) {
 		super();
 		this.bookCode = bookCode;
 		this.bookTitle = bookTitle;
@@ -44,7 +43,7 @@ public class Book implements java.io.Serializable {
 		this.bookDate = bookDate;
 		this.bookViews = bookViews;
 		this.makeStatus = makeStatus;
-		this.bookDelyn = bookDelyn;
+		this.bookDelYN = bookDelYN;
 	}
 
 
@@ -187,14 +186,13 @@ public class Book implements java.io.Serializable {
 		this.makeStatus = makeStatus;
 	}
 
-
-	public String getBookDelyn() {
-		return bookDelyn;
+	public String getBookDelYN() {
+		return bookDelYN;
 	}
 
 
-	public void setBookDelyn(String bookDelyn) {
-		this.bookDelyn = bookDelyn;
+	public void setBookDelYN(String bookDelYN) {
+		this.bookDelYN = bookDelYN;
 	}
 
 
@@ -204,9 +202,7 @@ public class Book implements java.io.Serializable {
 				+ publisher + ", publishDate=" + publishDate + ", bookPage=" + bookPage + ", bookInfo=" + bookInfo
 				+ ", bookOimg=" + bookOimg + ", bookRimg=" + bookRimg + ", bookOpdf=" + bookOpdf + ", bookRpdf="
 				+ bookRpdf + ", bookDate=" + bookDate + ", bookViews=" + bookViews + ", makeStatus=" + makeStatus
-				+ ", bookDelyn=" + bookDelyn + "]";
+				+ ", bookDelYN=" + bookDelYN + "]";
 	}
-
-
-	
+		
 }

@@ -59,16 +59,18 @@ public class BookWaitingListServlet extends HttpServlet {
 		
 		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기
 		ArrayList<BookMakingProgress> list = bservice.selectWaitingBookList(startRow, endRow);
-		ArrayList<BookMakingProgress> makelist = bservice.selectMakingBook();
+		ArrayList<BookMakingProgress> waitlist = bservice.selectWaitingBook();
+		int dcount = new BookMakingService().getMakedBookCount();
 		RequestDispatcher view = null;
-		if(list.size() > 0 && makelist.size() > 0) {
+		if(list.size() > 0 && waitlist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookwaitinglist.jsp");
 			request.setAttribute("list", list);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
-			request.setAttribute("makelist", makelist);
+			request.setAttribute("waitlist", waitlist);
+			request.setAttribute("dcount", dcount);
 			view.forward(request, response);
 			
 		}else {

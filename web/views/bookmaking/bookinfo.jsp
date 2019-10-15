@@ -3,8 +3,8 @@
 <%@ page import="java.util.ArrayList, book.model.vo.BookMakingProgress" %>
 <%
 	BookMakingProgress bmp = (BookMakingProgress)request.getAttribute("bmp");
-	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
 	ArrayList<BookMakingProgress> list = (ArrayList<BookMakingProgress>)request.getAttribute("list");
+	int dcount = ((Integer)request.getAttribute("dcount")).intValue();
 %>
 <!DOCTYPE html>
 <html>
@@ -32,9 +32,9 @@ style="width:150px; height:10px;font-size:10pt;text-align:center;font-family:'S-
 padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</button></div><br><br>
 <!-- 도서 이미지 -->
 <div class="ye-bookimg" style="float:left;">
-<img id="보건교사 안은영" src="/sori/resources/book_images/<%= bmp.getBookRimg() %>">
+<img id="보건교사 안은영" src="/sori/resources/book_upfiles/<%= bmp.getBookRimg() %>">
 </div>
-<div class="ui compact message" style="position:relative;bottom:-350px;left:-715px;text-align:center;width:18%;height:5.5%">
+<div class="ui orange compact message" style="font-size:11pt;position:relative;bottom:-350px;left:-715px;text-align:center;width:18%;height:5.5%">
   제작은  10페이지씩입니다!
 </div>
 <!-- bookinfo 시작 -->
@@ -42,19 +42,19 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
   <div class="fields">
     <div class="field">
       <label>도서명</label>
-      <input type="text" readonly value="<%= bmp.getBookTitle() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= bmp.getBookTitle() %>" style="font-family:'S-Core Dream 6';font-size:0.9rem;width:250px;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>저자명</label>
-      <input type="text" readonly value="<%= bmp.getAuthor() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= bmp.getAuthor() %>" style="font-family:'S-Core Dream 6';font-size:0.9rem;">
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>출판사</label>
-      <input type="text" readonly value="<%= bmp.getPublisher() %>" style="font-family:'S-Core Dream 6'; font-size:0.9rem;">
+      <input type="text" readonly value="<%= bmp.getPublisher() %>" style="font-family:'S-Core Dream 6';font-size:0.9rem;width:180px;">
     </div>
   </div>
   <div class="fields">
@@ -99,7 +99,7 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
 <div class="ye-book-count">
 <div class="orange ui statistic">
     <div class="value" style="font-family:'S-Core Dream 7'">
-      <%= makelist.size() %>
+      <%= dcount %>
     </div>
     <div class="label" style="font-family:'S-Core Dream 6'">
       	우리가 함께 제작한 책

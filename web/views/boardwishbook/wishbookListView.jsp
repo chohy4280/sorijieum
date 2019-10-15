@@ -11,7 +11,7 @@
 $(function(){
 		showDiv();
 		
-		$("input[name=item]").on("change", function(){
+		$("input[name=item]").on("click", function(){
 			showDiv();
 		});
 	});
@@ -81,24 +81,29 @@ $(function(){
 	<br><hr><br>
 	<!-- 검색창 시작 -->
 		<center>
-		<div>
-			<input type="radio" name="item" value="title" checked> 도서명 &nbsp; &nbsp; &nbsp; 
-			<input type="radio" name="item" value="author"> 저자명&nbsp; &nbsp; &nbsp; 
-		</div>
+		<div class="ui checkbox">
+			  <input type="checkbox" name="item" value="title" checked><label>도서명</label>
+			</div> &nbsp;&nbsp;&nbsp;
+			<div class="ui checkbox">
+			 <input type="checkbox" name="item" value="author"><label>저자명</label>
+			</div>	
+		<br><br>
 		<div id="titlediv">
 			<form action="" method="post">
+			<div class="ui small input">
 				<input type="hidden" name="search" value="title">
-				<label>
-				<input type="search" name="keyword"></label>
-				<input type="submit" value="검색">
+				<label><input type="search" name="keyword" placeholder="검색하실 도서명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;"></label>
+			</div>
+			<input class="ui tiny basic button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
 			</form>
 		</div>
 		<div id="authordiv">
 			<form action="" method="post">
+			<div class="ui small input">
 				<input type="hidden" name="search" value="author">
-				<label>
-				<input type="search" name="keyword"></label>
-				<input type="submit" value="검색">
+				<label><input type="search" name="keyword" placeholder="검색하실 저자명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;"></label>
+			</div>
+			<input class="ui tiny basic button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
 			</form>
 		</div>
 		</center>

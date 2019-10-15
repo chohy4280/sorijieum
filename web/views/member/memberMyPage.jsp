@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member"%>
-<%
+<%-- <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
-%>     
+%>   --%>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,28 +35,28 @@ body {
 <body>
 <section class="my-section" style="margin: 0 5% 0 5%; border: 0;">
 <% if(loginMember.getTypeNumber()==1 || loginMember.getTypeNumber()==2) { %>
-<div class="ui basic segment" style="background-color:white;">
-	<div class="ui two column very relaxed grid">
-		<div class="column">
+<div class="ui basic segment" style="background-color:white;overflow:hidden;">
+	<div class="ui two column very relaxed grid" style="overflow:hidden;">
+		<div class="column" style="overflow:hidden;">
 			<i class="big book icon brown"></i><br><br>
 			<center>
-				<button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+				<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userMyBook.jsp'">
 					내 서재</button>
 			</center>
-			<center><button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userLikeBook.jsp'">
 					관심도서</button></center>
-			<center><button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userWishBook.jsp'">
 					내 신청도서</button></center>
 		</div>
-		<div class="column">
+		<div class="column" style="overflow:hidden;">
 			<i class="big user icon brown"></i><br><br>
-			<center><button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userMyQna.jsp'">
 					내 문의</button></center>
-			<center><button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userUpdate.jsp'">
 					내 정보 수정</button></center>
 		</div>
@@ -64,22 +64,22 @@ body {
 </div>
 <% }else { %>
 <h1>
-<div class="ui basic segment" style="background-color:white;">
-<div class="ui two column very relaxed grid">
-	<div class="column">
+<div class="ui basic segment" style="background-color:white;overflow:hidden;">
+<div class="ui two column very relaxed grid" style="overflow:hidden;">
+	<div class="column" style="overflow:hidden;">
 		<i class="big book icon brown"></i><br><br>
 		<center>
-			<button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+			<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 			onclick="location.href='/sori/views/member/makerMakedBook.jsp'">
 				참여 도서</button>
 		</center>
 	</div>
-	<div class="column">
+	<div class="column" style="overflow:hidden;">
 		<i class="big user icon brown"></i><br><br>
-		<center><button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+		<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 			onclick="location.href='/sori/views/member/makerMyQna.jsp'">
 				내 문의</button></center>
-		<center><button class="massive ui inverted brown button" style="width:80%;height:180px;margin-bottom:1%;font-size:30pt;" 
+		<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 			onclick="location.href='/sori/views/member/makerUpdate.jsp'">
 					내 정보 수정</button></center>
 		</div>

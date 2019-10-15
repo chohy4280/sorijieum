@@ -33,11 +33,13 @@ public class BookMakingMainServlet extends HttpServlet {
 		//도서제작 메인 간편리스트 처리용 컨트롤러
 		ArrayList<BookMakingProgress> makelist = new BookMakingService().selectMakingBook();
 		ArrayList<BookMakingProgress> waitlist = new BookMakingService().selectWaitingBook();
+		int dcount = new BookMakingService().getMakedBookCount();
 		RequestDispatcher view = null;
 		if(makelist.size() > 0 && waitlist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bmmain.jsp");
 			request.setAttribute("makelist", makelist);
 			request.setAttribute("waitlist", waitlist);
+			request.setAttribute("dcount", dcount);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

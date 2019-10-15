@@ -38,13 +38,15 @@ public class MemberEnrollCheckIdServlet extends HttpServlet {
 
 		int result = new MemberService().checkUserId(userid);
 		
-		PrintWriter out = response.getWriter();
+		String returnValue = null;
+	
 		if(result == 0) 
-			out.append("사용 가능한 아이디");
-
+			returnValue = "ok";
 		else
-			out.append("이미 사용중인 아이디");
+			returnValue = "no";
 		
+		PrintWriter out = response.getWriter();
+		out.append(returnValue);
 		out.flush();
 		out.close();
 	}

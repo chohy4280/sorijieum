@@ -666,7 +666,7 @@ INSERT INTO BOOK VALUES ('9788934972464', '사피엔스', '유발 하라리', '�
 문명의 배를 타고 진화의 바다를 항해한 인류는 이제 어디로 나아갈 것인가! 왜 사피엔스 종만이 지구상에 살아남았나? 인간은 왜 역사상 가장 치명적인 동물이 되었는가? 인간의 유효기간은 언제까지인가? 역사, 사회, 생물, 종교, 등 학문의 경계를 넘나들며 인류 역사의 시간을 종횡무진 써내려간 문명의 항해기가 우리 눈앞에 펼쳐진다!', '사피엔스.jpg', '201910131936.jpg', '사피엔스.pdf', '201910131856.pdf', '2019/10/13', 0, 'WAIT', DEFAULT);
 
 INSERT INTO BOOK VALUES ('8982816631', '자기 앞의 생', '에밀 아자르', '문학동네', '2003/05/06', 363, '자신에게 주어진 생을 완전히 만족하며 살아가는 사람이 몇이나 될까? 작가는 실제 나이보다 많은 나이를 살고 있는 열네 살 모모의 눈으로 이해하지 못할 세상을 바라본다. 모모의 눈에 비친 세상은 결코 꿈같이 아름다운 세상이 아니다. 인종 차별받는 아랍인, 감옥에 끌려갔다가 살아 돌아온 유태인, 성전환자 등... 세상 모든 사람들은 스승이라고 했듯이 모모의 눈에도 소설속 모든 이들이 인생의 굳은살을 단단하게 해주는 인생선배들이다. 작은 상처에도 아파하는 독자들이여, 온전히 삶을 보듬길 바란다면 지금 이 책 앞에 서라.', '자기 앞의 생.jpg', '201910021429.jpg', '자기 앞의 생.pdf', '201910021215.pdf', '2019/10/02', 0, 'MAKE', DEFAULT);
-
+                                              
 INSERT INTO BOOK VALUES('8983925329','해리포터와 마법사의 돌 2','J.K. 롤링','문학수첩','2014/12/18',244,'어둠의 마왕 볼드모트에게 부모를 잃고 홀로 살아남은 아이,해리는 안전을 위해 마법사가 아닌 사람인 ‘머글’ 페투니아 이모와 버논 이모부 손에 길러지며 불우한 어린 시절을 보낸다. 열한 번째 생일날, 해그리드를 통해 자신이 마법사라는 사실을 알게 된 해리는 호그와트 마법학교에 입학해 헤르미온느 그레인저, 론 위즐리라는 친구들과 함께 영생을 주는 마법사의 돌을 찾는 엄청난 모험을 시작하게 된다.'
 ,'해리포터와_마법사의_돌2.jpg','201902142133.jpg','해리포터와_마법사의_돌2.pdf','201905112217.pdf','2019/05/11',3,'DONE', DEFAULT);
 
@@ -896,6 +896,23 @@ INSERT INTO BOOK VALUES('8932013047','그대의 차가운 손','한강','문학�
 책가방을 양쪽 어깨에 메고 친구 몇과 나와보니, 어느새 장대처럼 굵어진 빗살이 모래 운동장에 닐꽂히고 있었다.',
 '그대의_차가운_손.jpg','201907050945.jpg','그대의_차가운_손.pdf','201909052237.pdf','2019/09/05',76,'DONE',DEFAULT);
 
+INSERT INTO BOOK VALUES ('9788950980726', '타인의 시선을 의식해 힘든 나에게', '글배우', '21세기북스', '2019/04/19', 184, '생각이 너무 많아 괴롭거나, 감정 기복이 심하거나, 작은 말에도 상처받는 이유는 우리가 알게 모르게 타인의 시선을 의식하며 살고 있기 때문이다. 수년 간 많은 이들의 고민을 직접 상담해오며 요즘 사람들이 가장 걱정하는 문제에 대해 같이 공감하고 이야기를 나눈 저자는 이들에게 실질적인 도움을 줄 수 있는 방법을 모아 이 책에 담았다.', '타인의 시선을 의식해 힘든 나에게.jpg', '201910031439.jpg', '타인의 시선을 의식해 힘든 나에게.pdf', '201910031235.pdf', '2019/10/03', 0, 'MAKE');
+
+--도서 데이터 수정
+UPDATE BOOK SET MAKESTATUS = 'MAKE'
+WHERE BOOKCODE = '9791188248674';
+UPDATE BOOK SET MAKESTATUS = 'MAKE'
+WHERE BOOKCODE = '9788932919874';
+UPDATE BOOK SET MAKESTATUS = 'MAKE'
+WHERE BOOKCODE = '9788995563502';
+UPDATE BOOK SET MAKESTATUS = 'MAKE'
+WHERE BOOKCODE = '9791135445620';
+UPDATE BOOK SET MAKESTATUS = 'MAKE'
+WHERE BOOKCODE = '9791187119845';
+UPDATE BOOK SET MAKESTATUS = 'MAKE'
+WHERE BOOKCODE = '9791162540640';
+                                              
+
 --내서재 데이터 입력
 INSERT INTO MYBOOK VALUES ('user005', '8954655971', 7, DEFAULT, DEFAULT);
 
@@ -925,6 +942,15 @@ INSERT INTO BOOKMAKING VALUES ('1162203625', SYSDATE, NULL, NULL, NULL, DEFAULT)
 INSERT INTO BOOKMAKING VALUES ('9791130620459', '2019-09-14', null, null, null, 20);
 INSERT INTO BOOKMAKING VALUES ('9788934972464', sysdate, null, null, null, default);
 INSERT INTO BOOKMAKING VALUES ('8982816631', '2019-10-03', null, null, null, 84);
+INSERT INTO BOOKMAKING VALUES ('9788950980726', '2019-10-03', null, null, null, 15);
+INSERT INTO BOOKMAKING VALUES ('9788950981983', sysdate, null, null, null, 0);
+INSERT INTO BOOKMAKING VALUES ('9791188248674', sysdate, null, null, null, 231);
+INSERT INTO BOOKMAKING VALUES ('9788965134947', sysdate, null, null, null, 0);
+INSERT INTO BOOKMAKING VALUES ('9788932919874', sysdate, null, null, null, 12);
+INSERT INTO BOOKMAKING VALUES ('9788995563502', sysdate, null, null, null, 46);
+INSERT INTO BOOKMAKING VALUES ('9791135445620', sysdate, null, null, null, 15);
+INSERT INTO BOOKMAKING VALUES ('9791187119845', sysdate, null, null, null, 67);
+INSERT INTO BOOKMAKING VALUES ('9791162540640', sysdate, null, null, null, 154);
 
 --도서신청 데이터 입력
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user003', '아몬드', '손원평', '창비', '2017/03/31', '2019/01/12', 14, 'DONE', NULL, '2019/01/15', 'N', 'admin00');
