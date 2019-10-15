@@ -1,9 +1,10 @@
 package bookmaking.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
+
+import book.model.vo.Book;
 import book.model.vo.BookMakingProgress;
 import bookmaking.model.dao.BookMakingDao;
 
@@ -80,6 +81,18 @@ public class BookMakingService {
 	//불러올 pdf 리스트
 	public ArrayList<BookMakingProgress> selectBookPdfLoad(){
 		return null;
+	}
+
+	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
+	public int insertBook(Book b) {
+		Connection conn = getConnection();
+		int result = bmDao.insertBook(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 }

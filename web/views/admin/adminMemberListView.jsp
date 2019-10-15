@@ -45,7 +45,7 @@ $(function(){
         
         <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 180px; overflow: hidden;">
-            <form action="" method="post">
+            <form action="/sori/mslist.ad" method="post">
 				<div>
 				<a class="ui large teal label">개인정보</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
@@ -53,21 +53,21 @@ $(function(){
 						<option value="username">이름</option>
 						<option value="phone">전화번호</option>
 					</select>
-					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
+					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
 					<br><br>
 
 
 				<a class="ui large teal label">성　　별</a>&nbsp;
-					<input type="radio" name="gender" value="A" checked> 전체 &nbsp;&nbsp;&nbsp;
+					<input type="radio" name="gender" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;
 					<input type="radio" name="gender" value="F"> 여성&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="gender" value="M"> 남성
 					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 				<a class="ui large teal label">회원유형</a>&nbsp;
-					<input type="radio" name="usertype" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="usertype" value="wait"> 이용대기자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="usertype" value="hear"> 이용자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="usertype" value="make"> 제작자
+					<input type="radio" name="typenumber" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="typenumber" value="1"> 이용대기자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="typenumber" value="2"> 이용자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="typenumber" value="3"> 제작자
 					<center><input type="submit" value="검색"></center>
 				</div>
 				</form>
@@ -82,7 +82,7 @@ $(function(){
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="5%"><input type="checkbox" class="chk" id="allCheck" onclick="allChk();"/></th>
+						<th width="5%"><input type="checkbox" class="chk" id="allCheck"/></th>
 						<th width="10%">회원유형</th>
 						<th width="13%">이름</th>
 						<th width="17%">아이디</th>

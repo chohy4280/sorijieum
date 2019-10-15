@@ -21,6 +21,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import book.model.service.BookService;
 import book.model.vo.Book;
+import bookmaking.model.service.BookMakingService;
 
 /**
  * Servlet implementation class bookInsertServlet
@@ -104,9 +105,12 @@ public class AdBookInsertServlet extends HttpServlet {
 			b.setBookRpdf(bpdfRenameFileName);
 		}
 		
-		int result = new BookService().insertBook(b);
+		int result1 = new BookService().insertBook(b);
 		
-		if(result > 0) {
+		// 도서추가시 bookmaking 테이블에도 같이 insert함
+		int result2 = new BookMakingService().insertBook(b);
+		
+		if(result1 > 0 && result2 > 0) {
 			response.sendRedirect("/sori/blist.ad");
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

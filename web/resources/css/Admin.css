@@ -204,13 +204,13 @@ color: inherit;
 }
 
 .todayboard {
-	color: #d95c5c;
+	color: #ec9064;
 	font-weight: 800;
 	font-size: 23px;
 }
 
 .todayuser1{
-	color: #5bbd72;
+	color: #c7e385;
 	font-weight: 800;
 	font-size: 23px;
 }
@@ -308,6 +308,29 @@ color: inherit;
 	color: #6d6d6d;
 	padding: 5px;
 	padding-left: 15px;
+}
+
+
+.detailform{
+	border-top: 1px solid #4ecdc4;
+	border-bottom: 1px solid #4ecdc4;
+	cellspacing: 10px;
+	width: 100%;
+	font-size: 15px;
+}
+
+.detailform th{
+	height: 40px;
+	background: #4ecdc4;
+	color: #fff;
+}
+
+.detailform td{
+	height: 40px;
+	border-bottom: 1px solid #4ecdc4;
+	background: #f9f9f9;
+	color: #6d6d6d;
+	padding: 5px 30px;
 }
 
 .ui input {

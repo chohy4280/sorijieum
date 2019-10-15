@@ -1,12 +1,16 @@
 package book.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
-import java.sql.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import book.model.dao.BookDao;
 import book.model.vo.Book;
+import book.model.vo.BookDV;
 
 public class BookService {
 
@@ -27,25 +31,31 @@ public class BookService {
 	
 	
 	// 관리자 도서 검색용
-	public ArrayList<Book> selectBookSearch(String searchtype, String keyword, String bookstatus){
-		return null;
+	public ArrayList<Book> selectBookSearch(String searchtype, String keyword, String makestatus){
+		Connection conn = getConnection();
+		ArrayList<Book> list = bDao.selectBookSearch(conn, searchtype, keyword, makestatus);
+		close(conn);
+		return list;
 	}
 	
 	
 	// 관리자 도서 삭제용
-	public int deleteBook(int bookcode) {
+	public int deleteBook(String bookcode) {
 		return 0;
 	}
 	
 	
 	// 관리자 도서 한개 정보 불러오기용
-	public Book selectBookOne(int bookcode) {
-		return null;
+	public BookDV selectBookOne(String bookcode) {
+		Connection conn = getConnection();
+		BookDV book = bDao.selectBookOne(conn, bookcode);
+		close(conn);
+		return book;
 	}
 	
 	
 	// 관리자 도서 정보 수정용
-	public Book updateBook(int bookcode) {
+	public Book updateBook(String bookcode) {
 		return null;
 	}
 	
@@ -96,7 +106,7 @@ public class BookService {
 		      return list;
 		   }
 		 //도서검색 한개만 불러오기
-		 public Book selectOne(int bookcode) {
+		 public Book selectOne(String bookcode) {
 			 Connection conn = getConnection();
 			 Book book = bDao.selectOne(conn,bookcode);
 			 close(conn);

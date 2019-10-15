@@ -1,11 +1,17 @@
 package qna.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import qna.model.service.QnaService;
+import qna.model.vo.Qna;
 
 /**
  * Servlet implementation class adminQnaSearchServlet
@@ -27,7 +33,23 @@ public class AdQnaSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 Q&A 검색용
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		String searchtype = request.getParameter("searchtype");
+		String keyword = request.getParameter("keyword");
+		String qnastatus = request.getParameter("qnastatus");
+		
+		ArrayList<Qna> list = new QnaService().selectQnaSearch(searchtype, keyword, qnastatus);
+		
+		RequestDispatcher view = null;
+		if(list.size() >= 0) {
+			view = request.getRequestDispatcher("views/admin/adminQnaListView.jsp");
+			request.setAttribute("list", list);
+		}else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "게시물 검색 실패!");
+		}
+		view.forward(request, response);
 	}
 
 	/**

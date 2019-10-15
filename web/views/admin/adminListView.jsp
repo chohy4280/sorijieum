@@ -46,14 +46,16 @@ $(function(){
             
             <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 85px;">
-            <form action="" method="post">
+            <form action="/sori/adslist.ad" method="post">
 				<div style="float:left">
 				<a class="ui large teal label">관리자정보</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
 						<option value="userid">아이디</option>
 						<option value="username">이름</option>
+						<option value="email">이메일</option>
+						<option value="phone">전화번호</option>
 					</select>
-					<input type="text" class="search" name="searchuserid" id="userid" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
+					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
 					<input type="submit" value="검색">
 				</div>
 				</form>
@@ -68,28 +70,32 @@ $(function(){
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="2%"><input type="checkbox" class="chk" id="allCheck" onclick="allChk(this);"/></th>
-						<th width="10%">아이디</th>
-						<th width="13%">이름</th>
-						<th width="15%">이메일</th>
-						<th width="10%">전화번호</th>
+						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
+						<th width="3%">No</th>
 						<th width="10%">관리자구분</th>
+						<th width="17%">아이디</th>
+						<th width="14%">이름</th>
+						<th width="20%">이메일</th>
+						<th width="20%">전화번호</th>
+						<th width="14%">등록일</th>
 					</tr>
-					<% for(int i = 0; i < list.size() ; i++) { 
+					<% for(int i = list.size()-1; i >= 0 ; i--) { 
 						Member m = list.get(i);
 					%>
 					<tr>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= m.getUserId() %>e"></td>
-						<td><a href="/sori/views/admin/adminUpdateForm.jsp"><%= m.getUserId() %></a></td>
-						<td><a href="/sori/views/admin/adminUpdateForm.jsp"><%= m.getUserName() %></a></td>
-						<td><%= m.getEmail() %></td>
-						<td><%= m.getPhone() %></td>
+						<td><%= i+1 %></td>
 						<td><% if(m.getTypeNumber() == Integer.parseInt("4")){ %>
 							부관리자
 							<% } else { %>
 							대표관리자
 							<% } %>
 						</td>
+						<td><a href="/sori/views/admin/adminUpdateForm.jsp"><%= m.getUserId() %></a></td>
+						<td><a href="/sori/views/admin/adminUpdateForm.jsp"><%= m.getUserName() %></a></td>
+						<td><%= m.getEmail() %></td>
+						<td><%= m.getPhone() %></td>
+						<td><%= m.getEnrollDate() %></td>
 					</tr>
 					<% } %>
 				</table>
