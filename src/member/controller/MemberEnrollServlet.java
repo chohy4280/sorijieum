@@ -2,15 +2,15 @@ package member.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
@@ -40,15 +40,26 @@ public class MemberEnrollServlet extends HttpServlet {
 		member.setUserId(request.getParameter("userid"));
 		member.setTypeNumber(Integer.parseInt(request.getParameter("typenumber")));
 		member.setUserName(request.getParameter("username"));
-		member.setUserPwd(request.getParameter("username"));
+		member.setUserPwd(request.getParameter("userpwd"));
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
 		member.setGender(request.getParameter("gender"));
 		
-	/*	String birthStr = request.getParameter("birth");
-		SimpleDateFormat birthForm = new SimpleDateFormat("yyyy-MM-dd");
-		Date birth = (Date) birthForm.parse(birthStr);
-		member.setBirth(birth);*/
+		String birthStr = request.getParameter("birth");
+		Date birth = Date.valueOf(birthStr);
+		member.setBirth(birth);
+		
+		int result = new MemberService().insertMember(member);
+		System.out.println(result);
+		//4.받은 결과로 성공/실패에 대한 뷰를 선택해서 내보내기. => 뷰만 내보낼때는 sendRedirect / 뷰에 값까지 같이 보낼때는 requestDispacther(<=상대경로만 사용가능)
+		if(result>0) {	//성공 
+			response.sendRedirect("/sori/views/member/memberLoginView.jsp");
+		}
+		else {			//실패
+			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "회원 가입 실패!");
+			view.forward(request, response);
+		}
 		
 	}
 

@@ -56,7 +56,31 @@ public class MemberDao {
 	
 	//가입
 	public int insertMember(Connection conn, Member member) {
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "insert into member values(?,?,?,?,?,?,?,?,sysdate,null,null,'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			pstmt.setInt(2, member.getTypeNumber());
+			pstmt.setString(3, member.getUserName());
+			pstmt.setString(4, member.getUserPwd());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setString(6, member.getEmail());
+			pstmt.setString(7, member.getGender());
+			pstmt.setDate(8, member.getBirth());
+			
+			result = pstmt.executeUpdate();			
+			System.out.println("처리된 행 갯수: "+ result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	//아이디 중복체크
