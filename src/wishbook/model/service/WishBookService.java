@@ -34,8 +34,11 @@ public class WishBookService {
 	
 	
 	// 관리자 신청도서 검색용
-	public ArrayList<WishBook> selectWishBookSearch(String searchtype, String keyword, String wbstatus){
-		return null;
+	public ArrayList<WishBook> selectWishBookSearch(String searchtype, String keyword, String wishstatus){
+		Connection conn = getConnection();
+		ArrayList<WishBook> list = wbDao.selectWishBookSearch(conn, searchtype, keyword, wishstatus);
+		close(conn);
+		return list;
 	}
 	
 	

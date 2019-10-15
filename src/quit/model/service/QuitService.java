@@ -27,8 +27,11 @@ public class QuitService {
 	}
 	
 	// 관리자 탈퇴회원 검색 조회용
-	public ArrayList<Quit> selectQuitMemberSearch(String membertype, String userid, String quittype){
-		return null;
+	public ArrayList<Quit> selectQuitMemberSearch(String typenumber, String userid, String quittype){
+		Connection conn = getConnection();
+		ArrayList<Quit> list = qDao.selectQuitMemberSearch(conn, typenumber, userid, quittype);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 이용자 탈퇴회원 신규회원(Sysdate) 검색용

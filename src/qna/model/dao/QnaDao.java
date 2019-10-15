@@ -84,8 +84,53 @@ public class QnaDao {
   }
 
   // 관리자 Q&A 검색용
-  public ArrayList<Qna> selectQnaSearch(Connection conn, String searchtype, String keyword, String answerstatus){
-    return null;
+  public ArrayList<Qna> selectQnaSearch(Connection conn, String searchtype, String keyword, String qnastatus){
+	  ArrayList<Qna> list = new ArrayList<Qna>();
+	  Statement stmt = null;
+	  ResultSet rset = null;
+	  
+	  String query = null;
+/*	  검색 경우의 수
+ 	  1-1 검색조건 X, 답변여부 전체
+	  1-2 검색조건 X, 답변여부 O
+
+	  2-1 검색조건 O, 답변여부 전체
+	  2-2 검색조건 O, 답변여부 O*/
+	  
+	  if(keyword == null) {
+		  if(qnastatus.equals("ALL"))
+			  query = "select * from qna where qnastatus in ('Y', 'N')";
+		  else
+			  query = "select * from qna where qnastatus = '" + qnastatus + "'";
+	  }else {
+		  if(qnastatus.equals("ALL"))
+			  query = "select * from qna where " + searchtype + " like '%" + keyword + "%' and qnastatus in ('Y', 'N')";
+		  else
+			  query = "select * from qna where " + searchtype + " like '%" + keyword + "%' and qnastatus = '" + qnastatus + "'";
+	  }
+	  
+	  try {
+		stmt = conn.createStatement();
+		rset = stmt.executeQuery(query);
+		
+		while(rset.next()) {
+			Qna q = new Qna();
+			q.setQnaTitle(rset.getString("qnatitle"));
+			q.setQnaStatus(rset.getString("qnastatus"));
+			q.setQnaWriter(rset.getString("qnawriter"));
+			q.setQnaDate(rset.getDate("qnadate"));
+			q.setQnaViews(rset.getInt("qnaviews"));
+			
+			list.add(q);
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(stmt);
+	}
+	  
+    return list;
   }
 
   // 관리자 Q&A 새문의글(Sysdate) 조회용

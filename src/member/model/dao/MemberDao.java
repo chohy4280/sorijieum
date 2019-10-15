@@ -165,7 +165,7 @@ public class MemberDao {
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from member where typenumber between 4 and 5";
+		String query = "select * from member where typenumber between 4 and 5 order by enrolldate desc";
 		
 		try {
 			stmt = conn.createStatement();
@@ -179,6 +179,7 @@ public class MemberDao {
 				m.setEmail(rset.getString("email"));
 				m.setPhone(rset.getString("phone"));
 				m.setTypeNumber(rset.getInt("typenumber"));
+				m.setEnrollDate(rset.getDate("enrolldate"));
 				
 				list.add(m);
 			}
@@ -207,8 +208,37 @@ public class MemberDao {
 	}
 	
 	// 관리자 한명 조회용
-	public Member selectAdminOne(Connection conn, String searchtype, String keyword) {
-		return null;
+	public ArrayList<Member> selectAdminOne(Connection conn, String searchtype, String keyword) {
+		ArrayList<Member> list = new ArrayList<Member>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from (select * from member where typenumber in (4, 5)) where " + searchtype + " like '%" + keyword + "%' order by enrolldate desc";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				Member m = new Member();
+				
+				m.setTypeNumber(rset.getInt("typenumber"));
+				m.setUserId(rset.getString("userid"));
+				m.setUserName(rset.getString("username"));
+				m.setEmail(rset.getString("email"));
+				m.setPhone(rset.getString("email"));
+				m.setEnrollDate(rset.getDate("enrolldate"));
+				
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
 	}
 	
 	// 관리자 전체회원 조회용
@@ -217,7 +247,7 @@ public class MemberDao {
 		Statement stmt = null;
 		ResultSet rset= null;
 		
-		String query = "SELECT * FROM MEMBER WHERE TYPENUMBER BETWEEN 1 AND 3 ORDER BY ENROLLDATE DESC";
+		String query = "SELECT * FROM (SELECT * FROM MEMBER WHERE QUITYN = 'N') WHERE TYPENUMBER BETWEEN 1 AND 3 ORDER BY ENROLLDATE DESC";
 		
 		try {
 			stmt = conn.createStatement();
@@ -246,8 +276,69 @@ public class MemberDao {
 	}
 	
 	// 관리자 회원 검색용
-	public ArrayList<Member> selectMemberSearch(Connection conn, String searchtype, String keyword, String gender, String membertype){
-		return null;
+	public ArrayList<Member> selectMemberSearch(Connection conn, String searchtype, String keyword, String gender, String typenumber){
+		ArrayList<Member> list = new ArrayList<Member>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = null;
+		
+/*		경우의 수
+ 		1-1. 키워드 X, 성별전체, 회원유형 전체
+		1-2. 키워드 X, 성별 O, 회원유형 전체
+		1-3. 키워드 X, 성별 전체, 회원유형 O
+		1-4. 키워드 X, 성별O, 회원유형O
+
+		2-1. 키워드 O, 성별전체, 회원유형 전체
+		2-2. 키워드 O, 성별 O, 회원유형 전체
+		2-3. 키워드 O, 성별 전체, 회원유형 O
+		2-4. 키워드 O, 성별O, 회원유형O*/
+		
+		if(keyword == null) {
+			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 1-1
+				query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";
+			else if((!gender.equals("ALL")) && typenumber.equals("ALL"))	// 1-2
+				query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber in (1,2,3) order by enrolldate desc";
+			else if(gender.equals("ALL") && !typenumber.equals("ALL"))	// 1-3
+				query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber = " + typenumber + " order by enrolldate desc";
+			else if((!gender.equals("ALL")) && !typenumber.equals("ALL"))	// 1-4
+			query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber = " + typenumber + " order by enrolldate desc";
+		} else {
+			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 2-1
+				query = "select * from (select * from member where quityn = 'N') where " + searchtype + " like '%" + keyword + "%' and gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";
+			else if((!gender.equals("ALL")) && typenumber.equals("ALL"))	// 2-2
+				query = "select * from (select * from member where quityn = 'N') where " + searchtype + " like '%" + keyword + "%' and gender = '" + gender + "' and typenumber in (1,2,3) order by enrolldate desc";
+			else if(gender.equals("ALL") && !typenumber.equals("ALL"))	// 2-3
+				query = "select * from (select * from member where quityn = 'N') where " + searchtype + " like '%" + keyword + "%' and gender in ('F', 'M') and typenumber = " + typenumber + " order by enrolldate desc";
+			else if((!gender.equals("ALL")) && !typenumber.equals("ALL"))	// 2-4
+			query = "select * from (select * from member where quityn = 'N') where " + searchtype + " like '%" + keyword + "%' and gender = '" + gender + "' and typenumber = " + typenumber + " order by enrolldate desc";
+		}
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				Member m = new Member();
+				
+				m.setTypeNumber(rset.getInt("typenumber"));
+				m.setUserName(rset.getString("username"));
+				m.setUserId(rset.getString("userid"));
+				m.setGender(rset.getString("gender"));
+				m.setEmail(rset.getString("email"));
+				m.setPhone(rset.getString("phone"));
+				m.setEnrollDate(rset.getDate("enrolldate"));
+				
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return list;
 	}
 	
 	// 관리자 회원 한명 검색용

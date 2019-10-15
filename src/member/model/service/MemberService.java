@@ -102,21 +102,27 @@ public class MemberService {
 	}
 	
 	// 관리자 한명 조회용
-	public Member selectAdminOne(String searchtype, String keyword) {
-		return null;
+	public ArrayList<Member> selectAdminOne(String searchtype, String keyword) {
+		Connection conn = getConnection();
+		ArrayList<Member> list = mDao.selectAdminOne(conn, searchtype, keyword);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 전체회원 조회용
 	public ArrayList<Member> selectAll(){
 		Connection conn = getConnection();
-		ArrayList<Member> list = mdao.selectAll(conn);
+		ArrayList<Member> list = mDao.selectAll(conn);
 		close(conn);
 		return list;
 	}
 	
 	// 관리자 회원 검색용
-	public ArrayList<Member> selectMemberSearch(String searchtype, String keyword, String gender, String membertype){
-		return null;
+	public ArrayList<Member> selectMemberSearch(String searchtype, String keyword, String gender, String typenumber){
+		Connection conn = getConnection();
+		ArrayList<Member> list = mDao.selectMemberSearch(conn, searchtype, keyword, gender, typenumber);
+		close(conn);
+		return list;
 	}
 	
 	// 관리자 회원 한명 검색용

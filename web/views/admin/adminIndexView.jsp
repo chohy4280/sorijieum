@@ -6,7 +6,7 @@
 
 <%
 	Date sysdate = new Date();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 (E)");
 	ArrayList<WishBook> wishbList = (ArrayList<WishBook>)request.getAttribute("wishbList");
 	ArrayList<Book> wbList = (ArrayList<Book>)request.getAttribute("wbList");
 	ArrayList<Book> mbList = (ArrayList<Book>)request.getAttribute("mbList");
@@ -44,7 +44,7 @@
 	            <!-- 도서 섹션-->          
 	            <div class="data-box">
 	            	<div class="data-section1">
-	            		<i class="huge yellow book icon"></i>
+	            		<i class="huge book icon" style="color: #f2c61f;"></i>
 	            		<div class="data-title" style="color: #f2c61f">도서</div>
 	            	</div>
 	            	<div class="data-section2">

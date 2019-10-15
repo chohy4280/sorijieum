@@ -45,24 +45,24 @@ $(".chk").click(function(){
             
             <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 180px;">
-            <form action="" method="post">
+            <form action="/sori/bslist.ad" method="post">
 				<div>
 				<a class="ui large teal label">검색조건</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
 						<option value="bookcode">도서코드</option>
-						<option value="bookname">도서명</option>
+						<option value="booktitle">도서명</option>
 						<option value="author">저자</option>
 						<option value="publisher">출판사</option>
 					</select>
-					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
+					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
 					
 					<br><br>
 
 				<a class="ui large teal label">도서상태</a>&nbsp;
-					<input type="radio" name="bookstate" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="bookstate" value="wait"> 제작대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="bookstate" value="make"> 제작중 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="bookstate" value="done"> 제작완료
+					<input type="radio" name="makestatus" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="makestatus" value="WAIT"> 제작대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="makestatus" value="MAKE"> 제작중 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="makestatus" value="DONE"> 제작완료
 					<center><input type="submit" value="검색"></center>
 				</div>
 				</form>
@@ -93,8 +93,8 @@ $(".chk").click(function(){
 					<tr>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= b.getBookCode() %>"></td>
 						<td><%= i+1 %> </td>
-						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp"><%= b.getBookCode() %></a></td>
-						<td><a href="/sori/views/admin/adminUpdateBookForm.jsp"><%= b.getBookTitle() %></a></td>
+						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookCode() %></a></td>
+						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookTitle() %></a></td>
 						<td><%= b.getAuthor() %></td>
 						<td><%= b.getPublisher() %></td>
 						<td><% if(b.getMakeStatus().equals("WAIT")) {%>

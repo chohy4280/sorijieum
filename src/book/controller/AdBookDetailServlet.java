@@ -1,11 +1,16 @@
 package book.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import book.model.service.BookService;
+import book.model.vo.BookDV;
 
 /**
  * Servlet implementation class adminBookDetailServlet
@@ -27,7 +32,22 @@ public class AdBookDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 도서 한개 정보 불러오기용
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		String bookcode = request.getParameter("bookcode");
+		
+		BookDV book = new BookService().selectBookOne(bookcode);
+		
+		RequestDispatcher view = null;
+		
+		if(book != null) {
+			view = request.getRequestDispatcher("views/admin/adminDetailBook.jsp");
+			request.setAttribute("book", book);
+		} else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "도서 상세보기 실패!");
+		}
+		view.forward(request, response);
 	}
 
 	/**

@@ -1,11 +1,17 @@
 package wishbook.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import wishbook.model.service.WishBookService;
+import wishbook.model.vo.WishBook;
 
 /**
  * Servlet implementation class adminWishbookSearchServlet
@@ -27,7 +33,23 @@ public class AdWishbookSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 신청도서 검색용
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		String searchtype = request.getParameter("searchtype");
+		String keyword = request.getParameter("keyword");
+		String wishstatus = request.getParameter("wishstatus");
+		
+		ArrayList<WishBook> list = new WishBookService().selectWishBookSearch(searchtype, keyword, wishstatus);
+		
+		RequestDispatcher view = null;
+		if(list.size() >= 0) {
+			view = request.getRequestDispatcher("views/admin/adminWishBookListView.jsp");
+			request.setAttribute("list", list);
+		}else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "신청도서 검색 실패!");
+		}
+		view.forward(request, response);
 	}
 
 	/**

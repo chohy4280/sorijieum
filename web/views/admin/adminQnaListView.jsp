@@ -47,20 +47,20 @@ $(function(){
             
             <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 80px;">
-            <form action="" method="post">
+            <form action="/sori/bodslist.ad" method="post">
 				<div>
 				<a class="ui large teal label">검색조건</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 130px;">
-						<option value="title">제목</option>
-						<option value="userid">아이디</option>
+						<option value="qnatitle">제목</option>
+						<option value="qnawriter">아이디</option>
 					</select>
-					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
+					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 				<a class="ui large teal label">답변여부</a>&nbsp;
-					<input type="radio" name="replystate" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="replystate" value="bookwait"> 답변전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="replystate" value="bookmake"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="qnastatus" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="qnastatus" value="N"> 답변전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="qnastatus" value="Y"> 답변완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" value="검색">
 				</div>
 				</form>
@@ -76,11 +76,11 @@ $(function(){
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="3%"><input type="checkbox" class="chk" id="allCheck" onclick="allChk(this);"/></th>
-						<th width="5%">No</th>
-						<th width="35%">제목</th>
-						<th width="12%">답변여부</th>
-						<th width="15%">작성자ID</th>
+						<th width="3%"><input type="checkbox" class="chk" id="allCheck"/></th>
+						<th width="3%">No</th>
+						<th width="9%">답변여부</th>
+						<th width="50%" style="text-align:left">제목</th>
+						<th width="10%">작성자ID</th>
 						<th width="10%">작성일</th>
 						<th width="5%">조회수</th>
 					</tr>
@@ -90,13 +90,13 @@ $(function(){
 					<tr>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= q.getQnaNo() %>"></td>
 						<td><%= i+1 %></td>
-						<td align="left"><a href=""><%= q.getQnaTitle() %></a></td>
 						<td><% if(q.getQnaStatus().equals("Y")) { %>
 							답변완료
 							<%} else { %>
 							답변전
 							<% } %>
 						</td>
+						<td style="text-align:left"><a href=""><%= q.getQnaTitle() %></a></td>
 						<td><%= q.getQnaWriter() %></td>
 						<td><%= q.getQnaDate() %></td>
 						<td><%= q.getQnaViews() %></td>

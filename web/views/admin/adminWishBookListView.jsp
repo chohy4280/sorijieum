@@ -22,21 +22,21 @@
         
         <!-- 검색창 시작!-->
             <div class="greyBox" style="height: 180px;">
-            <form action="" method="post">
+            <form action="/sori/wbslist.ad" method="post">
 				<div>
 				<a class="ui large teal label">상세검색</a>&nbsp;
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 150px;">
-						<option value="bookname">도서명</option>
-						<option value="userid">신청자ID</option>
+						<option value="wishbooktitle">도서명</option>
+						<option value="wishwriter">신청자ID</option>
 					</select>
-					<input type="text" class="search" name="searchtypetext" id="searchtypetext" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
+					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 400px;">
 					<br><br>
 					
 					<a class="ui large teal label">처리상태</a>&nbsp;
-					<input type="radio" name="bookstate" value="all" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="bookstate" value="wait"> 승인대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="bookstate" value="done"> 승인완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="bookstate" value="rjct"> 반려
+					<input type="radio" name="wishstatus" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="wishstatus" value="WAIT"> 승인대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="wishstatus" value="DONE"> 승인완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="wishstatus" value="RJCT"> 반려
 				
 
 					<center><input type="submit" value="검색"></center>
