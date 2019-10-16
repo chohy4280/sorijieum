@@ -1,11 +1,16 @@
 package wishbook.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import wishbook.model.service.WishBookService;
+import wishbook.model.vo.WishBook;
 
 /**
  * Servlet implementation class wishbookResultServlet
@@ -27,7 +32,25 @@ public class wishbookResultServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 신청도서 승인반려처리용
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		WishBook wb = new WishBook();
+		int wishno = Integer.parseInt(request.getParameter("wishno"));
+		wb.setWishNo(wishno);
+		wb.setWishStatus(request.getParameter("wishstatus"));
+		wb.setRjctReason(request.getParameter("rjctreason"));
+		wb.setWishbookAdmin(request.getParameter("wishbookadmin"));
+		
+		int result = new WishBookService().updatetWishBookResult(wb);
+		
+		if(result > 0) {
+			response.sendRedirect("/sori/wbdview?wishno=" + wishno);
+		} else {
+			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "신청도서 관리자 처리 실패!");
+			view.forward(request, response);
+		}
+		
 	}
 
 	/**

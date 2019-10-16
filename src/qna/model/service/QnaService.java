@@ -59,9 +59,9 @@ public class QnaService {
 	}
 	
 	// 관리자 Q&A 검색용
-	public ArrayList<Qna> selectQnaSearch(String searchtype, String keyword, String qnastatus){
+	public ArrayList<Qna> selectQnaSearch(String searchtype, String keyword, String qnastatus, String qnadate){
 		Connection conn = getConnection();
-		ArrayList<Qna> list = qDao.selectQnaSearch(conn, searchtype, keyword, qnastatus);
+		ArrayList<Qna> list = qDao.selectQnaSearch(conn, searchtype, keyword, qnastatus, qnadate);
 		close(conn);
 		return list;
 	}

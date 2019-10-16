@@ -44,13 +44,23 @@ public class WishBookService {
 	
 	// 관리자 신청도서 한 개 불러오기 용
 	public WishBook selectWishBookOneAdmin(int wishno) {
-		return null;
+		Connection conn = getConnection();
+		WishBook wb = wbDao.selectWishBookOneAdmin(conn, wishno);
+		close(conn);
+		return wb;
 	}
 	
 	
 	// 관리자 신청도서 승인반려처리용
-	public WishBook insertWishBookResult(int wishno) {
-		return null;
+	public int updatetWishBookResult(WishBook wb) {
+		Connection conn = getConnection();
+		int result = wbDao.updateWishBookResult(conn, wb);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	//*********************************************************************

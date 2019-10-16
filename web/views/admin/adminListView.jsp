@@ -70,7 +70,9 @@ $(function(){
 				<br>
 				<table class="listTable">
 					<tr>
+					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
+						<% } %>
 						<th width="3%">No</th>
 						<th width="10%">관리자구분</th>
 						<th width="17%">아이디</th>
@@ -83,7 +85,9 @@ $(function(){
 						Member m = list.get(i);
 					%>
 					<tr>
+					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= m.getUserId() %>e"></td>
+						<% } %>
 						<td><%= i+1 %></td>
 						<td><% if(m.getTypeNumber() == Integer.parseInt("4")){ %>
 							부관리자
@@ -101,8 +105,10 @@ $(function(){
 				</table>
 				
 				<br>
+				<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 				<div style="float:left"><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddForm.jsp'">추가</button>
 				<button class="mini ui black button" onclick="">삭제</button></div>
+				<% } %>
 				</div>
 			</div>
 				
