@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>나의 신청도서</title>
+<%@ include file="/../inc/top.jsp" %>
 </head>
 <body>
 

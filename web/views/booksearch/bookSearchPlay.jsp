@@ -6,9 +6,8 @@
 <meta charset="UTF-8">
 <title>도서 재생 </title>
 <%@include file="/../inc/top.jsp"%>
-<%@include file="/../inc/sementic.jsp" %>
 <!-- CUSTOM CSS -->
-	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
+	<link rel="stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
 </head>
 <body>
 <section class="my-section">

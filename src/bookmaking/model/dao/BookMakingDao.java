@@ -264,7 +264,7 @@ public class BookMakingDao {
 		}
 		return dcount;
 	}
-
+  
 	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
 	public int insertBook(Connection conn, Book b) {
 		int result = 0;

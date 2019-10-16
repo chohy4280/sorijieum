@@ -1002,7 +1002,12 @@ INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user005', '쇼코의 미소', 
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user003', '쇼코의 미소', '최은영', NULL, NULL, '2019/03/02', 8, 'RJCT', '이미 신청된 도서입니다.', '2019/03/03', 'N' , 'admin00');
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user005', '소년이 온다', '한강', NULL, NULL, '2019/09/02', 7, DEFAULT, NULL, NULL, 'N', NULL);
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user005', '검사내전', '김웅', NULL, NULL, '2019/09/08', 5, DEFAULT, NULL, NULL, 'N', NULL);
-
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user001', '여행의 이유', '김영하', NULL, NULL, '2019/09/08', 4, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user002', '해리포터 시리즈', '제이케이롤링', NULL, NULL, '2019/09/09', 9, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user002', '아몬드', '손원평', NULL, NULL, '2019/09/09', 8, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user001', '너무 재밌어서 잠 못 드는 심리학 사전', '스벤야 아이젠브라운', NULL, NULL, '2019/09/10', 3, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user004', '박막례, 이대로 죽을 순 없다', '박막례, 김유라', '위즈덤 하우스', NULL, '2019/09/11', 11, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user003', '개미', '베르나르 베르베르', NULL, NULL, '2019/09/11', 7, DEFAULT, NULL, NULL, 'N', NULL);
 
 --qna 데이터 입력
 INSERT INTO QNA VALUES (SEQ_QNANO.NEXTVAL, '한자 작성은 어떻게 하면되나요', 'user002', '도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?', '2019/09/23', 21, 'Y', NULL, NULL, 'N');
@@ -1063,5 +1068,5 @@ INSERT INTO MEMBER VALUES(
 'quituser01',3,'김탈퇴','quit01','01011118888','quituser@gmail.com','M','1978-05-14',DEFAULT,NULL,NULL,'Y');
 
 INSERT INTO QUIT VALUES('quituser01','F','사이트를 이용하지 않습니다.','2019-08-27');
-
+                                              
 COMMIT;

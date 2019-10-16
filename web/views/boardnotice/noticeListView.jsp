@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/../inc/top.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항 목록</title>
-  <!-- Semantic UI CND -->
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+<%@ include file="/../inc/top.jsp" %>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
@@ -50,7 +46,7 @@
 		</table>
 	<!--공지사항 목록 끝-->
 		<br>
-		<div align="right"><a class="big ui black label" href="">글쓰기</a></div>
+		<div align="right"><a class="big ui black label" href="/sori/views/boardnotice/noticeWrite.jsp">글쓰기</a></div>
 		
 		
 	<!-- 페이징 시작 -->
