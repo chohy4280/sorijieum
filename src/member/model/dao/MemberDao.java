@@ -311,6 +311,9 @@ public class MemberDao {
  		1-1. 키워드 X, 성별전체, 회원유형 전체
 		1-2. 키워드 X, 성별 O, 회원유형 전체
 		1-3. 키워드 X, 성별 전체, 회원유형 O
+			1-3.1 메인회면 이용자 신규회원용 typenumber=4
+			1-3.2 메인화면 이용자 TOTAL용 typenumber=5
+			1-3.3 메인화면 제작자 신규회원용 typenumber=6
 		1-4. 키워드 X, 성별O, 회원유형O
 
 		2-1. 키워드 O, 성별전체, 회원유형 전체
@@ -321,12 +324,24 @@ public class MemberDao {
 		if(keyword == null) {
 			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 1-1
 				query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";
+			
 			else if((!gender.equals("ALL")) && typenumber.equals("ALL"))	// 1-2
 				query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber in (1,2,3) order by enrolldate desc";
-			else if(gender.equals("ALL") && !typenumber.equals("ALL"))	// 1-3
+			
+			else if(gender.equals("ALL") && !typenumber.equals("ALL")) {	// 1-3
+				if(typenumber.equals("4"))	// 메인화면 이용자 신규회원용
+					query = "select * from (select * from member where quityn = 'N' and enrolldate = sysdate) where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
+				
+				else if(typenumber.equals("5"))	// 메인화면 이용자 TOTAL용
+					query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
+				
+				else if(typenumber.equals("6")) // 메인화면 제작자 신규회원용
+					query = "select * from (select * from member where quityn = 'N' and enrolldate = sysdate) where gender in ('F', 'M') and typenumber = 3 order by enrolldate desc";
+				else
 				query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber = " + typenumber + " order by enrolldate desc";
-			else if((!gender.equals("ALL")) && !typenumber.equals("ALL"))	// 1-4
-			query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber = " + typenumber + " order by enrolldate desc";
+				
+			}else if((!gender.equals("ALL")) && !typenumber.equals("ALL"))	// 1-4
+				query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber = " + typenumber + " order by enrolldate desc";
 		} else {
 			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 2-1
 				query = "select * from (select * from member where quityn = 'N') where " + searchtype + " like '%" + keyword + "%' and gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";

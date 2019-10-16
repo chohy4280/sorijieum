@@ -140,11 +140,12 @@ color: inherit;
 
 
 .base {
-	margin-left: 50px;
+	margin-left: 40px;
+	
 }
 
 .sysdate {
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: 600;
 	color:#000;
 }
@@ -204,13 +205,13 @@ color: inherit;
 }
 
 .todayboard {
-	color: #ec9064;
+	color: #d95c5c;
 	font-weight: 800;
 	font-size: 23px;
 }
 
 .todayuser1{
-	color: #c7e385;
+	color: #5bbd72;
 	font-weight: 800;
 	font-size: 23px;
 }

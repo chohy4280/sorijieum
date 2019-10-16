@@ -36,7 +36,7 @@
 
 	<!--오늘의 차트 시작-->
             <div class="base">
-	            <i class="large blue check circle icon"></i>
+	            <img src="/sori/resources/images/refresh.png" style="width:25px; height:25px;" onclick="window.location.reload()">
 	            <span class="sysdate"><%= sdf.format(sysdate) %></span>
 	            
 	            <div class="data">
@@ -54,10 +54,10 @@
 	            		<div>완료도서</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todaybook"><a href=""><%= wishbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href=""><%= wbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href=""><%= mbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href=""><%= dbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/wbslist.ad?wishstatus=WAIT"><%= wishbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/bslist.ad?makestatus=WAIT"><%= wbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/bslist.ad?makestatus=MAKE"><%= mbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/bslist.ad?makestatus=DONE"><%= dbList.size() %></span></a> 권</div>
 	            	</div>
 	            </div>
 	            
@@ -73,8 +73,8 @@
 	            		<div>미답변 문의</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayboard"><a href=""><%= newQList.size() %></span></a> 건</div>
-	            		<div><span class="todayboard"><a href=""><%= uaQList.size() %></span></a> 건</div>
+	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?qnastatus=ALL&qnadate=sysdate"><%= newQList.size() %></span></a> 건</div>
+	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?qnastatus=N"><%= uaQList.size() %></span></a> 건</div>
 	            	</div>
 	            </div>
 	            
@@ -92,9 +92,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser1"><a href=""><%= newUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?gender=ALL&typenumber=4"><%= newUList.size() %></span></a> 명</div>
 	            		<div><span class="todayuser1"><a href=""><%= quitUList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser1"><a href=""><%= totalUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?gender=ALL&typenumber=5"><%= totalUList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            
@@ -111,9 +111,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser2"><a href=""><%= newMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?gender=ALL&typenumber=6"><%= newMList.size() %></span></a> 명</div>
 	            		<div><span class="todayuser2"><a href=""><%= quitMList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser2"><a href=""><%= totalMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?gender=ALL&typenumber=3"><%= totalMList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            

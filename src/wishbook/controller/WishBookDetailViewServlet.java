@@ -1,11 +1,16 @@
 package wishbook.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import wishbook.model.service.WishBookService;
+import wishbook.model.vo.WishBook;
 
 /**
  * Servlet implementation class WishBookDetailViewServlet
@@ -26,8 +31,22 @@ public class WishBookDetailViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 신청도서 상세보기
+		request.setCharacterEncoding("utf-8");
+		
+		int wishno = Integer.parseInt(request.getParameter("wishno"));
+		
+		WishBook wb = new WishBookService().selectWishBookOneAdmin(wishno);
+		
+		RequestDispatcher view = null;
+		if(wb != null) {
+			view = request.getRequestDispatcher("views/admin/adminWishBookDetailView.jsp");
+			request.setAttribute("wb", wb);
+		} else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "신청도서 상세보기 실패!");
+		}
+		view.forward(request, response);
 	}
 
 	/**

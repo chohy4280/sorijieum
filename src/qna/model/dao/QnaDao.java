@@ -84,7 +84,7 @@ public class QnaDao {
   }
 
   // 관리자 Q&A 검색용
-  public ArrayList<Qna> selectQnaSearch(Connection conn, String searchtype, String keyword, String qnastatus){
+  public ArrayList<Qna> selectQnaSearch(Connection conn, String searchtype, String keyword, String qnastatus, String qnadate){
 	  ArrayList<Qna> list = new ArrayList<Qna>();
 	  Statement stmt = null;
 	  ResultSet rset = null;
@@ -92,20 +92,24 @@ public class QnaDao {
 	  String query = null;
 /*	  검색 경우의 수
  	  1-1 검색조건 X, 답변여부 전체
+ 	  	1-1.1 메인화면 새문의글 조회용
 	  1-2 검색조건 X, 답변여부 O
 
 	  2-1 검색조건 O, 답변여부 전체
 	  2-2 검색조건 O, 답변여부 O*/
 	  
 	  if(keyword == null) {
-		  if(qnastatus.equals("ALL"))
+		  if(qnastatus.equals("ALL")) {
+			  if(qnadate != null) //1-1.1 메인화면 새문의글 조회용
+				  query = "select * from (select * from qna where qnadate = sysdate) where qnastatus in ('Y', 'N')";
+			  else	// 1-1
 			  query = "select * from qna where qnastatus in ('Y', 'N')";
-		  else
+		  }else // 1-2
 			  query = "select * from qna where qnastatus = '" + qnastatus + "'";
 	  }else {
-		  if(qnastatus.equals("ALL"))
+		  if(qnastatus.equals("ALL")) // 2-1
 			  query = "select * from qna where " + searchtype + " like '%" + keyword + "%' and qnastatus in ('Y', 'N')";
-		  else
+		  else // 2-2
 			  query = "select * from qna where " + searchtype + " like '%" + keyword + "%' and qnastatus = '" + qnastatus + "'";
 	  }
 	  

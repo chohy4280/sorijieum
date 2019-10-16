@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.ArrayList, book.model.vo.Book" %>
-<%@ include file="/../inc/adminTemplate.jsp" %>
+ <%@ include file="/../inc/adminTemplate.jsp" %>
 <%
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 %>
@@ -78,7 +78,9 @@ $(".chk").click(function(){
 				<br>
 				<table class="listTable">
 					<tr>
+					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
+						<% } %>
 						<th width="5%">No</th>
 						<th width="10%">도서코드</th>
 						<th width="25%">도서명</th>
@@ -91,7 +93,9 @@ $(".chk").click(function(){
 						Book b = list.get(i);
 					%>
 					<tr>
+					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= b.getBookCode() %>"></td>
+						<%} %>
 						<td><%= i+1 %> </td>
 						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookCode() %></a></td>
 						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookTitle() %></a></td>
@@ -112,7 +116,9 @@ $(".chk").click(function(){
 				
 				<br>
 				<div><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddBookForm.jsp'">추가</button>&nbsp;
+				<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 					<button class="mini ui black button" onclick="fn_bookDelete();">삭제</button></div>
+					<% } %>
 				</div>
 			</div>
 				
@@ -122,17 +128,6 @@ $(".chk").click(function(){
 
 </section>
 <!-- Content 끝! -->
-
-    <footer class="site-footer">
-        <p>
-          &copy; Copyrights <strong>sorijieum</strong>. All Rights Reserved<br>
-          Created with sorijieum by @minyoung</a>
-        </p>
-        
-        <a href="index.html#" class="go-top">
-          <i class="fa fa-angle-up"></i>
-          </a>
-    </footer>
 
 
 </body>

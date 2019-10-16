@@ -49,7 +49,7 @@ public class MemberLoginServlet extends HttpServlet {
 			
 			//성공에 대한 서비스를 요청한 클라이언트에게 뷰를 내보냄.
 			if(loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)
-				response.sendRedirect("/sori/views/admin/adminIndexView.jsp");
+				response.sendRedirect("/sori/admain.ad");
 			else
 				response.sendRedirect("/sori/index.jsp");
 		}

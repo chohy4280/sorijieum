@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="wishbook.model.vo.WishBook" %>
 <%@ include file="/../inc/adminTemplate.jsp" %>
+<%
+	WishBook wb = (WishBook)request.getAttribute("wb");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,43 +27,76 @@
 				<br><br>
 				<table class="listTable">
 					<tr>
-						<th width="15%">신청일</th><td width="35%">2019/10/03</td>
-						<th width="15%">신청자(ID)</th><td width="35%">박공주(user003)</td>
+						<th width="15%">신청일</th><td width="35%"><%= wb.getWishDate() %></td>
+						<th width="15%">신청자ID</th><td width="35%"><%= wb.getWishWriter() %></td>
 					</tr>
 					<tr>
-						<th>도서명</th><td>보건교사 안은영</td>
-						<th>처리상태</th><td>승인</td>
+						<th>도서명</th><td><%= wb.getWishBookTitle() %></td>
+						<th>처리상태</th><td><% if(wb.getWishStatus().equals("WAIT")) { %>
+											승인대기
+											<% } else if(wb.getWishStatus().equals("DONE")) { %>
+											승인완료
+											<% } else { %>
+											반려
+											<% } %>
+										</td>
 					</tr>
 					<tr>
-						<th>저자명</th><td>정세랑</td>
-						<th>처리일시</th><td>2019/10/04</td>
+						<th>저자명</th><td><%= wb.getWishBookAuthor() %></td>
+						<th>처리일시</th><td><% if(wb.getWishStatusDate() == null) { %>
+												&nbsp;
+											<%} else { %>
+												<%= wb.getWishStatusDate() %>
+											<%} %>
+										</td>
 					</tr>
 					<tr>
-						<th>출판사명</th><td>민음사</td>
-						<th>처리자</th><td>최민영(admin01)</td>
+						<th>출판사명</th><td><% if(wb.getWishPublisher() == null) { %>
+												&nbsp;
+											<%} else { %>
+												<%= wb.getWishPublisher() %>
+											<%} %></td>
+						<th>처리자</th><td><% if(wb.getWishbookAdmin() == null) { %>
+												&nbsp;
+											<%} else { %>
+												<%= wb.getWishbookAdmin() %>
+											<%} %></td>
 					</tr>
 				</table>
 				<br><hr><br>
 				<a class="ui large teal label">관리자 처리</a><br><br>
-				<form action="" method="post">
+				<form action="/sori/wbresult.ad" method="post">
+					<input type="hidden" name="wishno" value="<%= wb.getWishNo() %>">
+					<input type="hidden" name="wishbookadmin" value="<%= loginMember.getUserId() %>">
 					<table class="listTable">
 					<tr>
 						<th width="15%">처리상태</th>
-						<td width="85%"><div align="left">　<input type="radio" name="state" value="done">　승인 &nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="radio" name="state" value="rjct">　반려</div></td>
+						<td width="85%"><div align="left">　
+						<% if(wb.getWishStatus().equals("DONE")) { %>
+							<input type="radio" name="wishstatus" value="DONE" checked>　승인 &nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="wishstatus" value="RJCT">　반려
+						<% } else if(wb.getWishStatus().equals("RJCT")) { %>
+							<input type="radio" name="wishstatus" value="DONE">　승인 &nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="wishstatus" value="RJCT" checked>　반려
+						<% } else {%>
+							<input type="radio" name="wishstatus" value="WAIT">　승인 &nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="wishstatus" value="RJCT">　반려
+						<% } %>
+						</div></td>
 					</tr>
 					<tr>
-						<th width="15%">코멘트</th><td width="85%"><textarea name="rjctreason" cols="140" rows="5"></textarea></td>
+						<th width="15%">코멘트</th><td width="85%"><textarea name="rjctreason" cols="130" rows="5"><% if(wb.getRjctReason() != null) { %><%= wb.getRjctReason() %><% } %></textarea>
+						</td>
 					</tr>
 					</table>
 					<br><br>
 					<center>
-					<div class="ui buttons">
-						<input type="submit" button class="ui positive button"  style="width:100px"></button>
-					 	<div class="or"></div>
-					  	<input type="reset" class="ui button" style="width:100px"></button>
-					</div>
-				</center>
+						<div class="ui buttons">
+							<input type="submit" button class="ui positive button"  style="width:100px"></button>
+						 	<div class="or"></div>
+						  	<input type="reset" class="ui button" style="width:100px"></button>
+						</div>
+					</center>
 				</form>
 				
 				</div>
