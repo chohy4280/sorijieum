@@ -1,12 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/../inc/top.jsp" %>
+<%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook" %>
+<%
+	ArrayList<WishBook> list = (ArrayList<WishBook>)request.getAttribute("list");
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>도서신청</title>
-<script type="text/javascript" src="/first/resources/js/jquery-3.4.1.min.js"></script>
+<%@ include file="/../inc/top.jsp" %>
+<%@ include file="/../inc/cdn.jsp"%>
 <script type="text/javascript">
 $(function(){
 		showDiv();
@@ -29,19 +37,13 @@ $(function(){
 
 	}
 </script>
-
-  <!-- Semantic UI CND -->
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
-  <!-- CUSTOM CSS -->
-<link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
+<!-- CUSTOM CSS -->
+<link rel="stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
 <body>
 
 <!-- Content 시작! -->
 	<section class="my-section">
-	
 	<!--도서신청 시작-->
 	<div class="my-content">
 	<a class="massive ui yellow label" style="font-size: 30px">도서신청</a>
@@ -58,27 +60,52 @@ $(function(){
 				<th width="10%">신청일</th>
 				<th width="10%">진행사항</th>
 			</tr>
+			<% for(int i = 0; i < list.size(); i++){
+				WishBook wb = list.get(i);
+				%>
 			<tr>
-				<td>1</td>
-				<td style="text-align:left;"><a href="/sori/views/boardwishbook/wishbookDetailView.jsp">아몬드</a></td>
-				<td>손원평</td>
-				<td>user003</td>
-				<td>2019/01/12</td>
-				<td>승인</td>
+				<td><%= i + 1%></td>
+				<td><a href="/sori/views/boardwishbook/wishbookDetailView.jsp"
+				style="color: #ffbf00;">
+				<%= wb.getWishBookTitle() %></a></td>
+				<td><%= wb.getWishBookAuthor() %></td>
+				<td><%= wb.getWishWriter() %></td>
+				<td><%= wb.getWishDate() %></td>
+				<td><%= wb.getWishStatus() %></td>
 			</tr>
+			<% } %>
 		</table>
 	<!--도서신청 목록 끝-->
 		<br>
-		<div align="right"><a class="big ui black label" href="">나의신청내역</a>
-			&nbsp;&nbsp;<a class="big ui black label" href="/sori/views/boardwishbook/wishbookAddForm.jsp">글쓰기</a>
+		<div class="ye-label" align="right">
+			<a class="big ui basic label" href="/sori/views/boardwishbook/mywishbookDetailView.jsp">나의신청내역</a>&nbsp;&nbsp;
+			<a class="big ui basic label" href="/sori/views/boardwishbook/wishbookAddForm.jsp">신청하기</a>
 		</div>
-		
-		
+		<br>
 	<!-- 페이징 시작 -->
-		<div align="center">페이징 버튼 부분(추후 코딩 예정)</div>
+		<div id="pagebox" align="center">
+		<a href="/sori/wblist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
+	<% if((beginPage - 10) < 1){ %>
+		<a href="/sori/wblist?page=1"><i class="angle grey left icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/wblist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+	<% } %>&nbsp;
+	<% for(int p = beginPage; p <= endPage; p++){ 
+			if(p == currentPage){
+	%>
+		<a href="/sori/wblist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+	<% }else{ %>
+		<a href="/sori/wblist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+	<% }} %>&nbsp;
+	<% if((endPage +  10) < maxPage){ %>
+		<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/wblist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+	<% } %>&nbsp;
+	<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
+	</div>
 	<!-- 페이징 끝 -->
-	
-	<br><hr><br>
+<br><hr><br>
 	<!-- 검색창 시작 -->
 		<center>
 		<div class="ui checkbox">
@@ -92,7 +119,7 @@ $(function(){
 			<form action="" method="post">
 			<div class="ui small input">
 				<input type="hidden" name="search" value="title">
-				<label><input type="search" name="keyword" placeholder="검색하실 도서명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;"></label>
+				<input type="search" name="keyword" placeholder="검색하실 도서명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
 			</div>
 			<input class="ui tiny basic button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
 			</form>
@@ -101,17 +128,15 @@ $(function(){
 			<form action="" method="post">
 			<div class="ui small input">
 				<input type="hidden" name="search" value="author">
-				<label><input type="search" name="keyword" placeholder="검색하실 저자명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;"></label>
+				<input type="search" name="keyword" placeholder="검색하실 저자명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
 			</div>
 			<input class="ui tiny basic button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
 			</form>
 		</div>
 		</center>
 	<!-- 검색창 끝 -->
-	
 	</div>
 	<!--도서신청 끝-->
-	
 	</section>
 	<!-- Content 끝! -->
 </body>

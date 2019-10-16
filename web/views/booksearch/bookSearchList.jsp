@@ -11,9 +11,8 @@
 <meta charset="UTF-8">
 <title>도서검색</title>
 <%@include file="/../inc/top.jsp"%>
-<%@include file="/../inc/sementic.jsp" %>
 <!-- CUSTOM CSS -->
-	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
+	<link rel="stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
 
 </head>
 

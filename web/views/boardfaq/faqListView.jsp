@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/../inc/top.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항 목록</title>
-<script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
+<%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -18,14 +17,8 @@
 			});
 	});
 </script>
-
-  <!-- Semantic UI CND -->
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
-  <!-- CUSTOM CSS -->
+<!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
- <script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
  
 </head>
 <body>

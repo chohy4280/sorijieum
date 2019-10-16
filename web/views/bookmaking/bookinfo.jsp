@@ -98,10 +98,10 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
 <!-- book count -->
 <div class="ye-book-count">
 <div class="orange ui statistic">
-    <div class="value" style="font-family:'S-Core Dream 7'">
+    <div class="value" style="font-family:'S-Core Dream 7';">
       <%= dcount %>
     </div>
-    <div class="label" style="font-family:'S-Core Dream 6'">
+    <div class="label" style="font-family:'S-Core Dream 6';margin-top:10px;">
       	우리가 함께 제작한 책
     </div>
 </div>

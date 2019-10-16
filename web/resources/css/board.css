@@ -1,21 +1,20 @@
 @charset "UTF-8";
 
 .my-section{
-	padding-top: 130px;
-	padding-bottom: 70px;
+	padding-top: 50px;
+	padding-bottom: 40px;
 	padding-left: 30px;
 	padding-right: 30px;
 	height:auto;
 }
 
 .my-content {
-	/*background: #e7e7e7;*/
 	width: 90%;
 	height: auto;
 	padding: 40px 40px;
 	margin-left: 5%;
 	margin-right: 5%;
-	margin-bottom: 70px;
+	margin-bottom: 0px;
 }
 
 .my-listTable {
@@ -36,7 +35,6 @@
 .my-listTable td{
 	height: 30px;
 	border-bottom: 1px solid #fbbe09;
-	background: #f9f9f9;
 	color: #6d6d6d;
 	text-align: center;
 }
@@ -92,7 +90,6 @@
 
 /* 신청도서 상세 내역용 테이블*/
 
-
 .my-listTable4 {
 	text-align: center;
 	border: 1px solid #fbbe09;
@@ -116,8 +113,6 @@
 	padding: 10px 10px;
 }
 
-
-
 .my-boardcontent {
 	widht: 100%;
 	padding-left: 30px;
@@ -127,7 +122,6 @@
 	margin-bottom: 30px;
 	border-bottom: 1px solid #fbbe09;
 }
-
 
 .ui input {
 	width: 300px;
@@ -172,3 +166,14 @@
 	margin: 0px;
 	padding: 0px;
 }
+
+
+/***************/
+/* 도서신청 회원 뷰 */
+/**************/
+
+.ye-label .label{
+	color:#fbbe09;
+}
+
+

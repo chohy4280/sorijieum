@@ -112,7 +112,7 @@
 <div class="ui four cards" style="margin:0 5% 0 5%">
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardwishbook/wishbookListView.jsp'" src="/sori/resources/images/도서신청.png">
+      	<img onclick="location.href='/sori/wblist'" src="/sori/resources/images/도서신청.png">
     </div>
   </div>
   <div class="card">

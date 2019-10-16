@@ -3,6 +3,8 @@ package wishbook.model.dao;
 import java.sql.*;
 import java.util.ArrayList;
 
+import book.model.vo.BookMakingProgress;
+
 import static common.JDBCTemplate.*;
 
 import wishbook.model.vo.WishBook;
@@ -136,12 +138,59 @@ public class WishBookDao {
 	
 	//************************************************************
 	
-	public int getListCount(){
-		return 0;
+	public int getListCount(Connection conn){
+		int wcount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select count(*) from wishbook";
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				wcount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return wcount;
 	}
 	
-	public ArrayList<WishBook> selectWishBookList(int startnum, int endnum){
-		return null;
+	public ArrayList<WishBook> selectWishBookList(Connection conn, int startnum, int endnum){
+		ArrayList<WishBook> wlist = new ArrayList<WishBook>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS " + 
+						"FROM (SELECT * FROM WISHBOOK " + 
+						"ORDER BY WISHDATE DESC)) " + 
+						"WHERE RNUM >= ? AND RNUM <= ? ";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startnum);
+			pstmt.setInt(2, endnum);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				WishBook wb = new WishBook();
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishWriter(rset.getString("wishwriter"));
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				wlist.add(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return wlist;
 	}
 
 	public WishBook selectWishBookOne(Connection conn, int wishno){

@@ -4,6 +4,7 @@ import java.sql.*;
 import static common.JDBCTemplate.*;
 import java.util.ArrayList;
 
+import book.model.vo.BookMakingProgress;
 import wishbook.model.dao.WishBookDao;
 import wishbook.model.vo.WishBook;
 
@@ -57,12 +58,18 @@ public class WishBookService {
 	
 	//도서신청 게시물 카운트
 	public int getListCount(){
-		return 0;
+		Connection conn = getConnection();
+		int wcount = wbDao.getListCount(conn);
+		close(conn);
+		return wcount;
 	}
 	
 	//도서신청 목록
 	public ArrayList<WishBook> selectWishBookList(int startnum, int endnum){
-		return null;
+		Connection conn = getConnection();
+		ArrayList<WishBook> list = wbDao.selectWishBookList(conn, startnum, endnum);
+		close(conn);
+		return list;
 	}
 
 	//도서신청 상세보기
