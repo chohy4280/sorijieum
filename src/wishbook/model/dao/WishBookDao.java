@@ -126,13 +126,66 @@ public class WishBookDao {
 	
 	// 관리자 신청도서 한 개 불러오기 용
 	public WishBook selectWishBookOneAdmin(Connection conn, int wishno) {
-		return null;
+		WishBook wb = null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from wishbook where wishno = " + wishno;
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				wb = new WishBook();
+				
+				wb.setWishNo(wishno);
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishWriter(rset.getString("wishwriter"));
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishStatusDate(rset.getDate("wishstatusdate"));
+				wb.setWishPublisher(rset.getString("wishpublisher"));
+				wb.setWishbookAdmin(rset.getString("wishbookadmin"));
+				wb.setRjctReason(rset.getString("rjctreason"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return wb;
 	}
 	
 	
 	// 관리자 신청도서 승인반려처리용
-	public WishBook insertWishBookResult(Connection conn, int wishno) {
-		return null;
+	public int updateWishBookResult(Connection conn, WishBook wb) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		System.out.println("wb : " + wb);
+		String query = "update wishbook set wishstatus = ?, rjctreason = ?, wishbookadmin = ?, wishstatusdate = sysdate where wishno = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, wb.getWishStatus());
+			pstmt.setString(2, wb.getRjctReason());
+			pstmt.setString(3, wb.getWishbookAdmin());
+			pstmt.setInt(4, wb.getWishNo());
+			
+			result = pstmt.executeUpdate();
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	

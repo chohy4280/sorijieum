@@ -18,22 +18,28 @@
 					 font-style: normal; }
 		
 		* { font-family: 'S-CoreDream-7ExtraBold';}
+		nav { float:left; 
+			  height:100%;}
 </style>
 </head>
 <body>
-
-<div class="ui vertical menu" style="margin:100px 0 0 0px;height:100%;width:225px;">
+<nav>
+<div class="ui vertical menu" style="margin:17% 0 0 0px;height:80%;width:225px;">
   <div class="item">
   <i class="brown fitted big home icon" style="float:left;margin-left:0;"></i>
-  <a href="/sori/views/member/userMyPage.jsp" style="font-size:20pt">마이페이지</a>
+  <a href="/sori/mypage?userid=<%= loginMember.getUserId() %>" style="font-size:20pt">마이페이지</a>
   </div>
   <div class="item">
     <i class="brown fitted big home icon" style="float:left;margin-left:0;"></i>
     <a style="font-size:20pt">도서</a>
     <div class="menu">
-      <a class="item" href="/sori/views/member/.jsp" style="font-size:13pt">내 서재</a>
-      <a class="item" href="/sori/views/member/.jsp" style="font-size:13pt">관심도서</a>
-      <a class="item" href="/sori/views/member/.jsp" style="font-size:13pt">내 신청도서</a>
+    <% if(loginMember.getTypeNumber()==3){ %>
+    	<a class="item" href="/sori/views/member/makerMakeBook.jsp" style="font-size:13pt">참여도서</a>
+    <% }else { %>
+    	<a class="item" href="/sori/views/member/userMyBook.jsp" style="font-size:13pt">내서재</a>
+    	<a class="item" href="/sori/views/member/userLikeBook.jsp" style="font-size:13pt">관심도서</a>
+    	<a class="item" href="/sori/views/member/userWishBook.jsp" style="font-size:13pt">신청도서</a>
+    <% } %>
     </div>
   </div>
   <div class="item">
@@ -45,6 +51,6 @@
     </div>
   </div>
  </div>
- 
+</nav>
 </body>
 </html>

@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>도서 상세</title>
+<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 
@@ -20,7 +21,7 @@
 	<!--도서 추가 시작-->
             <i class="big book icon"></i><span style="font:black; font-size:17pt; padding:10px;">《<%= book.getBookTitle() %>》 상세 내역</span>
             <br><br>
-            <div class="lightgreyBox" style="height: 700px; align: center;">
+            <div class="lightgreyBox" style="height: 800px; align: center;">
             	<table class="detailform">
 					<tr>
 						<th width="30%">도서명</th>
@@ -81,8 +82,11 @@
 				</table>
 				<br><br>
 				<center>
-					<button class="small ui teal button" href="">수정</button> &nbsp; <button class="small ui teal button" href="javascript:go(-1)">◀BACK</button><br><br><br>
+					<button class="small ui teal button" href="">수정</button> &nbsp; 
+					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button><br><br><br>
+					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 					<button class="small ui red button" href="">도서삭제</button>
+					<% } %>
 				</center>
             </div>
     <!-- 도서 추가 끝! -->

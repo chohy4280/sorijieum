@@ -54,11 +54,21 @@ public class MemberService {
 	
 	//수정
 	public int updateMember(Member member) {
-		return 0;
+		Connection conn = getConnection();
+		int result = mDao.updateMember(conn, member);
+		if(result > 0) 
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	public Member selectMember(String userId) {
-		return null;
+		Connection conn = getConnection();
+		Member member = mDao.selectMember(conn, userId);
+		close(conn);
+		return member;
 	}
 	
 	public ArrayList<Member> selectMemberList(){

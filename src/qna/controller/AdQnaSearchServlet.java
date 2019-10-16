@@ -38,8 +38,9 @@ public class AdQnaSearchServlet extends HttpServlet {
 		String searchtype = request.getParameter("searchtype");
 		String keyword = request.getParameter("keyword");
 		String qnastatus = request.getParameter("qnastatus");
+		String qnadate = request.getParameter("qnadate");
 		
-		ArrayList<Qna> list = new QnaService().selectQnaSearch(searchtype, keyword, qnastatus);
+		ArrayList<Qna> list = new QnaService().selectQnaSearch(searchtype, keyword, qnastatus, qnadate);
 		
 		RequestDispatcher view = null;
 		if(list.size() >= 0) {

@@ -1068,5 +1068,5 @@ INSERT INTO MEMBER VALUES(
 'quituser01',3,'김탈퇴','quit01','01011118888','quituser@gmail.com','M','1978-05-14',DEFAULT,NULL,NULL,'Y');
 
 INSERT INTO QUIT VALUES('quituser01','F','사이트를 이용하지 않습니다.','2019-08-27');
-
+                                              
 COMMIT;

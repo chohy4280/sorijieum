@@ -67,7 +67,7 @@
 						%>
 						<td><%= i+1 %></td>
 						<td><%= wb.getWishWriter() %></td>
-						<td><a href="/sori/views/admin/adminWishBookDetailView.jsp"><%= wb.getWishBookTitle() %></a></td>
+						<td><a href="/sori/wbdview?wishno=<%= wb.getWishNo() %>"><%= wb.getWishBookTitle() %></a></td>
 						<td><%= wb.getWishDate() %></td>
 						<td><% if(wb.getWishStatus().equals("WAIT")) {%>
 							승인대기

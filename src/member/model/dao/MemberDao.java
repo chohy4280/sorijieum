@@ -148,11 +148,63 @@ public class MemberDao {
 	
 	//수정
 	public int updateMember(Connection conn, Member member) {
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update member set userpwd=?,email=?,phone=? where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserPwd());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	public Member selectMember(Connection conn, String userId) {
-		return null;
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				member = new Member();
+				member.setUserId(userId);
+				member.setUserName(rset.getString("username"));
+				member.setUserPwd(rset.getString("userpwd"));
+				member.setTypeNumber(rset.getInt("typenumber"));
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setGender(rset.getString("gender"));
+				member.setBirth(rset.getDate("birth"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
 	}
 	
 	public ArrayList<Member> selectMemberList(Connection conn){
@@ -311,6 +363,9 @@ public class MemberDao {
  		1-1. 키워드 X, 성별전체, 회원유형 전체
 		1-2. 키워드 X, 성별 O, 회원유형 전체
 		1-3. 키워드 X, 성별 전체, 회원유형 O
+			1-3.1 메인회면 이용자 신규회원용 typenumber=4
+			1-3.2 메인화면 이용자 TOTAL용 typenumber=5
+			1-3.3 메인화면 제작자 신규회원용 typenumber=6
 		1-4. 키워드 X, 성별O, 회원유형O
 
 		2-1. 키워드 O, 성별전체, 회원유형 전체
@@ -321,12 +376,24 @@ public class MemberDao {
 		if(keyword == null) {
 			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 1-1
 				query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";
+			
 			else if((!gender.equals("ALL")) && typenumber.equals("ALL"))	// 1-2
 				query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber in (1,2,3) order by enrolldate desc";
-			else if(gender.equals("ALL") && !typenumber.equals("ALL"))	// 1-3
+			
+			else if(gender.equals("ALL") && !typenumber.equals("ALL")) {	// 1-3
+				if(typenumber.equals("4"))	// 메인화면 이용자 신규회원용
+					query = "select * from (select * from member where quityn = 'N' and enrolldate = sysdate) where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
+				
+				else if(typenumber.equals("5"))	// 메인화면 이용자 TOTAL용
+					query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
+				
+				else if(typenumber.equals("6")) // 메인화면 제작자 신규회원용
+					query = "select * from (select * from member where quityn = 'N' and enrolldate = sysdate) where gender in ('F', 'M') and typenumber = 3 order by enrolldate desc";
+				else
 				query = "select * from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber = " + typenumber + " order by enrolldate desc";
-			else if((!gender.equals("ALL")) && !typenumber.equals("ALL"))	// 1-4
-			query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber = " + typenumber + " order by enrolldate desc";
+				
+			}else if((!gender.equals("ALL")) && !typenumber.equals("ALL"))	// 1-4
+				query = "select * from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber = " + typenumber + " order by enrolldate desc";
 		} else {
 			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 2-1
 				query = "select * from (select * from member where quityn = 'N') where " + searchtype + " like '%" + keyword + "%' and gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";
