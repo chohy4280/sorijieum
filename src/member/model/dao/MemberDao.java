@@ -148,11 +148,63 @@ public class MemberDao {
 	
 	//수정
 	public int updateMember(Connection conn, Member member) {
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update member set userpwd=?,email=?,phone=? where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserPwd());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	public Member selectMember(Connection conn, String userId) {
-		return null;
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				member = new Member();
+				member.setUserId(userId);
+				member.setUserName(rset.getString("username"));
+				member.setUserPwd(rset.getString("userpwd"));
+				member.setTypeNumber(rset.getInt("typenumber"));
+				member.setPhone(rset.getString("phone"));
+				member.setEmail(rset.getString("email"));
+				member.setGender(rset.getString("gender"));
+				member.setBirth(rset.getDate("birth"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
 	}
 	
 	public ArrayList<Member> selectMemberList(Connection conn){

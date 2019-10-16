@@ -19,6 +19,24 @@
 }
 
 .hy-section{
-	padding-left:300px;
-	padding-top:200px;
+	float:left;
+	padding-top: 5%;
+    padding-bottom: 70px;
+    padding-left: 20%;
+    padding-right: 30px;
+    overflow:hidden;
+}
+
+.hy-div{
+	overflow:hidden;
+}
+
+.quitdiv{
+	border:1px grey solid;
+	width:800px;
+	height:400px;
+	padding-top:3%;
+	padding-left:5%;
+	padding-left:5%;
+	padding-bottom:3%;
 }
