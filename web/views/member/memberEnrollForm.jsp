@@ -11,8 +11,11 @@
 <script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 <%@ include file="/inc/top.jsp" %>
-<script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
-
+<style type="text/css">
+* th{
+	text-align:center;
+}
+</style>
 <script type="text/javascript">
 $(function(){
 	var idTF = "F";

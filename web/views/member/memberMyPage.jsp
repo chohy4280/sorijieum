@@ -57,7 +57,7 @@ body {
 				onclick="location.href='/sori/views/member/userMyQna.jsp'">
 					내 문의</button></center>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-				onclick="location.href='/sori/views/member/userUpdate.jsp'">
+				onclick="location.href='/sori/views/member/memberUpdateView.jsp'">
 					내 정보 수정</button></center>
 		</div>
 	</div>
@@ -70,7 +70,7 @@ body {
 		<i class="big book icon brown"></i><br><br>
 		<center>
 			<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-			onclick="location.href='/sori/views/member/makerMakedBook.jsp'">
+			onclick="location.href='/sori/views/member/makerMakeBook.jsp'">
 				참여 도서</button>
 		</center>
 	</div>
@@ -80,7 +80,7 @@ body {
 			onclick="location.href='/sori/views/member/makerMyQna.jsp'">
 				내 문의</button></center>
 		<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-			onclick="location.href='/sori/views/member/makerUpdate.jsp'">
+			onclick="location.href='/sori/myinfo?userid=<%= loginMember.getUserId() %>'">
 					내 정보 수정</button></center>
 		</div>
 	</div>
