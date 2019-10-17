@@ -1070,3 +1070,6 @@ INSERT INTO MEMBER VALUES(
 INSERT INTO QUIT VALUES('quituser01','F','사이트를 이용하지 않습니다.','2019-08-27');
                                               
 COMMIT;
+
+alter table makedbook rename to makebook;
+commit;

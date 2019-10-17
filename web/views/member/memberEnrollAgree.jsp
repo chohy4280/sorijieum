@@ -22,7 +22,7 @@ $(function(){
 <body>
 
 <section class="my-section">
-<table border="0" cellspacing="0" cellpadding="10" align="center" width="800" height="60">
+<table border="0" cellspacing="0" cellpadding="10" align="center" width="800" height="60" style="text-align:center;">
 <tr><th width="50%" bgcolor="#ECB93E"><h1>1.약관동의</h1></th><th bgcolor="#F5DEB3"><h1>2.가입정보입력</h1></th></tr>
 </table>
 <br>

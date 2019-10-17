@@ -73,7 +73,6 @@ public class MemberDao {
 			pstmt.setDate(8, member.getBirth());
 			
 			result = pstmt.executeUpdate();			
-			System.out.println("처리된 행 갯수: "+ result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -143,7 +142,24 @@ public class MemberDao {
 	
 	//탈퇴
 	public int deleteMember(Connection conn, String userId) {
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update member set quityn='Y' where userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 	
 	//수정
@@ -222,13 +238,104 @@ public class MemberDao {
 	}
 	
 	//아이디찾기
-	public Member selectMemberSearchId(Connection conn, String userName, String email) {
-		return null;
+	public Member selectMemberSearchId(Connection conn, String username, String phone) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where username=? and phone=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, username);
+			pstmt.setString(2, phone);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				member = new Member();
+				
+				member.setUserId(rset.getString("userid"));
+				member.setUserName(rset.getString("username"));
+				member.setQuitYN(rset.getString("quityn"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
 	}
 	
+	//임시비밀번호 적용
+	public void updateTempPwd(Connection conn, String userid) {
+		PreparedStatement pstmt = null;
+		
+		String query = "update member set userpwd=? where userid=?";
+		
+		//임시비밀번호 발생
+		int index = 0;  
+        char[] charSet = new char[] {  
+                '0','1','2','3','4','5','6','7','8','9'    
+                ,'a','b','c','d','e','f','g','h','i','j','k','l','m'  
+                ,'n','o','p','q','r','s','t','u','v','w','x','y','z'};  
+          
+        StringBuffer sb = new StringBuffer();  
+        for (int i=0; i<6; i++) {  
+            index =  (int)(Math.random()*charSet.length);  
+            sb.append(charSet[index]);  
+        }  
+        
+        String tempPwd = sb.toString();   
+        
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, tempPwd);
+			pstmt.setString(2, userid);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	}
+
 	//비밀번호 찾기
-	public Member selectMemberSearchPwd(Connection conn, String userId, String email) {
-		return null;
+	public Member selectMemberSearchPwd(Connection conn, String userid, String email) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from member where userid=? and email=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, email);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				updateTempPwd(conn,userid);
+				
+				member = new Member();
+				
+				member.setUserId(rset.getString("userid"));
+				member.setUserPwd(rset.getString("userpwd"));
+				member.setQuitYN(rset.getString("quityn"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
 	}
 	
 	
