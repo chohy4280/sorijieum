@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook" %>
+<%
+	WishBook wb = (WishBook)request.getAttribute("wb");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>신청도서 상세 보기</title>
 <%@ include file="/../inc/top.jsp" %>
-  <!-- CUSTOM CSS -->
+<%@ include file="/../inc/cdn.jsp"%>
+<!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
 <body>
-
 <!-- Content 시작! -->
 	<section class="my-section">
-	
 	<!--도서신청 내용 시작-->
 	<div class="my-content">
 		<a class="massive ui yellow label" style="font-size: 30px">도서 신청</a>
@@ -24,22 +27,30 @@
 	<center>
 		<table class="my-listTable4" style="width:50%;">
 			<tr>
-				<th width="30%">제목</th><td width="70%">아몬드</td>
+				<th width="20%">제목</th><td width="80%"><%= wb.getWishBookTitle() %></td>
 			</tr>
 			<tr>
-				<th>저자</th><td>손원평</td>
+				<th>저자</th><td><%= wb.getWishBookAuthor() %></td>
 			</tr>
 			<tr>
-				<th>출판사</th><td>창비</td>
+			<% if(wb.getWishPublisher() != null){ %>
+				<th>출판사</th><td><%= wb.getWishPublisher() %></td>
+			<% }else{ %>
+				<th>출판사</th><td>&nbsp;</td>
+			<% } %>
 			</tr>
 			<tr>
-				<th>출판일</th><td>2017/03/31</td>
+			<% if(wb.getWishPublishDate() != null){ %>
+				<th>출판일</th><td><%= wb.getWishPublishDate() %></td>
+			<% }else{ %>
+				<th>출판일</th><td>&nbsp;</td>
+			<% } %>
 			</tr>
 			<tr>
-				<th>신청자</th><td>user003</td>
+				<th>신청자</th><td><%= wb.getWishWriter() %></td>
 			</tr>
 			<tr>
-				<th>신청일</th><td>2019/01/15</td>
+				<th>신청일</th><td><%= wb.getWishDate() %></td>
 			</tr>
 		</table>
 	</center>
@@ -48,12 +59,11 @@
 	<!-- 관리자/작성자 수정삭제 버튼 -->
 	<div align="right">
 		<div class="ui buttons">
-			<button class="ui positive button" onclick="location.href='/sori/views/boardwishbook/wishbookUpdateForm.jsp'">수정</button>
+			<button class="ui positive button" onclick="location.href='/sori/wbuview?wishno=<%= wb.getWishNo() %>'">수정</button>
 		  	<div class="or"></div>
 			<button class="ui button" onclick="">삭제</button>
 		</div>
 	</div>
-	
 	
 	<!-- 공통 페이지 이동 버튼 -->
 		<center>

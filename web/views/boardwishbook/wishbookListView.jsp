@@ -13,35 +13,31 @@
 <head>
 <meta charset="UTF-8">
 <title>도서신청</title>
+<!-- CUSTOM CSS -->
+<link rel="stylesheet" type="text/css" href="/sori/resources/css/board.css">
 <%@ include file="/../inc/top.jsp" %>
 <%@ include file="/../inc/cdn.jsp"%>
 <script type="text/javascript">
 $(function(){
-		showDiv();
-		
-		$("input[name=item]").on("click", function(){
-			showDiv();
+		$(".ui.tiny").hover(function(){
+			$(this).addClass("yellow");
+		},function(){
+			$(this).removeClass("yellow");
 		});
-	});
-	
-	function showDiv(){
-		if($("input[name=item]").eq(0).is(":checked")){
-			$("#titlediv").css("display", "block");
-			$("#authordiv").css("display", "none");
-		}
 		
-		if($("input[name=item]").eq(1).is(":checked")){
-			$("#titlediv").css("display", "none");
-			$("#authordiv").css("display", "block");
-		}
-
-	}
+		$(".ye-label .big.ui").hover(function(){
+			$(this).removeClass("black");
+			$(this).addClass("yellow");
+		},function(){
+			$(this).removeClass("yellow");
+			$(this).addClass("black");
+		});
+		
+	});
 </script>
-<!-- CUSTOM CSS -->
-<link rel="stylesheet" type="text/css" href="/sori/resources/css/board.css">
+
 </head>
 <body>
-
 <!-- Content 시작! -->
 	<section class="my-section">
 	<!--도서신청 시작-->
@@ -65,8 +61,7 @@ $(function(){
 				%>
 			<tr>
 				<td><%= i + 1%></td>
-				<td><a href="/sori/views/boardwishbook/wishbookDetailView.jsp"
-				style="color: #ffbf00;">
+				<td><a href="/sori/wbdview?wishno=<%= wb.getWishNo() %>" style="color: #ffbf00;">
 				<%= wb.getWishBookTitle() %></a></td>
 				<td><%= wb.getWishBookAuthor() %></td>
 				<td><%= wb.getWishWriter() %></td>
@@ -78,8 +73,8 @@ $(function(){
 	<!--도서신청 목록 끝-->
 		<br>
 		<div class="ye-label" align="right">
-			<a class="big ui basic label" href="/sori/views/boardwishbook/mywishbookDetailView.jsp">나의신청내역</a>&nbsp;&nbsp;
-			<a class="big ui basic label" href="/sori/views/boardwishbook/wishbookAddForm.jsp">신청하기</a>
+			<a class="big ui basic black label" href="/sori/views/boardwishbook/mywishbookDetailView.jsp">나의신청내역</a>&nbsp;&nbsp;
+			<a class="big ui basic black label" href="/sori/views/boardwishbook/wishbookAddForm.jsp">신청하기</a>
 		</div>
 		<br>
 	<!-- 페이징 시작 -->
@@ -108,32 +103,18 @@ $(function(){
 <br><hr><br>
 	<!-- 검색창 시작 -->
 		<center>
-		<div class="ui checkbox">
-			  <input type="checkbox" name="item" value="title" checked><label>도서명</label>
-			</div> &nbsp;&nbsp;&nbsp;
-			<div class="ui checkbox">
-			 <input type="checkbox" name="item" value="author"><label>저자명</label>
-			</div>	
-		<br><br>
-		<div id="titlediv">
-			<form action="" method="post">
-			<div class="ui small input">
-				<input type="hidden" name="search" value="title">
-				<input type="search" name="keyword" placeholder="검색하실 도서명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
-			</div>
-			<input class="ui tiny basic button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
-			</form>
+		<form action="/sori/wbsearch" method="post">
+		<select class="ui mini simple dropdown" name="search" id="search" style="border-radius:5px;">
+			<option value="wishbooktitle">도서명</option>
+			<option value="wishbookauthor">저자명</option>
+		</select>
+		<div class="ui small input">
+			<input type="text" class="search" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
 		</div>
-		<div id="authordiv">
-			<form action="" method="post">
-			<div class="ui small input">
-				<input type="hidden" name="search" value="author">
-				<input type="search" name="keyword" placeholder="검색하실 저자명을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
-			</div>
-			<input class="ui tiny basic button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
-			</form>
-		</div>
+			<input class="ui tiny basic black button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
+		</form>
 		</center>
+		<br><br><br>
 	<!-- 검색창 끝 -->
 	</div>
 	<!--도서신청 끝-->
