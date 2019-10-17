@@ -97,35 +97,41 @@ public class BookService {
 		return dbList;
 	}
 	////////////////////////////////////////////////////////////////////
+	//도서 총 개수 
 	
-	//도서검색 전체목록
-		 public ArrayList<Book> selectAll2(){
-		      Connection conn = getConnection();
-		      ArrayList<Book> list = bDao.selectAll2(conn);
-		      close(conn);
-		      return list;
-		   }
+    
+	  public int getListCount() {
+	    	 Connection conn = getConnection();
+	    	 int listCount = bDao.getListCount(conn);
+	    	 close(conn);
+	    	 return listCount;
+	  }
+
 		 //도서검색 한개만 불러오기
-		 public Book selectOne(String bookcode) {
+		 public Book selectOne(String booktitle) {
 			 Connection conn = getConnection();
-			 Book book = bDao.selectOne(conn,bookcode);
+			 Book book = bDao.selectOne(conn,booktitle);
 			 close(conn);
 			 return book;
 		 }
-		 //도서검색 제목명 검색
-		 public ArrayList<Book> selectTitleSearch(String keyword){
-		      Connection conn = getConnection();
-		      ArrayList<Book> list = bDao.selectTitleSearch(conn, keyword);
-		      close(conn);
-		      return list;
-		   }
-	             //도서검색 저자명 검색
-		 public ArrayList<Book> selectAuthorSearch(String keyword){
-		      Connection conn = getConnection();
-		      ArrayList<Book> list = bDao.selectTitleSearch(conn, keyword);
-		      close(conn);
-		      return list;
-		   }
+	
+	  
+      //도서전체목록 페이징 처리
+		public ArrayList<Book> selectList(int startRow, int endRow) {//한페이지에 열개씩 담기
+			Connection conn = getConnection();
+			ArrayList<Book> list = bDao.selectList(conn,startRow,endRow);
+			close(conn);
+			return list;
+		}
+
+          //도서검색창 검색 처리용
+		public ArrayList<Book> selectAllBookSearch(String search, String keyword) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		
 
 	}
 
