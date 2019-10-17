@@ -46,7 +46,7 @@ public class WishBookDetailViewServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서신청 상세정보 보기 실패!");
 			view.forward(request, response);
-		}		
+		}				
 	}
 
 	/**

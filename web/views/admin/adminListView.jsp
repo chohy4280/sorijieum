@@ -95,10 +95,10 @@ $(function(){
 							대표관리자
 							<% } %>
 						</td>
-						<td><a href="/sori/views/admin/adminUpdateForm.jsp"><%= m.getUserId() %></a></td>
-						<td><a href="/sori/views/admin/adminUpdateForm.jsp"><%= m.getUserName() %></a></td>
+						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>"><%= m.getUserId() %></a></td>
+						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>"><%= m.getUserName() %></a></td>
 						<td><%= m.getEmail() %></td>
-						<td><%= m.getPhone() %></td>
+						<td><%= m.getPhone().substring(0, 3) %> - <%= m.getPhone().substring(3, 7) %> - <%= m.getPhone().substring(7, 11) %></td>
 						<td><%= m.getEnrollDate() %></td>
 					</tr>
 					<% } %>
