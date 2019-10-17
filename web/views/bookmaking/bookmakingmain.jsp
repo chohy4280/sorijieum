@@ -7,7 +7,7 @@
 <META http-equiv="Pragma" content="no-cache">
 <META http-equiv="Cache-Control" content="No-Cache">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, shrink-to-fit=no">
 <title>도서제작</title>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="crossorigin="anonymous"></script>
 <!-- 에디터 cdn 링크 -->
@@ -554,7 +554,7 @@ $(document).ready(function(){
 				<i class="yellow large info circle icon"></i>
 				</div>
 				<div class="ui custom popup transition hidden"
-				style="padding:18px;margin-left:739px;margin-top:22px;font-size:10pt;text-align:left;
+				style="padding:18px;margin-left:848px;margin-top:22px;font-size:10pt;text-align:left;
 				font-family:'S-Core Dream 5';white-space:nowrap;"> 
 				<strong>1.</strong> 가이드라인을 반드시 숙지하신 후 꼼꼼히 제작해주시기 바랍니다.<br/>
 				<strong>2.</strong> 페이지별로 제작을 완료하신 후 저장 버튼을 눌러주세요.<br/>

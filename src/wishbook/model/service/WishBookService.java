@@ -84,22 +84,46 @@ public class WishBookService {
 
 	//도서신청 상세보기
 	public WishBook selectWishBookOne(int wishno){
-		return null;
+		Connection conn = getConnection();
+		WishBook wishbook = wbDao.selectWishBookOne(conn, wishno);
+		close(conn);
+		return wishbook;
 	}
 
 	//도서신청 게시물 수정
 	public int updateWishBook(WishBook wishbook){
-		return 0;
+		Connection conn = getConnection();
+		int result = wbDao.updateWishBook(conn, wishbook);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	//도서신청 게시물 등록
 	public int insertWishBook(WishBook wishbook){
-		return 0;
+		Connection conn = getConnection();
+		int result = wbDao.insertWishBook(conn, wishbook);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	//도서신청 게시물 삭제
 	public int deleteWishBook(WishBook wishbook){
-		return 0;
+		Connection conn = getConnection();
+		int result = wbDao.deleteWishBook(conn, wishbook);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	//나의 도서신청 게시물보기
@@ -107,14 +131,19 @@ public class WishBookService {
 		return null;
 	}
 	
-	//도서신청글 제목 검색
-	public ArrayList<WishBook> selectTitleWishBook(String wishbooktitle){
-		return null;
-	}
-	
-	//도서신청글 저자명 검색
-	public ArrayList<WishBook> selectWriterWishBook(String wishbooktitle){
-		return null;
+	//도서신청 도서명, 저자명 검색
+	public ArrayList<WishBook> selectSearchWishBook(String search, String keyword, int startnum, int endnum){
+		Connection conn = getConnection();
+		ArrayList<WishBook> list = wbDao.selectSearchWishBook(conn, search, keyword, startnum, endnum);
+		close(conn);
+		return list;
 	}
 
+	//도서신청 검색게시물 카운트
+	public int getWishListCount(String search, String keyword){
+		Connection conn = getConnection();
+		int wcount = wbDao.getWishListCount(conn, search, keyword);
+		close(conn);
+		return wcount;
+	}
 }

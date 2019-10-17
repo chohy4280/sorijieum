@@ -247,11 +247,54 @@ public class WishBookDao {
 	}
 
 	public WishBook selectWishBookOne(Connection conn, int wishno){
-		return null;
+		WishBook wb = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from wishbook where wishno = " + wishno;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				wb = new WishBook();
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishPublisher(rset.getString("wishpublisher"));
+				wb.setWishPublishDate(rset.getDate("wishpublishdate"));
+				wb.setWishWriter(rset.getString("wishwriter"));
+				wb.setWishDate(rset.getDate("wishdate"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return wb;
 	}
 
 	public int updateWishBook(Connection conn, WishBook wishbook){
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update wishbook set wishbooktitle = ?, wishbookauthor = ?, "
+					+ " wishpublisher = ?, wishpublishdate = ? where wishno = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, wishbook.getWishBookTitle());
+			pstmt.setString(2, wishbook.getWishBookAuthor());
+			pstmt.setString(3, wishbook.getWishPublisher());
+			pstmt.setDate(4, wishbook.getWishPublishDate());
+			pstmt.setInt(5, wishbook.getWishNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	public int insertWishBook(Connection conn, WishBook wishbook){
@@ -266,11 +309,62 @@ public class WishBookDao {
 		return null;
 	}
 	
-	public ArrayList<WishBook> selectTitleWishBook(Connection conn, String wishbooktitle){
-		return null;
+	public ArrayList<WishBook> selectSearchWishBook(Connection conn, String search, String keyword, int startnum, int endnum){
+		ArrayList<WishBook> list = new ArrayList<WishBook>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = null;
+		if(keyword != null) {
+			query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS " + 
+					"FROM (SELECT * FROM WISHBOOK " + 
+					"WHERE " + search + " LIKE '%" + keyword + "%' "+ 
+					"ORDER BY WISHDATE DESC)) " + 
+					"WHERE RNUM >= ? AND RNUM <= ?";
+		}
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startnum);
+			pstmt.setInt(2, endnum);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				WishBook wb = new WishBook();
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishWriter(rset.getString("wishwriter"));
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				list.add(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
-	
-	public ArrayList<WishBook> selectWriterWishBook(Connection conn, String wishbooktitle){
-		return null;
+
+	public int getWishListCount(Connection conn, String search, String keyword) {
+		int wcount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "SELECT COUNT(*) FROM WISHBOOK " + 
+				"WHERE " + search + " LIKE '%" + keyword + "%' ";
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				wcount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return wcount;
 	}
+
 }

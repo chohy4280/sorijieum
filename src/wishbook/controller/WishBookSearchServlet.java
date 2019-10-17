@@ -9,20 +9,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import book.model.service.BookService;
+import book.model.vo.Book;
 import wishbook.model.service.WishBookService;
 import wishbook.model.vo.WishBook;
 
 /**
- * Servlet implementation class WishBookListServlet
+ * Servlet implementation class WishBookSearchServlet
  */
-@WebServlet("/wblist")
-public class WishBookListServlet extends HttpServlet {
+@WebServlet("/wbsearch")
+public class WishBookSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishBookListServlet() {
+    public WishBookSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +34,9 @@ public class WishBookListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//신청도서 목록 페이징 포함 처리 컨트롤러
+		//도서신청 검색 처리용 컨트롤러
+		//도서명 검색, 저자명 검색 기능
+		request.setCharacterEncoding("utf-8");
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
@@ -55,9 +60,10 @@ public class WishBookListServlet extends HttpServlet {
 		//currentPage에 출력할 목록의 조회할 행 번호 계산
 		int startnum = (currentPage * limit) - 4;
 		int endnum = currentPage * limit;
+		String search = request.getParameter("search");
+		String keyword = request.getParameter("keyword");
+		ArrayList<WishBook> list = wservice.selectSearchWishBook(search, keyword, startnum, endnum);
 		
-		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기
-		ArrayList<WishBook> list = wservice.selectWishBookList(startnum, endnum);
 		RequestDispatcher view = null;
 		if(list.size() > 0) {
 			view = request.getRequestDispatcher("views/boardwishbook/wishbookListView.jsp");
@@ -66,10 +72,10 @@ public class WishBookListServlet extends HttpServlet {
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
-			view.forward(request, response);	
+			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서 신청 전체 목록  조회 실패!");
+			request.setAttribute("message", "도서신청 검색 조회 실패! ");
 			view.forward(request, response);
 		}
 	}

@@ -34,7 +34,7 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
 <div class="ye-bookimg" style="float:left;">
 <img id="보건교사 안은영" src="/sori/resources/book_upfiles/<%= bmp.getBookRimg() %>">
 </div>
-<div class="ui orange compact message" style="font-size:11pt;position:relative;bottom:-350px;left:-715px;text-align:center;width:18%;height:5.5%">
+<div class="ui orange compact message" style="font-size:11pt;position:relative;bottom:-350px;left:-722px;text-align:center;width:18%;height:5.5%">
   제작은  10페이지씩입니다!
 </div>
 <!-- bookinfo 시작 -->
@@ -60,7 +60,7 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
   <div class="fields">
     <div class="field">
     <label>책 소개</label>
-    <textarea rows="3" cols="55" style="font-size:0.9rem;" readonly>
+    <textarea rows="9" cols="55" style="font-size:0.9rem;" readonly>
     <%= bmp.getBookInfo() %>
     </textarea>
   </div>
@@ -69,7 +69,7 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
 <%  int make = (bmp.getMakepage());
 	int book = (bmp.getBookPage());
 	int pwidth = (int)(((double)make / book) * 100);%>
-  <div class="progress" align="left" style="width:429px;height:20px;margin-left:-5px;">
+  <div class="progress" align="left" style="width:429px;height:20px;">
   	<div class="progress-bar" role="progressbar" 
   	style="font-size:8pt; background: orange; width:<%= pwidth %>%;" aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= bmp.getBookPage() %>"><%= pwidth %>%</div>
 	</div><strong>제작상태 :</strong> <%= bmp.getMakepage() %>/<%= bmp.getBookPage() %>쪽 진행중
