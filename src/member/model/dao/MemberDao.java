@@ -241,7 +241,7 @@ public class MemberDao {
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from member where typenumber between 4 and 5 order by enrolldate desc";
+		String query = "select * from (select * from member where quityn = 'N') where typenumber between 4 and 5 order by typenumber desc, enrolldate desc, userid desc";
 		
 		try {
 			stmt = conn.createStatement();
@@ -274,16 +274,48 @@ public class MemberDao {
 	}
 	
 	// 관리자 수정용
-	public int updateAdmin(Connection conn, Member member) {
-		return 0;
+	public int updateAdmin(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt= null;
+		
+		String query = "update member set userpwd = ?, phone = ?, email = ?, birth = ? where userid = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getUserPwd());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setDate(4, m.getBirth());
+			pstmt.setString(5, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
-	// 관리자 삭제용
+	// 관리자 삭제용(quityn N -> Y)
 	public int deleteAdmin(Connection conn, String userid) {
-		return 0;
+		int result = 0;
+		Statement stmt = null;
+		
+		String query = "update member set quityn = 'Y' where userid = '" + userid + "'";
+		
+		try {
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		return result;
 	}
 	
-	// 관리자 한명 조회용
+	// 관리자 한명 검색용
 	public ArrayList<Member> selectAdminOne(Connection conn, String searchtype, String keyword) {
 		ArrayList<Member> list = new ArrayList<Member>();
 		Statement stmt = null;
@@ -432,13 +464,40 @@ public class MemberDao {
 		return list;
 	}
 	
-	// 관리자 회원 한명 검색용
-	public Member selectMemberOne(Connection conn, String userid) {
-		return null;
-	}
+	// 관리자 한명 출력용
+		public Member selectAdminOneDetail(Connection conn, String userid) {
+			Member m = null;
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from member where userid = '" + userid + "'";
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()) {
+					m = new Member();
+					
+					m.setUserId(userid);
+					m.setUserName(rset.getString("username"));
+					m.setUserPwd(rset.getString("userpwd"));
+					m.setPhone(rset.getString("phone"));
+					m.setEmail(rset.getString("email"));
+					m.setGender(rset.getString("gender"));
+					m.setBirth(rset.getDate("birth"));
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			return m;
+		}
 	
 	// 관리자 회원 정보 수정용
-	public int updateMemberAdmin(Connection conn, Member member) {
+	public int updateMemberAdmin(Connection conn, String userid) {
 		return 0;
 	}
 	
@@ -537,7 +596,7 @@ public class MemberDao {
 			
 			String query = "select * from member where typenumber = 3 and quityn = 'N'";
 			
-			try {
+			try { 
 				stmt = conn.createStatement();
 				rset = stmt.executeQuery(query);
 				
@@ -556,6 +615,9 @@ public class MemberDao {
 			}
 			return totalMList;
 		}
+
+		
+		
 
 		
 

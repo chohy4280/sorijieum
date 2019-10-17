@@ -32,7 +32,7 @@
 	<header>
 		<div class="topbar" style="overflow:hidden;">
 			<span class="topname"><a href="/sori/index.jsp" target="_blank"><i class="home icon"></i></a>SORIJIEUM <span style="color:#4ecdc4">ADMIN</span></span>
-			<div id="adminname"><a href=""><%= loginMember.getUserName() %></a> 님!&nbsp;&nbsp;&nbsp;<button class="ui mini teal button" onclick="location.href='/sori/memberLogout'">Logout</button></div>
+			<div id="adminname"><a href="/sori/addetail.ad?userid=<%= loginMember.getUserId() %>"><%= loginMember.getUserName() %></a> 님!&nbsp;&nbsp;&nbsp;<button class="ui mini teal button" onclick="location.href='/sori/memberLogout'">Logout</button></div>
 		</div>
 	</header>
 <!-- 상단 바 끝! -->
