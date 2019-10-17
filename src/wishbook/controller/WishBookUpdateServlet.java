@@ -1,11 +1,17 @@
 package wishbook.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import wishbook.model.service.WishBookService;
+import wishbook.model.vo.WishBook;
 
 /**
  * Servlet implementation class WishBookUpdateServlet
@@ -26,8 +32,24 @@ public class WishBookUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 도서신청 수정 컨트롤러
+		request.setCharacterEncoding("utf-8");
+		int wishno = Integer.parseInt(request.getParameter("wishno"));
+		String wishbooktitle = request.getParameter("wishbooktitle");
+		String wishbookauthor = request.getParameter("wishbookauthor");
+		String wishpublisher = request.getParameter("wishpublisher");
+		Date wishpublishdate = Date.valueOf(request.getParameter("wishpublishdate"));
+		WishBook wishbook = new WishBook(wishno, wishbooktitle, wishbookauthor, wishpublisher, wishpublishdate);
+		int result = new WishBookService().updateWishBook(wishbook);
+		
+		RequestDispatcher view = null;
+		if (result > 0) {
+			response.sendRedirect("/sori/wblist");
+		} else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "도서신청 수정 실패");
+			view.forward(request, response);
+		}
 	}
 
 	/**

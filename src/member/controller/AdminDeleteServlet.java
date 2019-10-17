@@ -1,11 +1,16 @@
 package member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import member.model.service.MemberService;
+import quit.model.service.QuitService;
 
 /**
  * Servlet implementation class adminDeleteServlet
@@ -27,7 +32,20 @@ public class AdminDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 삭제용
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		String userid = request.getParameter("userid");
+		
+		int result = new MemberService().deleteAmin(userid);
+		int result2 = new QuitService().insertAdmin(userid);
+		
+		if(result > 0 && result2 > 0) {
+			response.sendRedirect("/sori/adlist.ad");
+		}else {
+			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "관리자 삭제 실패!");
+			view.forward(request, response);
+		}
 	}
 
 	/**

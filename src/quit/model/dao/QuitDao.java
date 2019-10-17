@@ -204,5 +204,23 @@ public class QuitDao {
 			}
 			return quitMList;
 		}
-
+  
+		// 관리자 삭제시 quit테이블에도 추가
+		public int insertAdmin(Connection conn, String userid) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "insert into quit values (?, 'F', '대표 관리자에 의한 삭제', sysdate)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, userid);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
 }

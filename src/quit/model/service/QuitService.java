@@ -52,12 +52,24 @@ public class QuitService {
 		return quitUList;
 	}
 	
-// 관리자 제작자 탈퇴회원 신규회원(Sysdate) 검색용
+	// 관리자 제작자 탈퇴회원 신규회원(Sysdate) 검색용
 	public ArrayList<Quit> selectQuitMakerSysdate(){
 		Connection conn = getConnection();
 		ArrayList<Quit> quitMList = qDao.selectQuitMakerSysdate(conn);
 		close(conn);
 		return quitMList;
+	}
+
+	// 관리자 삭제시 quit테이블에도 추가
+	public int insertAdmin(String userid) {
+		Connection conn = getConnection();
+		int result = qDao.insertAdmin(conn, userid);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 
 }

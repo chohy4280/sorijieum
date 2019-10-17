@@ -1,6 +1,7 @@
 package wishbook.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import book.model.vo.BookMakingProgress;
+import bookmaking.model.service.BookMakingService;
 import wishbook.model.service.WishBookService;
 import wishbook.model.vo.WishBook;
 
@@ -31,22 +34,19 @@ public class WishBookDetailViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 신청도서 상세보기
-		request.setCharacterEncoding("utf-8");
-		
+		//도서신청글 상세보기 처리용 컨트롤러
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
-		
-		WishBook wb = new WishBookService().selectWishBookOneAdmin(wishno);
-		
+		WishBook wb = new WishBookService().selectWishBookOne(wishno);
 		RequestDispatcher view = null;
 		if(wb != null) {
-			view = request.getRequestDispatcher("views/admin/adminWishBookDetailView.jsp");
+			view = request.getRequestDispatcher("views/boardwishbook/wishbookDetailView.jsp");
 			request.setAttribute("wb", wb);
-		} else {
+			view.forward(request, response);
+		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "신청도서 상세보기 실패!");
-		}
-		view.forward(request, response);
+			request.setAttribute("message", "도서신청 상세정보 보기 실패!");
+			view.forward(request, response);
+		}				
 	}
 
 	/**

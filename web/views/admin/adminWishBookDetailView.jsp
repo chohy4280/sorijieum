@@ -17,7 +17,7 @@
 <section class="contentsection">
 
 	<!--신청도서 목록 시작-->
-		<i class="big book icon"></i><span style="font:black; font-size:17pt; padding:10px;">신청도서 상세내역</span>
+		<i class="big book icon"></i><span style="font:black; font-size:17pt; padding:10px;">《<%= wb.getWishBookTitle() %>》&nbsp;상세 내역</span>
         <br><br>
         
        <!-- 신청도서 상세내역 시작! -->

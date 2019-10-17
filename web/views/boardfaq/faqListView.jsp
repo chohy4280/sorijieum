@@ -7,7 +7,6 @@
 <title>공지사항 목록</title>
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		$("li.question").click(function() {
 			$(this).next().slideToggle("fast")

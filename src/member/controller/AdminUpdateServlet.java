@@ -1,11 +1,19 @@
 package member.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.glass.ui.View;
+
+import member.model.service.MemberService;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class adminUpdateServlet
@@ -27,7 +35,25 @@ public class AdminUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 수정용
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		Member m = new Member();
+		m.setUserId(request.getParameter("userid"));
+		m.setUserPwd(request.getParameter("userpwd"));
+		m.setEmail(request.getParameter("email"));
+		m.setPhone(request.getParameter("phone"));
+		m.setBirth(Date.valueOf(request.getParameter("birth")));
+		
+		int result = new MemberService().updateAdmin(m);
+		
+		if(result > 0) {
+			response.sendRedirect("/sori/addetail.ad?userid=" + m.getUserId());
+		} else {
+			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "관리자 정보 수정 실패!");
+			view.forward(request, response);
+		}
+		
 	}
 
 	/**

@@ -268,18 +268,19 @@ public class BookMakingDao {
 	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
 	public int insertBook(Connection conn, Book b) {
 		int result = 0;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		
-		String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";
+		/*String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";*/
+		String query = "insert into bookmaking values (?, sysdate, null, null, null, 0)";
 				
 		try {
-			stmt = conn.createStatement();
-			
-			result = stmt.executeUpdate(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, b.getBookCode());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt);
+			close(pstmt);
 		}
 		return result;
 

@@ -124,13 +124,27 @@ public class MemberService {
 	}
 	
 	// 관리자 수정용
-	public int updateAdmin(Member member) {
-		return 0;
+	public int updateAdmin(Member m) {
+		Connection conn = getConnection();
+		int result = mDao.updateAdmin(conn, m);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
-	// 관리자 삭제용
+	// 관리자 삭제용(quityn N -> Y)
 	public int deleteAmin(String userid) {
-		return 0;
+		Connection conn = getConnection();
+		int result = mDao.deleteAdmin(conn, userid);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	// 관리자 한명 조회용
@@ -157,13 +171,16 @@ public class MemberService {
 		return list;
 	}
 	
-	// 관리자 회원 한명 검색용
-	public Member selectMemberOne(String userid) {
-		return null;
+	// 관리자 한명 출력용
+	public Member selectAdminOneDetail(String userid) {
+		Connection conn = getConnection();
+		Member m = mDao.selectAdminOneDetail(conn, userid);
+		close(conn);
+		return m;
 	}
 	
 	// 관리자 회원 정보 수정용
-	public int updateMemberAdmin(Member member) {
+	public int updateMemberAdmin(Member m) {
 		return 0;
 	}
 	
@@ -203,4 +220,5 @@ public class MemberService {
 			close(conn);
 			return totalMList;
 		}
+
 }
