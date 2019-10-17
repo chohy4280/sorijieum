@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%
+	Member member = (Member)request.getAttribute("member");
+	String message = (String)request.getAttribute("message");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,14 +16,20 @@
 <%@ include file="/inc/top.jsp" %>
 </head>
 <body>
-<section class="my-section" style="margin-top:15%">
-<div class="ui raised very padded text container segment" style="width:400px;height:150px;margin-left:40%;display:table;">
+<section class="my-section">
+<div class="ui raised very padded text container segment" style="width:450px;height:150px;margin-left:40%;display:table;">
 	<div style="display:table-cell;vertical-align:middle;text-align:center;font-size:15pt;">
-	아이디 찾기 성공
+	<% if(member != null){ %>
+	<%= member.getUserName() %> 님의 아이디는<br>
+	<%= member.getUserId() %> <br>
+	입니다.
+	<% }else { %>
+	<%= message %>
+	<% } %>
 	</div>
 </div>
 <center>
-<button class="massive ui button ui yellow button" style="margin-left:40px;" onclick="location.href='/sori/views/member/memberLoginView.jsp'">
+<button class="massive ui button ui yellow button" style="margin-left:10px;" onclick="location.href='/sori/views/member/memberLoginView.jsp'">
 	로그인하기
 </button>
 <button class="massive ui button" style="margin-left:10px;">

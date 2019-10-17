@@ -1,7 +1,6 @@
 package quit.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -16,6 +15,17 @@ public class QuitService {
 	
 	public QuitService() {}
 	
+	//회원 탈퇴시 탈퇴 테이블에 등록용
+	public int insertQuitMember(String userid,int reason,String etc) {
+		Connection conn = getConnection();
+		int result = qDao.insertQuitMember(conn,userid,reason,etc);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 	//관리자 서비스****************************************
 	// 관리자 탈퇴회원 전체 조회용

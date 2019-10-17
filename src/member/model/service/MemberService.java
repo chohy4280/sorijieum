@@ -49,7 +49,14 @@ public class MemberService {
 	
 	//탈퇴
 	public int deleteMember(String userId) {
-		return 0;
+		Connection conn = getConnection();
+		int result = mDao.deleteMember(conn, userId);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);		
+		close(conn);
+		return result;		
 	}
 	
 	//수정
@@ -86,13 +93,19 @@ public class MemberService {
 	}
 	
 	//아이디찾기
-	public Member selectMemberSearchId(String userName, String email) {
-		return null;
+	public Member selectMemberSearchId(String username, String phone) {
+		Connection conn = getConnection();
+		Member member = mDao.selectMemberSearchId(conn, username, phone);
+		close(conn);
+		return member;
 	}
   
 	//비밀번호 찾기
-	public Member selectMemberSearchPwd(String userId, String email) {
-		return null;
+	public Member selectMemberSearchPwd(String userid, String email) {
+		Connection conn = getConnection();
+		Member member = mDao.selectMemberSearchPwd(conn, userid, email);
+		close(conn);
+		return member;
 	}
 
 	

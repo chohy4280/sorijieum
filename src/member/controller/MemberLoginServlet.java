@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,20 +39,30 @@ public class MemberLoginServlet extends HttpServlet {
 		
 		Member loginMember = new MemberService().loginCheck(userid,userpwd);
 		
-		
 		//4.받은 결과를 가지고 성공/실패에 대한 뷰를 선택해서 내보내기.
 		if(loginMember != null) {
-			//로그인 성공시에, 로그인 상태 관리를 위한 세션 객체 생성함
-			HttpSession session = request.getSession();
-			//자동 로그아웃 타임을 지정할 수 있다.
-//					session.setMaxInactiveInterval(15*60); 	//15분동안 아무 요청이 없으면 자동 로그아웃
-			session.setAttribute("loginMember", loginMember);
-			
-			//성공에 대한 서비스를 요청한 클라이언트에게 뷰를 내보냄.
-			if(loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)
-				response.sendRedirect("/sori/admain.ad");
-			else
-				response.sendRedirect("/sori/index.jsp");
+			//탈퇴여부 확인 하고 로그인세션 부여함
+			if(loginMember.getQuitYN().equals("N")) {
+				//로그인 성공시에, 로그인 상태 관리를 위한 세션 객체 생성함
+				HttpSession session = request.getSession();
+
+				session.setAttribute("loginMember", loginMember);
+				
+				if(loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)
+					response.sendRedirect("/sori/admain.ad");
+				else
+					response.sendRedirect("/sori/index.jsp");
+			}
+			else {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				 
+				out.println("<script>alert('탈퇴처리 된 계정입니다. 확인 후 다시 로그인 해주세요.'); "
+						+ "location.href='/sori/views/member/memberLoginView.jsp';</script>");
+				 
+				out.flush();
+				out.close();
+			}
 		}
 		else {
 			//뷰를 지정하고, 뷰한테 값도 함께 내보낼 때 사용함.

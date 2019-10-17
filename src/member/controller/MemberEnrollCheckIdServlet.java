@@ -36,6 +36,7 @@ public class MemberEnrollCheckIdServlet extends HttpServlet {
 
 		String userid = request.getParameter("userid");
 
+		System.out.println(userid);
 		int result = new MemberService().checkUserId(userid);
 		
 		String returnValue = null;
@@ -44,7 +45,7 @@ public class MemberEnrollCheckIdServlet extends HttpServlet {
 			returnValue = "ok";
 		else
 			returnValue = "no";
-		
+	
 		PrintWriter out = response.getWriter();
 		out.append(returnValue);
 		out.flush();

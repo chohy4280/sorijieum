@@ -5,6 +5,7 @@
 %>
 <!DOCTYPE html>  
 <head>
+<script src="/sori/resources/js/jquery-3.4.1.min.js"></script>
  <!-- favicon 위치 -->
 <link rel="shortcut icon" href="/sori/resources/images/favicon.ico">
 <link rel="icon" href="/sori/resources/images/favicon.ico">

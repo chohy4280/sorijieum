@@ -3,15 +3,53 @@ package quit.model.dao;
 import static common.JDBCTemplate.close;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import quit.model.vo.Quit;
 
 public class QuitDao {
 
 	public QuitDao() {}
+
+	//회원 탈퇴시 탈퇴테이블에 입력
+	public int insertQuitMember(Connection conn, String userid, int reason, String etc) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "insert into quit values(?,'G',?,sysdate)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			switch(reason) {
+			case 1:
+				pstmt.setString(2, "사이트 이용 빈도가 낮습니다.");
+				break;
+			case 2:
+				pstmt.setString(2, "사이트 이용방법이 어렵습니다.");
+				break;
+			case 3:
+				pstmt.setString(2, "개인정보 유출이 우려됩니다.");
+				break;
+			case 4:
+				pstmt.setString(2, etc);
+				break;
+			}
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	// 관리자용 dao************************************************************************************************
 		// 관리자 탈퇴회원 전체 조회용
@@ -166,4 +204,5 @@ public class QuitDao {
 			}
 			return quitMList;
 		}
+
 }
