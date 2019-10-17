@@ -81,9 +81,9 @@ $(".chk").click(function(){
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
 						<% } %>
-						<th width="5%">No</th>
-						<th width="10%">도서코드</th>
-						<th width="25%">도서명</th>
+						<th width="3%">No</th>
+						<th width="12%">도서코드</th>
+						<th style="width:25%; text-align: left;">도서명</th>
 						<th width="12%">저자명</th>
 						<th width="13%">출판사명</th>
 						<th width="8%">도서상태</th>
@@ -98,7 +98,7 @@ $(".chk").click(function(){
 						<%} %>
 						<td><%= i+1 %> </td>
 						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookCode() %></a></td>
-						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookTitle() %></a></td>
+						<td style="text-align: left; color:#4ecdc4;"><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookTitle() %></a></td>
 						<td><%= b.getAuthor() %></td>
 						<td><%= b.getPublisher() %></td>
 						<td><% if(b.getMakeStatus().equals("WAIT")) {%>

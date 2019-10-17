@@ -3,10 +3,12 @@ package quit.model.dao;
 import static common.JDBCTemplate.close;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import quit.model.vo.Quit;
 
 public class QuitDao {
@@ -165,5 +167,24 @@ public class QuitDao {
 				close(conn);
 			}
 			return quitMList;
+		}
+
+		// 관리자 삭제시 quit테이블에도 추가
+		public int insertAdmin(Connection conn, String userid) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "insert into quit values (?, 'F', '대표 관리자에 의한 삭제', sysdate)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, userid);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
 		}
 }

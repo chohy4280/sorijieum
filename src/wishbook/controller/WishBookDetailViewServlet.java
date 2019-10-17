@@ -31,22 +31,7 @@ public class WishBookDetailViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 신청도서 상세보기
-		request.setCharacterEncoding("utf-8");
 		
-		int wishno = Integer.parseInt(request.getParameter("wishno"));
-		
-		WishBook wb = new WishBookService().selectWishBookOneAdmin(wishno);
-		
-		RequestDispatcher view = null;
-		if(wb != null) {
-			view = request.getRequestDispatcher("views/admin/adminWishBookDetailView.jsp");
-			request.setAttribute("wb", wb);
-		} else {
-			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "신청도서 상세보기 실패!");
-		}
-		view.forward(request, response);
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class wishbookResultServlet extends HttpServlet {
 		int result = new WishBookService().updatetWishBookResult(wb);
 		
 		if(result > 0) {
-			response.sendRedirect("/sori/wbdview?wishno=" + wishno);
+			response.sendRedirect("/sori/wbdetail.ad?wishno=" + wishno);
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "신청도서 관리자 처리 실패!");
