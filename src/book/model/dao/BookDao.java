@@ -102,6 +102,7 @@ public class BookDao {
 			} finally {
 				close(rset);
 				close(stmt);
+			
 			}
 			return list;
 		}
@@ -274,69 +275,107 @@ public class BookDao {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////
 		
-		
-		// bookSearch 도서전체목록
-		public ArrayList<Book> selectAll2(Connection conn){
-	        ArrayList<Book> blist = new ArrayList<Book>();
-	        Statement stmt = null;
+		 //도서 총 갯수   
+		public int getListCount(Connection conn) {
+			int listCount = 0;
+			Statement stmt = null;
 			ResultSet rset = null;
-			String query = "select * from book";
+			
+			String query = "select count(*) from book";
+			
+			try {
+				stmt = conn.createStatement();
+				
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(rset);
+				close(stmt);
+			}
+			return listCount;
+		}
+		
+		// bookSearch 도서한권만 검색
+		public Book selectOne(Connection conn, String booktitle) {
+			Book book = null;
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from book where bookdelyn = 'N' and MAKESTATUS ='DONE' and booktitle = '" + booktitle + "'";
+			
 			try {
 				stmt = conn.createStatement();
 				rset = stmt.executeQuery(query);
 				
-				while(rset.next()) {
-					Book b = new Book();
+				if(rset.next()) {
+					book = new Book();
 					
-					b.setBookCode(rset.getString("bookCode"));
-					b.setBookTitle(rset.getString("bookTitle"));
-					b.setAuthor(rset.getString("author"));
-					b.setPublisher(rset.getString("publisher"));
-					b.setPublishDate(rset.getDate("publishdate"));
-					b.setBookPage(rset.getInt("bookpage"));
-					b.setBookInfo(rset.getString("bookinfo"));
-					b.setBookOimg(rset.getString("bookoimg"));
-					b.setBookRimg(rset.getString("bookrimg"));
-					b.setBookOpdf(rset.getString("bookopdf"));
-					b.setBookRpdf(rset.getString("bookrpdf"));
-					b.setBookDate(rset.getDate("bookdate"));
-					b.setBookViews(rset.getInt("bookviews"));
-					b.setMakeStatus(rset.getString("makestatus"));
-					
-					blist.add(b);	
-					
-				}
+					book.setBookTitle(booktitle);
+					book.setAuthor(rset.getString("author"));
+					book.setPublisher(rset.getString("publisher"));
+					book.setPublishDate(rset.getDate("publishdate"));
+					book.setBookInfo(rset.getString("bookinfo"));
+					book.setBookRimg(rset.getString("bookrimg"));
+	}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(rset);
 				close(stmt);
 			}
-			return blist;
-		}
-		
-		
-		// bookSearch 도서한권만 검색
-		public Book selectOne(Connection conn, String bookcode) {
-			Book book = null;
 			
 			return book;
 		}
 		
-		// bookSearch 도서제목명 검색
-		public ArrayList<Book> selectTitleSearch(Connection conn, String keyword){
+        //도서검색창 검색 처리용
+		public ArrayList<Book> selectAllBookSearch(String search, String keyword) {
 			ArrayList<Book> list = new ArrayList<Book>();
+			
 			
 			return list;
 		}
-		
-		//도서저자명검색
-		
-		public ArrayList<Book> selectAuthorSearch(Connection conn, String keyword){
+
+         //도서전체목록 페이징
+		public ArrayList<Book> selectList(Connection conn, int startRow, int endRow) {
 			ArrayList<Book> list = new ArrayList<Book>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
 			
+			String query ="SELECT * FROM (SELECT ROWNUM RNUM, BOOKTITLE, BOOKRIMG " + 
+					"FROM(SELECT * FROM BOOK " + 
+					"where bookdelyn = 'N' and MAKESTATUS ='DONE' " + 
+					"ORDER BY BOOKTITLE)) " + 
+					"WHERE RNUM >= ? AND RNUM <= ?";
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Book book = new Book();
+					book.setBookTitle(rset.getString("booktitle"));
+					book.setBookRimg(rset.getString("bookrimg"));
+					
+					list.add(book);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
 			return list;
 		}
+
+       
 
 
 }

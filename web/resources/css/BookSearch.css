@@ -1,11 +1,4 @@
 @charset "UTF-8";
-/* body {
-	background-color: #eaeaea;
-	color:#444c57;
-	margin: 0;
-	padding: 0;
-	font-family: '맑은고딕'
-} */
 
 ul {
 	margin: 0;
@@ -27,12 +20,13 @@ color: inherit;
 
 }
 
-.input{/*검색 창  */
-	
-	margin-Left : 600px;
-	
+.ui action input{
+	align : center;
+	margin-top: 30px;
 }
-
+.ui compact selection dropdown{
+	margin: 0;
+}
 
 .my-section{
    padding-top: 130px;
@@ -53,15 +47,22 @@ color: inherit;
 }
 
 .yu-bookdetailimg{/* 도서상세보기에 들어갈 책 이미지 */
-
-     padding : 50px;
+     margin-left: 80px;
+    margin-top : 10px;
      text-align:center;
+}
+.detailimg{  /* 도서상세보기 에서 보일 이미지 */
+	width: 250px;
+	
+
 }
 
 .yu-bookdetailinfo{/* 도서상세보기에 들어갈 제목,저자,출판사,출판일,옮긴이 */
-   padding : 50px;
+   margin-top : 70px;
+   /* padding : 10px; */
    text-align: center;
-    
+   font-size: 25px;
+   
 }
 .yu-booktitle{/* yu-bookdetailinfo div 안에 들어갈 책제목 */
    
@@ -78,8 +79,9 @@ color: inherit;
 
 .yu-bookdetailintro{/* 도서상세보기에 들어갈 도서소개 */
    
-   padding : 50px;
+   padding : 60px;
    text-align: center;
+   font-size: 16px
 }
 
 .yu-ui buttons{
@@ -87,12 +89,14 @@ color: inherit;
 }
 
 .yu-likebutton{/*관심도서 추가버튼  */
-  width:50px;
-  height: 50px;
+  width:70px;
+  height: 70px;
   margin-left: 1100px;
+  
 }
+
 .yu-palybutton{
-	margin-right:1100px;
+	margin-right:900px;
 	margin-bottom:500px;
 }
 
@@ -105,7 +109,21 @@ color: inherit;
 	margin-top: 600px;
 }
 
+.yu-table_img{
+	width:40px;
+	height:40px;
+	
+}
 
+.yu-bookimg1{
+	width:220px;
+	height: 250px;
+}
 
+.yu-booktitle{
+	
+}
 
-
+.yu-recent5{
+	
+}

@@ -100,11 +100,11 @@
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/booksearch/bookSearchList.jsp'" src="/sori/resources/images/도서검색.png">
+      	<img onclick="location.href='/sori/blist'" src="/sori/resources/images/도서검색.png">
     </div>
   </div>
   <div class="card">
-    <div class="image">
+   <div class="image">
       	<img onclick="location.href='/sori/bmkmain'" src="/sori/resources/images/도서제작.png">
     </div>
   </div>  
