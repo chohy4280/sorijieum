@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ page import = "java.util.ArrayList, book.model.vo.Book, member.model.vo.Member, bookmaking.model.vo.BookMaking" %>
+    <% BookMaking bookmaking = (BookMaking)request.getAttribute("bookmaking");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +15,12 @@
 <body>
 <section class="my-section">
 <center>
+
 <div class="yu.textbook" style="border: 3px solid;">
-도서제작이 완료된 파일을 불러온다. 
+<%= bookmaking.getBookrtxt() %>
 </div>
+
+
 
 <button onclick ="location='bookSearchDetail.jsp'" class="ui left labeled icon button">
   <i class="left arrow icon"></i>

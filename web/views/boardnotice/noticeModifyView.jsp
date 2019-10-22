@@ -24,41 +24,44 @@
 		<span style="color:grey">소리지음 공지사항입니다</span>
 		<br><br>
 	<!-- 공지사항 목록 시작 -->
+	<form action = "/sori/nomidi" method = "post" enctype= "multipart/form-data">
+	<input type= "hidden" name="noticeno" value="<%= notice.getNoticeNo() %>"> <!-- 값은 전송은 가지만 안보이게 한다. -->
+<input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
+<input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
 		<table class="my-listTable" align="center">
 			<tr>
 			
-				<th colspan="4" style="height:60px; font-size: 25px;"><a href="/sori/ndlist?no=<%= notice.getNoticeNo() %>"><%= notice.getNoticeTitle() %></a></td>
+				<th colspan="4" style="height:60px; font-size: 25px;"><input type="text" name = "noticetitle" placeholder="공지사항 제목" 
+				value="<%= notice.getNoticeTitle() %>" style="width:700px;"></th>
 			</tr>
 			<tr style="height:20px; font-size: 12px;">
-				<td><%= notice.getNoticeWriter() %></td>
-				<td><%= notice.getNoticeDate() %></td>
+				<td><input type= "text" name = "noticewriter" placeholder="공지사항 작성자" value="<%= notice.getNoticeWriter() %>"></td>
+				<td><input type="date" name="noticedate" placeholder= "YYYY/MM/DD" value="<%= notice.getNoticeDate() %>"></td>
 				<td><%= notice.getNoticeViews() %></td>
-				<td>  <% if(notice.getNoticeRfile() !=null && !notice.getNoticeOfile().equals("null")){ %>
+				<td><% if(notice.getNoticeRfile() !=null && !notice.getNoticeOfile().equals("null")){ %>
            <a href="/sori/nfdown?ofile=<%= notice.getNoticeOfile() %>
-           &rfile=<%= notice.getNoticeRfile()  %>">
+           &rfile=<%= notice.getNoticeRfile() %>">
            <%= notice.getNoticeOfile() %></a>
            <% }else{ %>
                  첨부파일 없음
-                  <% } %></td>
+                  <% } %><br>
+                  
+                  </td>
 			</tr>	
 			
 		</table>
+		
 		<div class="my-boardcontent">
-		<%= notice.getNoticeContent() %>
-		</div>
+		<textarea name="content" cols="150" rows="14"><%= notice.getNoticeContent() %>
+		</textarea></div>
 		
-		
+		<div align="right">
+		<div class="ui buttons">
+			<input type="submit" class="ui positive button" value="수정" style="width:80px"></button>
+		</form>
 	
 	<!--공지사항 목록 끝-->
 	
-	<!-- 관리자 수정삭제 버튼 -->
-	<div align="right">
-		<div class="ui buttons">
-			<button class="ui positive button" onclick="location.href='/sori/nomtm?noticeno=<%= notice.getNoticeNo() %>'">수정</button>
-		  	<div class="or"></div>
-			<button class="ui button" onclick="location.href='/sori/ndelete?noticeno=<%= notice.getNoticeNo() %>&rfile=<%= notice.getNoticeRfile() %> '">삭제</button>
-		</div>
-	</div>
 	
 	
 	<!-- 공통 페이지 이동 버튼 -->

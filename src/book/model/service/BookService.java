@@ -12,6 +12,7 @@ import java.util.HashMap;
 import book.model.dao.BookDao;
 import book.model.vo.Book;
 import book.model.vo.BookDV;
+import bookmaking.model.vo.BookMaking;
 
 public class BookService {
 
@@ -130,9 +131,9 @@ public class BookService {
 	  }
 
 		 //도서검색 한개만 불러오기
-		 public Book selectOne(String booktitle) {
+		 public Book selectOne(String bookcode) {
 			 Connection conn = getConnection();
-			 Book book = bDao.selectOne(conn,booktitle);
+			 Book book = bDao.selectOne(conn,bookcode);
 			 close(conn);
 			 return book;
 		 }
@@ -146,10 +147,20 @@ public class BookService {
 			return list;
 		}
 
-          //도서검색창 검색 처리용
-		public ArrayList<Book> selectAllBookSearch(String search, String keyword) {
-			// TODO Auto-generated method stub
-			return null;
+
+		public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
+		     Connection conn = getConnection();
+		     ArrayList<Book> list = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
+		     close(conn);
+			return list;
+		}
+
+
+		public BookMaking selectPlay(String bookcode) {
+			 Connection conn = getConnection();
+			 BookMaking bookmaking = bDao.selectPlay(conn,bookcode);
+			 close(conn);
+			 return bookmaking;
 		}
 
 

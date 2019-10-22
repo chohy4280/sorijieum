@@ -55,7 +55,7 @@ footer{
   <a class="item" href="/sori/blist">도서 검색</a>
   <a class="item" href="/sori/bmkmain">도서 제작</a>
   <a class="item" href="/sori/wblist">도서 신청</a>
-  <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
+  <a class="item" href="/sori/nlist">공지사항</a>
   <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>
   <a class="item" href="/sori/qlist">Q&A</a>
   <div class="right menu">

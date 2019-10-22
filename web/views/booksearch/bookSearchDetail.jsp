@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import = "java.util.ArrayList, book.model.vo.Book, member.model.vo.Member" %>
-    <% Book book = (Book)request.getAttribute("book");%>
+    <%@ page import = "java.util.ArrayList, book.model.vo.Book, member.model.vo.Member, bookmaking.model.vo.BookMaking" %>
+    <% Book book = (Book)request.getAttribute("book");
+    BookMaking bookmaking =(BookMaking)request.getAttribute("bookmaking");%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +19,7 @@
 <section class="my-section">
 
 <div class="yu-bookdetailimg"style="/* border: 1px solid gold; */float: left; width: 25%; height: 350px;">
-<img class = detailimg src="/sori/resources/book_images/<%=book.getBookRimg()%>"></div>
+<img class = detailimg src="/sori/resources/book_upfiles/<%=book.getBookRimg()%>"></div>
 
 <div class="yu-bookdetailinfo" style="/* border: 1px solid red; */ float: left; width: 25%; height: 350px;">
 <div class="yu-booktitle"style="/* border: 1px solid red; */ height: 60px;" ><%= book.getBookTitle() %></div>
@@ -29,13 +31,14 @@
 <div class="yu-bookdetailintro"style="/* border: 1px solid blue; */ float: left; width: 40%; height: 350px;">
 <%= book.getBookInfo() %>
 </div> 
-
- <button class="yu-likebutton">
- <i class="heart icon"></i>
- </button>
+<center>
+<div class="yu-like">
+ <i class="huge red heart icon" ></i>
+</div>
+ </center>
+ <button class="ui icon button" id ="yu-playbutton" onclick="location.href='/sori/bpage'" class="yu-playbutton">
  
- <button onclick= "location='bookSearchPlay.jsp'" class="yu-palybutton">
- <i class="paly icon"></i>
+ <i class="play icon" ></i>
  </button>
  </section>
 </body>

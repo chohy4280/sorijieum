@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import book.model.vo.Book;
 import book.model.vo.BookMakingProgress;
 import bookmaking.model.dao.BookMakingDao;
+import bookmaking.model.vo.BookMaking;
 
 public class BookMakingService {
 	//의존성 주입
@@ -91,12 +92,20 @@ public class BookMakingService {
 	}
 	
 	//제작완료 카운트
-	public int getMakedBookCount(){
-		Connection conn = getConnection();
-		int dcount = bmDao.getMakedBookCount(conn);
-		close(conn);
-		return dcount;
-	}
+		public int getMakedBookCount(){
+			Connection conn = getConnection();
+			int dcount = bmDao.getMakedBookCount(conn);
+			close(conn);
+			return dcount;
+		}
+
+		////도서검색에서 도서재생으로 넘어가는 
+		public BookMaking selectPlayPage(String bookcode) {
+			 Connection conn = getConnection();
+			 BookMaking bookmaking = bmDao.selectPlay(conn,bookcode);
+			 close(conn);
+			 return bookmaking;
+		}
 	
 	//도서제작 추출 텍스트 파일 불러오기
 	public ArrayList<Book> selectBookLoadText(String bookcode){

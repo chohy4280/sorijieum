@@ -64,7 +64,10 @@ color: inherit;
    font-size: 25px;
    
 }
-.yu-booktitle{/* yu-bookdetailinfo div 안에 들어갈 책제목 */
+.yu-booktitle{
+	text-align:center;
+	font-size : 20px;
+	
    
 }
 
@@ -88,16 +91,15 @@ color: inherit;
 	
 }
 
-.yu-likebutton{/*관심도서 추가버튼  */
-  width:70px;
-  height: 70px;
-  margin-left: 1100px;
+.yu-like{/*관심도서 추가버튼  */
+
   
 }
 
-.yu-palybutton{
-	margin-right:900px;
-	margin-bottom:500px;
+#yu-playbutton{
+	margin-left : 200px;
+	margin-right : 1100px;
+width: 100px;
 }
 
 .yu.textbook{
@@ -116,8 +118,7 @@ color: inherit;
 }
 
 .yu-bookimg1{
-	width:220px;
-	height: 250px;
+	
 }
 
 .yu-booktitle{
@@ -125,5 +126,9 @@ color: inherit;
 }
 
 .yu-recent5{
+	
+}
+
+.yu-booktitle{
 	
 }

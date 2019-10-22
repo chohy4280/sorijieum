@@ -27,19 +27,12 @@
 		<table class="my-listTable" align="center">
 			<tr>
 			
-				<th colspan="4" style="height:60px; font-size: 25px;"><a href="/sori/ndlist?no=<%= notice.getNoticeNo() %>"><%= notice.getNoticeTitle() %></a></td>
+				<th colspan="3" style="height:60px; font-size: 25px;"><a href="/sori/ntopfix?no=<%= notice.getNoticeNo() %>"><%= notice.getNoticeTitle() %></a></td>
 			</tr>
 			<tr style="height:20px; font-size: 12px;">
 				<td><%= notice.getNoticeWriter() %></td>
 				<td><%= notice.getNoticeDate() %></td>
 				<td><%= notice.getNoticeViews() %></td>
-				<td>  <% if(notice.getNoticeRfile() !=null && !notice.getNoticeOfile().equals("null")){ %>
-           <a href="/sori/nfdown?ofile=<%= notice.getNoticeOfile() %>
-           &rfile=<%= notice.getNoticeRfile()  %>">
-           <%= notice.getNoticeOfile() %></a>
-           <% }else{ %>
-                 첨부파일 없음
-                  <% } %></td>
 			</tr>	
 			
 		</table>
@@ -54,9 +47,9 @@
 	<!-- 관리자 수정삭제 버튼 -->
 	<div align="right">
 		<div class="ui buttons">
-			<button class="ui positive button" onclick="location.href='/sori/nomtm?noticeno=<%= notice.getNoticeNo() %>'">수정</button>
+			<button class="ui positive button" onclick="">수정</button>
 		  	<div class="or"></div>
-			<button class="ui button" onclick="location.href='/sori/ndelete?noticeno=<%= notice.getNoticeNo() %>&rfile=<%= notice.getNoticeRfile() %> '">삭제</button>
+			<button class="ui button" onclick="">삭제</button>
 		</div>
 	</div>
 	

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import book.model.vo.Book;
 import book.model.vo.BookMakingProgress;
+import bookmaking.model.vo.BookMaking;
 
 public class BookMakingDao {
 
@@ -282,6 +283,11 @@ public class BookMakingDao {
 
 	}
 
+	public BookMaking selectPlay(Connection conn, String bookcode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public ArrayList<Book> selectBookLoadText(Connection conn, String bookcode) {
 		ArrayList<Book> txtlist = new ArrayList<Book>();
 		PreparedStatement pstmt = null;
@@ -306,6 +312,7 @@ public class BookMakingDao {
 		}
 		return txtlist;
 	}
+
 
 	public BookMakingProgress selectBookMakingMainLoad(Connection conn, String bookcode, String userid) {
 		BookMakingProgress bmp = null;
