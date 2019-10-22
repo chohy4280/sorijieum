@@ -11,11 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import book.model.service.BookService;
 import book.model.vo.Book;
-import pageinfo.model.vo.PageInfo;
+
 
 /**
  * Servlet implementation class bookListServlet
