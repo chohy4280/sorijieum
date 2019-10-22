@@ -239,10 +239,6 @@ public class BookMakingDao {
 		}
 		return bookmp;
 	}
-	
-	public ArrayList<BookMakingProgress> selectBookPdfLoad(Connection conn){
-		return null;
-	}
 
 	public int getMakedBookCount(Connection conn) {
 		int dcount = 0;
@@ -286,8 +282,54 @@ public class BookMakingDao {
 
 	}
 
+	public ArrayList<Book> selectBookLoadText(Connection conn, String bookcode) {
+		ArrayList<Book> txtlist = new ArrayList<Book>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book where bookcode = '" + bookcode + "'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Book book = new Book();
+				book.setBookCode(rset.getString("bookcode"));
+				book.setBookRtxt(rset.getString("bookrtxt"));
+				txtlist.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return txtlist;
+	}
 
-	
-	
+	public BookMakingProgress selectBookMakingMainLoad(Connection conn, String bookcode, String userid) {
+		BookMakingProgress bmp = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book join bookmaking using (bookcode) where bookcode = '" + bookcode + "'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				bmp = new BookMakingProgress();
+				bmp.setBookCode(rset.getString("bookcode"));
+				bmp.setBookPage(rset.getInt("bookpage"));
+				bmp.setMakepage(rset.getInt("makepage"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return bmp;
+	}
 
 }

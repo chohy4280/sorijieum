@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BookMakingLoadFileServlet
+ * Servlet implementation class BookMakingSaveTextServlet
  */
-@WebServlet("/bmlfile")
-public class BookMakingLoadFileServlet extends HttpServlet {
+@WebServlet("/bmstext")
+public class BookMakingSaveTextServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BookMakingLoadFileServlet() {
+    public BookMakingSaveTextServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +26,7 @@ public class BookMakingLoadFileServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 도서제작 텍스트 파일 저장 컨트롤러
 	}
 
 	/**

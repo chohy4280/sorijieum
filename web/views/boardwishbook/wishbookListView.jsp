@@ -42,19 +42,38 @@ $(function(){
 	<section class="my-section">
 	<!--도서신청 시작-->
 	<div class="my-content">
-	<a class="massive ui yellow label" style="font-size: 30px">도서신청</a>
+	<div style="display:flex;justify-content:space-between;">
+	<div>
+	<div class="massive ui yellow label" style="font-size: 30px">도서신청</div>
 	<span style="color:#fbbe09; font-weight:600">│</span>
 	<span style="color:grey">도서신청 게시판입니다</span>
-		<br><br>
+	</div>
+	<!-- 검색창 시작 -->
+		<div style="margin-top:20px;">
+		<form action="/sori/wbsearch" method="post">
+		<select class="ui mini simple dropdown" name="search" id="search" style="border-radius:5px;">
+			<option value="wishbooktitle">도서명</option>
+			<option value="wishbookauthor">저자명</option>
+		</select>
+		<div class="ui small input">
+			<input type="text" class="search" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
+		</div>
+			<input class="ui tiny basic black button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
+		</form>
+		</div>
+		</div>
+	<!-- 검색창 끝 -->
+	<br>
 	<!-- 도서신청 목록 시작 -->
 		<table class="my-listTable" align="center">
 			<tr>
 				<th width="5%">No</th>
-				<th width="45%">도서명</th>
+				<th width="40%">도서명</th>
 				<th width="15%">저자명</th>
 				<th width="15%">신청자ID</th>
 				<th width="10%">신청일</th>
 				<th width="10%">진행사항</th>
+				<th width="5%">조회수</th>
 			</tr>
 			<% for(int i = 0; i < list.size(); i++){
 				WishBook wb = list.get(i);
@@ -66,21 +85,30 @@ $(function(){
 				<td><%= wb.getWishBookAuthor() %></td>
 				<td><%= wb.getWishWriter() %></td>
 				<td><%= wb.getWishDate() %></td>
-				<td><%= wb.getWishStatus() %></td>
+				<% if(wb.getWishStatus().equals("WAIT")){ %>
+				<td>승인대기</td>
+				<% }else if(wb.getWishStatus().equals("RJCT")){ %>
+				<td>반려</td>
+				<% }else if(wb.getWishStatus().equals("DONE")){ %>
+				<td>승인</td>
+				<% } %>
+				<td><%= wb.getWishViews() %></td>
 			</tr>
 			<% } %>
 		</table>
 	<!--도서신청 목록 끝-->
 		<br>
 		<div class="ye-label" align="right">
-			<a class="big ui basic black label" href="/sori/views/boardwishbook/mywishbookDetailView.jsp">나의신청내역</a>&nbsp;&nbsp;
+			<a class="big ui basic black label" href="/sori/views/member/userWishBook.jsp">나의신청내역</a>&nbsp;&nbsp;
 			<a class="big ui basic black label" href="/sori/views/boardwishbook/wishbookAddForm.jsp">신청하기</a>
 		</div>
 		<br>
+		
 	<!-- 페이징 시작 -->
+<%-- 	<% if() %> --%>
 		<div id="pagebox" align="center">
 		<a href="/sori/wblist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
-	<% if((beginPage - 10) < 1){ %>
+	<% if((beginPage - 1) < 1){ %>
 		<a href="/sori/wblist?page=1"><i class="angle grey left icon"></i></a>
 	<% }else{ %>
 		<a href="/sori/wblist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
@@ -92,30 +120,18 @@ $(function(){
 	<% }else{ %>
 		<a href="/sori/wblist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 	<% }} %>&nbsp;
-	<% if((endPage +  10) < maxPage){ %>
+	<% if((endPage + 1) < maxPage){ %>
 		<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 	<% }else{ %>
-		<a href="/sori/wblist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+		<a href="/sori/wblist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
 	<% } %>&nbsp;
 	<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
 	</div>
+	<%-- <% }else{ %>
+	
+	<% } %> --%>
 	<!-- 페이징 끝 -->
-<br><hr><br>
-	<!-- 검색창 시작 -->
-		<center>
-		<form action="/sori/wbsearch" method="post">
-		<select class="ui mini simple dropdown" name="search" id="search" style="border-radius:5px;">
-			<option value="wishbooktitle">도서명</option>
-			<option value="wishbookauthor">저자명</option>
-		</select>
-		<div class="ui small input">
-			<input type="text" class="search" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
-		</div>
-			<input class="ui tiny basic black button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
-		</form>
-		</center>
-		<br><br><br>
-	<!-- 검색창 끝 -->
+<br>
 	</div>
 	<!--도서신청 끝-->
 	</section>

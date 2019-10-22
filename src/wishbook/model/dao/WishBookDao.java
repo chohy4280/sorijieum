@@ -216,7 +216,7 @@ public class WishBookDao {
 		ArrayList<WishBook> wlist = new ArrayList<WishBook>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS " + 
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS, WISHVIEWS " + 
 						"FROM (SELECT * FROM WISHBOOK " + 
 						"ORDER BY WISHDATE DESC)) " + 
 						"WHERE RNUM >= ? AND RNUM <= ? ";
@@ -235,6 +235,7 @@ public class WishBookDao {
 				wb.setWishWriter(rset.getString("wishwriter"));
 				wb.setWishDate(rset.getDate("wishdate"));
 				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setWishViews(rset.getInt("wishviews"));
 				wlist.add(wb);
 			}
 		} catch (SQLException e) {
@@ -298,16 +299,43 @@ public class WishBookDao {
 	}
 	
 	public int insertWishBook(Connection conn, WishBook wishbook){
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "insert into wishbook values(SEQ_WISHNO.NEXTVAL, ?, ?, ?, ?, ?, "
+						+ "sysdate, default, default, null, null, default, null)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, wishbook.getWishWriter());
+			pstmt.setString(2, wishbook.getWishBookTitle());
+			pstmt.setString(3, wishbook.getWishBookAuthor());
+			pstmt.setString(4, wishbook.getWishPublisher());
+			pstmt.setDate(5, wishbook.getWishPublishDate());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
-	public int deleteWishBook(Connection conn, WishBook wishbook){
-		return 0;
+	public int deleteWishBook(Connection conn, int wishno){
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "delete from wishbook where wishno = " + wishno;
+		try {
+			pstmt = conn.prepareStatement(query);
+			result = pstmt.executeUpdate();
+			System.out.println(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
-	public WishBook selectMyWishBook(Connection conn, int wishno, String wishwriter){
-		return null;
-	}
 	
 	public ArrayList<WishBook> selectSearchWishBook(Connection conn, String search, String keyword, int startnum, int endnum){
 		ArrayList<WishBook> list = new ArrayList<WishBook>();
@@ -315,7 +343,7 @@ public class WishBookDao {
 		ResultSet rset = null;
 		String query = null;
 		if(keyword != null) {
-			query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS " + 
+			query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS, WISHVIEWS " + 
 					"FROM (SELECT * FROM WISHBOOK " + 
 					"WHERE " + search + " LIKE '%" + keyword + "%' "+ 
 					"ORDER BY WISHDATE DESC)) " + 
@@ -334,6 +362,7 @@ public class WishBookDao {
 				wb.setWishWriter(rset.getString("wishwriter"));
 				wb.setWishDate(rset.getDate("wishdate"));
 				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setWishViews(rset.getInt("wishviews"));
 				list.add(wb);
 			}
 		} catch (SQLException e) {
@@ -365,6 +394,23 @@ public class WishBookDao {
 			close(stmt);
 		}
 		return wcount;
+	}
+	
+	public int updateWishViews(Connection conn, int wishno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update wishbook set wishviews = wishviews + 1 where wishno = ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, wishno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

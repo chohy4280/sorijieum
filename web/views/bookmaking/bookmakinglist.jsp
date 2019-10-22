@@ -46,14 +46,14 @@
 			%>
 			<div class="ye-bm2">
 			<% if(makelist.get(i).getBookTitle().length() < 14){ %>
-			<div class="ui large grey basic label" align="center" style="width: 210px;">
-			<p style="text-align:center;font-size:10pt;">
-			<%= makelist.get(i).getBookTitle() %></p>
+			<div class="ui large basic label" align="center" style="width: 210px;"
+			onclick="location.href='/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>'">
+			<p style="text-align:center;font-size:10pt;"><%= makelist.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large grey basic label" align="center" style="width: 210px;">
-			<p style="text-align:center;font-size:10pt;">
-			<%= makelist.get(i).getBookTitle().substring(0, 15) %>..</p>
+			<div class="ui large basic label" align="center" style="width: 210px;"
+			onclick="location.href='/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>'">
+			<p style="text-align:center;font-size:10pt;"><%= makelist.get(i).getBookTitle().substring(0, 15) %>..</p>
 			</div><br>
 			<% } %>
 			<a href="/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>">
@@ -81,20 +81,21 @@
 	<a href="/sori/bmlist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
 <% } %>&nbsp;
 <% for(int p = beginPage; p <= endPage; p++){ 
-		if(p == currentPage){
+	if(p == currentPage){
 %>
 	<a href="/sori/bmlist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
 <% }else{ %>
 	<a href="/sori/bmlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 <% }} %>&nbsp;
-<% if((endPage +  10) < maxPage){ %>
+<% if((endPage + 1) < maxPage){ %>
 	<a href="/sori/bmlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 <% }else{ %>
-	<a href="/sori/bmlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+	<a href="/sori/bmlist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
 <% } %>&nbsp;
 <a href="/sori/bmlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
 </div><!-- 페이징 -->
-	<!-- book count -->
+
+<!-- book count -->
 <div class="ye-book-count" style="float:right;bottom:10px;left:500px;align:right;padding:50px;">
 <div class="orange ui statistic" >
     <div class="value" style="font-family:'S-Core Dream 7';">

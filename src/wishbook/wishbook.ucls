@@ -102,8 +102,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="wishbook.controller.WishBookTitleSearchServlet" project="sorijieum" 
-    file="/sorijieum/src/wishbook/controller/WishBookTitleSearchServlet.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="wishbook.controller.WishBookSearchServlet" project="sorijieum" 
+    file="/sorijieum/src/wishbook/controller/WishBookSearchServlet.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1087" y="323"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -138,16 +138,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="wishbook.controller.AdWishbookWaitListServlet" project="sorijieum" 
-    file="/sorijieum/src/wishbook/controller/AdWishbookWaitListServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1688" y="475"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="wishbook.controller.AdWishbookSearchServlet" project="sorijieum" 
+  <class id="18" language="java" name="wishbook.controller.AdWishbookSearchServlet" project="sorijieum" 
     file="/sorijieum/src/wishbook/controller/AdWishbookSearchServlet.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1089" y="625"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -156,7 +147,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="wishbook.controller.wishbookResultServlet" project="sorijieum" 
+  <class id="19" language="java" name="wishbook.controller.wishbookResultServlet" project="sorijieum" 
     file="/sorijieum/src/wishbook/controller/wishbookResultServlet.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1389" y="625"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -165,13 +156,13 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="21">    
+  <association id="20">    
     <bendpoint x="581" y="342"/>    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="22" name="wbDao">        
+      <attribute id="21" name="wbDao">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="23" minimum="0" maximum="1">        
+      <multiplicity id="22" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
