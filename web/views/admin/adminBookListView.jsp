@@ -4,6 +4,14 @@
  <%@ include file="/../inc/adminTemplate.jsp" %>
 <%
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();	//Object>Integer로 형변환 후 int로 한번 더 형변환!
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	String searchtype = (String)request.getSession().getAttribute("searchtype");
+	String keyword = (String)request.getSession().getAttribute("keyword");
+	String makestatus = (String)request.getSession().getAttribute("makestatus");
 %>
 <!DOCTYPE html>
 <html>
@@ -31,7 +39,31 @@ $(".chk").click(function(){
 	}	
 });
 
+
 }); // document.ready...
+
+
+// 체크박스 다중삭제
+function delBtn(){
+	var result = confirm('정말로 해당 도서들을 삭제하시겠습니까?');
+	if(result){
+		var lists = [];
+		$("input[name='RowCheck']:checked").each(function(i){
+			lists.push($(this).val());
+		});
+		var list = lists.join(",");
+		$.ajax({
+			url:"/sori/bdel.ad",
+			type:"post",
+			data:{ lists : list },
+			success : function(data){
+				alert(data);
+				location.href="/sori/blist.ad?page="+<%=currentPage%>;
+			}
+		})
+		return false;
+	}}
+
 </script>
 
 <!-- Content 시작! -->
@@ -59,11 +91,12 @@ $(".chk").click(function(){
 					<br><br>
 
 				<a class="ui large teal label">도서상태</a>&nbsp;
-					<input type="radio" name="makestatus" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="makestatus" value="WAIT"> 제작대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="makestatus" value="MAKE"> 제작중 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="makestatus" value="ALL" checked> 전체 &emsp;&emsp;
+					<input type="radio" name="makestatus" value="WAIT"> 제작대기&emsp;&emsp;
+					<input type="radio" name="makestatus" value="MAKE"> 제작중 &emsp;&emsp;
 					<input type="radio" name="makestatus" value="DONE"> 제작완료
 					<center><input type="submit" value="검색"></center>
+					
 				</div>
 				</form>
 			</div>
@@ -72,33 +105,32 @@ $(".chk").click(function(){
 			
 			
 			<!-- 도서검색 결과 리스트 시작! -->
-			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
+			<div class="listBoxBG" style="height: 500px; margin-top:180px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 권</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= listCount %></span> 권</div>
 				<br>
 				<table class="listTable">
 					<tr>
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
 						<% } %>
-						<th width="3%">No</th>
-						<th width="12%">도서코드</th>
-						<th style="width:25%; text-align: left;">도서명</th>
+						<th width="10%">도서코드</th>
+						<th width="30%">도서명</th>
 						<th width="12%">저자명</th>
 						<th width="13%">출판사명</th>
 						<th width="8%">도서상태</th>
 						<th width="10%">도서등록일</th>
 					</tr>
-					<% for(int i = list.size()-1; i >= 0 ; i--) {
-						Book b = list.get(i);
+					<% 	if(list.size() != 0){
+						for(int i = list.size()-1; i >= 0 ; i--) {
+							Book b = list.get(i);
 					%>
 					<tr>
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= b.getBookCode() %>"></td>
 						<%} %>
-						<td><%= i+1 %> </td>
-						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookCode() %></a></td>
-						<td style="text-align: left; color:#4ecdc4;"><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>"><%= b.getBookTitle() %></a></td>
+						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>"><%= b.getBookCode() %></a></td>
+						<td style="text-align: left"><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>"><%= b.getBookTitle() %></a></td>
 						<td><%= b.getAuthor() %></td>
 						<td><%= b.getPublisher() %></td>
 						<td><% if(b.getMakeStatus().equals("WAIT")) {%>
@@ -111,19 +143,46 @@ $(".chk").click(function(){
 						</td>
 						<td><%= b.getBookDate() %></td>
 					</tr>
-					<% } %>
+					<% }} else { %>
+					<tr><td colspan="7" style="color:#aaa">해당되는 도서가 없습니다.</td></tr>
+					<%} %>
 				</table>
 				
 				<br>
 				<div><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddBookForm.jsp'">추가</button>&nbsp;
 				<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
-					<button class="mini ui black button" onclick="fn_bookDelete();">삭제</button></div>
+					<button class="mini ui black button" onclick="return delBtn();">삭제</button></div>
 					<% } %>
 				</div>
-			</div>
-				
+				<br><br>
+				       <!-- 페이징처리 시작 -->
+							<div id="pagebox" align="center">
+								<a href="/sori/blist.ad?page=1&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><i class="angle grey double left icon"></i></a>&emsp;
+							<% if((beginPage - 10) < 1){ %>
+								<a href="/sori/blist.ad?page=1&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><i class="angle grey left icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/blist.ad?page=<%= beginPage - 10 %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><i class="angle grey left icon"></i></a>
+							<% } %>&ensp;
+							<% for(int p = beginPage; p <= endPage; p++){ 
+									if(p == currentPage){
+							%>
+								<a href="/sori/blist.ad?page=<%= p %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><b class="ui small teal circular label"><%= p %></b></a>&emsp;
+							<% }else{ %>
+								<a href="/sori/blist.ad?page=<%= p %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><font color="black"><b><%= p %></b></font></a>&emsp;
+							<% }} %>&ensp;
+							<% if((endPage +  10) < maxPage){ %>
+								<a href="/sori/blist.ad?page=<%= endPage +  10 %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><i class="angle grey right icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/blist.ad?page=<%= maxPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><i class="angle grey right icon"></i></a>
+							<% } %>&ensp;
+							<a href="/sori/blist.ad?page=<%= maxPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><i class="angle grey double right icon"></i></a>&emsp;
+							</div>
+							<!-- 페이징 끝-->
+								</div>
 			<!-- 도서검색 결과 리스트 끝! -->
        <!-- 도서 목록 끝! -->
+
+
        
 
 </section>

@@ -79,11 +79,6 @@ public class BookMakingService {
 		return book;
 	}
 	
-	//불러올 pdf 리스트
-	public ArrayList<BookMakingProgress> selectBookPdfLoad(){
-		return null;
-	}
-
 	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
 	public int insertBook(Book b) {
 		Connection conn = getConnection();
@@ -112,4 +107,19 @@ public class BookMakingService {
 			 return bookmaking;
 		}
 	
+	//도서제작 추출 텍스트 파일 불러오기
+	public ArrayList<Book> selectBookLoadText(String bookcode){
+		Connection conn = getConnection();
+		ArrayList<Book> list = bmDao.selectBookLoadText(conn, bookcode);
+		close(conn);
+		return list;
+	}
+	
+	//도서제작 불러오기
+	public BookMakingProgress selectBookMakingMainLoad(String bookcode, String userid){
+		Connection conn = getConnection();
+		BookMakingProgress list = bmDao.selectBookMakingMainLoad(conn, bookcode, userid);
+		close(conn);
+		return list;
+	}
 }

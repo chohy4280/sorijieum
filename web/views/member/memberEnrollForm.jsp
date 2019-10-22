@@ -111,26 +111,26 @@ $(function(){
       <label><input type="radio" name="typenumber" value="3" required> 제작자</label></td>
 </tr>
 
-<tr><th>이 름</th><td>&nbsp;&nbsp;<input type="text" name="username"></td></tr>   <!-- required : 필수 입력항목 -->
+<tr><th>이 름</th><td>&nbsp;&nbsp;<input type="text" name="username" required></td></tr>   <!-- required : 필수 입력항목 -->
 
 <tr><th>아이디</th>
-            <td>&nbsp;&nbsp;<input type="text" name="userid" id="userid" > &nbsp;
+            <td>&nbsp;&nbsp;<input type="text" name="userid" id="userid" required> &nbsp;
               <button id="checkid" onsubmit="return false;">중복체크</button>
             <span id="idspan"></span></td></tr>
                
-<tr><th>암 호</th><td>&nbsp;&nbsp;<input type="password" name="userpwd" id="userpwd" ><span id="pwdspan"></span></td></tr>
+<tr><th>암 호</th><td>&nbsp;&nbsp;<input type="password" name="userpwd" id="userpwd" required><span id="pwdspan"></span></td></tr>
 
-<tr><th>암호확인</th><td>&nbsp;&nbsp;<input type="password" id="userpwd2" ><span id="pwdspan2"></span></td></tr>
+<tr><th>암호확인</th><td>&nbsp;&nbsp;<input type="password" id="userpwd2" required><span id="pwdspan2"></span></td></tr>
 
-<tr><th>전화번호</th><td>&nbsp;&nbsp;<input type="tel" name="phone" id="phone" maxlength="11" placeholder="ex)01012345678" ></td></tr>
+<tr><th>전화번호</th><td>&nbsp;&nbsp;<input type="tel" name="phone" id="phone" maxlength="11" placeholder="ex)01012345678" required></td></tr>
 
-<tr><th>이메일</th><td>&nbsp;&nbsp;<input type="email" name="email" placeholder="ex)abc@example.com" ></td></tr>
+<tr><th>이메일</th><td>&nbsp;&nbsp;<input type="email" name="email" placeholder="ex)abc@example.com" required></td></tr>
 
 <tr><th>성 별</th>
-<td>&nbsp;&nbsp;<label><input type="radio" name="gender" value="M" > 남자</label> &nbsp;
-            <label><input type="radio" name="gender" value="F" > 여자</label></td></tr>
+<td>&nbsp;&nbsp;<label><input type="radio" name="gender" value="M" required> 남자</label> &nbsp;
+            <label><input type="radio" name="gender" value="F" required> 여자</label></td></tr>
             
-<tr><th>생년월일</th><td>&nbsp;&nbsp;<input type="date" name="birth" ></td></tr>
+<tr><th>생년월일</th><td>&nbsp;&nbsp;<input type="date" name="birth" required></td></tr>
 
 <tr><th colspan="2">
 <a href="/sori/views/member/memberLoginView.jsp"><input type="submit" value="가입하기" id="btnsub"></a> &nbsp;
@@ -140,5 +140,6 @@ $(function(){
 </form>
 <br>
 <center><a href="/sori/views/member/memberEnrollAgree.jsp">약관동의 페이지로 이동</a></center>
+</section>
 </body>
 </html>

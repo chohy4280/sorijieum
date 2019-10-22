@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import book.model.vo.Book;
 import book.model.vo.BookDV;
@@ -19,72 +20,147 @@ public class BookDao {
 	
 	
 	// 관리자용 dao************************************************************************************************
+	
+	// 관리자용 전체 도서 갯수 출력용
+	public int getListCountAdmin(Connection conn) {
+		int listCount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select count(*) from book where bookdelyn = 'N'";
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+	
+
+	
 	// 관리자 도서 전체 목록 조회용
-		public ArrayList<Book> selectAll(Connection conn){	
+		public ArrayList<Book> selectAll(Connection conn, int startRow, int endRow){	
 			ArrayList<Book> list = new ArrayList<Book>();
-			Statement stmt = null;
+			PreparedStatement pstmt = null;
 			ResultSet rset = null;
-			String query = "select * from book where bookdelyn = 'N'";
+			
+			String query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate "
+										+ "from(select * from book where bookdelyn='N' order by bookdate desc)) where rnum between ? and ?";
+
 			try {
-				stmt = conn.createStatement();
-				rset = stmt.executeQuery(query);
 				
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+					
 				while(rset.next()) {
 					Book b = new Book();
+					
 					
 					b.setBookCode(rset.getString("bookcode"));
 					b.setBookTitle(rset.getString("booktitle"));
 					b.setAuthor(rset.getString("author"));
 					b.setPublisher(rset.getString("publisher"));
-					b.setPublishDate(rset.getDate("publishdate"));
-					b.setBookPage(rset.getInt("bookpage"));
-					b.setBookInfo(rset.getString("bookinfo"));
-					b.setBookOimg(rset.getString("bookoimg"));
-					b.setBookRimg(rset.getString("bookrimg"));
-					b.setBookOpdf(rset.getString("bookopdf"));
-					b.setBookRpdf(rset.getString("bookrpdf"));
 					b.setBookDate(rset.getDate("bookdate"));
-					b.setBookViews(rset.getInt("bookviews"));
 					b.setMakeStatus(rset.getString("makestatus"));
-					b.setBookDelYN(rset.getString("bookdelyn"));
 					
-					list.add(b);	
-					
+					list.add(b);
 				}
+				
+					
+					
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(rset);
-				close(stmt);
+				close(pstmt);
 			}
 			return list;
 		}
 		
 		
-		// 관리자 도서 검색용
-		public ArrayList<Book> selectBookSearch(Connection conn, String searchtype, String keyword, String makestatus){
-			ArrayList<Book> list = new ArrayList<Book>();
+		// 도서검색 갯수 출력용
+		public int getListCountSelectBookSearch(Connection conn, String searchtype, String keyword, String makestatus){
+			int listCount = 0;
 			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = null;
+			
+			if(keyword == null) {					// case1)검색어가 없고
+				if(makestatus.equals("ALL") == true)	// case1-1) 전체
+					query = "select count(*) from (select * from book where bookdelyn = 'N') where makestatus in ('WAIT', 'MAKE', 'DONE')";
+				else									// case1-2) 상태선택
+					query = "select count(*) from (select * from book where bookdelyn = 'N') where makestatus = '" + makestatus + "'";
+			} else {								// case2)검색어가 있고
+				if(makestatus.equals("ALL") == true)	// case2-1) 전체
+					query = "select count(*) from (select * from book where bookdelyn = 'N') where " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE')";
+				else									// case2-2) 상태선택
+					query = "select count(*) from (select * from book where bookdelyn = 'N') where " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "'";
+			}
+			
+			try {
+				stmt = conn.createStatement();
+				
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(rset);
+				close(stmt);
+			}
+			return listCount;
+		}
+			
+			
+			
+
+		
+		// 관리자 도서 검색용
+		public ArrayList<Book> selectBookSearch(Connection conn, String searchtype, String keyword, String makestatus, int startRow, int endRow){
+			ArrayList<Book> list = new ArrayList<Book>();
+			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			
 			String query = null;
 			if(keyword == null) {					// case1)검색어가 없고
 				if(makestatus.equals("ALL") == true)	// case1-1) 전체
-					query = "select * from (select * from book where bookdelyn = 'N') where makestatus in ('WAIT', 'MAKE', 'DONE')";
+					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
 				else									// case1-2) 상태선택
-					query = "select * from (select * from book where bookdelyn = 'N') where makestatus = '" + makestatus + "'";
+					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
 			} else {								// case2)검색어가 있고
 				if(makestatus.equals("ALL") == true)	// case2-1) 전체
-					query = "select * from (select * from book where bookdelyn = 'N') where " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE')";
+					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
 				else									// case2-2) 상태선택
-					query = "select * from (select * from book where bookdelyn = 'N') where " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "'";
+					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
 			}
 			
 
 			try {
-				stmt = conn.createStatement();
-				rset = stmt.executeQuery(query);
 				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				rset = pstmt.executeQuery();
 				
 				while(rset.next()) {
 					Book b = new Book();
@@ -102,16 +178,32 @@ public class BookDao {
 				e.printStackTrace();
 			} finally {
 				close(rset);
-				close(stmt);
+				close(pstmt);
 			
 			}
 			return list;
 		}
 		
 		
+
+			
+		
 		// 관리자 도서 삭제용
 		public int deleteBook(Connection conn, String bookcode) {
-			return 0;
+			int result = 0;
+			Statement stmt = null;
+			
+			String query = "update book set bookdelyn = 'Y' where bookcode = '" + bookcode + "'";
+			
+			try {
+				stmt = conn.createStatement();
+				result = stmt.executeUpdate(query);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(stmt);
+			}
+			return result;
 		}
 		
 		
@@ -371,8 +463,6 @@ public class BookDao {
 			}
 			return list;
 		}
-
-
 
 		public ArrayList<Book> selectBookTitleAuthor(Connection conn,String search, String keyword, int startRow, int endRow) {
 			ArrayList<Book> list = new ArrayList<Book>();

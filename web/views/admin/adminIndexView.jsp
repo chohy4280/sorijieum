@@ -93,7 +93,7 @@
 	            	</div>
 	            	<div class="data-section3">
 	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?gender=ALL&typenumber=4"><%= newUList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser1"><a href=""><%= quitUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="/sori/qmslist.ad?quittype=ALL&typenumber=12"><%= quitUList.size() %></span></a> 명</div>
 	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?gender=ALL&typenumber=5"><%= totalUList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
@@ -112,7 +112,7 @@
 	            	</div>
 	            	<div class="data-section3">
 	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?gender=ALL&typenumber=6"><%= newMList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser2"><a href=""><%= quitMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="/sori/qmslist.ad?quittype=ALL&typenumber=33"><%= quitMList.size() %></span></a> 명</div>
 	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?gender=ALL&typenumber=3"><%= totalMList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>

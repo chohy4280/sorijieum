@@ -1,11 +1,18 @@
 package qnacomment.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import qna.model.service.QnaService;
+import qna.model.vo.Qna;
+import qnacomment.model.service.QnaCommentService;
+import qnacomment.model.vo.QnaComment;
 
 /**
  * Servlet implementation class QnaCommentDeleteServlet
@@ -26,8 +33,30 @@ public class QnaCommentDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//Q&A 답변 삭제용 컨트롤러
+		int qnano = Integer.parseInt(request.getParameter("qnano"));
+		
+		QnaCommentService qcservice = new QnaCommentService();
+		QnaService qservice = new QnaService();
+		int result = qcservice.deleteQnaComment(qnano);
+		/*Qna qna = qservice.selectQnaOne(qnano);
+		QnaComment qComm = qcservice.selectQnaComment(qnano);*/
+		
+		System.out.println("삭제된 행 개수:"+result);
+		
+		RequestDispatcher view = null;
+		if(result>0) {
+			view = request.getRequestDispatcher("/qdetail");
+			qservice.deleteQnaCommYN(qnano);
+			/*request.setAttribute("qna", qna);
+			request.setAttribute("qComm", qComm);*/
+			request.setAttribute("qnano", qnano);
+		}
+		else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "답변 삭제 실패!!!!");
+		}
+		view.forward(request, response);
 	}
 
 	/**

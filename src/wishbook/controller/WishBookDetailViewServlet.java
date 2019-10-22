@@ -36,7 +36,9 @@ public class WishBookDetailViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//도서신청글 상세보기 처리용 컨트롤러
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
-		WishBook wb = new WishBookService().selectWishBookOne(wishno);
+		WishBookService wservice = new WishBookService();
+		wservice.updateWishViews(wishno);//조회수 증가
+		WishBook wb = wservice.selectWishBookOne(wishno);
 		RequestDispatcher view = null;
 		if(wb != null) {
 			view = request.getRequestDispatcher("views/boardwishbook/wishbookDetailView.jsp");

@@ -1,13 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="qna.model.vo.Qna, qnacomment.model.vo.QnaComment" %>
+<% 
+	Qna qna = (Qna)request.getAttribute("qna");
+	QnaComment qComm = (QnaComment)request.getAttribute("qComm");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>FAQ 게시글 보기</title>
-<%@ include file="/../inc/top.jsp" %>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
+<%@ include file="/../inc/top.jsp" %>
+<script type="text/javascript">
+$(function(){
+	<% if(qComm != null){ %>
+		$("#upBtn").click(function(){
+			$(".showComm").css("display","none");
+			$(".upComm").css("display","block");
+			return false;
+		});
+		
+		$("#commReset").click(function(){
+			$(".showComm").css("display","block");
+			$(".upComm").css("display","none");
+			return false
+		});
+		
+		$("#commUpdate").click(function(){
+			mappingAction("update");
+		});
+		
+		$("#commDel").click(function(){
+			mappingAction("delete");
+		});
+	<% } %>
+});
+
+function commentChk(){
+	if(document.getElementById("commcontent").value==""){
+		alert("답변 내용을 작성해주세요.");
+		return false;
+	}
+}
+
+function mappingAction(val){
+    var form = document.commForm;
+ 	
+    if (val == "update")
+        form.action = "/sori/qcupdate";
+    else if (val == "delete") 
+        form.action = "/sori/qcdelete";
+	
+ /*    form.submit(); */
+}
+
+function updateChk(){
+	<% if(qComm != null){ %>
+		alert("문의글 수정은 답변이 없을 경우에만 가능합니다.");
+		return false;
+	<% }else { %>
+		location.href='/sori/qupview?qnano=<%= qna.getQnaNo() %>';
+	<% } %>
+}
+</script>
+
 </head>
 <body>
 
@@ -16,77 +73,102 @@
 	
 	<!--QNA 시작-->
 	<div class="my-content">
-		<a class="massive ui yellow label" style="font-size: 30px">QNA</a>
+		<a class="massive ui yellow label" style="font-size: 30px" href="/sori/qlist">Q&A</a>
 		<span style="color:#fbbe09; font-weight:600">│</span>
 		<span style="color:grey">소리지음 문의사항 게시판입니다</span>
 		<br><br>
 	<!-- QNA 목록 시작 -->
 		<table class="my-listTable" align="center">
 			<tr>
-				<th colspan="3" style="height:60px; font-size: 25px;">한자 작성은 어떻게 하면되나요</th>
+				<th colspan="3" style="height:60px; font-size: 25px;"><%= qna.getQnaTitle() %></th>
 			</tr>
 			<tr style="height:20px; font-size: 12px;">
-				<td>작성자 : user002</td>
-				<td>작성일 : 2019/09/23</td>
-				<td>조회수 : 21</td>
+				<td>작성자 : <%= qna.getQnaWriter() %></td>
+				<td>작성일 : <%= qna.getQnaDate() %></td>
+				<td>조회수 : <%= qna.getQnaViews() %></td>
 			</tr>	
 		</table>
 		<div class="my-boardcontent">
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
-		도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?
+		<%= qna.getQnaContent().replace("\r\n", "<br>") %><br><br><br>
+		<hr>
+		<% if(qna.getQnaOfile() != null){ %>
+		<a href="/sori/qfdown?ofile=<%= qna.getQnaOfile() %>&rfile=<%= qna.getQnaRfile() %>"><%= qna.getQnaOfile() %></a>
+		<% }else { %>
+		첨부파일 없음
+		<% } %>
 		</div>
+
 	<!--QNA 목록 끝-->
 	
-	<!-- 관리자 수정삭제 버튼 -->
+	<!-- 문의글 수정삭제 버튼 -->
+	<% if(loginMember.getTypeNumber()==5 || loginMember.getUserId().equals(qna.getQnaWriter())){ %>
 	<div align="right">
 		<div class="ui buttons">
-			<button class="ui positive button" onclick="">수정</button>
+			<button class="ui positive button" onclick="updateChk()">수정</button>
 		  	<div class="or"></div>
-			<button class="ui button" onclick="">삭제</button>
+			<button class="ui button" onclick="location.href='/sori/qdelete?qnano=<%= qna.getQnaNo() %>'">삭제</button>
 		</div>
 	</div>
-	
+	<% } %>
 	<br>
 	
 	<!-- 유저&관리자 공통 댓글 출력 영역 시작 -->
 	<h3>COMMENT</h3>
-<!-- ★만약 댓글 여러 개 달기 가능하면 여기서부터 -->
+	<% if(qComm != null){ %> <!-- 답변이 있을때 -->
+	<form name="commForm" method="post">
+	<input type="hidden" name="qnano" value="<%= qComm.getQnaNo() %>">
+	<input type="hidden" name="qcwriter" value="<%= loginMember.getUserId() %>">
 	<table class="my-listTable2" width="100%">
 	<tr>
-		<th width="5%"><input type="checkbox" name="comment" id="comment"></th>
-		<th width="15%">관리자(admin02)</th>
-		<th width="65%" style="text-align:left;">2019/09/24</th>
-		<!-- 관리자일때만 ↓보임 -->
-		<th width="20%" style="text-align:right"><button class="mini ui grey button">수정</button><button class="mini ui grey button">삭제</button></th>
+		<th width="5%"></th>
+		<th width="15%">관리자(<%= qComm.getQnaComWriter() %>)</th>
+		<th width="65%" style="text-align:left;"><%= qComm.getQnaComDate() %></th>
+		<!-- 답변 단 관리자&대표관리자 일때만 ↓보임 -->
+		<% if(loginMember.getTypeNumber()==5 || loginMember.getUserId().equals(qComm.getQnaComWriter())){ %>
+		<th width="20%" style="text-align:right" id="adBtn">
+		<div class="showComm" style="display:block;">
+		<button class="mini ui grey button" id="upBtn">수정</button>
+		<button class="mini ui grey button" id="commDel">삭제</button>
+		</div>
+		<div class="upComm" style="display:none;">
+		<button class="mini ui grey button" id="commUpdate">완료</button>
+		<button class="mini ui grey button" id="commReset">취소</button>
+		</div>
+		</th>
+		<% } %>
 	</tr>
+	<!-- 수정버튼 누르면 답변 내용 영역이 로 바뀌면서 수정 가능 -->
 	<tr>
-		<td colspan="4">네이버 사전에 한자를 그려서 확인할수 있습니다.<br>
-						네이버 사전에 한자를 그려서 확인할수 있습니다.<br>
-						네이버 사전에 한자를 그려서 확인할수 있습니다.<br></td>
+		<td colspan="4" id="commarea">
+		<div class="showComm" style="display:block;">
+		<%= qComm.getQnaComments().replace("\r\n", "<br>") %>
+		</div>
+		<div class="upComm" style="display:none;">
+		<textarea name='commUpdateContent' class='qnaTextarea'><%= qComm.getQnaComments() %></textarea>
+		</div>
+		</td>
 	</tr>
 	</table>
-	<br>
-<!-- ★여기까지 for loop 돌리면 될듯..? 근데 복수댓글이면 삭제할 때 답변(고유)번호가 없어서 체크했을 때 전달할 답변번호 없음. 컬럼 생성해야 함.-->
-
+	</form>
+	<br><br>
+	<% } else{ %>
+	<div style="color:grey;">
+	아직 답변이 없습니다.<br>
+	</div>
+	<% } %>
 	<!-- 유저&관리자 공통 댓글 출력 영역 끝 -->
 	
 	
 	
 	<!-- 관리자 댓글작성 영역 시작 -->
-	<form action="" method="post">
-		<input type="hidden" name="qnano" value="">
-		<input type="hidden" name="comwriter" value="">
-  		<textarea name="qnacomments" placeholder="답변 내용 작성" cols="100" rows="5" style="width:1200px; height:100px;"></textarea>
-		<br><input type="submit" button class="mini ui yellow button"></button>
+	<% if(loginMember.getTypeNumber()==5 || loginMember.getTypeNumber()==4){ %>
+	<form action="/sori/qcinsert" method="post" onsubmit="return commentChk();">
+		<input type="hidden" name="qnano" value="<%= qna.getQnaNo() %>">
+		<input type="hidden" name="commwriter" value="<%= loginMember.getUserId() %>">
+  		<textarea name="commcontent" id="commcontent" class="qnaTextarea" placeholder="답변 내용 작성"></textarea>
+		<br><input type="submit" class="mini ui yellow button" >
 	</form>
+	<% } %>
 	<!-- 관리자 댓글작성 영역 끝 -->
 	
 	<br><br><br>

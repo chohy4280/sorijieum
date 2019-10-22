@@ -41,10 +41,11 @@ public class WishBookSearchServlet extends HttpServlet {
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
-		
-		int limit = 5;  //한 페이지에 출력할 목록 갯수
+		String search = request.getParameter("search");
+		String keyword = request.getParameter("keyword");
+		int limit = 10;  //한 페이지에 출력할 목록 갯수
 		WishBookService wservice = new WishBookService();
-		int listCount = wservice.getListCount(); //테이블의 전체 목록 갯수 조회
+		int listCount = wservice.getWishListCount(search, keyword); //테이블의 전체 목록 갯수 조회
 		//총 페이지수 계산
 		int maxPage = listCount / limit;
 		if(listCount % limit > 0)
@@ -58,10 +59,8 @@ public class WishBookSearchServlet extends HttpServlet {
 			endPage = maxPage;
 		
 		//currentPage에 출력할 목록의 조회할 행 번호 계산
-		int startnum = (currentPage * limit) - 4;
+		int startnum = (currentPage * limit) - 9;
 		int endnum = currentPage * limit;
-		String search = request.getParameter("search");
-		String keyword = request.getParameter("keyword");
 		ArrayList<WishBook> list = wservice.selectSearchWishBook(search, keyword, startnum, endnum);
 		
 		RequestDispatcher view = null;

@@ -6,5 +6,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/sori server"/>
 	<classpathentry kind="lib" path="C:/dev_tools/db_tools/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/dev_tools/db_tools/pdfbox-1.8.3.jar"/>
+	<classpathentry kind="lib" path="C:/dev_tools/db_tools/commons-logging-1.2.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

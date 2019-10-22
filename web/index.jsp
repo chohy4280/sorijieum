@@ -87,7 +87,7 @@
 <% } %>
 </header>
 <br>
-<div class="ui four cards" style="margin:10px 5% 0 5%">
+<div class="ui four cards" style="margin:-15px 5% 0 5%">
   <div class="card">
     <div class="image">
     	<img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png">
@@ -122,7 +122,7 @@
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardqna/qnaListView.jsp'" src="/sori/resources/images/QNA.png">
+      	<img onclick="location.href='/sori/qlist'" src="/sori/resources/images/QNA.png">
     </div>
   </div>
   <div class="card">
@@ -131,7 +131,6 @@
     </div>
   </div>  
 </div>
-<br><br>
 </div>
 </body>
 </html>
