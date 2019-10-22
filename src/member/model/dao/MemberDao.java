@@ -112,34 +112,6 @@ public class MemberDao {
 		return result;
 	}
 	
-/*	//아이디 중복체크
-	public String checkUserId2(Connection conn, String userid) {
-		String dbid = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from member where userid=?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userid);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) 
-				dbid = "adc"
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return dbid;
-	}*/
-	
 	//탈퇴
 	public int deleteMember(Connection conn, String userId) {
 		int result = 0;

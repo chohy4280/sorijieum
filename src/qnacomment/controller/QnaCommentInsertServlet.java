@@ -1,11 +1,17 @@
 package qnacomment.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import qna.model.service.QnaService;
+import qnacomment.model.service.QnaCommentService;
+import qnacomment.model.vo.QnaComment;
 
 /**
  * Servlet implementation class QnaCommentInsertServlet
@@ -26,8 +32,34 @@ public class QnaCommentInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//QNACOMMET 작성 컨트롤러
+		request.setCharacterEncoding("UTF-8");
+		int qnano = Integer.parseInt(request.getParameter("qnano"));
+		String commwriter = request.getParameter("commwriter");
+		String commcontent = request.getParameter("commcontent");
+		
+		QnaComment qcomm = new QnaComment();
+		qcomm.setQnaNo(qnano);
+		qcomm.setQnaComWriter(commwriter);
+		qcomm.setQnaComments(commcontent);
+		
+		QnaCommentService qcservice = new QnaCommentService();
+		
+		int result = qcservice.insertQnaComment(qcomm);
+
+	
+		RequestDispatcher view = null;
+		if(result>0) {
+			view = request.getRequestDispatcher("/qdetail");
+			new QnaService().insertQnaCommYN(qnano);
+			request.setAttribute("qnano", qnano);
+		}
+		else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "답변 작성 실패");
+		}
+		view.forward(request, response);
+
 	}
 
 	/**

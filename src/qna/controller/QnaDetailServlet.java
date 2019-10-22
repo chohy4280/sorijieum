@@ -1,11 +1,18 @@
 package qna.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import qna.model.service.QnaService;
+import qna.model.vo.Qna;
+import qnacomment.model.service.QnaCommentService;
+import qnacomment.model.vo.QnaComment;
 
 /**
  * Servlet implementation class QnaDetailServlet
@@ -26,8 +33,34 @@ public class QnaDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//Q&A 상세보기 처리용 컨트롤러
+		request.setCharacterEncoding("UTF-8");
+		int qnano = Integer.parseInt(request.getParameter("qnano"));
+//		int currentPage = Integer.parseInt(request.getParameter("page"));
+		
+		//3.
+		QnaService qservice = new QnaService();
+		qservice.updateViews(qnano);
+		Qna qna = qservice.selectQnaOne(qnano);
+		QnaComment qComm = new QnaCommentService().selectQnaComment(qnano);
+		
+		//4.
+		RequestDispatcher view = null;
+		if(qna != null) {
+			view = request.getRequestDispatcher("views/boardqna/qnaDetailView.jsp");
+			request.setAttribute("qna", qna); 
+			request.setAttribute("qComm", qComm);
+	
+//			request.setAttribute("currentPage", currentPage);
+			view.forward(request, response);
+		}
+		else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", qnano+ "번 게시글 상세조회 실패");
+			view.forward(request, response);
+		}
+		
+		
 	}
 
 	/**

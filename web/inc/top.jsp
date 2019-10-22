@@ -5,7 +5,6 @@
 %>
 <!DOCTYPE html>  
 <head>
-<script src="/sori/resources/js/jquery-3.4.1.min.js"></script>
  <!-- favicon 위치 -->
 <link rel="shortcut icon" href="/sori/resources/images/favicon.ico">
 <link rel="icon" href="/sori/resources/images/favicon.ico">
@@ -58,7 +57,7 @@ footer{
   <a class="item" href="/sori/wblist">도서 신청</a>
   <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
   <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>
-  <a class="item" href="/sori/views/boardqna/qnaListView.jsp">Q&A</a>
+  <a class="item" href="/sori/qlist">Q&A</a>
   <div class="right menu">
   <% if(loginMember != null){ %>
   <div style="float:right;margin-right:0;margin-left:25%;margin-top:10px;display:inline-block;overflow:hidden;">

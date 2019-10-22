@@ -1,4 +1,4 @@
-package qnacomment.controller;
+package qna.controller;
 
 import java.io.IOException;
 
@@ -11,20 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import qna.model.service.QnaService;
 import qna.model.vo.Qna;
-import qnacomment.model.service.QnaCommentService;
-import qnacomment.model.vo.QnaComment;
 
 /**
- * Servlet implementation class QnaCommentDeleteServlet
+ * Servlet implementation class QnaUpdateServlet
  */
-@WebServlet("/qcdelete")
-public class QnaCommentDeleteServlet extends HttpServlet {
+@WebServlet("/qupview")
+public class QnaUpdateViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaCommentDeleteServlet() {
+    public QnaUpdateViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,28 +31,19 @@ public class QnaCommentDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Q&A 답변 삭제용 컨트롤러
+		//문의글 수정 페이지로 이동용 컨트롤러
 		int qnano = Integer.parseInt(request.getParameter("qnano"));
 		
-		QnaCommentService qcservice = new QnaCommentService();
-		QnaService qservice = new QnaService();
-		int result = qcservice.deleteQnaComment(qnano);
-		/*Qna qna = qservice.selectQnaOne(qnano);
-		QnaComment qComm = qcservice.selectQnaComment(qnano);*/
-		
-		System.out.println("삭제된 행 개수:"+result);
+		Qna qna = new QnaService().selectQnaOne(qnano);
 		
 		RequestDispatcher view = null;
-		if(result>0) {
-			view = request.getRequestDispatcher("/qdetail");
-			qservice.deleteQnaCommYN(qnano);
-			/*request.setAttribute("qna", qna);
-			request.setAttribute("qComm", qComm);*/
-			request.setAttribute("qnano", qnano);
+		if(qna != null) {
+			view = request.getRequestDispatcher("views/boardqna/qnaUpdateView.jsp");
+			request.setAttribute("qna", qna);
 		}
 		else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "답변 삭제 실패!!!!");
+			request.setAttribute("message", "문의글 수정페이지로 이동 실패");
 		}
 		view.forward(request, response);
 	}
