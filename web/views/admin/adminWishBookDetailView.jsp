@@ -92,9 +92,9 @@
 					<br><br>
 					<center>
 						<div class="ui buttons">
-							<input type="submit" button class="ui positive button"  style="width:100px"></button>
+							<input type="submit" button class="ui positive button"  style="width:100px" value="저장"></button>
 						 	<div class="or"></div>
-						  	<input type="reset" class="ui button" style="width:100px"></button>
+						  	<input type="reset" class="ui button" style="width:100px" value="초기화"></button>
 						</div>
 					</center>
 				</form>

@@ -14,17 +14,47 @@ public class WishBookDao {
 	public WishBookDao() {}
 
 	// 관리자용 dao************************************************************************************************
-	// 관리자 신청도서(전체)
-	public ArrayList<WishBook> selectAll(Connection conn){
-		ArrayList<WishBook> list = new ArrayList<WishBook>();
-		
+	
+	// 관리자 전체 신청도서 갯수 출력용
+	public int getListCountAdmin(Connection conn) {
+		int listCount = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from wishbook";
+		String query = "select count(*) from wishbook";
+		
 		try {
 			stmt = conn.createStatement();
+			
 			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+	
+	
+	// 관리자 신청도서(전체)
+	public ArrayList<WishBook> selectAll(Connection conn, int startRow, int endRow){
+		ArrayList<WishBook> list = new ArrayList<WishBook>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from (select rownum rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from(select * from wishbook order by wishdate desc)) where rnum between ? and ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				WishBook wb = new WishBook();
@@ -43,7 +73,7 @@ public class WishBookDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		return list;
 	}
@@ -77,34 +107,75 @@ public class WishBookDao {
 		return wishbList;
 	}
 	
-	
-	// 관리자 신청도서 검색용
-	public ArrayList<WishBook> selectWishBookSearch(Connection conn, String searchtype, String keyword, String wishstatus){
-		ArrayList<WishBook> list = new ArrayList<WishBook>();
+
+	// 관리자 신청도서 리스트카운트 추출용
+	public int getListCountSearchAdmin(Connection conn, String searchtype, String keyword, String wishstatus) {
+		int listCount = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
 		
 		String query = null;
 		if(keyword == null) {
 			if(wishstatus.equals("ALL") == true)
-				query = "select * from wishbook where wishstatus in ('WAIT', 'DONE', 'RJCT')";
+				query = "select count(*) from wishbook where wishstatus in ('WAIT', 'DONE', 'RJCT')";
 			else
-				query = "select * from wishbook where wishstatus = '" + wishstatus + "'";
+				query = "select count(*) from wishbook where wishstatus = '" + wishstatus + "'";
 		} else {
 			if(wishstatus.equals("ALL") == true)
-				query = "select * from wishbook where " + searchtype + " like '%" + keyword + "%' and wishstatus in ('WAIT', 'DONE', 'RJCT')";
+				query = "select count(*) from wishbook where " + searchtype + " like '%" + keyword + "%' and wishstatus in ('WAIT', 'DONE', 'RJCT')";
 			else
-				query = "select * from wishbook where " + searchtype + " like '%" + keyword + "%' and wishstatus = '" + wishstatus + "'";
+				query = "select count(*) from wishbook where " + searchtype + " like '%" + keyword + "%' and wishstatus = '" + wishstatus + "'";
 		}
 		
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
 			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+	
+	
+	// 관리자 신청도서 검색용
+	public ArrayList<WishBook> selectWishBookSearch(Connection conn, String searchtype, String keyword, String wishstatus, int startRow, int endRow){
+		ArrayList<WishBook> list = new ArrayList<WishBook>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = null;
+		String sentence = "select * from (select rownum rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from (select * from wishbook";
+		if(keyword == null) {
+			if(wishstatus.equals("ALL") == true)
+				query = sentence+" where wishstatus in ('WAIT', 'DONE', 'RJCT') order by wishdate desc, wishno desc)) where rnum between ? and ?";
+			else
+				query = sentence+" where wishstatus = '" + wishstatus + "' order by wishdate desc, wishno desc)) where rnum between ? and ?";
+		} else {
+			if(wishstatus.equals("ALL") == true)
+				query = sentence+" where " + searchtype + " like '%" + keyword + "%' and wishstatus in ('WAIT', 'DONE', 'RJCT') order by wishdate desc, wishno desc)) where rnum between ? and ?";
+			else
+				query = sentence+" where " + searchtype + " like '%" + keyword + "%' and wishstatus = '" + wishstatus + "' order by wishdate desc, wishno desc)) where rnum between ? and ?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			
 			while(rset.next()) {
 				WishBook wb = new WishBook();
 				
 				wb.setWishWriter(rset.getString("wishwriter"));
+				wb.setWishNo(rset.getInt("wishno"));
 				wb.setWishBookTitle(rset.getString("wishbooktitle"));
 				wb.setWishDate(rset.getDate("wishdate"));
 				wb.setWishStatus(rset.getString("wishstatus"));
@@ -117,7 +188,7 @@ public class WishBookDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return list;
@@ -366,5 +437,7 @@ public class WishBookDao {
 		}
 		return wcount;
 	}
+
+
 
 }

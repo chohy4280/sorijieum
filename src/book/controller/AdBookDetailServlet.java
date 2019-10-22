@@ -35,6 +35,7 @@ public class AdBookDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String bookcode = request.getParameter("bookcode");
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
 		BookDV book = new BookService().selectBookOne(bookcode);
 		
@@ -43,6 +44,7 @@ public class AdBookDetailServlet extends HttpServlet {
 		if(book != null) {
 			view = request.getRequestDispatcher("views/admin/adminDetailBook.jsp");
 			request.setAttribute("book", book);
+			request.setAttribute("currentPage", currentPage);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 상세보기 실패!");

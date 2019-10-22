@@ -50,18 +50,36 @@ public class QnaService {
 	}
 
 	//관리자 서비스****************************************
-	// 관리자 Q&A 전체조회용
-	public ArrayList<Qna> selectAll(){
+	
+	// 관리자 Q&A 전체조회 리스트 카운트용
+	public int getListCountAdmin() {
 		Connection conn = getConnection();
-		ArrayList<Qna> list = qDao.selectAll(conn);
+		int listCount = qDao.getListCountAdmin(conn);
+		close(conn);
+		return listCount;
+	}
+	// 관리자 Q&A 전체조회용
+	public ArrayList<Qna> selectAll(int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.selectAll(conn, startRow, endRow);
 		close(conn);
 		return list;
 	}
 	
-	// 관리자 Q&A 검색용
-	public ArrayList<Qna> selectQnaSearch(String searchtype, String keyword, String qnastatus, String qnadate){
+	
+	// 관리자 Q&A 검색조회 리스트카운트
+	public int getSearchListCountAdmin(String searchtype, String keyword, String qnastatus, String qnadate) {
 		Connection conn = getConnection();
-		ArrayList<Qna> list = qDao.selectQnaSearch(conn, searchtype, keyword, qnastatus, qnadate);
+		int listCount = qDao.getSearchListCountAdmin(conn, searchtype, keyword, qnastatus, qnadate);
+		close(conn);
+		return listCount;
+	}
+
+	
+	// 관리자 Q&A 검색용
+	public ArrayList<Qna> selectQnaSearch(String searchtype, String keyword, String qnastatus, String qnadate, int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.selectQnaSearch(conn, searchtype, keyword, qnastatus, qnadate, startRow, endRow);
 		close(conn);
 		return list;
 	}
@@ -81,4 +99,21 @@ public class QnaService {
 		close(conn);
 		return uaQList;
 	}
+
+	// 관리자 문의글 삭제용
+	public int deleteQnaAdmin(String qnano) {
+		Connection conn = getConnection();
+		int result = qDao.deleteQnaAdmin(conn, qnano);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
+
+
+
 }

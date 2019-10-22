@@ -5,6 +5,11 @@
  
 <%
 	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();	//Object>Integer로 형변환 후 int로 한번 더 형변환!
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 %>
 <!DOCTYPE html>
 <html>
@@ -33,6 +38,38 @@ $(function(){
 	});
 
 	}); // document.ready...
+	
+	// 검색어 없을 때
+	function valuechk(){
+		var searchCheck = 0;
+		if ($("#keyword").val() == "") {
+			alert("검색어를 입력해 주세요.")
+
+			$("#keyword").focus();//커서입력
+			return false;
+		}
+	}
+	
+	// 체크박스 다중삭제
+	function delBtn(){
+		var result = confirm('정말로 해당 관리자들을 삭제하시겠습니까?\n삭제후 동일 아이디로 30일 간 관리자 추가가 불가능합니다.');
+		if(result){
+			var lists = [];
+			$("input[name='RowCheck']:checked").each(function(i){
+				lists.push($(this).val());
+			});
+			var list = lists.join(",");
+			$.ajax({
+				url:"/sori/mdel.ad",
+				type:"post",
+				data:{ lists : list },
+				success : function(data){
+					alert(data);
+					location.href="/sori/adlist.ad";
+				}
+			})
+			return false;
+		}}
 </script>
 </head>
 <body>
@@ -56,7 +93,7 @@ $(function(){
 						<option value="phone">전화번호</option>
 					</select>
 					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
-					<input type="submit" value="검색">
+					<input type="submit" value="검색" onclick="valuechk();">
 				</div>
 				</form>
 			</div>
@@ -64,9 +101,9 @@ $(function(){
 			<!-- 검색창 끝! -->
 			
 			<!-- 회원검색 결과 리스트 시작! -->
-			<div class="listBoxBG" style="height: 1500px; margin-top:90px;">
+			<div class="listBoxBG" style="height: 500px; margin-top:90px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 명</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= listCount %></span> 명</div>
 				<br>
 				<table class="listTable">
 					<tr>
@@ -81,12 +118,13 @@ $(function(){
 						<th width="20%">전화번호</th>
 						<th width="14%">등록일</th>
 					</tr>
-					<% for(int i = list.size()-1; i >= 0 ; i--) { 
+					<% if(list.size() != 0){
+						for(int i = list.size()-1; i >= 0 ; i--) { 
 						Member m = list.get(i);
 					%>
 					<tr>
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
-						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= m.getUserId() %>e"></td>
+						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= m.getUserId() %>"></td>
 						<% } %>
 						<td><%= i+1 %></td>
 						<td><% if(m.getTypeNumber() == Integer.parseInt("4")){ %>
@@ -98,18 +136,45 @@ $(function(){
 						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>"><%= m.getUserId() %></a></td>
 						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>"><%= m.getUserName() %></a></td>
 						<td><%= m.getEmail() %></td>
-						<td><%= m.getPhone().substring(0, 3) %> - <%= m.getPhone().substring(3, 7) %> - <%= m.getPhone().substring(7, 11) %></td>
+						<td><%= m.getPhone() %></td>
 						<td><%= m.getEnrollDate() %></td>
 					</tr>
-					<% } %>
+					<% }} else { %>
+					<tr><td colspan="8" style="color:#aaa">해당되는 관리자가 없습니다.</td></tr>
+					<%} %>
 				</table>
 				
 				<br>
 				<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 				<div style="float:left"><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddForm.jsp'">추가</button>
-				<button class="mini ui black button" onclick="">삭제</button></div>
+				<button class="mini ui black button" onclick="return delBtn();">삭제</button></div>
 				<% } %>
 				</div>
+				
+				<br><br>
+				 <!-- 페이징처리 시작 -->
+							<div id="pagebox" align="center">
+								<a href="/sori/adlist.ad?page=1"><i class="angle grey double left icon"></i></a>&emsp;
+							<% if((beginPage - 10) < 1){ %>
+								<a href="/sori/adlist.ad?page=1"><i class="angle grey left icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/adlist.ad?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+							<% } %>&ensp;
+							<% for(int p = beginPage; p <= endPage; p++){ 
+									if(p == currentPage){
+							%>
+								<a href="/sori/adlist.ad?page=<%= p %>"><b class="ui small teal circular label"><%= p %></b></a>&emsp;
+							<% }else{ %>
+								<a href="/sori/adlist.ad?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&emsp;
+							<% }} %>&ensp;
+							<% if((endPage +  10) < maxPage){ %>
+								<a href="/sori/adlist.ad?page=<%= endPage +  10 %>"><i class="angle grey right icon"></i></a>
+							<% }else {%>
+								<a href="/sori/adlist.ad?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+							<% } %>&ensp;
+							<a href="/sori/adlist.ad?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&emsp;
+							</div>
+							<!-- 페이징 끝-->
 			</div>
 				
 			<!-- 회원검색 결과 리스트 끝! -->

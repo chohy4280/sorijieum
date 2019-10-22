@@ -1,6 +1,12 @@
 package adminmemo.model.dao;
 
-import java.sql.*;
+import static common.JDBCTemplate.close;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import adminmemo.model.vo.AdminMemo;
@@ -13,17 +19,72 @@ public class AdminMemoDao {
 	
 	// 관리자 Dao *********************************************
 	// 관리자 메모 전체보기
-	public ArrayList<AdminMemo> selectAll(Connection conn){
-		return null;
+	public ArrayList<AdminMemo> selectAll(Connection conn, String userid){
+		ArrayList<AdminMemo> list = new ArrayList<AdminMemo>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from adminmemo where userid = '" + userid + "'";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				AdminMemo memo = new AdminMemo();
+				memo.setUserId(userid);
+				memo.setMemoNo(rset.getInt("memono"));
+				memo.setMemoDate(rset.getDate("memodate"));
+				memo.setAdminMemo(rset.getString("adminmemo"));
+				memo.setAdminId(rset.getString("adminid"));
+				
+				list.add(memo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
 	}
 	
 	// 관리자 메모 등록용
 	public int insertAdminMemo(Connection conn, AdminMemo admemo) {
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "insert into adminmemo values (SEQ_MEMONO.NEXTVAL, ?, ?, ?, sysdate)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, admemo.getUserId());
+			pstmt.setString(2, admemo.getAdminId());
+			pstmt.setString(3, admemo.getAdminMemo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	// 관리자 메모 삭제용
 	public int deleteAdminMemo(Connection conn, int memono) {
-		return 0;
+		int result = 0;
+		Statement stmt = null;
+		
+		String query = "delete adminmemo where memono = " + memono;
+		
+		try {
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		return result;
 	}
 }
