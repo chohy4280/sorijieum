@@ -6,11 +6,7 @@ Blind person can listen to a book and Volunteer can make a sound-book using this
 
 <hr>
 
-
-
 <h2 id="about">About</h2>
-
-<hr>
 
 <p>시각장애인들과 비장애인들이 ‘독서’라는 주제로 함께 이용할 수 있는 사이트입니다. <br>
 웹 애플리케이션(Web Application) 형태이며 웹 개발 과정을 공부중인 학생의 프로젝트로 현재 운영되는 사이트는 아닙니다.</p>
@@ -29,11 +25,7 @@ Blind person can listen to a book and Volunteer can make a sound-book using this
 
 <hr>
 
-
-
 <h2 id="directory">Directory</h2>
-
-<hr>
 
 <p><i class="icon-file"></i><strong>MVC 패턴방식으로 구현하였습니다.</strong> </p>
 
@@ -72,11 +64,7 @@ Blind person can listen to a book and Volunteer can make a sound-book using this
 
 <hr>
 
-
-
 <h2 id="using">Using</h2>
-
-<hr>
 
 <p>API</p>
 
@@ -91,10 +79,6 @@ pdfbox-1.8.3.jar</p>
 
 <hr>
 
-
-
 <h2 id="database-model">Database Model</h2>
-
-<hr>
 
 <p>이미지추가</p>
