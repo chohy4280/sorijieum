@@ -4,6 +4,11 @@
 <%@ include file="/../inc/adminTemplate.jsp" %>
 <%
 	ArrayList<WishBook> list = (ArrayList<WishBook>)request.getAttribute("list");
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();	//Object>Integer로 형변환 후 int로 한번 더 형변환!
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 %>
 <!DOCTYPE html>
 <html>
@@ -33,9 +38,9 @@
 					<br><br>
 					
 					<a class="ui large teal label">처리상태</a>&nbsp;
-					<input type="radio" name="wishstatus" value="ALL" checked> 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="wishstatus" value="WAIT"> 승인대기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="wishstatus" value="DONE"> 승인완료 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="wishstatus" value="ALL" checked> 전체 &emsp;&emsp;
+					<input type="radio" name="wishstatus" value="WAIT"> 승인대기&emsp;&emsp;
+					<input type="radio" name="wishstatus" value="DONE"> 승인완료 &emsp;&emsp;
 					<input type="radio" name="wishstatus" value="RJCT"> 반려
 				
 
@@ -47,13 +52,13 @@
 			<!-- 검색창 끝! -->
 			
 			<!-- 회원검색 결과 리스트 시작! -->
-			<div class="listBoxBG" style="height: 1500px; margin-top:200px;">
+			<div class="listBoxBG" style="height: 500px; margin-top:180px;">
 				<div class="listBox">
-				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= list.size() %></span> 건</div>
+				<div>총 <span style="font-weight: 600; font-size: 13pt; color:#4ecdc4"><%= listCount %></span> 건</div>
 				<br>
 				<table class="listTable">
 					<tr>
-						<th width="5%">No</th>
+						<th width="5%">글번호</th>
 						<th width="10%">신청자ID</th>
 						<th width="45%">도서명</th>
 						<th width="10%">신청일</th>
@@ -61,13 +66,15 @@
 						<th width="10%">처리자</th>
 						<th width="10%">처리일시</th>
 					</tr>
-					<tr>
-						<% for(int i = list.size()-1; i >= 0 ; i--) {
+					
+						<% if(list.size() != 0){
+							for(int i = 0; i < list.size() ; i++) {
 							WishBook wb = list.get(i);
 						%>
-						<td><%= i+1 %></td>
+					<tr>
+						<td><%= wb.getWishNo()%></td>
 						<td><%= wb.getWishWriter() %></td>
-						<td><a href="/sori/wbdetail.ad?wishno=<%= wb.getWishNo() %>"><%= wb.getWishBookTitle() %></a></td>
+						<td><a href="/sori/wbdetail.ad?wishno=<%= wb.getWishNo() %>&page<%=currentPage%>"><%= wb.getWishBookTitle() %></a></td>
 						<td><%= wb.getWishDate() %></td>
 						<td><% if(wb.getWishStatus().equals("WAIT")) {%>
 							승인대기
@@ -90,10 +97,39 @@
 							<% } %>
 						</td>
 					</tr>
-					<% } %>
+					<% }}else{ %>
+					<tr><td colspan="7" style="color:#aaa">해당되는 신청내역이 없습니다.</td></tr>
+					<%} %>
 				</table>
 				
 				</div>
+				
+				<br><br>
+				       <!-- 페이징처리 시작 -->
+							<div id="pagebox" align="center">
+								<a href="/sori/wblist.ad?page=1"><i class="angle grey double left icon"></i></a>&emsp;
+							<% if((beginPage - 10) < 1){ %>
+								<a href="/sori/wblist.ad?page=1"><i class="angle grey left icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/wblist.ad?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+							<% } %>&emsp;
+							<% for(int p = beginPage; p <= endPage; p++){ 
+									if(p == currentPage){
+							%>
+								<a href="/sori/wblist.ad?page=<%= p %>"><b class="ui small teal circular label"><%= p %></b></a>&emsp;
+							<% }else{ %>
+								<a href="/sori/wblist.ad?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&emsp;
+							<% }} %>&emsp;
+							<% if((endPage +  10) < maxPage){ %>
+								<a href="/sori/wblist.ad?page=<%= endPage +  10 %>"><i class="angle grey right icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/wblist.ad?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+							<% } %>&emsp;
+							<a href="/sori/wblist.ad?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&emsp;
+							</div>
+							<!-- 페이징 끝-->
+							
+							
 			</div>
 				
 			<!-- 회원검색 결과 리스트 끝! -->

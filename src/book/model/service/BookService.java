@@ -7,6 +7,7 @@ import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import book.model.dao.BookDao;
 import book.model.vo.Book;
@@ -22,26 +23,47 @@ public class BookService {
 	
 	//관리자 서비스****************************************
 	// 관리자 도서 전체 목록 조회용
-	public ArrayList<Book> selectAll(){	
+	public ArrayList<Book> selectAll(int startRow, int endRow){	
 		Connection conn = getConnection();
-		ArrayList<Book> list = bDao.selectAll(conn);
+		ArrayList<Book> list = bDao.selectAll(conn, startRow, endRow);
 		close(conn);
 		return list;
 	}
+	
+	public int getListCountAdmin() {
+   	 Connection conn = getConnection();
+   	 int listCount = bDao.getListCountAdmin(conn);
+   	 close(conn);
+   	 return listCount;
+ }
 	
 	
 	// 관리자 도서 검색용
-	public ArrayList<Book> selectBookSearch(String searchtype, String keyword, String makestatus){
+	public ArrayList<Book> selectBookSearch(String searchtype, String keyword, String makestatus, int startRow, int endRow){
 		Connection conn = getConnection();
-		ArrayList<Book> list = bDao.selectBookSearch(conn, searchtype, keyword, makestatus);
+		ArrayList<Book> list = bDao.selectBookSearch(conn, searchtype, keyword, makestatus, startRow, endRow);
 		close(conn);
 		return list;
 	}
+	
+	public int getListCountSelectBookSearch(String searchtype, String keyword, String makestatus) {
+	   	 Connection conn = getConnection();
+	   	 int listCount = bDao.getListCountSelectBookSearch(conn, searchtype, keyword, makestatus);
+	   	 close(conn);
+	   	 return listCount;
+	 }
 	
 	
 	// 관리자 도서 삭제용
 	public int deleteBook(String bookcode) {
-		return 0;
+		Connection conn = getConnection();
+		int result = bDao.deleteBook(conn, bookcode);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	

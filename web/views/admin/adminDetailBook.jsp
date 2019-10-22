@@ -4,6 +4,7 @@
 <%@ include file="/../inc/adminTemplate.jsp" %>
 <%
 	BookDV book = (BookDV)request.getAttribute("book");
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
 %>
 <!DOCTYPE html>
 <html>
@@ -11,6 +12,18 @@
 <meta charset="UTF-8">
 <title>도서 상세</title>
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	
+	function delBtn(){
+		var result = confirm("'<%= book.getBookTitle() %>' 도서를 삭제하시겠습니까?\n삭제 후 복구가 불가능합니다.");
+		if(result){
+			location.href='/sori/bdel.ad?bookcode=<%= book.getBookCode() %>';
+			alert("도서 삭제가 완료되었습니다.");
+			location.href="/sori/blist.ad?page=<%= currentPage %>";
+		}
+			return false;
+		}
+</script>
 </head>
 <body>
 
@@ -82,10 +95,10 @@
 				</table>
 				<br><br>
 				<center>
-					<button class="small ui teal button" href="">수정</button> &nbsp; 
+					<button class="small ui teal button" href="/sori/bup.ad?bookcode=<%=book.getBookCode() %>&page="<%= currentPage %>">수정</button> &nbsp; 
 					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button><br><br><br>
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
-					<button class="small ui red button" href="">도서삭제</button>
+					<button class="small ui red button" onclick="return delBtn();">도서삭제</button>
 					<% } %>
 				</center>
             </div>

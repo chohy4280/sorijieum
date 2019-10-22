@@ -36,8 +36,8 @@ public class AdminDeleteServlet extends HttpServlet {
 		
 		String userid = request.getParameter("userid");
 		
-		int result = new MemberService().deleteAmin(userid);
-		int result2 = new QuitService().insertAdmin(userid);
+		int result = new MemberService().deleteMember(userid);
+		int result2 = new QuitService().insertMember(userid);
 		
 		if(result > 0 && result2 > 0) {
 			response.sendRedirect("/sori/adlist.ad");
