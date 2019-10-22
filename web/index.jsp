@@ -122,7 +122,7 @@
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardqna/qnaListView.jsp'" src="/sori/resources/images/QNA.png">
+      	<img onclick="location.href='/sori/qlist'" src="/sori/resources/images/QNA.png">
     </div>
   </div>
   <div class="card">

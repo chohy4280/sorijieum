@@ -61,6 +61,36 @@
 	padding: 20px 20px;
 }
 
+.qnaTextarea {
+	 width:100%;
+	 height:100px;
+	 resize:none;
+}
+
+/* Q&A 작성창 테이블 */
+.my-listTable5 {
+	text-align: center;
+	border: 1px solid #fbbe09;
+	cellspacing: 10px;
+	margin-top: 30px;
+	margin-bottom: 70px;
+}
+
+.my-listTable5 th{
+	height: 15px;
+	background: #fbbe09;
+	color: #fff;
+}
+
+.my-listTable5 td{
+	height: 15px;
+	border: 1px solid #fbbe09;
+	background: #ffffff;
+	color: #6d6d6d;
+	font-size: 13pt;
+	padding: 10px 10px;
+}
+
 
 /* 오시는길 용 테이블 */
 
@@ -118,7 +148,7 @@
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-top:50px;
-	padding-bottom: 50px;
+	padding-bottom: 20px;
 	margin-bottom: 30px;
 	border-bottom: 1px solid #fbbe09;
 }
