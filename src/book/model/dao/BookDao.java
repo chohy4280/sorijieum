@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import book.model.vo.Book;
 import book.model.vo.BookDV;
+import bookmaking.model.vo.BookMaking;
 
 public class BookDao {
 
@@ -281,7 +282,7 @@ public class BookDao {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
-			String query = "select count(*) from book";
+			String query = "select count(*) from book where bookdelyn = 'N' and MAKESTATUS ='DONE'";
 			
 			try {
 				stmt = conn.createStatement();
@@ -302,12 +303,12 @@ public class BookDao {
 		}
 		
 		// bookSearch 도서한권만 검색
-		public Book selectOne(Connection conn, String booktitle) {
+		public Book selectOne(Connection conn, String bookcode) {
 			Book book = null;
 			Statement stmt = null;
 			ResultSet rset = null;
 			
-			String query = "select * from book where bookdelyn = 'N' and MAKESTATUS ='DONE' and booktitle = '" + booktitle + "'";
+			String query = "select * from book where bookdelyn = 'N' and MAKESTATUS ='DONE' and bookcode = '" + bookcode+ "'";
 			
 			try {
 				stmt = conn.createStatement();
@@ -316,7 +317,8 @@ public class BookDao {
 				if(rset.next()) {
 					book = new Book();
 					
-					book.setBookTitle(booktitle);
+					book.setBookCode(bookcode);
+					book.setBookTitle(rset.getString("booktitle"));
 					book.setAuthor(rset.getString("author"));
 					book.setPublisher(rset.getString("publisher"));
 					book.setPublishDate(rset.getDate("publishdate"));
@@ -333,13 +335,6 @@ public class BookDao {
 			return book;
 		}
 		
-        //도서검색창 검색 처리용
-		public ArrayList<Book> selectAllBookSearch(String search, String keyword) {
-			ArrayList<Book> list = new ArrayList<Book>();
-			
-			
-			return list;
-		}
 
          //도서전체목록 페이징
 		public ArrayList<Book> selectList(Connection conn, int startRow, int endRow) {
@@ -347,7 +342,7 @@ public class BookDao {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			
-			String query ="SELECT * FROM (SELECT ROWNUM RNUM, BOOKTITLE, BOOKRIMG " + 
+			String query ="SELECT * FROM (SELECT ROWNUM RNUM,Author, BOOKCODE,BOOKTITLE, BOOKRIMG " + 
 					"FROM(SELECT * FROM BOOK " + 
 					"where bookdelyn = 'N' and MAKESTATUS ='DONE' " + 
 					"ORDER BY BOOKTITLE)) " + 
@@ -361,6 +356,8 @@ public class BookDao {
 				
 				while(rset.next()) {
 					Book book = new Book();
+					book.setBookCode(rset.getString("bookcode"));
+				    book.setAuthor(rset.getString("author"));
 					book.setBookTitle(rset.getString("booktitle"));
 					book.setBookRimg(rset.getString("bookrimg"));
 					
@@ -375,7 +372,78 @@ public class BookDao {
 			return list;
 		}
 
-       
 
+
+		public ArrayList<Book> selectBookTitleAuthor(Connection conn,String search, String keyword, int startRow, int endRow) {
+			ArrayList<Book> list = new ArrayList<Book>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKTITLE, AUTHOR, BOOKRIMG "+ 
+					        "FROM(SELECT * FROM BOOK " +
+							"WHERE " + search + " LIKE '%" + keyword + "%' " +
+							"AND bookdelyn = 'N' and MAKESTATUS ='DONE' "+
+							"ORDER BY BOOKTITLE)) " +
+							"WHERE RNUM >= ? AND RNUM <= ?";
+					
+		
+		
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Book b = new Book();
+					
+					b.setBookCode(rset.getString("bookcode"));
+					b.setBookTitle(rset.getString("booktitle"));
+					b.setAuthor(rset.getString("author"));
+					b.setBookRimg(rset.getString("bookrimg"));
+					list.add(b);
+				
+				} 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+       return list;
+
+
+		}
+
+
+		public BookMaking selectPlay(Connection conn, String bookcode) {
+			BookMaking bookmaking = null;
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "SELECT BOOKRTXT FROM BOOKMAKING WHERE BOOKCODE = '" + bookcode + "'" ;
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()) {
+					bookmaking = new BookMaking();
+					
+					bookmaking.setBookcode(bookcode);
+					bookmaking.setBookrtxt(rset.getString("bookrtxt"));
+					
+	}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			return bookmaking;
+		}
 
 }

@@ -29,15 +29,23 @@ $('.ui.dropdown').dropdown({direction:'auto'});
 
 <body>
 <section class="my-section">
-<!-- 검색창 시작 -->
+
 <center>
-<div class="SearchBox" style="height: 50px; border: 2px solid red;">
+
+<%-- <div class="ListAll" align = "center">
+<div>총 <%= list.size() %>권</div></div> --%>
+
+<h3 align= "center"><a href="/sori/blist">처음으로</a></h3>
+
+
+<!-- 도서검색창 시작 -->
+<div class="SearchBox" style="height: 50px;/*  border: 2px solid red */;">
 <form action="/sori/bsearch" method="post">
-<select class="search" name="search" id="search" style="border-radius:5px; width:100px; height:40px">
-<option value="booktitle">도서명</option>
+<select name="search"  style="border-radius:5px; width:100px; height:40px">
+<option  value="booktitle">도서명</option>
 <option value="author">저자명</option>
 </select>
-<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius:5px; width:200px; height:40px;" >
+<input type="search" name="keyword"  placeholder="내용입력" style="border-radius:5px; width:200px; height:40px;" >
 <input type="submit" value="검색" style="border-radius:5px; width:100px; height:40px;">
 
 </form>
@@ -48,26 +56,24 @@ $('.ui.dropdown').dropdown({direction:'auto'});
 
 <!-- 신작 5개 불러오기  -->
 
-<div class="yu-recent5" style="border: 2px solid red;width: 200px; height: 50px; margin-top:10px;">
+<div class="yu-recent5" style="border: 2px solid red;width: 200px; height: 50px; margin-top:50px;">
 <span class="yu-recent55" style="border:2px solid blue; width:150px; height:50px;">해리포터</span>
 </div>
-<!-- 도서 검색 결과 리스트 -->
-<%-- <center>
-<div class="ListAll" align = "center">
-<div>총 <%= list.size() %>권</div>
-</div>
-</center> --%>
 
-<%for(Book b : list) {%>
-<div class= "yu-book" style= "border: 2px solid blue; width: 250px; height: 300px; float:left; margin-left:40px; margin-top: 50px;">
-<div class= "yu-booktitle" style="border: 2px solid red; width: 250px; height:40px;"onclick="location.href='/sori/bsdetail?booktitle=<%=b.getBookTitle()%>'"><%=b.getBookTitle()%></div>
-<div class = "yu-bookimg" style="border: 2px solid yellow; width: 250px; height:260px;"><img class= "yu-bookimg1" src="/sori/resources/book_upfiles/<%= b.getBookRimg()%>"></div>
+<!-- 도서 전체 결과 리스트 -->
+<%for(int i=0; i<list.size(); i++ ) {
+if(i%5 == 0){ %> 
+<br><br><br>
+<% } %>
+<div class= "yu-book" style= "width: 250px; height: 310px;float:left; margin-left:40px; margin-top: 10px; margin-bottom:100px;">
+<div class= "yu-booktitle" style="width: 250px; height:40px; " onclick="location.href='/sori/bsdetail?bookcode=<%=list.get(i).getBookCode()%>'"><%=list.get(i).getBookTitle()%></div>
+<div class = "yu-bookimg" style="width: 250px; height:270px;"><img class= "yu-bookimg1"style= "width:250px;
+	height: 270px;"src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg()%>"></div>
 </div>
 <% } %>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!-- 도서 전체 결과 리스트 끝 -->
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<!-- 페이징 -->
+<!--도서 페이징 처리 시작 -->
 <div id="pagebox" align="center">
    <a href="/sori/blist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
 <% if((beginPage - 10) < 1){ %>
@@ -82,13 +88,13 @@ $('.ui.dropdown').dropdown({direction:'auto'});
 <% }else{ %>
    <a href="/sori/blist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 <% }} %>&nbsp;
-<% if((endPage +  10) < maxPage){ %>
+<% if((endPage +  10) > maxPage){ %>
    <a href="/sori/blist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 <% }else{ %>
    <a href="/sori/blist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
 <% } %>&nbsp;
 <a href="/sori/blist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
-</div><!-- 페이징 -->
+</div><!-- 도서 전체 목록 페이징 끝 -->
 
 
  </section>
