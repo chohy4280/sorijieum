@@ -15,8 +15,20 @@
 <%@ include file="/../inc/cdn.jsp"%>
 <script type="text/javascript">
 $(function(){
+	$(".ye-make-buttons").on("click", function(){
+		alert("로그인하셔야 제작하실 수 있습니다.");
+	});
 	
 });
+
+function winOpen(){
+	<% if(bmp.getMakepage() == bmp.getBookPage()){ %>
+	alert("제작하실 페이지가 없습니다. 다른 책을 선택해주세요");
+	<% }else{ %>
+	var style = "width=500, height=500, scrollbars=no, resizable=no";
+	window.open("/sori/bmpopup?bookcode=<%=bmp.getBookCode() %>", "도서제작시 안내사항", style );
+	<% } %>
+}
 </script>
 </head>
 <br>
@@ -92,9 +104,17 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
 </div>
 <%  } } %>
 <!-- process donut 끝 -->
+<!-- 제작버튼 -->
+<% if(loginMember != null && loginMember.getTypeNumber() >=3 && bmp.getMakepage() != bmp.getBookPage()){ %>
 <div class="ye-make-button" align="right">
-<button onclick="location.href='/sori/views/bookmaking/bookmakingmain.jsp'" class="big ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
+<button onclick="winOpen()" class="big ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
 </div><br><br><br><br><br>
+<% }else{ %>
+<div class="ye-make-buttons" align="right">
+<button class="big ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
+</div><br><br><br><br><br>
+<% } %>
+<!-- 제작버튼 끝 -->
 <!-- book count -->
 <div class="ye-book-count">
 <div class="orange ui statistic">

@@ -40,18 +40,17 @@
 		<div class="ye-book2">
 			<div class="ye-bookwait2">
 			<a style="font-weight: bold;margin-left:5px;">제작해야할 도서</a><br><br>
-			<% for(int i = 0; i < 7; i++){ %>
+			<% for(int i = 0; i < waitlist.size(); i++){ %>
 			<div class="ye-bw2">
 			<% if(waitlist.get(i).getBookTitle().length() < 14){ %>
-			<div class="ui large grey basic label" align="center" style="width: 210px;"
+			<div class="ui large basic label" align="center" style="width:210px;"
 			onclick="location.href='/sori/bminfo?bookrimg=<%= waitlist.get(i).getBookRimg() %>'">
-			<p style="text-align:center;font-size:10pt;">
-			<%= waitlist.get(i).getBookTitle() %></p>
+			<p style="text-align:center;font-size:10pt;"><%= waitlist.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large grey basic label" align="center" style="width: 210px;">
-			<p style="text-align:center;font-size:10pt;">
-			<%= waitlist.get(i).getBookTitle().substring(0, 15) %>..</p>
+			<div class="ui large basic label" align="center" style="width: 210px;"
+			onclick="location.href='/sori/bminfo?bookrimg=<%= waitlist.get(i).getBookRimg() %>'">
+			<p style="text-align:center;font-size:10pt;"><%= waitlist.get(i).getBookTitle().substring(0, 15) %>..</p>
 			</div><br>
 			<% } %>
 			<a href="/sori/bminfo?bookrimg=<%= waitlist.get(i).getBookRimg() %>"> 
@@ -79,10 +78,10 @@
 <% }else{ %>
 	<a href="/sori/bwlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 <% }} %>&nbsp;
-<% if((endPage +  10) < maxPage){ %>
+<% if((endPage +  1) < maxPage){ %>
 	<a href="/sori/bwlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 <% }else{ %>
-	<a href="/sori/bwlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+	<a href="/sori/bwlist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
 <% } %>&nbsp;
 <a href="/sori/bwlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
 </div><!-- 페이징 -->

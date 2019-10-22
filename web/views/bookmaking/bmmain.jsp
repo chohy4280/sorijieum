@@ -54,12 +54,12 @@ $(function(){
 			<% for(int i = 0; i < 6; i++){ %>
 			<div class="ye-bw">
 			<% if(waitlist.get(i).getBookTitle().length() < 13){ %>
-			<div class="ui large grey basic label" align="center" style="width: 170px;">
+			<div class="ui large basic label" align="center" style="width: 170px;">
 			<p style="text-align:center;font-size:10pt;">
 			<%= waitlist.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large grey basic label" align="center" style="width: 170px;">
+			<div class="ui large basic label" align="center" style="width: 170px;">
 			<p style="text-align:center;font-size:10pt;">
 			<%= waitlist.get(i).getBookTitle().substring(0, 12) %>..</p>
 			</div><br>
@@ -85,12 +85,12 @@ $(function(){
 			%>
 			<div class="ye-bm">
 			<% if(makelist.get(i).getBookTitle().length() < 13){ %>
-			<div class="ui large grey basic label" align="center" style="width: 170px;">
+			<div class="ui large basic label" align="center" style="width: 170px;">
 			<p style="text-align:center;font-size:10pt;">
 			<%= makelist.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large grey basic label" align="center" style="width: 170px;">
+			<div class="ui large basic label" align="center" style="width: 170px;">
 			<p style="text-align:center;font-size:10pt;">
 			<%= makelist.get(i).getBookTitle().substring(0, 12) %>..</p>
 			</div><br>

@@ -87,7 +87,7 @@
 <% } %>
 </header>
 <br>
-<div class="ui four cards" style="margin:10px 5% 0 5%">
+<div class="ui four cards" style="margin:-15px 5% 0 5%">
   <div class="card">
     <div class="image">
     	<img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png">
@@ -131,7 +131,6 @@
     </div>
   </div>  
 </div>
-<br><br>
 </div>
 </body>
 </html>
