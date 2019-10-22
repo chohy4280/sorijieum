@@ -84,8 +84,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="bookmaking.controller.BookMakingLoadFileServlet" project="sorijieum" 
-    file="/sorijieum/src/bookmaking/controller/BookMakingLoadFileServlet.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="bookmaking.controller.BookMakingMainLoadServlet" project="sorijieum" 
+    file="/sorijieum/src/bookmaking/controller/BookMakingMainLoadServlet.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="822" y="433"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -93,8 +93,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="bookmaking.controller.BookMakingSaveFileServlet" project="sorijieum" 
-    file="/sorijieum/src/bookmaking/controller/BookMakingSaveFileServlet.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="bookmaking.controller.BookMakingSaveTextServlet" project="sorijieum" 
+    file="/sorijieum/src/bookmaking/controller/BookMakingSaveTextServlet.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1118" y="431"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -102,22 +102,15 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="bookmaking.controller.BookMakedCountServlet" project="sorijieum" 
-    file="/sorijieum/src/bookmaking/controller/BookMakedCountServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="824" y="581"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="15">    
+  <association id="14">    
     <bendpoint x="605" y="361"/>    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="16" name="bmDao">        
+      <attribute id="15" name="bmDao">        
         <position height="18" width="41" x="561" y="347"/>      
       </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1"/>    
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

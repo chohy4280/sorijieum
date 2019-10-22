@@ -53,6 +53,15 @@ public class WishBook implements java.io.Serializable {
 		this.wishPublishDate = wishPublishDate;
 	}
 
+	public WishBook(String wishWriter, String wishBookTitle, String wishBookAuthor, String wishPublisher, Date wishPublishDate) {
+		super();
+		this.wishWriter = wishWriter;
+		this.wishBookTitle = wishBookTitle;
+		this.wishBookAuthor = wishBookAuthor;
+		this.wishPublisher = wishPublisher;
+		this.wishPublishDate = wishPublishDate;
+	}
+
 
 	public int getWishNo() {
 		return wishNo;

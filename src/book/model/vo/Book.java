@@ -21,13 +21,15 @@ public class Book implements java.io.Serializable {
 	private int bookViews;
 	private String makeStatus;
 	private String bookDelYN;
+	private String bookOtxt;
+	private String bookRtxt;
 	
 
 	public Book() {}
 
 	public Book(String bookCode, String bookTitle, String author, String publisher, Date publishDate, int bookPage,
 			String bookInfo, String bookOimg, String bookRimg, String bookOpdf, String bookRpdf, Date bookDate,
-			int bookViews, String makeStatus, String bookDelYN) {
+			int bookViews, String makeStatus, String bookDelYN, String bookOtxt, String bookRtxt) {
 		super();
 		this.bookCode = bookCode;
 		this.bookTitle = bookTitle;
@@ -44,6 +46,8 @@ public class Book implements java.io.Serializable {
 		this.bookViews = bookViews;
 		this.makeStatus = makeStatus;
 		this.bookDelYN = bookDelYN;
+		this.bookOtxt = bookOtxt;
+		this.bookRtxt = bookRtxt;
 	}
 
 
@@ -195,6 +199,21 @@ public class Book implements java.io.Serializable {
 		this.bookDelYN = bookDelYN;
 	}
 
+	public String getBookOtxt() {
+		return bookOtxt;
+	}
+
+	public void setBookOtxt(String bookOtxt) {
+		this.bookOtxt = bookOtxt;
+	}
+
+	public String getBookRtxt() {
+		return bookRtxt;
+	}
+
+	public void setBookRtxt(String bookRtxt) {
+		this.bookRtxt = bookRtxt;
+	}
 
 	@Override
 	public String toString() {
@@ -202,7 +221,10 @@ public class Book implements java.io.Serializable {
 				+ publisher + ", publishDate=" + publishDate + ", bookPage=" + bookPage + ", bookInfo=" + bookInfo
 				+ ", bookOimg=" + bookOimg + ", bookRimg=" + bookRimg + ", bookOpdf=" + bookOpdf + ", bookRpdf="
 				+ bookRpdf + ", bookDate=" + bookDate + ", bookViews=" + bookViews + ", makeStatus=" + makeStatus
-				+ ", bookDelYN=" + bookDelYN + "]";
+				+ ", bookDelYN=" + bookDelYN + ", bookOtxt=" + bookOtxt + ", bookRtxt=" + bookRtxt + "]";
 	}
+
+
+	
 		
 }

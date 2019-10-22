@@ -28,18 +28,37 @@ public class QuitService {
 	}
 	
 	//관리자 서비스****************************************
-	// 관리자 탈퇴회원 전체 조회용
-	public ArrayList<Quit> selectAll(){
+	
+	// 전체탈퇴회원 리스트카운트 출력용
+	public int getListCountAdmin() {
 		Connection conn = getConnection();
-		ArrayList<Quit> list = qDao.selectAll(conn);
+		int listCount = qDao.getListCountAdmin(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	
+	// 관리자 탈퇴회원 전체 조회용
+	public ArrayList<Quit> selectAll(int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<Quit> list = qDao.selectAll(conn, startRow, endRow);
 		close(conn);
 		return list;
 	}
 	
-	// 관리자 탈퇴회원 검색 조회용
-	public ArrayList<Quit> selectQuitMemberSearch(String typenumber, String userid, String quittype){
+	// 탈퇴회원 검색용 리스트카운트
+	public int getSearchListCountAdmin(String typenumber, String userid, String quittype) {
 		Connection conn = getConnection();
-		ArrayList<Quit> list = qDao.selectQuitMemberSearch(conn, typenumber, userid, quittype);
+		int listCount = qDao.getSerachListCountAdmin(conn, typenumber, userid, quittype);
+		close(conn);
+		return listCount;
+	}
+	
+	
+	// 관리자 탈퇴회원 검색 조회용
+	public ArrayList<Quit> selectQuitMemberSearch(String typenumber, String userid, String quittype, int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<Quit> list = qDao.selectQuitMemberSearch(conn, typenumber, userid, quittype, startRow, endRow);
 		close(conn);
 		return list;
 	}
@@ -61,9 +80,9 @@ public class QuitService {
 	}
 
 	// 관리자 삭제시 quit테이블에도 추가
-	public int insertAdmin(String userid) {
+	public int insertMember(String userid) {
 		Connection conn = getConnection();
-		int result = qDao.insertAdmin(conn, userid);
+		int result = qDao.insertMember(conn, userid);
 		if(result > 0)
 			commit(conn);
 		else
@@ -71,5 +90,6 @@ public class QuitService {
 		close(conn);
 		return result;
 	}
+
 
 }

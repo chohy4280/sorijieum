@@ -110,17 +110,33 @@ public class MemberService {
 
 	
 	//관리자 서비스****************************************
-	// 관리자 전체 조회용
-	public ArrayList<Member> selectAdminAll(){
+	
+	// 관리자 리스트카운트 출력용
+	public int getListCountAdmin() {
 		Connection conn = getConnection();
-		ArrayList<Member> list = mDao.selectAdminAll(conn);
+		int listCount = mDao.getListCountAdmin(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	// 관리자 전체 조회용
+	public ArrayList<Member> selectAdminAll(int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<Member> list = mDao.selectAdminAll(conn, startRow, endRow);
 		close(conn);
 		return list;
 	}
 	
 	// 관리자 추가용
-	public int insertAdmin(Member member) {
-		return 0;
+	public int insertAdmin(Member m) {
+		Connection conn = getConnection();
+		int result = mDao.insertAdmin(conn, m);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	// 관리자 수정용
@@ -135,38 +151,53 @@ public class MemberService {
 		return result;
 	}
 	
-	// 관리자 삭제용(quityn N -> Y)
-	public int deleteAmin(String userid) {
+
+	// 관리자 검색용 리스트카운트 출력
+	public int getListCountSearchAdmin(String searchtype, String keyword) {
 		Connection conn = getConnection();
-		int result = mDao.deleteAdmin(conn, userid);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
+		int listCount = mDao.getListCountSearchAdmin(conn, searchtype, keyword);
 		close(conn);
-		return result;
+		return listCount;
 	}
 	
-	// 관리자 한명 조회용
-	public ArrayList<Member> selectAdminOne(String searchtype, String keyword) {
+	// 관리자 검색용
+	public ArrayList<Member> selectAdminOne(String searchtype, String keyword, int startRow, int endRow) {
 		Connection conn = getConnection();
-		ArrayList<Member> list = mDao.selectAdminOne(conn, searchtype, keyword);
+		ArrayList<Member> list = mDao.selectAdminOne(conn, searchtype, keyword, startRow, endRow);
 		close(conn);
 		return list;
 	}
+	
+	// 관리자 전체 회원 리스트카운트 출력용
+	public int getListCountMemberAdmin() {
+		Connection conn = getConnection();
+		int listCount = mDao.getListCountMemberAdmin(conn);
+		close(conn);
+		return listCount;
+	}
+	
 	
 	// 관리자 전체회원 조회용
-	public ArrayList<Member> selectAll(){
+	public ArrayList<Member> selectAll(int startRow, int endRow){
 		Connection conn = getConnection();
-		ArrayList<Member> list = mDao.selectAll(conn);
+		ArrayList<Member> list = mDao.selectAll(conn, startRow, endRow);
 		close(conn);
 		return list;
+	}
+
+	
+	// 회원검색 리스트카운트 출력용
+	public int getListCountMemberSearchAdmin(String searchtype, String keyword, String gender, String typenumber) {
+		Connection conn = getConnection();
+		int listCount = mDao.getListCountMemberSearchAdmin(conn, searchtype, keyword, gender, typenumber);
+		close(conn);
+		return listCount;
 	}
 	
 	// 관리자 회원 검색용
-	public ArrayList<Member> selectMemberSearch(String searchtype, String keyword, String gender, String typenumber){
+	public ArrayList<Member> selectMemberSearch(String searchtype, String keyword, String gender, String typenumber, int startRow, int endRow){
 		Connection conn = getConnection();
-		ArrayList<Member> list = mDao.selectMemberSearch(conn, searchtype, keyword, gender, typenumber);
+		ArrayList<Member> list = mDao.selectMemberSearch(conn, searchtype, keyword, gender, typenumber, startRow, endRow);
 		close(conn);
 		return list;
 	}
@@ -179,15 +210,26 @@ public class MemberService {
 		return m;
 	}
 	
-	// 관리자 회원 정보 수정용
-	public int updateMemberAdmin(Member m) {
-		return 0;
+	// 회원 한명 조회용
+	public Member selectMemberOne(String userid) {
+		Connection conn = getConnection();
+		Member m = mDao.selectMemberOne(conn, userid);
+		close(conn);
+		return m;
 	}
 	
-	// 관리자 회원 삭제(강제탈퇴)용
-	public int deleteMemberAdmin(String userid) {
-		return 0;
+	// 관리자 회원 정보 수정용
+	public int updateMemberAdmin(Member m) {
+		Connection conn = getConnection();
+		int result = mDao.updateMemberAdmin(conn, m);
+		if(result > 0) 
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
+	
 	
 	// 관리자 이용자 신규회원(Sysdate) 검색용
 	public ArrayList<Member> selectNewUserSystdate(){
@@ -220,5 +262,8 @@ public class MemberService {
 			close(conn);
 			return totalMList;
 		}
+
+
+
 
 }

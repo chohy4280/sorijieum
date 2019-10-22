@@ -13,14 +13,16 @@
 <title>관리자 상세보기</title>
 <script type="text/javascript">
 
-	function admindelchk(){
-		
-		if(confirm("<%= m.getUserName() %>(<%= m.getUserId() %>)님을 삭제하시겠습니까?\n삭제 후 동일 아이디로 30일동안 관리자 추가가 불가능합니다.") == true){
-			location.href="/sori/addel.ad?userid=<%= m.getUserId() %>";
-		}else{
-			return;
-		}
-	};
+	// 관리자 삭제
+	function delBtn(){
+	var result = confirm('<%= m.getUserName() %>(<%= m.getUserId() %>)님을 관리자에서 삭제 처리하시겠습니까?\n삭제 후 동일 아이디로 30일동안 관리자 추가가 불가능합니다.');
+	if(result){
+		location.href='/sori/mdel.ad?userid=<%= m.getUserId() %>';
+		alert("회원 삭제가 완료되었습니다.");
+		location.href="/sori/adlist.ad";
+	}
+		return false;
+	}
 </script>
 </head>
 <body>
@@ -47,7 +49,7 @@
 					
 					<tr>
 						<th width="30%">전화번호</th>
-						<td><%= m.getPhone().substring(0, 3) %> - <%= m.getPhone().substring(3, 7) %> - <%= m.getPhone().substring(7, 11) %></td>
+						<td><%= m.getPhone() %></td>
 					</tr>
 					
 					<tr>
@@ -79,7 +81,7 @@
 					if(loginMember.getUserId().equals("admin00")) {%>	<!-- 대표 관리자일때만 부관리자 삭제버튼 나타남 -->
 					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>
 					<button class="small ui teal button" onclick="location.href='/sori/adupview.ad?userid=<%= m.getUserId() %>'">수정하기</button><br><br>
-					<button class="small ui red button" onclick="admindelchk();">관리자 삭제</button>
+					<button class="small ui red button" onclick="return delBtn();">관리자 삭제</button>
 					<%-- <button class="small ui red button" onclick="location.href='/sori/addel.ad?userid=<%= m.getUserId() %>'">관리자 삭제</button> --%>
 					<%} else { %>
 					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>

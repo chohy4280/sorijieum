@@ -46,13 +46,13 @@ footer{
 </style>
 </head>
 
-<div class="ui top fixed menu" style="height:80px;overflow:hidden;align:center;">
+<div class="ui top fixed menu" style="height:85px;overflow:hidden;align:center;">
   <div class="item">
 	<a href="/sori/index.jsp">
 	<img src="/sori/resources/images/logo.png" width="100px" height="100px"></a>
   </div>
   <a class="item" href="/sori/views/sorijieumIntro.jsp">사이트 소개</a>
-  <a class="item" href="/sori/views/booksearch/bookSearchList.jsp">도서 검색</a>
+  <a class="item" href="/sori/blist">도서 검색</a>
   <a class="item" href="/sori/bmkmain">도서 제작</a>
   <a class="item" href="/sori/wblist">도서 신청</a>
   <a class="item" href="/sori/views/boardnotice/noticeListView.jsp">공지사항</a>
@@ -60,7 +60,7 @@ footer{
   <a class="item" href="/sori/qlist">Q&A</a>
   <div class="right menu">
   <% if(loginMember != null){ %>
-  <div style="float:right;margin-right:0;margin-left:50%;display:inline-block;overflow:hidden;">
+  <div style="float:right;margin-right:0;margin-left:25%;margin-top:10px;display:inline-block;overflow:hidden;">
 	<h2 class="ui header">
 	<img src="/sori/resources/images/error.png" class="ui circular image">
 	<a href="/sori/views/member/memberMyPage.jsp" style="color:black;"><%= loginMember.getUserName() %>님</a>

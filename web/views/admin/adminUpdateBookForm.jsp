@@ -6,6 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>도서수정</title>
+<script type="text/javascript">
+$(function(){
+	
+	 //책소개 글자수 세기
+	 $("#bookinfo").keyup(function(e){
+		 var content = $(this).val();
+		 $("#counter").html("( <span style='color:#4ecdc4;'>"+content.length+"</span> / 최대 1000자 )");	// 글자수 실시간 카운팅
+		 
+		 if(content.length > 1000){
+			 alert("최대 1000자까지만 입력 가능합니다.");
+			 $(this).val(content.substring(0,1000));
+			 $("#counter").html("( <span style='color:red;'>1000 </span>/ 최대 1000자)");
+		 } 
+		 
+	 });
+	
+})//document ready...
+</script>
 </head>
 <body>
 
@@ -51,7 +69,8 @@
 					
 					<tr>
 						<th width="30%">책 소개</th>
-						<td><div class="ui input"><textarea name="bookintro" id="bookintro" placeholder="내용을 입력해주세요" cols="50" rows="10" required></textarea></div></td>
+						<td><div class="ui input"><textarea name="bookintro" id="bookintro" placeholder="내용을 입력해주세요" cols="50" rows="10" required></textarea></div>
+						<br><span id="counter" style="color:#aaa;">( <span style="color:#4ecdc4">0</span> / 최대 1000자 )</span></td>
 					</tr>
 					
 					<tr>
@@ -74,7 +93,7 @@
 				<br><br>
 				<center>
 					<div class="ui buttons">
-						<input type="submit" button class="ui positive button"  style="width:100px"></button>
+						<input type="submit" button class="ui positive button" style="width:100px" value="수정"></button>
 					 	<div class="or"></div>
 					  	<input type="reset" class="ui button" style="width:100px"></button>
 					</div>
