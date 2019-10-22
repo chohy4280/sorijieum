@@ -18,51 +18,68 @@ public class WishBookService {
 	
 	//관리자 서비스****************************************
 	// 관리자 신청도서(대기) 조회용
-	public ArrayList<WishBook> selectWaitWishBook(){
-		Connection conn = getConnection();
-		ArrayList<WishBook> wishbList = wbDao.selectWaitWishBook(conn);
-		return wishbList;
-	}
-	
-	
-	// 관리자 신청도서(전체) 조회용
-	public ArrayList<WishBook> selectAll(){
-		Connection conn = getConnection();
-		ArrayList<WishBook> list = wbDao.selectAll(conn);
-		close(conn);
-		return list;
-	}
-	
-	
-	// 관리자 신청도서 검색용
-	public ArrayList<WishBook> selectWishBookSearch(String searchtype, String keyword, String wishstatus){
-		Connection conn = getConnection();
-		ArrayList<WishBook> list = wbDao.selectWishBookSearch(conn, searchtype, keyword, wishstatus);
-		close(conn);
-		return list;
-	}
-	
-	
-	// 관리자 신청도서 한 개 불러오기 용
-	public WishBook selectWishBookOneAdmin(int wishno) {
-		Connection conn = getConnection();
-		WishBook wb = wbDao.selectWishBookOneAdmin(conn, wishno);
-		close(conn);
-		return wb;
-	}
-	
-	
-	// 관리자 신청도서 승인반려처리용
-	public int updatetWishBookResult(WishBook wb) {
-		Connection conn = getConnection();
-		int result = wbDao.updateWishBookResult(conn, wb);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
+	   public ArrayList<WishBook> selectWaitWishBook(){
+	      Connection conn = getConnection();
+	      ArrayList<WishBook> wishbList = wbDao.selectWaitWishBook(conn);
+	      return wishbList;
+	   }
+	   
+	   
+	   // 관리자 전체 신청도서 갯수 출력용
+	   public int getListCountAdmin() {
+	      Connection conn = getConnection();
+	      int listCount = wbDao.getListCountAdmin(conn);
+	      close(conn);
+	      return listCount;
+	   }
+	   
+	   // 관리자 신청도서(전체) 조회용
+	   public ArrayList<WishBook> selectAll(int startRow, int endRow){
+	      Connection conn = getConnection();
+	      ArrayList<WishBook> list = wbDao.selectAll(conn, startRow, endRow);
+	      close(conn);
+	      return list;
+	   }
+	   
+	   
+
+	   // 관리자 도서신청 검색 리스트 카운트용
+	   public int getListCountSearchAdmin(String searchtype, String keyword, String wishstatus) {
+	      Connection conn = getConnection();
+	      int listCount = wbDao.getListCountSearchAdmin(conn, searchtype, keyword, wishstatus);
+	      close(conn);
+	      return listCount;
+	   }
+	   
+	   // 관리자 신청도서 검색용
+	   public ArrayList<WishBook> selectWishBookSearch(String searchtype, String keyword, String wishstatus, int startRow, int endRow){
+	      Connection conn = getConnection();
+	      ArrayList<WishBook> list = wbDao.selectWishBookSearch(conn, searchtype, keyword, wishstatus, startRow, endRow);
+	      close(conn);
+	      return list;
+	   }
+	   
+	   
+	   // 관리자 신청도서 한 개 불러오기 용
+	   public WishBook selectWishBookOneAdmin(int wishno) {
+	      Connection conn = getConnection();
+	      WishBook wb = wbDao.selectWishBookOneAdmin(conn, wishno);
+	      close(conn);
+	      return wb;
+	   }
+	   
+	   
+	   // 관리자 신청도서 승인반려처리용
+	   public int updatetWishBookResult(WishBook wb) {
+	      Connection conn = getConnection();
+	      int result = wbDao.updateWishBookResult(conn, wb);
+	      if(result > 0)
+	         commit(conn);
+	      else
+	         rollback(conn);
+	      close(conn);
+	      return result;
+	   }
 	
 	//*********************************************************************
 	
