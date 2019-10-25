@@ -36,13 +36,23 @@ public class QnaDetailServlet extends HttpServlet {
 		//Q&A 상세보기 처리용 컨트롤러
 		request.setCharacterEncoding("UTF-8");
 		int qnano = Integer.parseInt(request.getParameter("qnano"));
-//		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
-		//3.
 		QnaService qservice = new QnaService();
+		int lastno = qservice.getLastNo(qnano);
+		int nextno = qservice.getNextNo(qnano);
+		
+		System.out.println(lastno+ ", "+ nextno);
+		
 		qservice.updateViews(qnano);
 		Qna qna = qservice.selectQnaOne(qnano);
 		QnaComment qComm = new QnaCommentService().selectQnaComment(qnano);
+		Qna lastQna = null;
+		Qna nextQna = null;
+		if(lastno != 0)
+			lastQna = qservice.selectQnaOne(lastno);
+		if(nextno != 0)
+			nextQna = qservice.selectQnaOne(nextno);
+
 		
 		//4.
 		RequestDispatcher view = null;
@@ -50,8 +60,8 @@ public class QnaDetailServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/boardqna/qnaDetailView.jsp");
 			request.setAttribute("qna", qna); 
 			request.setAttribute("qComm", qComm);
-	
-//			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("lastQna", lastQna);
+			request.setAttribute("nextQna", nextQna);
 			view.forward(request, response);
 		}
 		else {
