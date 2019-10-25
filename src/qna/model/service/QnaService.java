@@ -2,6 +2,9 @@ package qna.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+
+import member.model.vo.Member;
+
 import static common.JDBCTemplate.*;
 
 import qna.model.dao.QnaDao;
@@ -122,7 +125,41 @@ public class QnaService {
 		close(conn);
 		return list;
 	}
+	
+	//상세보기페이지 이전글번호
+	public int getLastNo(int qnano) {
+		Connection conn = getConnection();
+		int lastno = qDao.getLastNo(conn,qnano);
+		close(conn);
+		return lastno;
+	}
+	
+	//상세보기페이지 다음글번호
+	public int getNextNo(int qnano) {
+		Connection conn = getConnection();
+		int lastno = qDao.getNextNo(conn,qnano);
+		close(conn);
+		return lastno;
+	}
 
+	//마이페이지 내 문의 알림용
+	public ArrayList<Qna> selectQnaAlarmList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.selectQnaAlarmList(conn,userid);
+		close(conn);
+		return list;
+	}
+	
+	//마이페이지 내 문의 리스트 조회
+	public ArrayList<Qna> selectMyQnaList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.selectMyQnaList(conn,userid);
+		close(conn);
+		return list;
+	}
+
+	
+	
 	//관리자 서비스****************************************
 	
 	// 관리자 Q&A 전체조회 리스트 카운트용

@@ -293,10 +293,13 @@ public class QnaDao {
 			query += "qnawriter like ? ";
 		query += "order by qnano desc";
 		
+		System.out.println(keyword);
+		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, "%"+keyword+"%");
 			
+			System.out.println(query);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -315,6 +318,7 @@ public class QnaDao {
 				list.add(qna);
 			}
 			
+			System.out.println(list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -324,6 +328,122 @@ public class QnaDao {
 		
 		return list;
 	}  
+	
+	//상세페이지 이전글번호
+	public int getLastNo(Connection conn, int qnano) {
+		int lastno = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select max(qnano) as lastno from qna where qnano<?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnano);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				lastno = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return lastno;
+	}
+	//상세페이지 다음글번호
+	public int getNextNo(Connection conn, int qnano) {
+		int nextno = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select min(qnano) as nextno from qna where qnano>?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnano);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				nextno = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return nextno;
+	}
+	
+	//마이페이지 내 문의 알림용
+	public ArrayList<Qna> selectQnaAlarmList(Connection conn, String userid) {
+		ArrayList<Qna> list = new ArrayList<Qna>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select qnatitle,qna.qnano from qna join qnacomment on qna.qnano = qnacomment.qnano "+
+					"where qnawriter=? and qnastatus='Y' and qnacomdate between to_char(sysdate-7,'YYYYMMDD') and sysdate";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Qna qna = new Qna();
+				qna.setQnaTitle(rset.getString("qnatitle"));
+				qna.setQnaNo(rset.getInt("qnano"));
+				
+				list.add(qna);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	//내문의 리스트 출력
+	public ArrayList<Qna> selectMyQnaList(Connection conn, String userid) {
+		ArrayList<Qna> list = new ArrayList<Qna>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from qna where qnawriter=? order by qnano desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Qna qna = new Qna();
+				qna.setQnaTitle(rset.getString("qnatitle"));
+				qna.setQnaNo(rset.getInt("qnano"));
+				qna.setQnaDate(rset.getDate("qnadate"));
+				qna.setQnaStatus(rset.getString("qnastatus"));
+				qna.setQnaContent(rset.getString("qnacontent"));
+				list.add(qna);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
   
 	// 관리자용 dao************************************************************************************************
   
@@ -559,8 +679,5 @@ public class QnaDao {
 		
 		return result;
 	}
-
-
-
 
 }

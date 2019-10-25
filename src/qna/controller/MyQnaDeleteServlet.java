@@ -1,6 +1,7 @@
-package qnacomment.controller;
+package qna.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,21 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import qna.model.service.QnaService;
-import qna.model.vo.Qna;
-import qnacomment.model.service.QnaCommentService;
-import qnacomment.model.vo.QnaComment;
 
 /**
- * Servlet implementation class QnaCommentDeleteServlet
+ * Servlet implementation class MyQnaDeleteServlet
  */
-@WebServlet("/qcdelete")
-public class QnaCommentDeleteServlet extends HttpServlet {
+@WebServlet("/qdelete.my")
+public class MyQnaDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaCommentDeleteServlet() {
+    public MyQnaDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,22 +31,28 @@ public class QnaCommentDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Q&A 답변 삭제용 컨트롤러
-		int qnano = Integer.parseInt(request.getParameter("qnano"));
-		
-		QnaCommentService qcservice = new QnaCommentService();
+		//마이페이지 내문의 삭제
 		QnaService qservice = new QnaService();
-		int result = qcservice.deleteQnaComment(qnano);
+		String[] check = request.getParameterValues("delChk");
+		String userid = request.getParameter("userid");
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		
+		int result = 0;
+		
+		System.out.println(check);
+		for(int i=0; i<check.length; i++) {
+			result += qservice.deleteQna(Integer.parseInt(check[i]));
+		}
 		
 		RequestDispatcher view = null;
-		if(result>0) {
-			view = request.getRequestDispatcher("/qdetail");
-			qservice.deleteQnaCommYN(qnano);
-			request.setAttribute("qnano", qnano);
+		if(result == check.length) {
+			view = request.getRequestDispatcher("/qlist.my");
+			request.setAttribute("userid", userid);
+			request.setAttribute("page", currentPage);
 		}
 		else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "답변 삭제 실패!!!!");
+			request.setAttribute("message", "삭제 실패");
 		}
 		view.forward(request, response);
 	}

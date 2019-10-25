@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이용자 사이드바 </title>
+<title>회원 사이드바 </title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -12,22 +12,31 @@
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 
 <style>
-		@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
-					 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
-					 font-weight: normal; 
-					 font-style: normal; }
-		
-		* { font-family: 'S-CoreDream-7ExtraBold';}
-		nav { float:left; 
-			  height:100%;}
+@font-face { 
+	font-family: 'S-CoreDream-7ExtraBold'; 
+	 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
+	 font-weight: normal; 
+	 font-style: normal; 
+}
+
+* { 
+	font-family: 'S-CoreDream-7ExtraBold';
+}
+
+nav { 
+	float:left; 
+	height:100%;
+}
+
 </style>
 </head>
 <body>
 <nav>
-<div class="ui vertical menu" style="margin:17% 0 0 0px;height:80%;width:225px;">
+<div class="ui vertical menu" style="margin:9% 0 0 0;height:100%;width:225px;">
+ <div style="position:fixed">
   <div class="item">
   <i class="brown fitted big home icon" style="float:left;margin-left:0;"></i>
-  <a href="/sori/mypage?userid=<%= loginMember.getUserId() %>" style="font-size:20pt">마이페이지</a>
+  <a href="/sori/mypage?userid=<%= loginMember.getUserId() %>" style="font-size:20pt; text-decoration:none;color:black">마이페이지</a>
   </div>
   <div class="item">
     <i class="brown fitted big home icon" style="float:left;margin-left:0;"></i>
@@ -46,9 +55,10 @@
     <i class="brown fitted big home icon" style="float:left;margin-left:0;"></i>
     <a style="font-size:20pt">개인</a>
     <div class="menu">
-      <a class="item" href="/sori/views/member/.jsp" style="font-size:13pt">내 문의</a>
-      <a class="item" href="/sori/views/member/.jsp" style="font-size:13pt">내 정보수정</a>
+      <a class="item" href="/sori/qlist.my?userid=<%= loginMember.getUserId() %>" style="font-size:13pt">내 문의</a>
+      <a class="item" href="/sori/myinfo?userid=<%= loginMember.getUserId() %>" style="font-size:13pt">내 정보수정</a>
     </div>
+  </div>
   </div>
  </div>
 </nav>

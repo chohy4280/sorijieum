@@ -36,7 +36,6 @@ public class MemberEnrollCheckIdServlet extends HttpServlet {
 
 		String userid = request.getParameter("userid");
 
-		System.out.println(userid);
 		int result = new MemberService().checkUserId(userid);
 		
 		String returnValue = null;
