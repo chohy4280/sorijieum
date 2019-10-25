@@ -122,4 +122,18 @@ public class BookMakingService {
 		close(conn);
 		return list;
 	}
+
+	
+
+	// 관리자 도서 수정용
+	public int updateBookadmin(Book b) {
+		Connection conn = getConnection();
+		int result = bmDao.updateBookadmin(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 }

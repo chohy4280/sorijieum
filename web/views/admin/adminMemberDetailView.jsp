@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, member.model.vo.Member, adminmemo.model.vo.AdminMemo" %>
+<%@ page import="java.util.ArrayList, member.model.vo.Member, adminmemo.model.vo.AdminMemo, mybook.model.vo.adminMyBook, likebook.model.vo.adminLikeBook, makebook.model.vo.adminMakeBook" %>
 <%@ include file="/../inc/adminTemplate.jsp" %>
 <%
 	Member m = (Member)request.getAttribute("m");
 	ArrayList<AdminMemo> memolist = (ArrayList<AdminMemo>)request.getAttribute("memolist");
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();	//Object>Integer로 형변환 후 int로 한번 더 형변환!
+	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	int mybklistCount = ((Integer)request.getAttribute("mybklistCount")).intValue();
+	int likebklistCount = ((Integer)request.getAttribute("likebklistCount")).intValue();
+	int makebklistCount = ((Integer)request.getAttribute("makebklistCount")).intValue();
 %>
 <!DOCTYPE html>
 <html>
@@ -63,6 +70,7 @@ $(function(){
 		 
 	 });
 	 
+	 
 	}); // document.ready...
 	
 	// 정보수정 확인용
@@ -79,15 +87,22 @@ $(function(){
 	
 	// 회원 삭제
 	function delBtn(){
-	var result = confirm('<%= m.getUserName() %>(<%= m.getUserId() %>)님을 강제탈퇴 처리하시겠습니까?\n강제탈퇴 처리 후 동일 아이디로 30일동안 재가입이 불가능합니다.');
-	if(result){
-		location.href='/sori/mdel.ad?userid=<%= m.getUserId() %>';
-		alert("회원 삭제가 완료되었습니다.");
-		location.href="/sori/mlist.ad";
-	}
+		var userid = "<%=m.getUserId() %>";
+		var result = confirm('<%= m.getUserName() %>(<%= m.getUserId() %>)님을 강제탈퇴 처리하시겠습니까?\n강제탈퇴 처리 후 동일 아이디로 30일동안 재가입이 불가능합니다.');
+		if(result){
+			$.ajax({
+				url: "/sori/mdel.ad",
+				type: "post",
+				data: { userid : userid },
+				success : function(data){
+					alert(data);
+					location.href="/sori/mlist.ad?page="+<%=currentPage%>;
+				}
+			})
 		return false;
-	}
+	}}
 	
+
 	// 메모 내용 없이 저장 클릭하면
 	function valuechk(){
 		var searchCheck = 0;
@@ -99,10 +114,36 @@ $(function(){
 		}
 	}
 	
+	// 이용자 읽은 도서 클릭시
+	function winOpen1(){
+		var style = "width=900, height=500%, scrollbars=no, resizable=no";
+		window.open("/sori/urblist.ad?page=1&userid=<%=m.getUserId() %>", "이용자 읽은도서", style);
+	}
+	
+	// 이용자 관심 도서 클릭시
+	function winOpen2(){
+		var style = "width=900, height=500%, scrollbars=no, resizable=no";
+		window.open("/sori/ulblist.ad?page=1&userid=<%=m.getUserId() %>", "이용자 관심도서", style);
+	}
+	
+	
+	// 제작자 도서 클릭시
+	function winOpen3(){
+		var style = "width=900, height=500%, scrollbars=no, resizable=no";
+		window.open("/sori/mmblist.ad?page=1&userid=<%=m.getUserId() %>", "제작자 제작도서", style);
+	}
+	
 
+	// 0권 도서 클릭시
+	function emptyPop(){
+		alert("해당 도서가 존재하지 않습니다.");
+		return false;
+	}
 </script>
 </head>
 <body>
+
+<% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
 <!-- Content 시작! -->
 <section class="contentsection">
 
@@ -113,7 +154,7 @@ $(function(){
 			<div class="listBoxBG" style="height: 1500px; margin-top:0px;">
 				<div class="listBox" >
 			<!-- 기본정보 섹션 시작 -->
-				<a class="ui large teal label">기본정보</a>
+				<a class="ui large blue label">기본정보</a>
 				<br><br>
 				<form action="/sori/mup.ad" method="post" enctype="multipart/form-data" name="upmemberForm">
 				<table class="listTable">
@@ -139,10 +180,8 @@ $(function(){
 					</tr>
 					<tr>
 						<th>성별</th><td><% if(m.getGender().equals("F")){%>
-										여성
-										<%}else{ %>
-										남성
-										<%} %>
+										여성<%}else{ %>
+										남성<%} %>
 										</td>
 						<th>인증내역</th><td>&ensp;
 										<% if(m.getUserOfile() != null) {%>
@@ -178,43 +217,51 @@ $(function(){
 				</center>
 				</form>
 			<!-- 기본정보 섹션 끝 -->
-				<br><hr><br>
+			<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+			<br><br><br><hr><br><br><br>
 			<!-- 도서정보 섹션 시작 -->
-				<a class="ui large teal label">도서정보</a><br><br>
-				<table class="listTable">
+				<a class="ui large blue label">도서정보</a>&ensp;<span style="color:#aaa">상세내역을 보려면 해당 도서의 숫자를 클릭하세요.</span><br><br>
+				<table class="listTable2">
+
+					<% if(m.getTypeNumber() == 1 || m.getTypeNumber() == 2) {%>
 					<tr>
-						<th width="33%">읽은도서</th>
-						<th width="33%">관심도서</th>
-						<th width="33%">제작도서</th>
+						<th width="33%">읽은 도서</th>
+						<th width="33%">관심 도서</th>
 					</tr>
 					<tr>
-						<td><a href="" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="">2</a> 권</td>
-						<td><a href="" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="">1</a> 권</td>
-						<td>-</a></td>
+						<%if(mybklistCount != 0) { %>
+						<td><a id="mybk" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="winOpen1();"><%= mybklistCount %></a> 권</td>
+						<%}else{ %>
+						<td><a id="mybk" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="return emptyPop();"><%= mybklistCount %></a> 권</td>
+						<%} %>
+						
+						<%if(likebklistCount != 0) {%>
+						<td><a id="likebk" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="winOpen2();"><%= likebklistCount %></a> 권</td>
+						<%}else{ %>
+						<td><a id="likebk" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="return emptyPop();"><%= likebklistCount %></a> 권</td>
+						<%} %>
 					</tr>
+						<%} else if (m.getTypeNumber() == 3) {%>
+					<tr>
+						<th width="33%">제작 도서</th>
+					</tr>
+					<tr>
+						<%if(makebklistCount != 0) {%>
+						<td><a id="makebk" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="winOpen3();"><%= makebklistCount %></a>권</td>
+						<%}else{ %>
+						<td><a id="makebk" style="font-weight: 600; font-size: 15pt; text-decoration: underline;" onclick="return emptyPop();"><%= makebklistCount %></a>권</td>
+						<%} %>
+					</tr>
+						<%} %>
 				</table>
 					<br>
 					
-					<table class="listTable">
-					<tr>
-						<th width="10%">No</th>
-						<th width="30">도서명</th>
-						<th width="30%">저자명</th>
-						<th width="30%">출판사명</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>보건교사 안은영</td>
-						<td>정세랑</td>
-						<td>민음사</td>
-					</tr>
-				</table>
 			<!-- 도서정보 섹션 끝 -->
-				<br><br><hr><br><br>			
-			
+				<br><br><br><hr><br><br><br>		
+			<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 			<!-- 관리자메모 섹션 시작 -->
-			<a class="ui large teal label">관리자메모</a>&ensp;<span style="color:#aaa">고객에게 노출되지 않는 관리자 전용 메모입니다.</span><br><br>
-					<table class="listTable">
+			<a class="ui large blue label">관리자메모</a>&ensp;<span style="color:#aaa">고객에게 노출되지 않는 관리자 전용 메모입니다.</span><br><br>
+					<table class="listTable2">
 					<tr>
 						<th width="5%">No</th>
 						<th width="55%">메모 내용</th>
@@ -227,17 +274,44 @@ $(function(){
 						AdminMemo memo = memolist.get(i);
 					%>
 					<tr>
-						<td><%= i+1 %></td>
+						<td><%= currentPage * 5 - 4 + i %></td>
 						<td><%= memo.getAdminMemo() %></td>
 						<td><%= memo.getAdminId() %></td>
 						<td><%= memo.getMemoDate() %></td>
 						<td><button class="mini ui grey button" onclick="location.href='/sori/mmdel.ad?userid=<%= m.getUserId() %>&memono=<%=memo.getMemoNo() %>'">삭제</button></td>
 					</tr>
-					<%}}else{ %>
-					<tr><td colspan="5" style="color:#aaa">현재 작성된 메모가 없습니다.</td></tr>
 					<%} %>
-					</table><br><br><br>
-					<p style="font-size: 13pt">메모 작성</p>
+					</table><br>
+					 <!-- 페이징처리 시작 -->
+							<div id="pagebox" align="center">
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=1"><i class="angle grey double left icon"></i></a>&emsp;
+							<% if((beginPage - 10) < 1){ %>
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=1"><i class="angle grey left icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+							<% } %>&ensp;
+							<% for(int p = beginPage; p <= endPage; p++){ 
+									if(p == currentPage){
+							%>
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=<%= p %>"><b class="ui small teal circular label"><%= p %></b></a>&emsp;
+							<% }else{ %>
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&emsp;
+							<% }} %>&ensp;
+							<% if((endPage +  10) < maxPage){ %>
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=<%= endPage +  10 %>"><i class="angle grey right icon"></i></a>
+							<% }else {%>
+								<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+							<% } %>&ensp;
+							<a href="/sori/mdetail.ad?userid=<%= m.getUserId() %>&page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&emsp;
+							</div>
+							<!-- 페이징 끝-->
+					<%}else{ %>
+					<tr><td colspan="5" style="color:#aaa">현재 작성된 메모가 없습니다.</td></tr>
+					</table>
+					<%} %>
+					<br><br>
+
+					<p style="font-size: 15pt">메모 작성</p>
 					<form action="/sori/mminsert.ad" method="post">
 						<textarea name="adminmemo" id="adminmemo" cols="150" rows="3" placeholder="관리자 메모 내용을 입력하세요.(공백 포함 최대 100자)" style="border-radius: 10px"></textarea>
 						<input type="hidden" name="userid" value="<%= m.getUserId() %>"/>
@@ -246,10 +320,10 @@ $(function(){
 						<input type="submit" button class="mini ui green button" onclick="return valuechk();" value="저장"></div>
 					</form>
 					
-			
+			<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 			<!-- 관리자메모 섹션 끝 -->
 				</div>
-				<br><br><br><br><br><hr><br><br>
+				<br><br><br><hr><br><br><br>
 				<center>
 				<button class="tiny ui teal button" onclick="javascript:history.back();">◀BACK</button>
 				<button class="tiny ui red button" onclick="return delBtn();">강제탈퇴</button>
@@ -257,9 +331,12 @@ $(function(){
 			</div>
        
         <!-- 회원 상세조회 내용 끝! -->
-        
-        
+
     <!-- 회원 상세조회 목록 끝! -->
 </section>
+
+
+<%}else{ %>
+<%} %>
 </body>
 </html>

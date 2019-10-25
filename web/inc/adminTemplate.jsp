@@ -31,8 +31,8 @@
 <!-- 상단 바 시작! -->
 	<header>
 		<div class="topbar" style="overflow:hidden;">
-			<span class="topname"><a href="/sori/index.jsp" target="_blank"><i class="home icon"></i></a>SORIJIEUM <span style="color:#4ecdc4">ADMIN</span></span>
-			<div id="adminname"><a href="/sori/addetail.ad?userid=<%= loginMember.getUserId() %>"><%= loginMember.getUserName() %></a> 님!&nbsp;&nbsp;&nbsp;<button class="ui mini teal button" onclick="location.href='/sori/memberLogout'">Logout</button></div>
+			<span class="topname"><a href="/sori/index.jsp" target="_blank"><i class="home icon"></i></a><a href="/sori/admain.ad">SORIJIEUM</a> <span style="color:#4ecdc4">ADMIN</span></span>
+			<div id="adminname"><a href="/sori/addetail.ad?userid=<%= loginMember.getUserId() %>&page=1"><%= loginMember.getUserName() %></a> 님!&nbsp;&nbsp;&nbsp;<button class="ui mini teal button" onclick="location.href='/sori/memberLogout'">Logout</button></div>
 		</div>
 	</header>
 <!-- 상단 바 끝! -->
@@ -82,7 +82,7 @@
 
 <nav>
 	<ul class="vertical-menu">
-		<li style="font-weight: 600; font-size:12pt"><a href="/sori/admain.ad"><i class="home icon"></i>MAIN</a></li>
+		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="home icon"></i>MAIN</a></li>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="book icon"></i>도서</a></li>
 			<ul>
 				<li><a href="">　도서목록</a></li>

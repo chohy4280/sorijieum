@@ -339,4 +339,27 @@ public class BookMakingDao {
 		return bmp;
 	}
 
+	// 관리자 도서수정용
+	public int updateBookadmin(Connection conn, Book b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+
+		String query = "update bookmaking set bookotxt=?, bookrtxt=? where bookcode =?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, b.getBookOtxt());
+			pstmt.setString(2, b.getBookRtxt());
+			pstmt.setString(3, b.getBookCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

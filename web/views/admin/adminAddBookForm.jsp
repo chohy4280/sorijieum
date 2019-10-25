@@ -18,9 +18,9 @@ $(function(){
 			 alert("최대 1000자까지만 입력 가능합니다.");
 			 $(this).val(content.substring(0,1000));
 			 $("#counter").html("( <span style='color:red;'>1000 </span>/ 최대 1000자)");
-		 } 
-		 
+		 }
 	 });
+		 
 	
 })//document ready...
 </script>
@@ -28,6 +28,7 @@ $(function(){
 <body>
 
 <!-- Content 시작! -->
+<% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
 <section class="contentsection">
 
 
@@ -59,12 +60,12 @@ $(function(){
 					
 					<tr>
 						<th width="30%">쪽수</th>
-						<td><div class="ui input"><input type="text" name="bookpage" id="bookpage"placeholder="숫자만 입력" required></div></td>
+						<td><div class="ui input"><input type="text" name="bookpage" id="bookpage"placeholder="숫자만 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
 					</tr>
 
 					<tr>
 						<th width="30%">도서코드</th>
-						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode"placeholder="숫자만 입력" required></div></td>
+						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode"placeholder="숫자만 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
 					</tr>
 					
 					<tr>
@@ -99,6 +100,8 @@ $(function(){
     
     
             </section>
+            <%}else{ %>
+            <%} %>
 <!-- Content 끝! -->
 </body>
 </html>

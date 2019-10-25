@@ -1,6 +1,7 @@
 package wishbook.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +34,7 @@ public class wishbookResultServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 신청도서 승인반려처리용
 		request.setCharacterEncoding("utf-8");
-		
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		WishBook wb = new WishBook();
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
 		wb.setWishNo(wishno);
@@ -42,9 +43,10 @@ public class wishbookResultServlet extends HttpServlet {
 		wb.setWishbookAdmin(request.getParameter("wishbookadmin"));
 		
 		int result = new WishBookService().updatetWishBookResult(wb);
-		
+
 		if(result > 0) {
-			response.sendRedirect("/sori/wbdetail.ad?wishno=" + wishno);
+			response.sendRedirect("/sori/wbdetail.ad?wishno=" + wishno+"&page="+currentPage);
+			request.setAttribute("wb", wb);
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "신청도서 관리자 처리 실패!");

@@ -43,16 +43,19 @@ public class AdMemberDeleteServlet extends HttpServlet {
 				if(checkBox != null) {
 					// 체크박스 삭제
 					String check[] = checkBox.split(",");
-					System.out.println(checkBox);
 					
 					for(int i = 0; i < check.length; i++) {
+						if(!check[i].equals("admin00")) {
 						result1 = mService.deleteMember(check[i]);
 						result2 = qService.insertMember(check[i]);
+						}
 					}
 				} else if(userid != null) {
 				// 회원 상세보기에서 삭제
+					if(!userid.equals("admin00")) {
 					result3 = mService.deleteMember(userid);
 					result4 = qService.insertMember(userid);
+					}
 				}
 				
 				response.setContentType("text/html; charset=utf-8");

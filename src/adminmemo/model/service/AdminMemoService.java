@@ -17,9 +17,9 @@ public class AdminMemoService {
 	
 	// 관리자 서비스 *********************************************
 	// 관리자 메모 전체보기
-	public ArrayList<AdminMemo> selectAll(String userid){
+	public ArrayList<AdminMemo> selectAll(String userid, int startRow, int endRow){
 		Connection conn = getConnection();
-		ArrayList<AdminMemo> list = admemoDao.selectAll(conn, userid);
+		ArrayList<AdminMemo> list = admemoDao.selectAll(conn, userid, startRow, endRow);
 		close(conn);
 		return list;
 	}
@@ -46,6 +46,14 @@ public class AdminMemoService {
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+
+	// 메모 갯수 조회
+	public int getListCountAdmin(String userid) {
+		Connection conn = getConnection();
+		int listCount = admemoDao.getListCountAdmin(conn, userid);
+		close(conn);
+		return listCount;
 	}
 	
 }

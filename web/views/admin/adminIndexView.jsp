@@ -30,10 +30,8 @@
 
 <body>
 <!-- Content 시작! -->
+<% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
 <section class="contentsection">
-
-
-
 	<!--오늘의 차트 시작-->
             <div class="base">
 	            <img src="/sori/resources/images/refresh.png" style="width:25px; height:25px;" onclick="window.location.reload()">
@@ -54,10 +52,10 @@
 	            		<div>완료도서</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todaybook"><a href="/sori/wbslist.ad?wishstatus=WAIT"><%= wishbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="/sori/bslist.ad?makestatus=WAIT"><%= wbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="/sori/bslist.ad?makestatus=MAKE"><%= mbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="/sori/bslist.ad?makestatus=DONE"><%= dbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/wbslist.ad?page=1&searchtype=wishbooktitle&keyword=&wishstatus=WAIT"><%= wishbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=WAIT"><%= wbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=MAKE"><%= mbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=DONE"><%= dbList.size() %></span></a> 권</div>
 	            	</div>
 	            </div>
 	            
@@ -73,8 +71,8 @@
 	            		<div>미답변 문의</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?qnastatus=ALL&qnadate=sysdate"><%= newQList.size() %></span></a> 건</div>
-	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?qnastatus=N"><%= uaQList.size() %></span></a> 건</div>
+	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?page=1&searchtype=qnatitle&keyword=&qnastatus=ALL&qnadate=sysdate"><%= newQList.size() %></span></a> 건</div>
+	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?page=1&searchtype=qnatitle&keyword=&qnastatus=N&qnadate=null"><%= uaQList.size() %></span></a> 건</div>
 	            	</div>
 	            </div>
 	            
@@ -91,10 +89,10 @@
 	            		<div>탈퇴회원</div>
 	            		<div>TOTAL</div>
 	            	</div>
-	            	<div class="data-section3">
-	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?gender=ALL&typenumber=4"><%= newUList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="/sori/qmslist.ad?quittype=ALL&typenumber=12"><%= quitUList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?gender=ALL&typenumber=5"><%= totalUList.size() %></span></a> 명</div>
+	            	<div class="data-section3">					
+	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=6"><%= newUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="/sori/qmslist.ad?page=1&typenumber=12&userid=&quittype=ALL"><%= quitUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=7"><%= totalUList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            
@@ -111,9 +109,9 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?gender=ALL&typenumber=6"><%= newMList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser2"><a href="/sori/qmslist.ad?quittype=ALL&typenumber=33"><%= quitMList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?gender=ALL&typenumber=3"><%= totalMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=8"><%= newMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="/sori/qmslist.ad?&page=1&typenumber=33&userid=&quittype=ALL"><%= quitMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=3"><%= totalMList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            
@@ -126,6 +124,8 @@
        
 </section>
 <!-- Content 끝! -->
+<%}else{ %>
+<%} %>
 
 
 </body>
