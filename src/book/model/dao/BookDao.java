@@ -551,7 +551,7 @@ public class BookDao {
 					bookmaking.setBookcode(bookcode);
 					bookmaking.setBookrtxt(rset.getString("bookrtxt"));
 					
-	}
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -561,5 +561,48 @@ public class BookDao {
 			
 			return bookmaking;
 		}
+
+		//참여도서 불러오기용 *********************************************************************************
+		/*public Book selectMakeBookOne(Connection conn, String bookcode) {
+			Book book = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from book join bookmaking on book.bookcode=bookmaking.bookcode "+
+						"where book.bookcode=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					book.setBookTitle(rset.getString("booktitle"));
+					book.setBookCode(rset.getString("bookcode"));
+					book.setAuthor(rset.getString("author"));
+					book.setPublisher(rset.getString("publisher"));
+					book.setPublishDate(rset.getDate("PUBLISHDATE"));
+					book.setBookPage(rset.getInt("BOOKPAGE"));
+					book.setBookInfo(rset.getString("BOOKINFO"));
+					book.setBookOimg(rset.getString("BOOKOIMG"));
+					book.setBookRimg(rset.getString("BOOKRIMG"));
+					book.setBookDate(rset.getDate("bookdate"));	
+					book
+					
+					
+			
+					BOOKVIEWS	NUMBER
+					MAKESTATUS	VARCHAR2(4 BYTE)
+					BOOKDELYN	VARCHAR2(2 BYTE)
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return book;
+		}*/
 
 }

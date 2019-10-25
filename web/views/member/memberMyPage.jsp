@@ -25,7 +25,7 @@ body {
 }
 
 .my-section{
-   padding-top: 10%;
+   padding-top: 5%;
    padding-bottom: 70px;
    padding-left: 30px;
    padding-right: 30px;
@@ -34,11 +34,11 @@ body {
 </head>
 <body>
 <section class="my-section" style="margin: 0 5% 0 5%; border: 0;">
-<% if(loginMember.getTypeNumber()==1 || loginMember.getTypeNumber()==2) { %>
 <div class="ui basic segment" style="background-color:white;overflow:hidden;">
 	<div class="ui two column very relaxed grid" style="overflow:hidden;">
 		<div class="column" style="overflow:hidden;">
 			<i class="big book icon brown"></i><br><br>
+			<% if(loginMember.getTypeNumber()==1 || loginMember.getTypeNumber()==2) { %>
 			<center>
 				<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userMyBook.jsp'">
@@ -49,12 +49,20 @@ body {
 					관심도서</button></center>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/userWishBook.jsp'">
-					내 신청도서</button></center>
+					내 신청도서</button>
+			</center>
+			<% }else { %>
+			<center>
+			<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
+			onclick="location.href='/sori/views/member/makerMakeBook.jsp'">
+				참여 도서</button>
+			</center>
+			<% } %>
 		</div>
 		<div class="column" style="overflow:hidden;">
 			<i class="big user icon brown"></i><br><br>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-				onclick="location.href='/sori/views/member/userMyQna.jsp'">
+				onclick="location.href='/sori/qlist.my?userid=<%= loginMember.getUserId() %>'">
 					내 문의</button></center>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
 				onclick="location.href='/sori/views/member/memberUpdateView.jsp'">
@@ -62,30 +70,6 @@ body {
 		</div>
 	</div>
 </div>
-<% }else { %>
-<h1>
-<div class="ui basic segment" style="background-color:white;overflow:hidden;">
-<div class="ui two column very relaxed grid" style="overflow:hidden;">
-	<div class="column" style="overflow:hidden;">
-		<i class="big book icon brown"></i><br><br>
-		<center>
-			<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-			onclick="location.href='/sori/views/member/makerMakeBook.jsp'">
-				참여 도서</button>
-		</center>
-	</div>
-	<div class="column" style="overflow:hidden;">
-		<i class="big user icon brown"></i><br><br>
-		<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-			onclick="location.href='/sori/views/member/makerMyQna.jsp'">
-				내 문의</button></center>
-		<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-			onclick="location.href='/sori/myinfo?userid=<%= loginMember.getUserId() %>'">
-					내 정보 수정</button></center>
-		</div>
-	</div>
-</div>	
-<% } %>
 </scetion>	
 </body>
 </html>
