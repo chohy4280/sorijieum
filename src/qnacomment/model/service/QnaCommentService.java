@@ -3,6 +3,7 @@ package qnacomment.model.service;
 import static common.JDBCTemplate.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import qnacomment.model.dao.QnaCommentDao;
 import qnacomment.model.vo.QnaComment;
@@ -57,5 +58,4 @@ public class QnaCommentService {
 		close(conn);
 		return result;
 	}
-	
 }

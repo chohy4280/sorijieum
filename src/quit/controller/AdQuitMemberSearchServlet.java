@@ -88,6 +88,10 @@ public class AdQuitMemberSearchServlet extends HttpServlet {
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("listCount", listCount);
+			request.setAttribute("typenumber", typenumber);
+			request.setAttribute("userid", userid);
+			request.setAttribute("quittype", quittype);
+			
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "회원탈퇴 검색 실패!");

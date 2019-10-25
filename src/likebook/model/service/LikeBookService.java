@@ -1,9 +1,14 @@
 package likebook.model.service;
 
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.getConnection;
+
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import likebook.model.dao.LikeBookDao;
 import likebook.model.vo.LikeBook;
+import likebook.model.vo.adminLikeBook;
 
 public class LikeBookService {
 	
@@ -24,8 +29,19 @@ public class LikeBookService {
 
   // 관리자 서비스 *******************************************
 	// 이용자 관심도서 조회용
-	public ArrayList<LikeBook> selectUserLikebookList(String userid){
-		return null;
+	public ArrayList<adminLikeBook> selectUserLikebookList(String userid, int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<adminLikeBook> list = lbDao.selectUserLikebookList(conn, userid, startRow, endRow);
+		close(conn);
+		return list;
+	}
+
+	// 이용자 관심도서 리스트 카운트 용
+	public int getListCountAdmin(String userid) {
+		Connection conn = getConnection();
+		int listCount = lbDao.getListCountAdmin(conn, userid);
+		close(conn);
+		return listCount;
 	}
 
 }

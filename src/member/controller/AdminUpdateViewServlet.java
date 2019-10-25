@@ -35,7 +35,7 @@ public class AdminUpdateViewServlet extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			
 			String userid = request.getParameter("userid");
-			System.out.println(userid);
+			int currentPage = Integer.parseInt(request.getParameter("page"));
 			Member m = new MemberService().selectAdminOneDetail(userid);
 		
 			RequestDispatcher view = null;
@@ -43,6 +43,7 @@ public class AdminUpdateViewServlet extends HttpServlet {
 			if(m != null) {
 				view = request.getRequestDispatcher("views/admin/adminUpdateForm.jsp");
 				request.setAttribute("m", m);
+				request.setAttribute("currentPage", currentPage);
 			} else {
 				view = request.getRequestDispatcher("views/common/error.jsp");
 				request.setAttribute("message", "수정 페이지 출력 실패!");

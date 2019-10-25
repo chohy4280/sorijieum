@@ -19,16 +19,19 @@ public class AdminMemoDao {
 	
 	// 관리자 Dao *********************************************
 	// 관리자 메모 전체보기
-	public ArrayList<AdminMemo> selectAll(Connection conn, String userid){
+	public ArrayList<AdminMemo> selectAll(Connection conn, String userid, int startRow, int endRow){
 		ArrayList<AdminMemo> list = new ArrayList<AdminMemo>();
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from adminmemo where userid = '" + userid + "'";
+		String query = "select * from (select rownum rnum, memono, adminmemo, adminid, memodate from (select * from adminmemo where userid = ? order by memodate desc)) where rnum between ? and ?";
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				AdminMemo memo = new AdminMemo();
@@ -44,7 +47,7 @@ public class AdminMemoDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return list;
@@ -86,5 +89,27 @@ public class AdminMemoDao {
 			close(stmt);
 		}
 		return result;
+	}
+
+	// 메모 갯수 조회
+	public int getListCountAdmin(Connection conn, String userid) {
+		int listCount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select count(*) from adminmemo where userid = '" + userid + "'";
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next())
+				listCount = rset.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
 	}
 }

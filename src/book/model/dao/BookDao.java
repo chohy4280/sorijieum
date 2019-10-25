@@ -142,16 +142,17 @@ public class BookDao {
 			ResultSet rset = null;
 			
 			String query = null;
+			String sentence = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book";
 			if(keyword == null) {					// case1)검색어가 없고
 				if(makestatus.equals("ALL") == true)	// case1-1) 전체
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
 				else									// case1-2) 상태선택
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
 			} else {								// case2)검색어가 있고
 				if(makestatus.equals("ALL") == true)	// case2-1) 전체
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
 				else									// case2-2) 상태선택
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
 			}
 			
 
@@ -249,8 +250,33 @@ public class BookDao {
 		
 		
 		// 관리자 도서 정보 수정용
-		public Book updateBook(Connection conn, String bookcode) {
-			return null;
+		public int updateBook(Connection conn, Book b) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "update book set booktitle=?, author=?, publisher=?, publishdate=?, bookpage=?, bookoimg=?, bookrimg=?, bookopdf=?, bookrpdf=? where bookcode=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, b.getBookTitle());
+				pstmt.setString(2, b.getAuthor());
+				pstmt.setString(3, b.getPublisher());
+				pstmt.setDate(4, b.getPublishDate());
+				pstmt.setInt(5, b.getBookPage());
+				pstmt.setString(6, b.getBookOimg());
+				pstmt.setString(7, b.getBookRimg());
+				pstmt.setString(8, b.getBookOpdf());
+				pstmt.setString(9, b.getBookRpdf());
+				pstmt.setString(10, b.getBookCode());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
 		}
 		
 		
@@ -557,7 +583,7 @@ public class BookDao {
 					book.setBookCode(bookcode);
 					book.setBookRtxt(rset.getString("bookrtxt"));
 					
-	}
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -626,7 +652,6 @@ public class BookDao {
 			return list;
 		}
 
-
 		public int addLikeBook(Connection conn, String userId, String bookcode) {
 			int result = 0;
 			PreparedStatement pstmt = null;
@@ -648,4 +673,48 @@ public class BookDao {
 		}
 			return result;
 }
+
+		//참여도서 불러오기용 *********************************************************************************
+		/*public Book selectMakeBookOne(Connection conn, String bookcode) {
+			Book book = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from book join bookmaking on book.bookcode=bookmaking.bookcode "+
+						"where book.bookcode=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					book.setBookTitle(rset.getString("booktitle"));
+					book.setBookCode(rset.getString("bookcode"));
+					book.setAuthor(rset.getString("author"));
+					book.setPublisher(rset.getString("publisher"));
+					book.setPublishDate(rset.getDate("PUBLISHDATE"));
+					book.setBookPage(rset.getInt("BOOKPAGE"));
+					book.setBookInfo(rset.getString("BOOKINFO"));
+					book.setBookOimg(rset.getString("BOOKOIMG"));
+					book.setBookRimg(rset.getString("BOOKRIMG"));
+					book.setBookDate(rset.getDate("bookdate"));	
+					book
+					
+					
+			
+					BOOKVIEWS	NUMBER
+					MAKESTATUS	VARCHAR2(4 BYTE)
+					BOOKDELYN	VARCHAR2(2 BYTE)
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return book;
+		}*/
+
 }

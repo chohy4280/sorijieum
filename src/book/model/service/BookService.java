@@ -36,7 +36,7 @@ public class BookService {
    	 int listCount = bDao.getListCountAdmin(conn);
    	 close(conn);
    	 return listCount;
- }
+	}
 	
 	
 	// 관리자 도서 검색용
@@ -78,8 +78,16 @@ public class BookService {
 	
 	
 	// 관리자 도서 정보 수정용
-	public Book updateBook(String bookcode) {
-		return null;
+	public int updateBook(Book b) {
+		Connection conn = getConnection();
+		int result = bDao.updateBook(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		
+		return result;
 	}
 	
 	
@@ -122,7 +130,6 @@ public class BookService {
 	////////////////////////////////////////////////////////////////////
 	//도서 총 개수 
 	
-    
 	  public int getListCount() {
 	    	 Connection conn = getConnection();
 	    	 int listCount = bDao.getListCount(conn);
@@ -207,34 +214,28 @@ public class BookService {
 			
 		}
 
-
-		
-
+	public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
+	     Connection conn = getConnection();
+	     ArrayList<Book> list = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
+	     close(conn);
+		return list;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+	public BookMaking selectPlay(String bookcode) {
+		 Connection conn = getConnection();
+		 BookMaking bookmaking = bDao.selectPlay(conn,bookcode);
+		 close(conn);
+		 return bookmaking;
+	}
 
+	//참여도서 불러오기용 *********************************************************************************
+	/*public Book selectMakeBookOne(String bookcode) {
+		Connection conn = getConnection();
+		Book book = bDao.selectMakeBookOne(conn,bookcode);
+		close(conn);
+		return book;
+		
+	}*/
+
+}

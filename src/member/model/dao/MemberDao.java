@@ -117,7 +117,7 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update member set quityn='Y' where userid=?";
+		String query = "update member set quityn='Y' where typenumber in (1,2,3,4) and userid=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -343,7 +343,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from (select rownum rnum, typenumber, userid, username, email, phone, enrolldate from (select * from member where quityn = 'N'and typenumber in (4,5) order by typenumber desc, enrolldate desc)) where rnum between ? and ?";
+		String query = "select * from (select rownum rnum, typenumber, userid, username, email, phone, enrolldate from (select * from member where quityn = 'N'and typenumber in (4,5) order by typenumber desc, enrolldate asc)) where rnum between ? and ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -453,7 +453,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from (select rownum rnum, typenumber, userid, username, email, phone, enrolldate from (select * from (select * from member where quityn = 'N' and typenumber in (4, 5) order by typenumber desc, enrolldate desc) where " + searchtype + " like '%" + keyword + "%')) where rnum between ? and ?";
+		String query = "select * from (select rownum rnum, typenumber, userid, username, email, phone, enrolldate from (select * from (select * from member where quityn = 'N' and typenumber in (4, 5) order by typenumber desc, enrolldate asc) where " + searchtype + " like '%" + keyword + "%')) where rnum between ? and ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -556,9 +556,9 @@ public class MemberDao {
  		1-1. 키워드 X, 성별전체, 회원유형 전체
 		1-2. 키워드 X, 성별 O, 회원유형 전체
 		1-3. 키워드 X, 성별 전체, 회원유형 O
-			1-3.1 메인회면 이용자 신규회원용 typenumber=4
-			1-3.2 메인화면 이용자 TOTAL용 typenumber=5
-			1-3.3 메인화면 제작자 신규회원용 typenumber=6
+			1-3.1 메인회면 이용자 신규회원용 typenumber=6
+			1-3.2 메인화면 이용자 TOTAL용 typenumber=7
+			1-3.3 메인화면 제작자 신규회원용 typenumber=8
 		1-4. 키워드 X, 성별O, 회원유형O
 
 		2-1. 키워드 O, 성별전체, 회원유형 전체
@@ -566,7 +566,7 @@ public class MemberDao {
 		2-3. 키워드 O, 성별 전체, 회원유형 O
 		2-4. 키워드 O, 성별O, 회원유형O*/
 		
-		if(keyword == null) {
+		if(keyword == null || keyword=="") {
 			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 1-1
 				query = "select count(*) from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2,3) order by enrolldate desc";
 			
@@ -574,14 +574,14 @@ public class MemberDao {
 				query = "select count(*) from (select * from member where quityn = 'N') where gender = '" + gender + "' and typenumber in (1,2,3) order by enrolldate desc";
 			
 			else if(gender.equals("ALL") && !typenumber.equals("ALL")) {	// 1-3
-				if(typenumber.equals("4"))	// 메인화면 이용자 신규회원용
-					query = "select count(*) from (select * from member where quityn = 'N' and enrolldate = sysdate) where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
+				if(typenumber.equals("6"))	// 메인화면 이용자 신규회원용
+					query = "select count(*) from (select * from member where quityn = 'N' and enrolldate like sysdate) where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
 				
-				else if(typenumber.equals("5"))	// 메인화면 이용자 TOTAL용
+				else if(typenumber.equals("7"))	// 메인화면 이용자 TOTAL용
 					query = "select count(*) from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber in (1,2) order by enrolldate desc";
 				
-				else if(typenumber.equals("6")) // 메인화면 제작자 신규회원용
-					query = "select count(*) from (select * from member where quityn = 'N' and enrolldate = sysdate) where gender in ('F', 'M') and typenumber = 3 order by enrolldate desc";
+				else if(typenumber.equals("8")) // 메인화면 제작자 신규회원용
+					query = "select count(*) from (select * from member where quityn = 'N' and enrolldate like sysdate) where gender in ('F', 'M') and typenumber = 3 order by enrolldate desc";
 				else
 				query = "select count(*) from (select * from member where quityn = 'N') where gender in ('F', 'M') and typenumber = " + typenumber + " order by enrolldate desc";
 				
@@ -627,9 +627,9 @@ public class MemberDao {
  		1-1. 키워드 X, 성별전체, 회원유형 전체
 		1-2. 키워드 X, 성별 O, 회원유형 전체
 		1-3. 키워드 X, 성별 전체, 회원유형 O
-			1-3.1 메인회면 이용자 신규회원용 typenumber=4
-			1-3.2 메인화면 이용자 TOTAL용 typenumber=5
-			1-3.3 메인화면 제작자 신규회원용 typenumber=6
+			1-3.1 메인화면 이용자 신규회원용 typenumber=6
+			1-3.2 메인화면 이용자 TOTAL용 typenumber=7
+			1-3.3 메인화면 제작자 신규회원용 typenumber=8
 		1-4. 키워드 X, 성별O, 회원유형O
 
 		2-1. 키워드 O, 성별전체, 회원유형 전체
@@ -639,8 +639,8 @@ public class MemberDao {
 		
 		//반복되는 문장 스트링 변수 처리
 		String sentence = "select * from (select rownum rnum, typenumber, username, userid, gender, email, phone, enrolldate from (select * from (select * from member where quityn='N' order by enrolldate desc))";
-		
-		if(keyword == null) {
+
+		if(keyword == null || keyword==""){
 			if(gender.equals("ALL") && typenumber.equals("ALL"))		// 1-1
 				query = sentence+" where gender in ('F', 'M') and typenumber in (1,2,3)) where rnum between ? and ?";
 			
@@ -648,13 +648,13 @@ public class MemberDao {
 				query = sentence+" where gender = '" + gender + "' and typenumber in (1,2,3)) where rnum between ? and ?";
 			
 			else if(gender.equals("ALL") && !typenumber.equals("ALL")) {	// 1-3
-				if(typenumber.equals("4"))	// 메인화면 이용자 신규회원용
+				if(typenumber.equals("6"))	// 메인화면 이용자 신규회원용
 					query = sentence+" where gender in ('F', 'M') and typenumber in (1,2) and enrolldate like sysdate) where rnum between ? and ?";
 				
-				else if(typenumber.equals("5"))	// 메인화면 이용자 TOTAL용
+				else if(typenumber.equals("7"))	// 메인화면 이용자 TOTAL용
 					query = sentence+" where gender in ('F', 'M') and typenumber in (1,2)) where rnum between ? and ?";
 				
-				else if(typenumber.equals("6")) // 메인화면 제작자 신규회원용
+				else if(typenumber.equals("8")) // 메인화면 제작자 신규회원용
 					query = sentence+" where gender in ('F', 'M') and typenumber = 3 and enrolldate like sysdate) where rnum between ? and ?";
 				else
 				query = sentence+" where gender in ('F', 'M') and typenumber = " + typenumber + ") where rnum between ? and ?";
@@ -806,7 +806,7 @@ public class MemberDao {
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from member where typenumber between 1 and 2 and enrolldate like sysdate";
+		String query = "select * from (select * from member where quityn = 'N') where typenumber in (1,2) and enrolldate like sysdate";
 		
 		try {
 			stmt = conn.createStatement();
@@ -833,7 +833,7 @@ public class MemberDao {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
-			String query = "select * from (select * from member where enrolldate like sysdate) where typenumber = '3'";
+			String query = "select * from (select * from member where quityn = 'N') where typenumber = 3 and enrolldate like sysdate";
 			
 			try {
 				stmt = conn.createStatement();

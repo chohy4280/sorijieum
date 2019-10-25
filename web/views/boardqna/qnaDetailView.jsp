@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" import="qna.model.vo.Qna, qnacomment.model.vo.QnaComment" %>
 <% 
 	Qna qna = (Qna)request.getAttribute("qna");
+	Qna lastQna = (Qna)request.getAttribute("lastQna");
+	Qna nextQna = (Qna)request.getAttribute("nextQna");
 	QnaComment qComm = (QnaComment)request.getAttribute("qComm");
 %>
 <!DOCTYPE html>
@@ -171,23 +173,42 @@ function updateChk(){
 	<% } %>
 	<!-- 관리자 댓글작성 영역 끝 -->
 	
-	<br><br><br>
+	<br>
 	<!-- 공통 페이지 이동 버튼 -->
-		<center>
+	<div align="right"><a class="big ui black label" href="/sori/qlist">목록으로</a></div>
+	<br>
+	<table class="my-listTable" align="center">
+		<tr>
+			<th width="10%">이전글</th>
+			<% if(lastQna ==null){ %>
+			<td width="90%">이전글이 없습니다.</td>
+			<% }else{ %>
+			<td width="90%"><a href="/sori/qdetail?qnano=<%= lastQna.getQnaNo() %>"><%= lastQna.getQnaTitle() %></a></td>
+			<% } %>
+		</tr><tr>
+			<th width="10%">다음글</th>
+			<% if(nextQna ==null){ %>
+			<td width="90%">다음글이 없습니다.</td>
+			<% }else{ %>
+			<td width="90%"><a href="/sori/qdetail?qnano=<%= nextQna.getQnaNo() %>"><%= nextQna.getQnaTitle() %></a></td>
+			<% } %>
+		</tr>
+	</table>
+		<%-- <center>
 			<div class="ui buttons">
-		  <button class="ui labeled icon button">
+		  <button class="ui labeled icon button" onclick="location.href='/sori/qdetail?qnano=<%= qna.getQnaNo()-1 %>'">
 		    <i class="left chevron icon"></i>
 		    이전글
 		  </button>
-		  <button class="ui button">
+		  <button class="ui button" onclick="location.href='/sori/qlist'">
 		    목록
 		  </button>
-		  <button class="ui right labeled icon button">
+		  <button class="ui right labeled icon button" onclick="location.href='/sori/qdetail?qnano=<%= qna.getQnaNo()+1 %>'">
 		    다음글
 		    <i class="right chevron icon"></i>
 		  </button>
 		</div>
-		</center>
+		</center> --%>
 
 
 	</div>

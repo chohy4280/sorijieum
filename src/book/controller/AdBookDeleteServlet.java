@@ -39,10 +39,9 @@ public class AdBookDeleteServlet extends HttpServlet {
 		if(checkBox != null) {
 		// 체크박스로 삭제
 		String check[] = checkBox.split(",");
-		
-		for(int i = 0; i < check.length; i++) {
-			result1 = bService.deleteBook(check[i]);
-			}
+			for(int i = 0; i < check.length; i++) {
+				result1 = bService.deleteBook(check[i]);
+				}
 		}else if(bookcode != null){
 		// 도서 상세에서 삭제
 		result2 = bService.deleteBook(bookcode);

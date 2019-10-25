@@ -35,6 +35,7 @@ public class AdminDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String userid = request.getParameter("userid");
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
 		Member m = new MemberService().selectAdminOneDetail(userid);
 		
@@ -42,6 +43,7 @@ public class AdminDetailServlet extends HttpServlet {
 		if(m != null) {
 			view = request.getRequestDispatcher("views/admin/adminDetailView.jsp");
 			request.setAttribute("m", m);
+			request.setAttribute("currentPage", currentPage);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "관리자 상세조회 실패!");

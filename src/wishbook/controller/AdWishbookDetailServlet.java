@@ -33,15 +33,17 @@ public class AdWishbookDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 신청도서 한 개 불러오기 용
 		request.setCharacterEncoding("utf-8");
-		
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
 		
 		WishBook wb = new WishBookService().selectWishBookOneAdmin(wishno);
+		
 		
 		RequestDispatcher view = null;
 		if(wb != null) {
 			view = request.getRequestDispatcher("views/admin/adminWishBookDetailView.jsp");
 			request.setAttribute("wb", wb);
+			request.setAttribute("currentPage", currentPage);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "신청도서 상세보기 실패!");

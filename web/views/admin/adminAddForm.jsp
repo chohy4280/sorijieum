@@ -64,20 +64,9 @@
 		      return false;
 			});
 		
-		// 전화번호에 - 포함 금지
-/* 		$("#phone").keyup(function(){
-			var phReg = /^[0-9]*$/;
-			if(!phReg.test($("#phone").val())){
-				$("#phonediv").html("전화번호는 숫자만 입력 가능합니다.");
-				phTF = "F";
-			} else {
-				pwTF = "T";
-			}
-			return false;
-		}); */
 		
 		
-		// 추가 버튼 클릭 시 위의 조건 3개를 모두 만족했을 때에만 넘어가게 함
+		// 추가 버튼 클릭 시 위의 조건 2개를 모두 만족했을 때에만 넘어가게 함
 		$("#btnsub").click(function(){
 		      if(idTF=="T" && pwTF=="T" && pwEq=="T"){
 		         return true;
@@ -94,6 +83,7 @@
 
 
 <!-- Content 시작! -->
+<% if(loginMember != null &&loginMember.getTypeNumber() == 5) { %>
 <section class="contentsection">
 
 
@@ -126,7 +116,7 @@
 					
 					<tr>
 						<th width="30%">전화번호</th>
-						<td><div class="ui input"><input type="text" name="phone" id="phone" placeholder="숫자만 입력(-제외)" required></div><div id="phonediv"></div></td>
+						<td><div class="ui input"><input type="text" name="phone" id="phone" placeholder="숫자만 입력(-제외)" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
 					</tr>
 					
 					<tr>
@@ -161,6 +151,8 @@
     
             </section>
 <!-- Content 끝! -->
+<%}else{ %>
+<%} %>
 
 </body>
 </html>
