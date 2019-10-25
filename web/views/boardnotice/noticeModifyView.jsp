@@ -11,6 +11,9 @@
 <title>공지사항 게시글 보기</title>
 <%@ include file="/../inc/top.jsp" %>
   <!-- CUSTOM CSS -->
+  <script type="text/javascript">
+
+</script>
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
 <body>
@@ -58,6 +61,9 @@
 		<div align="right">
 		<div class="ui buttons">
 			<input type="submit" class="ui positive button" value="수정" style="width:80px"></button>
+			</div>
+			</div>
+			
 		</form>
 	
 	<!--공지사항 목록 끝-->
@@ -67,16 +73,8 @@
 	<!-- 공통 페이지 이동 버튼 -->
 		<center>
 			<div class="ui buttons">
-		  <button class="ui labeled icon button">
-		    <i class="left chevron icon"></i>
-		    이전글
-		  </button>
-		  <button class="ui button">
-		    목록
-		  </button>
-		  <button class="ui right labeled icon button">
-		    다음글
-		    <i class="right chevron icon"></i>
+		  <button class="ui button" onclick = "javascript:history.go(-1);return false">
+		    이전
 		  </button>
 		</div>
 		</center>

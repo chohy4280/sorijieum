@@ -13,16 +13,16 @@ public class NoticeDao {
 	public NoticeDao() {}
 
 	public int getListCount(Connection conn) {
-		int nocount = 0;
+		int result = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
-		String query ="select count(*) from notice";
+		String query ="select count(*) from notice where noticetop= 'N'";
 		
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
 			if(rset.next()) {
-				nocount = rset.getInt(1);
+				result = rset.getInt(1);
 			}
 			
 		} catch (SQLException e) {
@@ -32,7 +32,7 @@ public class NoticeDao {
 			close(rset);
 			close(stmt);
 		}
-		return nocount;
+		return result;
 	}
 
 	public ArrayList<Notice> selectAll(Connection conn, int startnum, int endnum) {
@@ -102,7 +102,7 @@ public class NoticeDao {
 	}
 
 	public Notice selectOne(Connection conn, int noticeno) { //(한개만 조회)
-		Notice notice = null;
+		  Notice notice = null;
 		  PreparedStatement pstmt = null;
 	      ResultSet rset = null; //select qeury문
 	      
@@ -135,44 +135,7 @@ public class NoticeDao {
 		return notice;
 	}
 
-	public Notice selectOneForTop(Connection conn, int noticeno) { //상단고정 공지사항 글
-		Notice notice = null;
-		  PreparedStatement pstmt = null;
-	      ResultSet rset = null; //select qeury문
-	      
-	      String query = "select * from notice where noticetop = 'Y' and noticeno = " + noticeno;
-	      
-	      try {
-	    	  pstmt = conn.prepareStatement(query);
-	    	  pstmt.setInt(1, noticeno);
-	    	  
-	    	  rset = pstmt.executeQuery();
-	    	  
-	    	  if(rset.next()) {//if로 한칸만 내려서 한 생만 조회해라
-	    		  notice = new Notice();
-	    		  //안에 파랑색 글자는 DB에 있는 column_name하고 일치 해야 한다.
-	    		  notice.setNoticeNo(rset.getInt("noticeno"));
-	    		  notice.setNoticeTitle(rset.getString("noticetitle"));
-	    		  notice.setNoticeWriter(rset.getString("noticewriter"));
-	    		  notice.setNoticeDate(rset.getDate("noticedate"));
-	    		  notice.setNoticeOfile(rset.getString("noticeOfile"));
-	    		  notice.setNoticeRfile(rset.getString("noticeRfile"));
-	    		  notice.setNoticeContent(rset.getString("noticecontent"));
-	    		  notice.setNoticeViews(rset.getInt("noticeviews"));
-	    		  notice.setNoticeTop(rset.getString("noticetop"));
-	    	  }
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return notice;
 	
-}
-
 	public int modifyNotice(Connection conn, Notice notice) {
 		int result = 0;
 		
@@ -219,17 +182,18 @@ public class NoticeDao {
 		return result;
 	}
 
-	public int updateReadCount(Connection conn, int noticeno) {
+	public int updateReadCount(Connection conn, int noticeno) { //조회수 1증가
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update notice"
-				+"set noticeviews = noticeviews + 1"
-				+ "where noticeno = ?";
+		String query = "update notice set noticeviews=noticeviews+1 where noticeno=? ";
+			
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, noticeno);
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -237,5 +201,44 @@ public class NoticeDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public ArrayList<Notice> selectTopFixed(Connection conn) {
+		ArrayList<Notice> toplist = new ArrayList<Notice>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from notice where noticetop = 'Y'";
+		
+		  
+	      try {
+	    	  stmt = conn.createStatement();
+	    	  rset = stmt.executeQuery(query);
+	    	  
+	    	 
+	    	  
+	    	  while(rset.next()) {//if로 한칸만 내려서 한 생만 조회해라
+	    		  Notice notice = new Notice();
+	    		  //안에 파랑색 글자는 DB에 있는 column_name하고 일치 해야 한다.
+	    		  notice.setNoticeNo(rset.getInt("noticeno"));
+	    		  notice.setNoticeTitle(rset.getString("noticetitle"));
+	    		  notice.setNoticeWriter(rset.getString("noticewriter"));
+	    		  notice.setNoticeDate(rset.getDate("noticedate"));
+	    		  notice.setNoticeOfile(rset.getString("noticeOfile"));
+	    		  notice.setNoticeRfile(rset.getString("noticeRfile"));
+	    		  notice.setNoticeContent(rset.getString("noticecontent"));
+	    		  notice.setNoticeViews(rset.getInt("noticeviews"));
+	    		  notice.setNoticeTop(rset.getString("noticetop"));
+	    		  toplist.add(notice);
+	    	  }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return toplist;
 	}
 }

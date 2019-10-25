@@ -130,31 +130,89 @@ public class BookService {
 	////////////////////////////////////////////////////////////////////
 	//도서 총 개수 
 	
-    
-	 public int getListCount() {
-		Connection conn = getConnection();
-		int listCount = bDao.getListCount(conn);
-		close(conn);
-		return listCount;
-	 }
+	  public int getListCount() {
+	    	 Connection conn = getConnection();
+	    	 int listCount = bDao.getListCount(conn);
+	    	 close(conn);
+	    	 return listCount;
+	  }
 
-	 //도서검색 한개만 불러오기
-	 public Book selectOne(String bookcode) {
-		Connection conn = getConnection();
-		Book book = bDao.selectOne(conn,bookcode);
-		close(conn);
-		return book;
-	 }
+		 //도서검색 한개만 불러오기
+		 public Book selectOne(String bookcode) {
+			 Connection conn = getConnection();
+			 Book book = bDao.selectOne(conn,bookcode);
+			 close(conn);
+			 return book;
+		 }
+	
+	  
+      //도서전체목록 페이징 처리
+		public ArrayList<Book> selectList(int startRow, int endRow) {//한페이지에 열개씩 담기
+			Connection conn = getConnection();
+			ArrayList<Book> list = bDao.selectList(conn,startRow,endRow);
+			close(conn);
+			return list;
+		}
 
-  
-  //도서전체목록 페이징 처리
-	public ArrayList<Book> selectList(int startRow, int endRow) {//한페이지에 열개씩 담기
-		Connection conn = getConnection();
-		ArrayList<Book> list = bDao.selectList(conn,startRow,endRow);
-		close(conn);
-		return list;
-	}
 
+		public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
+		     Connection conn = getConnection();
+		     ArrayList<Book> list = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
+		     close(conn);
+			return list;
+		}
+
+
+		public Book selectPlayPage(String bookcode) {
+			Connection conn = getConnection();
+			Book book = bDao.selectPlayPage(conn, bookcode);
+			close(conn);
+			
+			return book;
+		}
+
+
+		public Book selectPlay(String bookcode) {
+			Connection conn = getConnection();
+			Book book = bDao.selectPlay(conn, bookcode);
+			close(conn);
+			return book;
+		}
+
+
+		public void updateBookReadCount(String bookcode) { 
+			Connection conn = getConnection();
+			int result = bDao.updateBookReadCount(conn,bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			
+			
+		}
+
+
+		public ArrayList<Book> selectTop5() {
+			Connection conn = getConnection();
+			ArrayList<Book> list = bDao.selectTop5(conn);
+			close(conn);
+			return list;
+		}
+
+
+
+		public int addLikeBook(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = bDao.addLikeBook(conn,userId, bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			return result;
+			
+		}
 
 	public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
 	     Connection conn = getConnection();
@@ -181,30 +239,3 @@ public class BookService {
 	}*/
 
 }
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-

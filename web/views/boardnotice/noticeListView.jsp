@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import = "notice.model.vo.Notice,java.util.ArrayList" %>
-<% ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+<% 
+  
+   ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+   ArrayList<Notice> topList = (ArrayList<Notice>)request.getAttribute("toplist");
     int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -23,17 +27,18 @@ function callFunction(){
 	   return false;  //다른 버튼으로 클릭 이벤트 전달 막기
 	}
 	
-var bDisplay = true;
-function doDisplay(){
-    var con = document.getElementById("myDIV");
-    if(con.style.display=='none'){
-        con.style.display = 'block';
-    }else{
-        con.style.display = 'none';
-    }
-}
+$(function(){
+	$("input:checkbox[id='topchk']").on("change",function(){
+		if($("input:checkbox[id='topchk']").is(":checked") == true){
+			$(".toplist").css("display","none");
+		}
+		if($("input:checkbox[id='topchk']").is(":checked") == false){
+			$(".toplist").css("display","");
+		}
 
-
+	});	
+});
+	
 
 </script>
 
@@ -42,16 +47,18 @@ function doDisplay(){
 
 <!-- Content 시작! -->
 	<section class="my-section">
-	
+
 	<!--공지사항 시작-->
 	<div class="my-content">
 		<a class="massive ui yellow label" style="font-size: 30px">공지사항</a>
 		<span style="color:#fbbe09; font-weight:600">│</span>
 		<span style="color:grey">소리지음 공지사항입니다</span>
-		<br><br>
+		<br><br><br>
+		<label><input type="checkbox" id="topchk">&nbsp; 공지숨기기</label>
+		
 	<!-- 공지사항 목록 시작 -->
 		<table class="my-listTable" align="center">
-		
+	
 			<tr>
 			
 				<th width="10%">No</th>
@@ -60,32 +67,33 @@ function doDisplay(){
 				<th width="15%">작성일</th>
 				<th width="10%">조회수</th>
 			</tr>
-		<a href = "javascript:doDisplay();">공지사항 보기</a>
-			
-		<% for(Notice n : list){
+			<% if(topList.size()!=0){ %>	
+		<% for(Notice n : topList){
 			%>
 			
-			<tr>
+			<tr class="toplist" style="display:table-row;">
 			   
-				<td  id="myDIV" style="color:red;">공지</td>
-				<td  id="myDIV"class = "menu" style="text-align:left;"><a href="/sori/ntopfix?no=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
-				<td  id="myDIV"><%= n.getNoticeWriter() %></td>
-				<td  id="myDIV"><%= n.getNoticeDate() %></td>
-				<td  id="myDIV"><%= n.getNoticeViews() %></td>
+				<td style="color:red;">공지</td>
+				<td style="text-align:left;">
+				<a href="/sori/ndlist?noticeno=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
+				<td ><%= n.getNoticeWriter() %></td>
+				<td ><%= n.getNoticeDate() %></td>
+				<td  ><%= n.getNoticeViews() %></td>
 			</tr>	
-			<% } %>
-		<% for(Notice n : list){
+			<% }} %>
 			
-			%>
+		<% for(Notice n : list){ %>
+			<% if(n.getNoticeTop().equals("N")){ %>
+		
 			<tr>
 				<td><%= n.getNoticeNo()-1 %></td>
-				<td style="text-align:left;"><a href="/sori/ndlist?no=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
+				<td style="text-align:left;"><a href="/sori/ndlist?noticeno=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
 				<td><%= n.getNoticeWriter() %></td>
 				<td><%= n.getNoticeDate() %></td>
 				<td><%= n.getNoticeViews() %></td>
 				
 			</tr>
-			<% } %>
+			<% }} %>
 		</table>
 	<!--공지사항 목록 끝-->
 		<br>
@@ -93,7 +101,7 @@ function doDisplay(){
 		
 		
 	<!-- 페이징 시작 -->
-		<div align="center">페이징 버튼 부분(추후 코딩 예정)
+		<div align="center">
 		<a href="/sori/nlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
 <% if((beginPage - 10) < 1){ %>
    <a href="/sori/nlist?page=1"><i class="angle grey left icon"></i></a>

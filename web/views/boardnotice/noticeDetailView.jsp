@@ -64,11 +64,11 @@
 	<!-- 공통 페이지 이동 버튼 -->
 		<center>
 			<div class="ui buttons">
-		  <button class="ui labeled icon button">
+		  <button class="ui labeled icon button" >
 		    <i class="left chevron icon"></i>
 		    이전글
 		  </button>
-		  <button class="ui button">
+		  <button class="ui button" onclick="location.href='/sori/blist'">
 		    목록
 		  </button>
 		  <button class="ui right labeled icon button">

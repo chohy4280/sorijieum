@@ -35,14 +35,19 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 		request.setCharacterEncoding("utf-8");
 		
 		String bookcode = request.getParameter("bookcode");
+		String userId = request.getParameter("userId");
 		
-		Book book = new BookService().selectOne(bookcode);
+		BookService bservice = new BookService();
+		Book book = bservice.selectOne(bookcode);
+		bservice.updateBookReadCount(bookcode);
+		
 		
 		RequestDispatcher view = null;
 		
 		if(book !=null) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchDetail.jsp");
-			request.setAttribute("book", book);
+			request.setAttribute("book",book);
+			request.setAttribute("userId", userId);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서불러오기 실패");
