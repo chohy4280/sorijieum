@@ -91,20 +91,24 @@ public class BookMakingService {
 		return result;
 	}
 	
+	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
+	public int insertBookMakeCheck(Book b) {
+		Connection conn = getConnection();
+		int result = bmDao.insertBookMakeCheck(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
 	//제작완료 카운트
 		public int getMakedBookCount(){
 			Connection conn = getConnection();
 			int dcount = bmDao.getMakedBookCount(conn);
 			close(conn);
 			return dcount;
-		}
-
-		////도서검색에서 도서재생으로 넘어가는 
-		public BookMaking selectPlayPage(String bookcode) {
-			 Connection conn = getConnection();
-			 BookMaking bookmaking = bmDao.selectPlay(conn,bookcode);
-			 close(conn);
-			 return bookmaking;
 		}
 	
 	//도서제작 추출 텍스트 파일 불러오기
@@ -115,11 +119,88 @@ public class BookMakingService {
 		return list;
 	}
 	
+	//도서제작 팝업창 불러오기
+	public BookMakingProgress selectBookMakingPopupLoad(String bookcode, String userid){
+		Connection conn = getConnection();
+		BookMakingProgress list = bmDao.selectBookMakingPopupLoad(conn, bookcode, userid);
+		close(conn);
+		return list;
+	}
+	
 	//도서제작 불러오기
 	public BookMakingProgress selectBookMakingMainLoad(String bookcode, String userid){
 		Connection conn = getConnection();
 		BookMakingProgress list = bmDao.selectBookMakingMainLoad(conn, bookcode, userid);
 		close(conn);
 		return list;
+	}
+	
+	//도서제작 제작하기 버튼 클릭시 동기화
+	public int bookMakingInsert(String bookcode, String userid) {
+		Connection conn = getConnection();
+		int result = bmDao.bookMakingInsert(conn, bookcode, userid);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//도서제작 제작하기 버튼 클릭시 BOOK TABLE MAKESTATUS MAKE로 변경
+	public int bookMakingUpdate(String bookcode) {
+		Connection conn = getConnection();
+		int result = bmDao.bookMakingUpdate(conn, bookcode);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//도서제작 페이지 입력 저장
+	public int inputInsert(BookMakingProgress bmp) {
+		Connection conn = getConnection();
+		int result = bmDao.inputInsert(conn, bmp);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//도서제작 페이지 입력 수정
+	public int inputUpdate(BookMakingProgress bmp) {
+		Connection conn = getConnection();
+		int result = bmDao.inputUpdate(conn, bmp);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//도서제작 모든 페이지 저장 후 makebook 추가
+	public int inputMakeBook(BookMakingProgress bmp) {
+		Connection conn = getConnection();
+		int result = bmDao.inputMakeBook(conn, bmp);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//************************************************************************************
+	//도서검색에서 도서재생으로 이동
+	public BookMaking selectPlayPage(String bookcode) {
+		 Connection conn = getConnection();
+		 BookMaking bookmaking = bmDao.selectPlay(conn,bookcode);
+		 close(conn);
+		 return bookmaking;
 	}
 }

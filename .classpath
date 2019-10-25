@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="C:/dev_tools/db_tools/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="C:/dev_tools/db_tools/pdfbox-1.8.3.jar"/>
 	<classpathentry kind="lib" path="C:/dev_tools/db_tools/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/dev_tools/db_tools/json_simple-1.1.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

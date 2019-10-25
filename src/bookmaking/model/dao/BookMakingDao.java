@@ -262,32 +262,6 @@ public class BookMakingDao {
 		return dcount;
 	}
   
-	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
-	public int insertBook(Connection conn, Book b) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		
-		/*String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";*/
-		String query = "insert into bookmaking values (?, sysdate, null, null, null, 0)";
-				
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, b.getBookCode());
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return result;
-
-	}
-
-	public BookMaking selectPlay(Connection conn, String bookcode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public ArrayList<Book> selectBookLoadText(Connection conn, String bookcode) {
 		ArrayList<Book> txtlist = new ArrayList<Book>();
 		PreparedStatement pstmt = null;
@@ -313,13 +287,12 @@ public class BookMakingDao {
 		return txtlist;
 	}
 
-
-	public BookMakingProgress selectBookMakingMainLoad(Connection conn, String bookcode, String userid) {
+	public BookMakingProgress selectBookMakingPopupLoad(Connection conn, String bookcode, String userid) {
 		BookMakingProgress bmp = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book join bookmaking using (bookcode) where bookcode = '" + bookcode + "'";
+		String query = "select * from book join bookmaking using (bookcode) join bookmakingcheck using (bookcode) where bookcode = '" + bookcode + "'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -329,6 +302,8 @@ public class BookMakingDao {
 				bmp.setBookCode(rset.getString("bookcode"));
 				bmp.setBookPage(rset.getInt("bookpage"));
 				bmp.setMakepage(rset.getInt("makepage"));
+				bmp.setBookTitle(rset.getString("booktitle"));
+				bmp.setBookmakestartstatus(rset.getString("bookmakestartstatus"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -338,5 +313,167 @@ public class BookMakingDao {
 		}
 		return bmp;
 	}
+	
+	public BookMakingProgress selectBookMakingMainLoad(Connection conn, String bookcode, String userid) {
+		BookMakingProgress bmp = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book join bookmaking using (bookcode) join bookmakingcheck using (bookcode) where bookcode = '" + bookcode + "'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				bmp = new BookMakingProgress();
+				bmp.setBookCode(rset.getString("bookcode"));
+				bmp.setBookPage(rset.getInt("bookpage"));
+				bmp.setMakepage(rset.getInt("makepage"));
+				bmp.setBookTitle(rset.getString("booktitle"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return bmp;
+	}
+	
+	public int bookMakingInsert(Connection conn, String bookcode, String userid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "insert into bookmakingcheck values(?, NULL, 'Y', NULL, DEFAULT, ?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bookcode);
+			pstmt.setString(2, userid);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int bookMakingUpdate(Connection conn, String bookcode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update book set makestatus = 'MAKE' where bookcode = '" + bookcode + "'";
+		try {
+			pstmt = conn.prepareStatement(query);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int inputInsert(Connection conn, BookMakingProgress bmp) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update bookmakingcheck set booktitle = ?, bookmaketxt = ?, bookmakepage = ?, userid = ? where bookcode = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bmp.getBookTitle());
+			pstmt.setString(2, bmp.getBookmaketxt());
+			pstmt.setInt(3, bmp.getBookmakepage());
+			pstmt.setString(4, bmp.getUserid());
+			pstmt.setString(5, bmp.getBookCode());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int inputUpdate(Connection conn, BookMakingProgress bmp) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update bookmakingcheck set bookmaketxt = ? where bookcode = ? and bookmakepage = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bmp.getBookmaketxt());
+			pstmt.setString(2, bmp.getBookCode());
+			pstmt.setInt(3, bmp.getBookmakepage());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int inputMakeBook(Connection conn, BookMakingProgress bmp) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "insert into makebook values (?, ?, sysdate)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bmp.getUserid());
+			pstmt.setString(2, bmp.getBookCode());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//************************************************************************************
+	
+	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
+		public int insertBook(Connection conn, Book b) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			/*String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";*/
+			String query = "insert into bookmaking values (?, sysdate, null, null, null, 0)";
+					
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, b.getBookCode());
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
+		
+	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
+		public int insertBookMakeCheck(Connection conn, Book b) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String query = "";
+			for (int i = 0; i <= b.getBookPage(); i++) {
+				if (i % 10 == 0) {
+					query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + i+1 + ", NULL)";
+				}
+	
+				try {
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, b.getBookCode());
+					result = pstmt.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					close(pstmt);
+				}
+			}
+			return result;
+		}
+
+	public BookMaking selectPlay(Connection conn, String bookcode) {
+			return null;
+		}
 
 }
