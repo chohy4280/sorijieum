@@ -90,6 +90,8 @@ public class AdminSearchServlet extends HttpServlet {
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("listCount", listCount);
+			request.setAttribute("searchtype", searchtype);
+			request.setAttribute("keyword", keyword);
 		} else {
 			view = request.getRequestDispatcher("view/common/error.jsp");
 			request.setAttribute("message", "관리자 검색 실패!");

@@ -9,6 +9,11 @@
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+
+	String searchtype = (String)request.getAttribute("searchtype");
+	String keyword = (String)request.getAttribute("keyword");
+	String qnastatus = (String)request.getAttribute("qnastatus");
+	String qnadate = (String)request.getAttribute("qnadate");
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +66,7 @@ $(function(){
 </head>
 
 <body>
-
+<% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
 <!-- Content 시작! -->
 <section class="contentsection">
 
@@ -76,17 +81,52 @@ $(function(){
             <form action="/sori/bodslist.ad" method="post">
 				<div>
 				<a class="ui large teal label">검색조건</a>&nbsp;
+				<% if(searchtype != null) {
+					String[] select = new String[2];
+					for(int i = 0 ; i < select.length; i++){
+						switch(searchtype){
+						case "qnatitle" : select[0] = "selected"; break;
+						case "qnawriter" : select[1] = "selected"; break;
+						}}
+				%>
+					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 130px;">
+						<option value="qnatitle" <%=select[0] %>>제목</option>
+						<option value="qnawriter" <%=select[1] %>>아이디</option>
+					</select>
+					<%}else{ %>
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 130px;">
 						<option value="qnatitle">제목</option>
 						<option value="qnawriter">아이디</option>
 					</select>
+					<%} %>
+					
+					<%if(keyword!=null) {%>
+					<input type="text" class="search" name="keyword" id="keyword" value="<%= keyword %>" style="border-radius: 10px; width: 200px;">
+					<%}else{ %>
 					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
+					<%} %>
+					
 					&emsp;&emsp;&emsp;&nbsp;
 					
 				<a class="ui large teal label">답변여부</a>&nbsp;
+				<%if(qnastatus != null) {
+					String[] check = new String[3];
+					for(int i = 0 ; i < check.length; i++){
+						switch(qnastatus){
+						case "ALL" : check[0] = "checked"; break;
+						case "N" : check[1] = "checked"; break;
+						case "Y" : check[2] = "checked"; break;
+						}
+					}
+				%>
+					<input type="radio" name="qnastatus" value="ALL" <%=check[0] %>> 전체 &emsp;&ensp;
+					<input type="radio" name="qnastatus" value="N" <%=check[1] %>> 답변전&emsp;&ensp;
+					<input type="radio" name="qnastatus" value="Y" <%=check[2] %>> 답변완료 &emsp;&emsp;&emsp;&nbsp;
+				<%}else{ %>
 					<input type="radio" name="qnastatus" value="ALL" checked> 전체 &emsp;&ensp;
 					<input type="radio" name="qnastatus" value="N"> 답변전&emsp;&ensp;
 					<input type="radio" name="qnastatus" value="Y"> 답변완료 &emsp;&emsp;&emsp;&nbsp;
+				<%} %>
 					<input type="submit" value="검색">
 				</div>
 				</form>
@@ -103,7 +143,7 @@ $(function(){
 				<table class="listTable">
 					<tr>
 						<th width="3%"><input type="checkbox" class="chk" id="allCheck"/></th>
-						<th width="3%">No</th>
+						<th width="3%">No.</th>
 						<th width="9%">답변여부</th>
 						<th width="50%" style="text-align:left">제목</th>
 						<th width="10%">작성자ID</th>
@@ -111,35 +151,50 @@ $(function(){
 						<th width="5%">조회수</th>
 					</tr>
 					<%	if(list.size() != 0){
-						for(int i = list.size()-1 ; i >= 0 ; i--) {
+						for(int i = 0 ; i < list.size() ; i++) {
 						Qna q = list.get(i);	
 					%>
 					<tr>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= q.getQnaNo() %>"></td>
-						<td><%= i+1 %></td>
+						<td><%= currentPage * 10 - 9 + i %></td>
 						<td><% if(q.getQnaStatus().equals("Y")) { %>
 							답변완료
 							<%} else { %>
 							답변전
 							<% } %>
 						</td>
-						<td style="text-align:left"><a href=""><%= q.getQnaTitle() %></a></td>
+						<td style="text-align:left"><a href="/sori/qdetail?qnano=<%=q.getQnaNo() %>" target="_blank"><%= q.getQnaTitle() %></a></td>
 						<td><%= q.getQnaWriter() %></td>
 						<td><%= q.getQnaDate() %></td>
 						<td><%= q.getQnaViews() %></td>
 					</tr>
-					<% }} else { %>
-					<tr><td colspan="7" style="color:#aaa">해당되는 게시글이 없습니다.</td></tr>
 					<%} %>
-				</table>
-				<br>
-				<button class="mini ui black button" onclick="return delBtn();">삭제</button>
-				
-				<br>
-				</div>
-				
-								<br><br>
+					</table>
+					<br>
 				 <!-- 페이징처리 시작 -->
+				 <%if(searchtype != null || keyword != null || qnastatus != null || qnadate != null) {%>
+							<div id="pagebox" align="center">
+								<a href="/sori/bodslist.ad?page=1&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><i class="angle grey double left icon"></i></a>&emsp;
+							<% if((beginPage - 10) < 1){ %>
+								<a href="/sori/bodslist.ad?page=1&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><i class="angle grey left icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/bodslist.ad?page=<%= beginPage - 10 %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><i class="angle grey left icon"></i></a>
+							<% } %>&ensp;
+							<% for(int p = beginPage; p <= endPage; p++){ 
+									if(p == currentPage){
+							%>
+								<a href="/sori/bodslist.ad?page=<%= p %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><b class="ui small teal circular label"><%= p %></b></a>&emsp;
+							<% }else{ %>
+								<a href="/sori/bodslist.ad?page=<%= p %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><font color="black"><b><%= p %></b></font></a>&emsp;
+							<% }} %>&ensp;
+							<% if((endPage +  10) < maxPage){ %>
+								<a href="/sori/bodslist.ad?page=<%= endPage +  10 %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><i class="angle grey right icon"></i></a>
+							<% }else {%>
+								<a href="/sori/bodslist.ad?page=<%= maxPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><i class="angle grey right icon"></i></a>
+							<% } %>&ensp;
+							<a href="/sori/bodslist.ad?page=<%= maxPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&qnastatus=<%=qnastatus%>&qnadate=<%=qnadate%>"><i class="angle grey double right icon"></i></a>&emsp;
+							</div>
+					<%} else { %>
 							<div id="pagebox" align="center">
 								<a href="/sori/bodlist.ad?page=1"><i class="angle grey double left icon"></i></a>&emsp;
 							<% if((beginPage - 10) < 1){ %>
@@ -160,16 +215,26 @@ $(function(){
 								<a href="/sori/bodlist.ad?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 							<% } %>&ensp;
 							<a href="/sori/bodlist.ad?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&emsp;
-							</div>
+							</div>	
+					<%} %>
 							<!-- 페이징 끝-->
+							<button class="mini ui black button" onclick="return delBtn();">삭제</button>
+					<% } else { %>
+					<tr><td colspan="7" style="color:#aaa">해당하는 게시글이 없습니다.</td></tr>
+					</table>
+					<%} %>
+				
+
+				</div>
 			</div>
 				
 			<!-- 게시물 결과 리스트 끝! -->
        <!-- 게시물 목록 끝! -->
-       
 
 </section>
 <!-- Content 끝! -->
+<%}else{ %>
+<%} %>
 
 </body>
 </html>

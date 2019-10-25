@@ -33,40 +33,21 @@ public class QnaSerachServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Q&A 검색 처리용 컨트롤러
-		/*int currentPage = 1;
+		request.setCharacterEncoding("UTF-8");
+		int currentPage = 1;
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		int limit = 10;  //한 페이지에 출력할 목록 갯수
 		
-		request.setCharacterEncoding("UTF-8");
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
 		
-		ArrayList<Qna> list = new QnaService().searchQna(type, keyword);
-		
-		RequestDispatcher view = null;
-		if(list.size()>0) {
-			view = request.getRequestDispatcher("views/boardqna/qnaListView.jsp");
-			request.setAttribute("list", list);
-			request.setAttribute("type", type);
-			request.setAttribute("keyword", keyword);
-		}
-		else {
-			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "문의글 검색 실패!!");
-		}
-		view.forward(request, response);
-		
-		
-		
-		
-		
-		
-
 		QnaService qservice = new QnaService();
-		int listCount = qservice.getListCount(); //테이블 전체 목록 개수 조회
-
+		
+		ArrayList<Qna> list = qservice.searchQna(type, keyword);
+		int listCount = list.size(); //검색된 개수
+		
 		//총 페이지수 계산
 		int maxPage = listCount / limit;
 		if(listCount % limit > 0)
@@ -83,26 +64,33 @@ public class QnaSerachServlet extends HttpServlet {
 		int startnum = (currentPage * limit) - 9;
 		int endnum = currentPage * limit;
 		
-		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기
-		ArrayList<Qna> list = qservice.selectQnaList(startnum, endnum);
-		ArrayList<Qna> toplist = qservice.selectQnaTopList();	//고정글 리스트를 따로 받아옴
+		ArrayList<Qna> pageList = new ArrayList<Qna>();
 		
+		for(int i=startnum-1; i<endnum; i++) {
+			if(i == listCount)
+				break;
+			pageList.add(list.get(i));
+		}
+		
+		ArrayList<Qna> toplist = qservice.selectQnaTopList();	//고정글 리스트를 따로 받아옴
 		RequestDispatcher view = null;
-		if(list.size()>0) {
+		if(list.size()>=0) {
 			view = request.getRequestDispatcher("views/boardqna/qnaListView.jsp");
-			request.setAttribute("list", list);
-			request.setAttribute("toplist", toplist);
+			request.setAttribute("list", pageList);
+			request.setAttribute("type", type);
+			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("toplist", toplist);
 		}
 		else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "Q&A 전체 목록 조회 실패!");
+			request.setAttribute("message", "문의글 검색 실패!!");
 		}
 		view.forward(request, response);
-*/
+		
 	}
 
 	/**

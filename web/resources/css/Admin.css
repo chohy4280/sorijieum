@@ -274,6 +274,27 @@ color: inherit;
 }
 
 
+.listTable2{
+	border-top: 1px solid #4ecdc4;
+	border-bottom: 1px solid #4ecdc4;
+	cellspacing: 10px;
+	width: 100%;
+}
+
+.listTable2 th{
+	height: 30px;
+	background: #4ecdc4;
+	color: #fff;
+}
+
+.listTable2 td{
+	height: 40px;
+	border-bottom: 1px solid #4ecdc4;
+	background: #f9f9f9;
+	color: #6d6d6d;
+	text-align: center;
+}
+
 
 /* adminBookList CSS 끝*/
 

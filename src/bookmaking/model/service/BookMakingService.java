@@ -139,6 +139,18 @@ public class BookMakingService {
 	public int bookMakingInsert(String bookcode, String userid) {
 		Connection conn = getConnection();
 		int result = bmDao.bookMakingInsert(conn, bookcode, userid);
+  if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	// 관리자 도서 수정용
+	public int updateBookadmin(Book b) {
+		Connection conn = getConnection();
+		int result = bmDao.updateBookadmin(conn, b);
 		if(result > 0)
 			commit(conn);
 		else
@@ -203,4 +215,5 @@ public class BookMakingService {
 		 close(conn);
 		 return bookmaking;
 	}
+
 }

@@ -1,11 +1,16 @@
 package book.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import book.model.service.BookService;
+import book.model.vo.Book;
 
 /**
  * Servlet implementation class BookSearchPlayServlet
@@ -26,8 +31,22 @@ public class BookSearchPlayServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+	
+		String bookcode = request.getParameter("bookcode");
+		Book book = new BookService().selectPlay(bookcode);
+		
+		RequestDispatcher view = null;
+		if(book != null) {
+			view = request.getRequestDispatcher("views/booksearch/bookSearchPlay.jsp");
+			request.setAttribute("bookcode", "bookcode");
+			view.forward(request, response);
+		}else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "");
+			view.forward(request, response);
+		}
 	}
 
 	/**

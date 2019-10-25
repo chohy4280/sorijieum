@@ -99,7 +99,8 @@ color: inherit;
 #yu-playbutton{
 	margin-left : 200px;
 	margin-right : 1100px;
-width: 100px;
+    width: 100px;
+   
 }
 
 .yu.textbook{
@@ -131,4 +132,8 @@ width: 100px;
 
 .yu-booktitle{
 	
+}
+
+#yu-listbutton{
+	magin-bottom : 200px;
 }

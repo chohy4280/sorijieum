@@ -10,6 +10,9 @@
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	
+	String searchtype = (String)request.getAttribute("searchtype");
+	String keyword = (String)request.getAttribute("keyword");
 %>
 <!DOCTYPE html>
 <html>
@@ -74,6 +77,7 @@ $(function(){
 </head>
 <body>
 
+<% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
 <!-- Content 시작! -->
 <section class="contentsection">
 	<!--회원 목록 시작-->
@@ -86,13 +90,38 @@ $(function(){
             <form action="/sori/adslist.ad" method="post">
 				<div style="float:left">
 				<a class="ui large teal label">관리자정보</a>&nbsp;
+				<% if(searchtype != null) {
+					String[] select = new String[4];
+					for(int i = 0 ; i < select.length; i++){
+						switch(searchtype){
+						case "userid" : select[0] = "selected"; break;
+						case "username" : select[1] = "selected"; break;
+						case "email" : select[2] = "selected"; break;
+						case "phone" : select[3] = "selected"; break;
+						}}
+				%>
+					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
+						<option value="userid" <%=select[0] %>>아이디</option>
+						<option value="username" <%=select[1] %>>이름</option>
+						<option value="email" <%=select[2] %>>이메일</option>
+						<option value="phone" <%=select[3] %>>전화번호</option>
+					</select>
+				<%}else{ %>
 					<select class="search" name="searchtype" id="searchtype" style="border-radius: 10px; width: 160px;">
 						<option value="userid">아이디</option>
 						<option value="username">이름</option>
 						<option value="email">이메일</option>
 						<option value="phone">전화번호</option>
 					</select>
+				<%} %>
+				
+				
+				<%if(keyword!=null) {%>
+					<input type="text" class="search" name="keyword" id="keyword" value="<%= keyword %>" style="border-radius: 10px; width: 200px;">
+				<%}else{ %>
 					<input type="text" class="search" name="keyword" id="keyword" placeholder="내용입력" style="border-radius: 10px; width: 200px;">
+				<%} %>
+					
 					<input type="submit" value="검색" onclick="valuechk();">
 				</div>
 				</form>
@@ -110,7 +139,7 @@ $(function(){
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<th width="2%"><input type="checkbox" class="chk" id="allCheck"/></th>
 						<% } %>
-						<th width="3%">No</th>
+						<th width="3%">No.</th>
 						<th width="10%">관리자구분</th>
 						<th width="17%">아이디</th>
 						<th width="14%">이름</th>
@@ -126,34 +155,47 @@ $(function(){
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= m.getUserId() %>"></td>
 						<% } %>
-						<td><%= i+1 %></td>
+						<td><%= currentPage * 10 - 9 + i %></td>
 						<td><% if(m.getTypeNumber() == Integer.parseInt("4")){ %>
 							부관리자
 							<% } else { %>
 							대표관리자
 							<% } %>
 						</td>
-						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>"><%= m.getUserId() %></a></td>
-						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>"><%= m.getUserName() %></a></td>
-						<td><%= m.getEmail() %></td>
+						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>&page=<%=currentPage%>"><%= m.getUserId() %></a></td>
+						<td><a href="/sori/addetail.ad?userid=<%= m.getUserId() %>&page=<%=currentPage%>"><%= m.getUserName() %></a></td>
+						<td><a href="mailto:<%= m.getEmail() %>" title="메일보내기"><%= m.getEmail() %></a></td>
 						<td><%= m.getPhone() %></td>
 						<td><%= m.getEnrollDate() %></td>
 					</tr>
-					<% }} else { %>
-					<tr><td colspan="8" style="color:#aaa">해당되는 관리자가 없습니다.</td></tr>
 					<%} %>
-				</table>
-				
-				<br>
-				<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
-				<div style="float:left"><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddForm.jsp'">추가</button>
-				<button class="mini ui black button" onclick="return delBtn();">삭제</button></div>
-				<% } %>
-				</div>
-				
-				<br><br>
+					</table>
+					<br>
 				 <!-- 페이징처리 시작 -->
+				 <%if(searchtype != null || keyword != null){ %>
 							<div id="pagebox" align="center">
+								<a href="/sori/adslist.ad?page=1&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&emsp;
+							<% if((beginPage - 10) < 1){ %>
+								<a href="/sori/adslist.ad?page=1&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+							<% }else{ %>
+								<a href="/sori/adslist.ad?page=<%= beginPage - 10 %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+							<% } %>&ensp;
+							<% for(int p = beginPage; p <= endPage; p++){ 
+									if(p == currentPage){
+							%>
+								<a href="/sori/adslist.ad?page=<%= p %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><b class="ui small teal circular label"><%= p %></b></a>&emsp;
+							<% }else{ %>
+								<a href="/sori/adslist.ad?page=<%= p %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&emsp;
+							<% }} %>&ensp;
+							<% if((endPage +  10) < maxPage){ %>
+								<a href="/sori/adslist.ad?page=<%= endPage +  10 %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+							<% }else {%>
+								<a href="/sori/adslist.ad?page=<%= maxPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+							<% } %>&ensp;
+							<a href="/sori/adslist.ad?page=<%= maxPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&emsp;
+							</div>
+					<%}else{ %>
+					<div id="pagebox" align="center">
 								<a href="/sori/adlist.ad?page=1"><i class="angle grey double left icon"></i></a>&emsp;
 							<% if((beginPage - 10) < 1){ %>
 								<a href="/sori/adlist.ad?page=1"><i class="angle grey left icon"></i></a>
@@ -175,14 +217,25 @@ $(function(){
 							<a href="/sori/adlist.ad?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&emsp;
 							</div>
 							<!-- 페이징 끝-->
+					<% } if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
+					<div style="float:left"><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddForm.jsp'">추가</button>
+					<button class="mini ui black button" onclick="return delBtn();">삭제</button></div>
+					<% }} else { %>
+					<tr><td colspan="8" style="color:#aaa">해당하는 관리자가 없습니다.</td></tr>
+					</table>
+					<br>
+					<div style="float:left"><button class="mini ui black button" onclick="location.href='/sori/views/admin/adminAddForm.jsp'">추가</button>
+					<%} %>
+				</div>
 			</div>
 				
 			<!-- 회원검색 결과 리스트 끝! -->
        <!-- 회원 목록 끝! -->
-
-
 </section>
 <!-- Content 끝! -->
+
+<%}else{ %>
+<%} %>
 
 </body>
 </html>

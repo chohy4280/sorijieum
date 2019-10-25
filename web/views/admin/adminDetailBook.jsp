@@ -11,22 +11,28 @@
 <head>
 <meta charset="UTF-8">
 <title>도서 상세</title>
-<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-	
-	function delBtn(){
+	// 도서삭제
+		function delBtn(){
+		var bookcode = "<%=book.getBookCode() %>";
 		var result = confirm("'<%= book.getBookTitle() %>' 도서를 삭제하시겠습니까?\n삭제 후 복구가 불가능합니다.");
 		if(result){
-			location.href='/sori/bdel.ad?bookcode=<%= book.getBookCode() %>';
-			alert("도서 삭제가 완료되었습니다.");
-			location.href="/sori/blist.ad?page=<%= currentPage %>";
-		}
-			return false;
-		}
+			$.ajax({
+				url: "/sori/bdel.ad",
+				type: "post",
+				data: { bookcode : bookcode },
+				success : function(data){
+					alert(data);
+					location.href="/sori/blist.ad?page="+<%= currentPage %>;
+				}
+			})
+		return false;
+	}}
 </script>
 </head>
 <body>
 
+<% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
 <!-- Content 시작! -->
 <section class="contentsection">
 
@@ -73,12 +79,12 @@
 					
 					<tr>
 						<th width="30%">도서이미지</th>
-						<td><a href="/sori/bfdown.ad?bookoimg=<%= book.getBookOimg() %>&bookrimg<%= book.getBookRimg() %>"><%= book.getBookOimg() %></a></td>
+						<td><a href="/sori/bimgfdown.ad?ofile=<%= book.getBookOimg() %>&rfile=<%= book.getBookRimg() %>"><%= book.getBookOimg() %></a></td>
 					</tr>
 					
 					<tr>
 						<th width="30%">도서원본파일</th>
-						<td><a href="/sori/bfdown.ad?bookopdf=<%= book.getBookOpdf() %>&bookrpdf<%= book.getBookRpdf() %>"><%= book.getBookOpdf() %></a></td>
+						<td><a href="/sori/bfdown.ad?ofile=<%= book.getBookOpdf() %>&rfile=<%= book.getBookRpdf() %>"><%= book.getBookOpdf() %></a></td>
 					</tr>
 					
 					<tr>
@@ -86,7 +92,7 @@
 						<td><%if(book.getBookotxt() == null){ %>
 							현재 제작중
 							<%} else { %>
-							<a href="/sori/bfdown.ad?bookotxt=<%= book.getBookotxt() %>&bookrtxt<%= book.getBookrtxt() %>"><%= book.getBookotxt() %></a>
+							<a href="/sori/btxtfdown.ad?ofile=<%= book.getBookotxt() %>&rfile=<%= book.getBookrtxt() %>"><%= book.getBookotxt() %></a>
 							<% } %>
 						</td>
 					</tr>
@@ -95,10 +101,10 @@
 				</table>
 				<br><br>
 				<center>
-					<button class="small ui teal button" href="/sori/bup.ad?bookcode=<%=book.getBookCode() %>&page="<%= currentPage %>">수정</button> &nbsp; 
-					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button><br><br><br>
+					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>&nbsp; 
+					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>'">수정</button>
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
-					<button class="small ui red button" onclick="return delBtn();">도서삭제</button>
+					<br><br><br><button class="small ui red button" onclick="return delBtn();">도서삭제</button>
 					<% } %>
 				</center>
             </div>
@@ -107,5 +113,7 @@
     
             </section>
 <!-- Content 끝! -->
+<%}else{ %>
+<%} %>
 </body>
 </html>

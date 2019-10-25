@@ -26,7 +26,7 @@
 	<section class="my-section">
 	
 	<!--공지사항 시작-->
-	<div class="my-content" style="height:800px;">
+	<div class="my-content" style="height:900px;">
 		<a class="massive ui yellow label" style="font-size: 30px">FAQ</a>
 		<span style="color:#fbbe09; font-weight:600">│</span>
 		<span style="color:grey">소리지음 자주 묻는 질문 게시판입니다</span>

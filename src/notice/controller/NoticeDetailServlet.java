@@ -32,12 +32,11 @@ public class NoticeDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 공지글 상세보기 처리용 컨트롤러
-		//no라는 이름의 정수가 왔다(noticeListView.jsp에 27번)
 		
-		int noticeno = Integer.parseInt(request.getParameter("no"));
+		request.setCharacterEncoding("UTF-8");
+		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
 		
 		NoticeService nservice = new NoticeService();
-		
 		Notice notice = nservice.selectOne(noticeno);
 		nservice.updateReadCount(noticeno);
 		

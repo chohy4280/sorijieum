@@ -57,12 +57,13 @@ public class AdBookInsertServlet extends HttpServlet {
 		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "utf-8", new DefaultFileRenamePolicy());
 		
 		Book b = new Book();
+		String bookcode = mrequest.getParameter("bookcode");
 		b.setBookTitle(mrequest.getParameter("booktitle"));
 		b.setAuthor(mrequest.getParameter("author"));
 		b.setPublisher(mrequest.getParameter("publisher"));
 		b.setPublishDate(Date.valueOf(mrequest.getParameter("pubdate")));
 		b.setBookPage(Integer.parseInt(mrequest.getParameter("bookpage")));
-		b.setBookCode(mrequest.getParameter("bookcode"));
+		b.setBookCode(bookcode);
 		b.setBookInfo(mrequest.getParameter("bookinfo"));
 		String bimgOriginalFileName = mrequest.getFilesystemName("bookoimg");
 		String bpdfOriginalFileName = mrequest.getFilesystemName("bookopdf");
@@ -72,41 +73,50 @@ public class AdBookInsertServlet extends HttpServlet {
 		if(bimgOriginalFileName != null && bpdfOriginalFileName != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
 			String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
-			String bpdfRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
+			String bpdfRenameFileName = bookcode + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
 			
 			File bimgOriginFile = new File(savePath + "\\" + bimgOriginalFileName);
 			File bimgRenameFile = new File(savePath + "\\" + bimgRenameFileName);
 			File bpdfOriginFile = new File(savePath + "\\" + bpdfOriginalFileName);
 			File bpdfRenameFile = new File(savePath + "\\" + bpdfRenameFileName);
 			
-			if(!bimgOriginFile.renameTo(bimgRenameFile) && !bpdfOriginFile.renameTo(bpdfRenameFile)) {
+			if(!bimgOriginFile.renameTo(bimgRenameFile)) {
 				int read = -1;
 				
 				byte[] buf = new byte[1024];
 				
 				FileInputStream fin = new FileInputStream(bimgOriginFile);
 				FileOutputStream fout = new FileOutputStream(bimgRenameFile);
-				FileInputStream fin2 = new FileInputStream(bpdfOriginFile);
-				FileOutputStream fout2 = new FileOutputStream(bpdfRenameFile);
 				
-				while(((read = fin.read(buf, 0, buf.length)) != -1) && ((read = fin2.read(buf, 0, buf.length)) != -1)) {
+				while((read = fin.read(buf, 0, buf.length)) != -1) {
 					fout.write(buf, 0, read);
-					fout2.write(buf, 0, read);
 				}
 					fin.close();
 					fout.close();
+					// 리네임 했으니 원본 삭제
+					bimgOriginFile.delete();
+					
+			}else if(!bpdfOriginFile.renameTo(bpdfRenameFile)) {
+				int read = -1;
+				
+				byte[] buf2 = new byte[1024];
+
+				FileInputStream fin2 = new FileInputStream(bpdfOriginFile);
+				FileOutputStream fout2 = new FileOutputStream(bpdfRenameFile);
+				
+				while((read = fin2.read(buf2, 0, buf2.length)) != -1) {
+					fout2.write(buf2, 0, read);
+				}
 					fin2.close();
 					fout2.close();
 					// 리네임 했으니 원본 삭제
-					bimgOriginFile.delete();
 					bpdfOriginFile.delete();
 			}
+			
 			b.setBookRimg(bimgRenameFileName);
 			b.setBookRpdf(bpdfRenameFileName);
 		}
-		
 		int result1 = new BookService().insertBook(b);
-		
 		// 도서추가시 bookmaking 테이블에도 같이 insert함
 		int result2 = new BookMakingService().insertBook(b);
 		
@@ -116,8 +126,8 @@ public class AdBookInsertServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 추가 실패!");
 			view.forward(request, response);
-		}
 	} 
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

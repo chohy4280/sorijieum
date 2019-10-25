@@ -39,17 +39,11 @@ public class QnaCommentDeleteServlet extends HttpServlet {
 		QnaCommentService qcservice = new QnaCommentService();
 		QnaService qservice = new QnaService();
 		int result = qcservice.deleteQnaComment(qnano);
-		/*Qna qna = qservice.selectQnaOne(qnano);
-		QnaComment qComm = qcservice.selectQnaComment(qnano);*/
-		
-		System.out.println("삭제된 행 개수:"+result);
 		
 		RequestDispatcher view = null;
 		if(result>0) {
 			view = request.getRequestDispatcher("/qdetail");
 			qservice.deleteQnaCommYN(qnano);
-			/*request.setAttribute("qna", qna);
-			request.setAttribute("qComm", qComm);*/
 			request.setAttribute("qnano", qnano);
 		}
 		else {

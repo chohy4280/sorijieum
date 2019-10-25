@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
- <%@ page import = "java.util.ArrayList, book.model.vo.Book, member.model.vo.Member" %>
- <%@include file="/../inc/top.jsp"%>
-<%@include file="/../inc/sementic.jsp" %>
+ <%@ page import = "java.util.ArrayList, book.model.vo.Book" %>
+
  <%
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
     int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
@@ -16,12 +15,44 @@
 <head>
 <meta charset="UTF-8">
 <title>도서검색</title>
-
-<script type="text/javascript" scr = "resources/js/jqeury-3.4.1.min.js"></script>
+ <%@include file="/../inc/top.jsp"%>
+<script type="text/javascript" src = "resources/js/jquery-3.4.1.min.js"></script>
 <script type ="text/javascript">
 $('.ui.dropdown').dropdown({direction:'auto'});
 
-</script>
+$(function(){
+	
+	$.ajax({
+		url : "/sori/btop5",
+		type : "get",
+		dataType : "json",
+		success : function(data){
+			var jsonStr = JSON.stringify(data);
+			
+			var json = JSON.parse(jsonStr);
+			
+			var values = ""; //출력할 값을 문자열로 만들어 준다
+			for(var i in json.list){
+				<% if(loginMember != null){ %>
+				values += "<tr><td>" + json.list[i].bcode + 
+					"</td><td><a href='/sori/bsdetail?bookcode=" + json.list[i].bcode + "&page=1'>" + 
+					decodeURIComponent(json.list[i].btitle).replace(/\+/gi, " ") 
+					+ "</a></td><td>" + json.list[i].bviews + "</td></tr>";
+				<% }else{ %>	
+				values += "<tr><td>" + json.list[i].bcode + "</td><td>" + 
+				decodeURIComponent(json.list[i].btitle).replace(/\+/gi, " ") 
+				+ "</td><td>" + json.list[i].bviews + "</td></tr>";
+				<% } %>
+			}
+			
+			//body의 table 에 출력 적용
+			$("#recentTop").html($("#recentTop").html() + values);
+		},
+		error : function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		}
+	});  
+	</script>
 <!-- CUSTOM CSS -->
 	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
 
@@ -56,9 +87,10 @@ $('.ui.dropdown').dropdown({direction:'auto'});
 
 <!-- 신작 5개 불러오기  -->
 
-<div class="yu-recent5" style="border: 2px solid red;width: 200px; height: 50px; margin-top:50px;">
-<span class="yu-recent55" style="border:2px solid blue; width:150px; height:50px;">해리포터</span>
-</div>
+
+<table id="recentTop" border="1" cellspacing="0">
+<tr><th>번호</th><th>제목</th><th>조회수</th></tr>
+</table>
 
 <!-- 도서 전체 결과 리스트 -->
 <%for(int i=0; i<list.size(); i++ ) {
@@ -66,7 +98,11 @@ if(i%5 == 0){ %>
 <br><br><br>
 <% } %>
 <div class= "yu-book" style= "width: 250px; height: 310px;float:left; margin-left:40px; margin-top: 10px; margin-bottom:100px;">
+<% if(loginMember != null && loginMember.getTypeNumber() != 1 && loginMember.getTypeNumber() != 3){ %>
 <div class= "yu-booktitle" style="width: 250px; height:40px; " onclick="location.href='/sori/bsdetail?bookcode=<%=list.get(i).getBookCode()%>'"><%=list.get(i).getBookTitle()%></div>
+<% }else{ %>
+<div class= "yu-booktitle" style="width: 250px; height:40px; "><%=list.get(i).getBookTitle()%></div>
+<% } %>
 <div class = "yu-bookimg" style="width: 250px; height:270px;"><img class= "yu-bookimg1"style= "width:250px;
 	height: 270px;"src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg()%>"></div>
 </div>
