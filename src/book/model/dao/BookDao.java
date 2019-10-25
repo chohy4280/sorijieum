@@ -508,8 +508,9 @@ public class BookDao {
 		}
 
 
-		public BookMaking selectPlay(Connection conn, String bookcode) {
-			BookMaking bookmaking = null;
+	
+		public Book selectPlayPage(Connection conn, String bookcode) {
+			Book book = null;
 			Statement stmt = null;
 			ResultSet rset = null;
 			
@@ -520,10 +521,10 @@ public class BookDao {
 				rset = stmt.executeQuery(query);
 				
 				if(rset.next()) {
-					bookmaking = new BookMaking();
+					book = new Book();
 					
-					bookmaking.setBookcode(bookcode);
-					bookmaking.setBookrtxt(rset.getString("bookrtxt"));
+					book.setBookCode(bookcode);
+					book.setBookRtxt(rset.getString("bookrtxt"));
 					
 	}
 			} catch (SQLException e) {
@@ -533,7 +534,118 @@ public class BookDao {
 				close(stmt);
 			}
 			
-			return bookmaking;
+			return book;
 		}
 
+
+		public Book selectPlay(Connection conn, String bookcode) {
+			Book book = null;
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = "SELECT BOOKRTXT FROM BOOKMAKING "
+					+ "JOIN BOOK ON BOOKMAKING.BOOKCODE = "
+					+ "BOOK.BOOKCODE WHERE BOOK.BOOKCODE = '" + bookcode + "'" ;
+			
+			try {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()) {
+					book = new Book();
+					
+					book.setBookCode(bookcode);
+					book.setBookRtxt(rset.getString("bookrtxt"));
+					
+	}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			return book;
+
+		}
+
+
+		public int updateBookReadCount(Connection conn, String bookcode) { //도서조회수 증가
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "update book set bookviews=bookviews+1 where bookcode=? ";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				
+				result = pstmt.executeUpdate();
+			} catch ( SQLException e) {
+				e.printStackTrace();
+			}finally {
+			close(pstmt);
+			return result;
+		}
+	}
+
+
+		public ArrayList<Book> selectTop5(Connection conn) {
+			ArrayList<Book> list = new ArrayList<Book>();
+			
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			// 조회수 많은 순 상위 5개 조회
+			String query = "select * " + 
+					"from (select rownum rnum, bookcode, booktitle, bookviews " + 
+					"from (select * from book " + 
+					"order by bookviews desc)) " + 
+					"where rnum >= 1 and rnum <= 5";
+			
+			try {
+				stmt = conn.createStatement();			
+				rset = stmt.executeQuery(query);
+				
+				while(rset.next()) {
+					Book book = new Book();
+					
+					book.setBookCode(rset.getString("bookcode"));
+					book.setBookTitle(rset.getString("booktitle"));
+					book.setBookViews(rset.getInt("bookviews"));			
+					
+					list.add(book);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(stmt);
+			}
+			
+			return list;
+		}
+
+
+		public int addLikeBook(Connection conn, String userId, String bookcode) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "insert into likebook values(?, ?)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, bookcode);
+				
+				result=pstmt.executeUpdate();
+				
+				System.out.println("dao : " + query);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+			close(pstmt);
+		}
+			return result;
+}
 }

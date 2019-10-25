@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import book.model.service.BookService;
+import book.model.vo.Book;
 import bookmaking.model.service.BookMakingService;
 import bookmaking.model.vo.BookMaking;
 
@@ -34,13 +36,15 @@ public class BookSearchPlayPageServlet extends HttpServlet {
 		//도서재생 페이지 이동하기 위한 컨트롤러
 		request.setCharacterEncoding("utf-8");
 		
+		
 		String bookcode = request.getParameter("bookcode");
-		BookMaking bm = new BookMakingService().selectPlayPage(bookcode);
+		Book book = new BookService().selectPlayPage(bookcode);
 		
 		RequestDispatcher view = null;
-		if(bm !=null) {
-			view = request.getRequestDispatcher("views/boardsearch/bookSearchPlay.jsp");
-			request.setAttribute("bm", bm);
+		if(book !=null) {
+			view = request.getRequestDispatcher("views/booksearch/bookSearchPlay.jsp");
+			request.setAttribute("book", book);
+			
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

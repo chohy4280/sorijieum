@@ -56,11 +56,13 @@ public class NoticeListServletServlet extends HttpServlet { //공지사항 전�
 		int endnum = currentPage * limit;
 	
 		ArrayList<Notice> list = nservice.selectAll(startnum, endnum);
+		ArrayList<Notice> toplist = nservice.selectTopFixed();
 		
 		RequestDispatcher view = null;
 		if(list.size() > 0) {
 			view = request.getRequestDispatcher("views/boardnotice/noticeListView.jsp");
 			request.setAttribute("list", list);
+			request.setAttribute("toplist", toplist);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);

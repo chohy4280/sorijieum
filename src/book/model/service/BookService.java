@@ -156,11 +156,55 @@ public class BookService {
 		}
 
 
-		public BookMaking selectPlay(String bookcode) {
-			 Connection conn = getConnection();
-			 BookMaking bookmaking = bDao.selectPlay(conn,bookcode);
-			 close(conn);
-			 return bookmaking;
+		public Book selectPlayPage(String bookcode) {
+			Connection conn = getConnection();
+			Book book = bDao.selectPlayPage(conn, bookcode);
+			close(conn);
+			
+			return book;
+		}
+
+
+		public Book selectPlay(String bookcode) {
+			Connection conn = getConnection();
+			Book book = bDao.selectPlay(conn, bookcode);
+			close(conn);
+			return book;
+		}
+
+
+		public void updateBookReadCount(String bookcode) { 
+			Connection conn = getConnection();
+			int result = bDao.updateBookReadCount(conn,bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			
+			
+		}
+
+
+		public ArrayList<Book> selectTop5() {
+			Connection conn = getConnection();
+			ArrayList<Book> list = bDao.selectTop5(conn);
+			close(conn);
+			return list;
+		}
+
+
+
+		public int addLikeBook(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = bDao.addLikeBook(conn,userId, bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			return result;
+			
 		}
 
 

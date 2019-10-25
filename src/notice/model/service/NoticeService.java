@@ -46,13 +46,6 @@ public class NoticeService {
 		return notice;
 	}
 
-	public Notice selectOneForTop(int noticeno) {
-		Connection conn = getConnection();
-		Notice notice = nDao.selectOneForTop(conn, noticeno);
-		close(conn);
-		return notice;
-	}
-
 	public int modifyNotice(Notice notice) {
 		Connection conn = getConnection();
 		int result = nDao.modifyNotice(conn, notice);
@@ -85,6 +78,13 @@ public class NoticeService {
 			rollback(conn);
 		close(conn);
 		
+	}
+
+	public ArrayList<Notice> selectTopFixed() {
+		Connection conn = getConnection();
+		ArrayList<Notice> toplist = nDao.selectTopFixed(conn);
+		close(conn);
+		return toplist;
 	}
 
 }

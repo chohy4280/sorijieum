@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
      <%@ page import = "java.util.ArrayList, book.model.vo.Book, member.model.vo.Member, bookmaking.model.vo.BookMaking" %>
-    <% BookMaking bookmaking = (BookMaking)request.getAttribute("bookmaking");%>
+    <% Book book = (Book)request.getAttribute("book");
+    BookMaking bm =(BookMaking)request.getAttribute("bookmaking");%>
 
 <!DOCTYPE html>
 <html>
@@ -16,9 +17,10 @@
 <section class="my-section">
 <center>
 
-<div class="yu.textbook" style="border: 3px solid;">
-<%= bookmaking.getBookrtxt() %>
-</div>
+<textarea row= "60" cols="100">
+<%= bm.getBookrtxt() %>
+</textarea>
+
 
 
 
