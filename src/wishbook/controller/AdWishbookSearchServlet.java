@@ -39,6 +39,7 @@ public class AdWishbookSearchServlet extends HttpServlet {
 		String keyword = request.getParameter("keyword");
 		String wishstatus = request.getParameter("wishstatus");
 		
+		
 		// ----------------- 페이징 처리 추가 -----------------
 				int currentPage; // 현재 페이지를 표시할 변수
 				int limit; // 한 페이지에 게시글이 몇 개가 보여질 것인지 표시

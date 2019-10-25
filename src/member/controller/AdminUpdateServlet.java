@@ -36,6 +36,7 @@ public class AdminUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 수정용
 		request.setCharacterEncoding("utf-8");
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
 		Member m = new Member();
 		m.setUserId(request.getParameter("userid"));
@@ -47,7 +48,8 @@ public class AdminUpdateServlet extends HttpServlet {
 		int result = new MemberService().updateAdmin(m);
 		
 		if(result > 0) {
-			response.sendRedirect("/sori/addetail.ad?userid=" + m.getUserId());
+			response.sendRedirect("/sori/addetail.ad?userid=" + m.getUserId()+"&page="+currentPage);
+			request.setAttribute("currentPage", currentPage);
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "관리자 정보 수정 실패!");

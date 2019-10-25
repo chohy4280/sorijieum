@@ -126,14 +126,20 @@ public class QuitDao {
 				2-2 아이디 O, 회원유형 O, 탈퇴유형 전체
 				2-3 아이디 O, 회원유형 전체, 탈퇴유형 O
 				2-4 아이디 O, 회원유형 O, 탈퇴유형 O*/
-				if(userid == null) {
+				if(userid == null || userid=="") {
 					if(typenumber.equals("ALL") && quittype.equals("ALL"))				//1-1
 						query = "select count(*) from quit join member using (userid) where typenumber in (1, 2, 3, 4) and quittype in ('F', 'G') order by quitdate desc";
 					
-					else if(!(typenumber.equals("ALL")) && quittype.equals("ALL"))		//1-2
+					else if(!(typenumber.equals("ALL")) && quittype.equals("ALL")) {	//1-2
 						query = "select count(*) from quit join member using(userid) where typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate desc";
 					
-					else if(typenumber.equals("ALL") && !quittype.equals("ALL"))		//1-3
+						if(typenumber.equals("12") && quittype.equals("ALL"))			// 메인 이용자용
+							query= "select count(*) from quit join member using (userid) where typenumber in (1, 2) and quittype in ('F', 'G') and quitdate like sysdate order by quitdate desc";
+
+						else if(typenumber.equals("33") && quittype.equals("ALL"))			// 메인 제작자용
+							query= "select count(*) from quit join member using (userid) where typenumber = 3 and quittype in ('F', 'G') and quitdate like sysdate order by quitdate desc";
+					
+					}else if(typenumber.equals("ALL") && !quittype.equals("ALL"))		//1-3
 						query = "select count(*) from quit join member using(userid) where typenumber in (1,2,3,4) and quittype = '" + quittype + "' order by quitdate desc";
 					
 					else if(!(typenumber.equals("ALL")) && !quittype.equals("ALL"))	//1-4
@@ -169,7 +175,7 @@ public class QuitDao {
 		}
 		
 		
-		// 관리자 탈퇴화원 검색 조회용
+		// 관리자 탈퇴회원 검색 조회용
 		public ArrayList<Quit> selectQuitMemberSearch(Connection conn, String typenumber, String userid, String quittype, int startRow, int endRow){
 			ArrayList<Quit> list = new ArrayList<Quit>();
 			PreparedStatement pstmt = null;
@@ -180,8 +186,8 @@ public class QuitDao {
 /*			조건 경우의 수
  			1-1 아이디 X, 회원유형 전체, 탈퇴유형 전체
 			1-2 아이디 X, 회원유형 O, 탈퇴유형 전체
-				메인용 회원유형 이용자, 탈퇴유형 전체, 탈퇴일 오늘
-				메인용 회원유형 제작자, 탈퇴유형 전체, 탈퇴일 오늘
+				메인용 회원유형 이용자, 탈퇴유형 전체, 탈퇴일 오늘 typenumber12
+				메인용 회원유형 제작자, 탈퇴유형 전체, 탈퇴일 오늘 typenumber33
 			1-3 아이디 X, 회원유형 전체, 탈퇴유형 O
 			1-4 아이디 X, 회원유형 O, 탈퇴유형 O
 
@@ -189,36 +195,36 @@ public class QuitDao {
 			2-2 아이디 O, 회원유형 O, 탈퇴유형 전체
 			2-3 아이디 O, 회원유형 전체, 탈퇴유형 O
 			2-4 아이디 O, 회원유형 O, 탈퇴유형 O*/
-			if(userid == null) {
+			if(userid == null || userid == "") {
 				if(typenumber.equals("ALL") && quittype.equals("ALL"))				//1-1
-					query = sentence+" where typenumber in (1, 2, 3, 4) and quittype in ('F', 'G') order by quitdate desc)) where rnum between ? and ?";
+					query = sentence+" where typenumber in (1, 2, 3, 4) and quittype in ('F', 'G') order by quitdate asc, userid asc)) where rnum between ? and ?";
 				
-				else if(!(typenumber.equals("ALL")) && quittype.equals("ALL"))		//1-2
-					query = sentence+" where typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate desc)) where rnum between ? and ?";
+				else if(!(typenumber.equals("ALL")) && quittype.equals("ALL")) {		//1-2
+					query = sentence+" where typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate asc, userid asc)) where rnum between ? and ?";
 				
-				else if(typenumber.equals(12) && quittype.equals("ALL"))			// 메인 이용자용
-					query= sentence+" where typenumber in (1,2) and quittype in ('G','F') and quitdate like sysdate order by quitdate desc)) where rnum between ? and ?";
+					if(typenumber.equals("12") && quittype.equals("ALL"))			// 메인 이용자용
+						query= sentence+" where typenumber in (1,2) and quittype in ('G','F') and quitdate like sysdate order by quitdate desc, userid asc)) where rnum between ? and ?";
 
-				else if(typenumber.equals(33) && quittype.equals("ALL"))			// 메인 제작자용
-					query= sentence+" where typenumber = 3 and quittype in ('G','F') and quitdate like sysdate order by quitdate desc)) where rnum between ? and ?";
+					else if(typenumber.equals("33") && quittype.equals("ALL"))			// 메인 제작자용
+						query= sentence+" where typenumber = 3 and quittype in ('G','F') and quitdate like sysdate order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
-				else if(typenumber.equals("ALL") && !quittype.equals("ALL"))		//1-3
-					query = sentence+" where typenumber in (1,2,3,4) and quittype = '" + quittype + "' order by quitdate desc)) where rnum between ? and ?";
+				}else if(typenumber.equals("ALL") && !quittype.equals("ALL"))		//1-3
+					query = sentence+" where typenumber in (1,2,3,4) and quittype = '" + quittype + "' order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
 				else if(!(typenumber.equals("ALL")) && !quittype.equals("ALL"))	//1-4
-					query = sentence+" where typenumber = " + typenumber + " and quittype = '" + quittype + "' order by quitdate desc)) where rnum between ? and ?";
+					query = sentence+" where typenumber = " + typenumber + " and quittype = '" + quittype + "' order by quitdate desc, userid asc)) where rnum between ? and ?";
 			}else {
 				if(typenumber.equals("ALL") && quittype.equals("ALL"))				//1-1
-					query = sentence+" where userid like '%" + userid + "%' and typenumber in (1,2,3,4) and quittype in ('G', 'F') order by quitdate desc)) where rnum between ? and ?";
+					query = sentence+" where userid like '%" + userid + "%' and typenumber in (1,2,3,4) and quittype in ('G', 'F') order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
 				else if(!(typenumber.equals("ALL")) && quittype.equals("ALL"))		//1-2
-					query = sentence+" where userid like '%" + userid + "%' and typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate desc)) where rnum between ? and ?";
+					query = sentence+" where userid like '%" + userid + "%' and typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
 				else if(typenumber.equals("ALL") && !quittype.equals("ALL"))		//1-3
-					query = sentence+" where userid like '%" + userid + "%' and typenumber in (1,2,3,4) and quittype = '" + quittype + "' order by quitdate desc)) where rnum between ? and ?";
+					query = sentence+" where userid like '%" + userid + "%' and typenumber in (1,2,3,4) and quittype = '" + quittype + "' order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
 				else if(!(typenumber.equals("ALL")) && !quittype.equals("ALL"))	//1-4
-					query = sentence+" where userid like '%" + userid + "%' and typenumber = " + typenumber + " and quittype = '" + quittype + "' order by quitdate desc)) where rnum between ? and ?";
+					query = sentence+" where userid like '%" + userid + "%' and typenumber = " + typenumber + " and quittype = '" + quittype + "' order by quitdate desc, userid asc)) where rnum between ? and ?";
 			}
 			
 			try {

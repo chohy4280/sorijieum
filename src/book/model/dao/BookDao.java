@@ -142,16 +142,17 @@ public class BookDao {
 			ResultSet rset = null;
 			
 			String query = null;
+			String sentence = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book";
 			if(keyword == null) {					// case1)검색어가 없고
 				if(makestatus.equals("ALL") == true)	// case1-1) 전체
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
 				else									// case1-2) 상태선택
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
 			} else {								// case2)검색어가 있고
 				if(makestatus.equals("ALL") == true)	// case2-1) 전체
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus in ('WAIT', 'MAKE', 'DONE') order by bookdate desc)) where rnum between ? and ?";
 				else									// case2-2) 상태선택
-					query = "select * from (select rownum rnum, bookcode, booktitle, author, publisher, makestatus, bookdate from(select * from book where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
+					query = sentence+" where bookdelyn='N' and " + searchtype + " like '%" + keyword + "%' and makestatus = '" + makestatus + "' order by bookdate desc)) where rnum between ? and ?";
 			}
 			
 
@@ -249,8 +250,33 @@ public class BookDao {
 		
 		
 		// 관리자 도서 정보 수정용
-		public Book updateBook(Connection conn, String bookcode) {
-			return null;
+		public int updateBook(Connection conn, Book b) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String query = "update book set booktitle=?, author=?, publisher=?, publishdate=?, bookpage=?, bookoimg=?, bookrimg=?, bookopdf=?, bookrpdf=? where bookcode=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, b.getBookTitle());
+				pstmt.setString(2, b.getAuthor());
+				pstmt.setString(3, b.getPublisher());
+				pstmt.setDate(4, b.getPublishDate());
+				pstmt.setInt(5, b.getBookPage());
+				pstmt.setString(6, b.getBookOimg());
+				pstmt.setString(7, b.getBookRimg());
+				pstmt.setString(8, b.getBookOpdf());
+				pstmt.setString(9, b.getBookRpdf());
+				pstmt.setString(10, b.getBookCode());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
 		}
 		
 		

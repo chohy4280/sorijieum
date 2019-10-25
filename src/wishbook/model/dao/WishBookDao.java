@@ -49,7 +49,7 @@ public class WishBookDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from (select rownum rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from(select * from wishbook order by wishdate desc)) where rnum between ? and ?";
+		String query = "select rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from (select rownum rnum, wishno, wishwriter, wishbooktitle, wishdate, wishstatus, wishbookadmin, wishstatusdate from(select * from wishbook order by wishdate desc, wishno desc)) where rnum between ? and ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, startRow);
@@ -85,7 +85,7 @@ public class WishBookDao {
 		Statement stmt = null;
 		ResultSet rset = null;
 		String query = "select * from wishbook where wishstatus = 'WAIT'";
-		
+		 
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);

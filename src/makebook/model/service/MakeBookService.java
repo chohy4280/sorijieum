@@ -1,9 +1,14 @@
 package makebook.model.service;
 
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.getConnection;
+
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import makebook.model.dao.MakeBookDao;
 import makebook.model.vo.MakeBook;
+import makebook.model.vo.adminMakeBook;
 
 public class MakeBookService {
 	
@@ -24,8 +29,19 @@ public class MakeBookService {
   
 	// 관리자 서비스 *******************************************
 	// 제작자 제작도서 조회용
-	public ArrayList<MakeBook> selectMakerMakebookList(String userid){
-		return null;
+	public ArrayList<adminMakeBook> selectMakerMakebookList(String userid, int startRow, int endRow){
+		Connection conn = getConnection();
+		ArrayList<adminMakeBook> list = mbDao.selectMakerMakebookList(conn, userid, startRow, endRow);
+		close(conn);
+		return list;
+	}
+
+	// 관리자 제작자 제작도서 리스트카운트용
+	public int getListCountAdmin(String userid) {
+		Connection conn = getConnection();
+		int listCount = mbDao.getListCountAdmin(conn, userid);
+		close(conn);
+		return listCount;
 	}
 
 }

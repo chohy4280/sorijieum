@@ -356,7 +356,7 @@ public class QnaDao {
 	  PreparedStatement pstmt = null;
 	  ResultSet rset = null;
 	  
-	  String query = "select * from (select rownum rnum, qnano, qnastatus, qnatitle, qnawriter, qnadate, qnaviews from qna order by qnadate asc) where rnum between ? and ?";
+	  String query = "select * from (select rownum rnum, qnano, qnastatus, qnatitle, qnawriter, qnadate, qnaviews from (select * from qna order by qnadate desc)) where rnum between ? and ?";
 	  try {
 		pstmt = conn.prepareStatement(query);
 		pstmt.setInt(1, startRow);
@@ -400,10 +400,10 @@ public class QnaDao {
 		 	  2-1 검색조건 O, 답변여부 전체
 		 	  2-2 검색조건 O, 답변여부 O*/
 		 	  
-		 	  if(keyword == null) {
+		 	  if(keyword == null || keyword=="") {
 		 		  if(qnastatus.equals("ALL")) {
-		 			  if(qnadate != null) //1-1.1 메인화면 새문의글 조회용
-		 				  query = "select count(*) from (select * from qna where qnadate = sysdate) where qnastatus in ('Y', 'N')";
+		 			  if(qnadate.equals("sysdate")) //1-1.1 메인화면 새문의글 조회용
+		 				  query = "select count(*) from (select * from qna where qnadate like sysdate) where qnastatus in ('Y', 'N')";
 		 			  else	// 1-1
 		 			  query = "select count(*) from qna where qnastatus in ('Y', 'N')";
 		 		  }else // 1-2
@@ -445,19 +445,19 @@ public class QnaDao {
 	  2-1 검색조건 O, 답변여부 전체
 	  2-2 검색조건 O, 답변여부 O*/
 	  
-	  if(keyword == null) {
+	  if(keyword == null || keyword=="") {
 		  if(qnastatus.equals("ALL")) {
-			  if(qnadate != null) //1-1.1 메인화면 새문의글 조회용
-				  query = sentence+" where qnadate like sysdate and qnastatus in ('Y', 'N') order by qnadate asc)) where rnum between ? and ?";
+			  if(qnadate.equals("sysdate")) //1-1.1 메인화면 새문의글 조회용
+				  query = sentence+" where qnadate like sysdate and qnastatus in ('Y', 'N') order by qnadate desc)) where rnum between ? and ?";
 			  else	// 1-1
-			  query = sentence+" where qnastatus in ('Y', 'N') order by qnadate asc)) where rnum between ? and ?";
+			  query = sentence+" where qnastatus in ('Y', 'N') order by qnadate desc)) where rnum between ? and ?";
 		  }else // 1-2
-			  query = sentence+" where qnastatus = '" + qnastatus + "' order by qnadate asc)) where rnum between ? and ?";
+			  query = sentence+" where qnastatus = '" + qnastatus + "' order by qnadate desc)) where rnum between ? and ?";
 	  }else {
 		  if(qnastatus.equals("ALL")) // 2-1
-			  query = sentence+" where " + searchtype + " like '%" + keyword + "%' and qnastatus in ('Y', 'N') order by qnadate asc)) where rnum between ? and ?";
+			  query = sentence+" where " + searchtype + " like '%" + keyword + "%' and qnastatus in ('Y', 'N') order by qnadate desc)) where rnum between ? and ?";
 		  else // 2-2
-			  query = sentence+" where " + searchtype + " like '%" + keyword + "%' and qnastatus = '" + qnastatus + "' order by qnadate asc)) where rnum between ? and ?";
+			  query = sentence+" where " + searchtype + " like '%" + keyword + "%' and qnastatus = '" + qnastatus + "' order by qnadate desc)) where rnum between ? and ?";
 	  }
 	  
 	  try {
@@ -473,6 +473,7 @@ public class QnaDao {
 			q.setQnaWriter(rset.getString("qnawriter"));
 			q.setQnaDate(rset.getDate("qnadate"));
 			q.setQnaViews(rset.getInt("qnaviews"));
+			q.setQnaNo(rset.getInt("qnano"));
 			
 			list.add(q);
 		}

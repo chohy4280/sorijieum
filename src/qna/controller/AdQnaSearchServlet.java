@@ -90,6 +90,11 @@ public class AdQnaSearchServlet extends HttpServlet {
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("listCount", listCount);
+			request.setAttribute("searchtype", searchtype);
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("qnastatus", qnastatus);
+			request.setAttribute("qnadate", qnadate);
+
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "게시물 검색 실패!");

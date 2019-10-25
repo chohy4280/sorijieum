@@ -78,8 +78,16 @@ public class BookService {
 	
 	
 	// 관리자 도서 정보 수정용
-	public Book updateBook(String bookcode) {
-		return null;
+	public int updateBook(Book b) {
+		Connection conn = getConnection();
+		int result = bDao.updateBook(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		
+		return result;
 	}
 	
 	
