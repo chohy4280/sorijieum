@@ -46,7 +46,7 @@ padding:10px 5px 23px; margin:0px 40px 0px 10px;">제작가이드라인 안내</
 <div class="ye-bookimg" style="float:left;">
 <img id="보건교사 안은영" src="/sori/resources/book_upfiles/<%= bmp.getBookRimg() %>">
 </div>
-<div class="ui orange compact message" style="font-size:11pt;position:relative;bottom:-350px;left:-722px;text-align:center;width:18%;height:5.5%">
+<div class="ui orange compact message" style="font-size:12pt;position:relative;bottom:-347px;left:-720px;text-align:center;width:16%;height:5%">
   제작은  10페이지씩입니다!
 </div>
 <!-- bookinfo 시작 -->

@@ -34,17 +34,15 @@ public class BookMakingMainPopupServlet extends HttpServlet {
 		// 도서제작 피디에프 파일의 이미지 도서코드 불러오기 컨트롤러
 		String bookcode = request.getParameter("bookcode");
 		String userid = request.getParameter("userid");
-		int currentPage = 1;
-		BookMakingProgress bmp = new BookMakingService().selectBookMakingMainLoad(bookcode, userid);
+		BookMakingProgress bmp = new BookMakingService().selectBookMakingPopupLoad(bookcode, userid);
 		RequestDispatcher view = null;
 		if(bmp != null) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakingpopup.jsp");
 			request.setAttribute("bmp", bmp);
-			request.setAttribute("currentPage", currentPage);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", " 실패!");
+			request.setAttribute("message", "도서제작 팝업창 불러오기 실패!");
 			view.forward(request, response);
 		}
 	}

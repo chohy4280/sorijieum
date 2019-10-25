@@ -21,6 +21,12 @@ function winOpens(){
 	window.opener.location.href = "/sori/bmmload?bookcode=<%=bmp.getBookCode() %>&userid=<%= loginMember.getUserId() %>";
 	window.self.close();
 }
+
+function noOpen(){
+	alert("다른 제작자가 도서를 제작중입니다. 잠시후에 다시 제작버튼을 눌러주세요!");
+	window.opener.location.href = "/sori/bmkmain";
+	window.self.close();
+}
 </script>
 <style>
 @font-face {
@@ -74,15 +80,21 @@ function winOpens(){
     </font></div>
     <p><font style="vertical-align: inherit;">
     제작 가이드라인을 반드시 숙지해주신 후,<br>제작에 참여해주시기 바랍니다.<br>
-    제작은 10페이지씩 참여하실 수 있으며,<br>가급적 주어진 제작 시간 안에 완료하여 주시기 바랍니다.<br>
-    완료하지 못하시면 추후 제작 참여에 패널티가 있을 수 있습니다.<br>
-    감사합니다.</font></p>
+    제작은 10페이지씩 참여하실 수 있으며,<br>반드시 주어진 시간 내에 완료하여 주시기 바랍니다.<br>
+    제작시간 내에 완료하지 못하시면 제작중이던 페이지는 사라지고, <br>메인페이지로 이동됩니다.<br>
+    제작시간은 쪽수 대비 문장량으로 최대한 넉넉하게 주어집니다!<br>
+    다시한번 도서제작에 참여해주신 제작자분의 노고에 깊은 감사를 드립니다.
+  </font></p>
   </div>
 </div>
  <div class="ye-make-button" align="right" style="margin-top:-30px;margin-right:65px;">
  <button class="ui yellow button" onclick="winOpen()"
 style="font-size:10pt;text-align:center;font-family:'S-Core Dream 5';">제작가이드라인 안내</button>
+<% if(bmp.getBookmakestartstatus().equals("N")){ %>
 <button onclick="winOpens()" class="ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
+<% }else{ %>
+<button onclick="noOpen()" class="ui yellow button" style="font-family:'S-Core Dream 6'">제작하기</button>
+<% } %>
 <button onclick="window.self.close()" class="ui yellow button" style="font-family:'S-Core Dream 6'">돌아가기</button>
 </div>
 </div>

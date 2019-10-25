@@ -34,8 +34,9 @@ public class BookMakingMainLoadServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		int currentPage = 1;
 		BookMakingProgress bmp = new BookMakingService().selectBookMakingMainLoad(bookcode, userid);
+		int result = new BookMakingService().bookMakingInsert(bookcode, userid);
 		RequestDispatcher view = null;
-		if(bmp != null) {
+		if(bmp != null && result > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakingmain.jsp");
 			request.setAttribute("bmp", bmp);
 			request.setAttribute("currentPage", currentPage);

@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/../inc/top.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>소리지음 사이트 소개</title>
-
-<!-- Semantic UI CND -->
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+<%@ include file="/../inc/top.jsp" %>
 <!-- CUSTOM CSS -->
-	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
-	
+<link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
 <body>
-
 <!-- Content 시작! -->
 	<section class="my-section">
 	<div align="center" style="background:#fff; widht:auto; height:3700px;">
@@ -107,14 +101,16 @@
 		</div>
 		<br><br>
 		<div>연관사이트
-		<select name="jump" onchange="location.href=this.value">
+		<select class="ui mini simple dropdown" name="jump" onchange="location.href=this.value" style="border-radius:5px;">
 			<option>선택</option>
 			<option value="http://www.kbuwel.or.kr">한국시각장애인연합회</option>
 			<option value="http://www.soriview.or.kr/sori">소리가보이는도서관</option>
 			<option value="http://www.itlo.org/">IT로</option>
 			</select>
 		</div>
+		<br><br>
 	</div>
+	<br><br>
 	</section>
 <!-- Content 끝! -->
 </body>

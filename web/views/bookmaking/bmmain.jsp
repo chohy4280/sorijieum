@@ -69,7 +69,7 @@ $(function(){
 			</div>
 			<% } %>
 			</div><!-- bookwait -->
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<div class="ye-bookmaking">
 			<a style="font-weight: bold;">제작중인 도서</a>&nbsp;&nbsp;
 			<button class="mini ui icon button" id="mbutton" 

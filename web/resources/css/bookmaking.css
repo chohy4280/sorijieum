@@ -183,7 +183,7 @@
 	margin-top: 5px;
 	margin-left: 40px;
 	padding: 20px;
-	width: 1350px;
+	width: 1500px;
 	background-color: #f7f7f7
 }
 
@@ -213,10 +213,6 @@
 
 .ui.button{
 	font-family:'S-Core Dream 6';
-}
-
-#guide1{
-	background-color: transparent !important;
 }
 
 #up{

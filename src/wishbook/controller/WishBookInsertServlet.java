@@ -34,7 +34,6 @@ public class WishBookInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 도서신청 추가 컨트롤러
 		request.setCharacterEncoding("utf-8");
-		
 		WishBook wishbook = new WishBook();
 		wishbook.setWishWriter(request.getParameter("wishwriter"));
 		wishbook.setWishBookTitle(request.getParameter("wishbooktitle"));
