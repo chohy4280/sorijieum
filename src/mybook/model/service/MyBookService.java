@@ -1,13 +1,13 @@
 package mybook.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import mybook.model.dao.MyBookDao;
 import mybook.model.vo.MyBook;
+import mybook.model.vo.MyBookMYB;
 import mybook.model.vo.adminMyBook;
 
 public class MyBookService {
@@ -18,13 +18,22 @@ public class MyBookService {
 	public MyBookService() {}
 
 	//내서재 목록
-	public ArrayList<MyBook> selectMyBookList(String userId) {
-		return null;
+	public ArrayList<MyBookMYB> selectMyBookList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<MyBookMYB> myblist = mbDao.selectMyBookList(conn, userid);
+		close(conn);
+		return myblist;
 	}
 	
 	//내서재 삭제
 	public int deleteMyBook(String userid, String bookCode) {
-		return 0;
+		Connection conn = getConnection();
+		int result = mbDao.deleteMyBook(conn, userid, bookCode);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
 	}
   
   	//관리자 서비스****************************************

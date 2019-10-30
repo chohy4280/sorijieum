@@ -1,4 +1,4 @@
-package likebook.controller;
+package wishbook.controller;
 
 import java.io.IOException;
 
@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import likebook.model.service.LikeBookService;
+import wishbook.model.service.WishBookService;
 
 /**
- * Servlet implementation class UserDeleteLikeBookServlet
+ * Servlet implementation class MyWishBookDeleteServlet
  */
-@WebServlet("/lbdel.my")
-public class UserDeleteLikeBookServlet extends HttpServlet {
+@WebServlet("/wbdel.my")
+public class MyWishBookDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserDeleteLikeBookServlet() {
+    public MyWishBookDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,22 +30,21 @@ public class UserDeleteLikeBookServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//관심도서 목록 삭제
-		LikeBookService lbservice = new LikeBookService();
+		// 내 신청도서 선택 삭제용 컨트롤러
+		WishBookService wbservice = new WishBookService();
 		String[] check = request.getParameterValues("delChk");
 		String userid = request.getParameter("userid");
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
 		int result = 0;
 		
-		System.out.println(check);
 		for(int i=0; i<check.length; i++) {
-			result += lbservice.deleteLikeBook(userid, check[i]);
+			result += wbservice.deleteWishBook((Integer.parseInt(check[i])));
 		}
 		
 		RequestDispatcher view = null;
 		if(result == check.length) {
-			view = request.getRequestDispatcher("/likebook.my");
+			view = request.getRequestDispatcher("/wishbook.my");
 			request.setAttribute("userid", userid);
 			request.setAttribute("page", currentPage);
 		}
@@ -54,7 +53,6 @@ public class UserDeleteLikeBookServlet extends HttpServlet {
 			request.setAttribute("message", "삭제 실패");
 		}
 		view.forward(request, response);
-				
 	}
 
 	/**

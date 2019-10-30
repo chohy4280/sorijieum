@@ -34,7 +34,7 @@ public class NoticeTopFixedServlet extends HttpServlet {
 		
 		int noticeno = Integer.parseInt(request.getParameter("no"));
 		
-		Notice notice = new NoticeService().selectOneForTop(noticeno);
+		Notice notice = null;
 		
 		RequestDispatcher view = null;
 		if(notice !=null) {

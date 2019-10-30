@@ -1,4 +1,4 @@
-package makebook.controller;
+package likebook.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import likebook.model.service.LikeBookService;
 import likebook.model.vo.LikeBookLB;
-import makebook.model.service.MakeBookService;
-import makebook.model.vo.MakeBookBBM;
+import mybook.model.vo.MyBookMYB;
 
 /**
- * Servlet implementation class MakerMakedBookListServlet
+ * Servlet implementation class UserLikeBookServlet
  */
-@WebServlet("/makebook.my")
-public class MakerMakeBookListServlet extends HttpServlet {
+@WebServlet("/likebook.my")
+public class UserLikeBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MakerMakeBookListServlet() {
+    public UserLikeBookServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,9 +41,9 @@ public class MakerMakeBookListServlet extends HttpServlet {
 		}
 		int limit = 3;  //한 페이지에 출력할 목록 갯수
 		
-		MakeBookService mbservice = new MakeBookService();
-		ArrayList<MakeBookBBM> mblist = mbservice.selectMakeBookList(userid);	//참여도서 목록 조회
-		int listCount = mblist.size(); //참여도서 전체 개수		
+		LikeBookService lbservice = new LikeBookService();
+		ArrayList<LikeBookLB> lblist = lbservice.selectLikeBookList(userid);	//관심도서 목록 조회
+		int listCount = lblist.size(); //내서재 전체 개수		
 	
 		//총 페이지수 계산
 		int maxPage = listCount / limit;
@@ -62,18 +62,18 @@ public class MakerMakeBookListServlet extends HttpServlet {
 		int endnum = currentPage * limit;
 		
 		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기
-		ArrayList<MakeBookBBM> pageList = new ArrayList<MakeBookBBM>();
+		ArrayList<LikeBookLB> pageList = new ArrayList<LikeBookLB>();
 		
 		for(int i=startnum-1; i<endnum; i++) {
 			if(i == listCount)
 				break;
-			pageList.add(mblist.get(i));
+			pageList.add(lblist.get(i));
 		}
 		
 		RequestDispatcher view = null;
-		if(mblist.size() >=0) {
-			view = request.getRequestDispatcher("views/member/makerMakeBook.jsp");
-			request.setAttribute("mblist", pageList);
+		if(lblist.size() >=0) {
+			view = request.getRequestDispatcher("views/member/userLikeBook.jsp");
+			request.setAttribute("lblist", pageList);
 			request.setAttribute("listCount", listCount);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);

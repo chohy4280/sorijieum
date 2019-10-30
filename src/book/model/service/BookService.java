@@ -216,15 +216,13 @@ public class BookService {
 			
 		}
 
-
-
 	//참여도서 불러오기용 *********************************************************************************
-	/*public Book selectMakeBookOne(String bookcode) {
+	public Book selectMakeBookOne(String bookcode) {
 		Connection conn = getConnection();
 		Book book = bDao.selectMakeBookOne(conn,bookcode);
 		close(conn);
 		return book;
 		
-	}*/
+	}
 
 }

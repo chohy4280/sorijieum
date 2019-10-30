@@ -1,12 +1,13 @@
 package makebook.model.service;
 
-import java.sql.Connection;
 import static common.JDBCTemplate.*;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import makebook.model.dao.MakeBookDao;
 import makebook.model.vo.MakeBook;
+import makebook.model.vo.MakeBookBBM;
 import makebook.model.vo.adminMakeBook;
 
 public class MakeBookService {
@@ -17,16 +18,23 @@ public class MakeBookService {
 	public MakeBookService() {}
 
 	//참여도서 목록
-	public ArrayList<MakeBook> selectMakeBookList(String userid, int startnum, int endnum){
+	public ArrayList<MakeBookBBM> selectMakeBookList(String userid){
 		Connection conn = getConnection();
-		ArrayList<MakeBook> mblist = mbDao.selectMakeBookList(conn,userid,startnum,endnum);
+		ArrayList<MakeBookBBM> mblist = mbDao.selectMakeBookList(conn,userid);
 		close(conn);
 		return mblist;
 	}
 	
 	//참여도서 삭제
-	public int deleteMakeBook(String userid, int bookCode) {
-		return 0;
+	public int deleteMakeBook(String userid, String bookcode) {
+		Connection conn = getConnection();
+		int result = mbDao.deleteMakeBook(conn, userid, bookcode);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 	//참여도서 개수 조회

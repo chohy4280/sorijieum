@@ -237,7 +237,7 @@ public class WishBookDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		System.out.println("wb : " + wb);
-		String query = "update wishbook set wishstatus = ?, rjctreason = ?, wishbookadmin = ?, wishstatusdate = sysdate where wishno = ?";
+		String query = "update wishbook set wishstatus = ?, rjctreason = ?, wishbookadmin = ?, wishstatusdate = sysdate, wishalarm='A' where wishno = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -373,7 +373,7 @@ public class WishBookDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = "insert into wishbook values(SEQ_WISHNO.NEXTVAL, ?, ?, ?, ?, ?, "
-						+ "sysdate, default, default, null, null, default, null)";
+						+ "sysdate, default, default, null, null, default, null, null)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -484,6 +484,128 @@ public class WishBookDao {
 		return result;
 	}
 
+	//내 신청도서 **********************************************************************
+	//내 신청도서 처리된 알림 보낼 리스트
+	public ArrayList<WishBook> selectWishAlarmList(Connection conn, String userid) {
+		ArrayList<WishBook> armlist = new ArrayList<WishBook>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from wishbook where wishwriter=? and wishstatus in ('RJCT','DONE') "+
+						"and wishalarm='A' order by wishstatusdate desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				WishBook wb = new WishBook();
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishWriter(userid);
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishPublisher(rset.getString("wishpublisher"));
+				wb.setWishPublishDate(rset.getDate("wishpublishdate"));
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setRjctReason(rset.getString("rjctreason"));
+				wb.setWishStatusDate(rset.getDate("wishstatusdate"));
+				wb.setWishbookAdmin(rset.getString("wishbookadmin"));
+				armlist.add(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return armlist;
+	}
 
+	//내 신청도서 목록 조회
+	public ArrayList<WishBook> selectMyWishList(Connection conn, String userid) {
+		ArrayList<WishBook> wblist = new ArrayList<WishBook>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from wishbook where wishwriter=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				WishBook wb = new WishBook();
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishWriter(userid);
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishPublisher(rset.getString("wishpublisher"));
+				wb.setWishPublishDate(rset.getDate("wishpublishdate"));
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setRjctReason(rset.getString("rjctreason"));
+				wb.setWishStatusDate(rset.getDate("wishstatusdate"));
+				wb.setWishbookAdmin(rset.getString("wishbookadmin"));
+				wblist.add(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return wblist;
+	}
+	
+	//내 신청도서 알림 삭제
+	public int deleteAlarm(Connection conn, int wishno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update wishbook set wishalarm=null where wishno=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, wishno);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//상단 알림개수 조회용
+	public int getAlarmCount(Connection conn, String userid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select count(*) from wishbook where wishwriter=? and wishalarm='A'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			if(rset.next()) 
+				result = rset.getInt(1);
+	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 }

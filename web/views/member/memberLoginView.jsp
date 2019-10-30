@@ -8,11 +8,43 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인화면</title>
-<%@ include file="/inc/top.jsp" %>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
+<%@ include file="/inc/top.jsp" %>
 <script type="text/javascript">
-	
-	function keyUP(){
+$(function(){
+	if(localStorage.getItem("userid") != null && localStorage.getItem("userpwd") != null){
+		/* $.ajax({
+			url:"autoLogin",
+			type:"post",
+			dataType:"json",
+			data:{
+					userid: localStorage.getItem("userid"),
+					userpwd: localStorage.getItem("userpwd")
+			},
+			success:function(data){
+				$("#p2").html($("#p2").text()+ "<br>"+ data);
+			}
+		});	//$.ajax() */
+		$("#userid").val(localStorage.getItem("userid"));
+		$("#userpwd").val(localStorage.getItem("userpwd"));
+	}
+});
+
+function autoChk(){
+	if($("input:checkbox[name='autoLogin']").is(":checked") == true){
+		localStorage.setItem("userid",$("#userid").val());
+		localStorage.setItem("userpwd",$("#userpwd").val());
+	}
+	else{
+		if(localStorage.getItem("userid") != null && localStorage.getItem("userpwd") != null){
+			localStorage.removeItem("userid");
+			localStorage.removeItem("userpwd");
+		}
+	}
+	return true;
+}
+  
+  	function keyUP(){
 		$("#userid").keyup(function(e){	// 아이디 비밀번호 찾기를 위한 스페이스바 입력
 			if(e.keyCode == 32){				// 스페이스바 입력 시
 				location.href="/sori/views/member/memberSearchIdPwd.jsp";
@@ -34,17 +66,17 @@
   </div>
   <div class="inline field">
     <label>비밀번호</label>&nbsp;&nbsp;
-    <input type="password" placeholder="비밀번호" name="userpwd" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
+    <input type="password" placeholder="비밀번호" name="userpwd" id="userpwd" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
   </div>
 </div>
 <br>
-<input type="checkbox" name="autoLogin" checked>&nbsp;자동로그인
+<label><input type="checkbox" name="autoLogin" value="1">&nbsp;로그인정보저장</label>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <a href="/sori/views/member/memberSearchIdPwd.jsp">아이디|비밀번호 찾기</a>
 <br><br>
 
 <div>
-	<input type="submit" value="로그인" class="ui huge yellow button" style="color:black;font-size:20pt;font-family:'S-Core Dream 6';">
+	<button class="ui huge yellow button" onclick="autoChk()" style="color:black;font-size:20pt;font-family:'S-Core Dream 6';">로그인</button>
 </div>
 </form>
 

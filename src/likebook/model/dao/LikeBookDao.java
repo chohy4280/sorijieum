@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import likebook.model.vo.LikeBook;
+import likebook.model.vo.LikeBookLB;
 import likebook.model.vo.adminLikeBook;
 import mybook.model.vo.adminMyBook;
 
@@ -18,13 +19,60 @@ public class LikeBookDao {
 	public LikeBookDao() {}
 
 	//관심도서 목록
-	public ArrayList<LikeBook> selectLikeBookList(Connection conn, String userid) {
-		return null;
+	public ArrayList<LikeBookLB> selectLikeBookList(Connection conn, String userid) {
+		ArrayList<LikeBookLB> lblist = new ArrayList<LikeBookLB>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				LikeBookLB lb = new LikeBookLB();
+				lb.setBookcode(rset.getString("bookcode"));
+				lb.setBooktitle(rset.getString("booktitle"));
+				lb.setAuthor(rset.getString("author"));
+				lb.setPublisher(rset.getString("publisher"));
+				lb.setPublishdate(rset.getDate("publishdate"));
+				lb.setBookoimg(rset.getString("bookoimg"));
+				lb.setBookrimg(rset.getString("bookrimg"));
+				lb.setUserid(userid);
+				lblist.add(lb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return lblist;
 	}
 	
 	//관심도서 삭제
-	public int deleteLikeBook(Connection conn, String userid, String bookCode) {
-		return 0;
+	public int deleteLikeBook(Connection conn, String userid, String bookcode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "delete from likebook where userid=? and bookcode=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, bookcode);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	// 관리자용 dao************************************************************************************************

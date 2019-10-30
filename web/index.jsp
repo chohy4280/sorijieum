@@ -2,7 +2,11 @@
     pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
-%>    
+	int typeNumber = 0;
+	if(loginMember != null){
+		typeNumber = loginMember.getTypeNumber();
+	}
+%>     
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +18,18 @@
 <script src="/sori/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+    //알림표시할 개수 조회
+    <% if(loginMember != null){ %>
+      $.ajax({
+        url:"/sori/getAlarm",
+        type:"post",
+        data:{userid:"<%= loginMember.getUserId() %>"},
+        success:function(result){
+          $(".floating").text(result);
+        }
+      });
+    <% } %>
+    
 		$("#mainOpen").keyup(function(){	// 메인 처음 접속시 안내 멘트에 대한 값 입력 창
 			var keyV = $(this).val();
 			var audio1 = new Audio("/sori/resources/mp3/mainOpen1.mp3");
@@ -63,14 +79,6 @@
 	})
 
 </script>
-<style>
-@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
-			 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
-			 font-weight: normal; 
-			 font-style: normal; }
-
-* { font-family: 'S-CoreDream-7ExtraBold';}
-</style>
   <!-- 시맨틱유아이 cdn -->
 
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -129,11 +137,42 @@
 <% }else { %>
 <div align="right">
 <h2 class="ui header">
-	<img src="/sori/resources/images/error.png" class="ui circular image">
-	<a href="/sori/views/member/memberMyPage.jsp" style="color:white;"><%= loginMember.getUserName() %>님</a>
-	&emsp;&emsp;&emsp;&emsp;&ensp;<br>
-	<a href="/sori/memberLogout" style="font-size:10pt;color:white;text-decoration:underline;">로그아웃</a>
-	&emsp;&emsp;&emsp;&emsp;&ensp;
+<div align="right" style="margin-right:2%;margin-top:1%">
+	<% if(typeNumber==1){ %>
+			<a class="ui grey image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+			<%= loginMember.getUserName() %><div class="floating ui big red circular label"></div>
+			<div class="detail">
+			이용대기자
+			</div>
+			</a>
+	<% }else if(typeNumber==2){ %>
+			<a class="ui yellow image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+			<%= loginMember.getUserName() %><div class="floating ui big red circular label"></div>
+			<div class="detail">
+			이용자
+			</div>
+			</a>
+	<% }else if(typeNumber==3){ %>
+			<a class="ui olive image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+			<%= loginMember.getUserName() %><div class="floating ui big red circular label"></div>
+			<div class="detail">
+			제작자
+			</div>
+			</a>
+	<% }else if(typeNumber==4 || typeNumber==5){ %>
+			<a class="ui teal image huge label" href="/sori/admain.ad">
+			<%= loginMember.getUserName() %>
+			<div class="detail">
+			<% if(typeNumber==4){ %>
+			부관리자
+			<% }else{ %>
+			대표관리자
+			<% } %>
+			</div>
+			</a>
+	<% } %>
+<div><a class="ui grey label" href="/sori/memberLogout">로그아웃</a></div>
+</div>
 </h2>
 </div>
 <% } %>

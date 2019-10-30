@@ -16,11 +16,12 @@ public class Qna implements java.io.Serializable{
 	private String qnaOfile;
 	private String qnaRfile;
 	private String qnaTop;
+	private String qnaAlarm;
 	
 	public Qna() {}
 
 	public Qna(int qnaNo, String qnaTitle, String qnaWriter, String qnaContent, Date qnaDate, int qnaViews,
-			String qnaStatus, String qnaOfile, String qnaRfile, String qnaTop) {
+			String qnaStatus, String qnaOfile, String qnaRfile, String qnaTop, String qnaAlarm) {
 		super();
 		this.qnaNo = qnaNo;
 		this.qnaTitle = qnaTitle;
@@ -32,6 +33,7 @@ public class Qna implements java.io.Serializable{
 		this.qnaOfile = qnaOfile;
 		this.qnaRfile = qnaRfile;
 		this.qnaTop = qnaTop;
+		this.qnaAlarm = qnaAlarm;
 	}
 
 	public int getQnaNo() {
@@ -114,11 +116,20 @@ public class Qna implements java.io.Serializable{
 		this.qnaTop = qnaTop;
 	}
 
+	public String getQnaAlarm() {
+		return qnaAlarm;
+	}
+
+	public void setQnaAlarm(String qnaAlarm) {
+		this.qnaAlarm = qnaAlarm;
+	}
+
 	@Override
 	public String toString() {
 		return "Qna [qnaNo=" + qnaNo + ", qnaTitle=" + qnaTitle + ", qnaWriter=" + qnaWriter + ", qnaContent="
 				+ qnaContent + ", qnaDate=" + qnaDate + ", qnaViews=" + qnaViews + ", qnaStatus=" + qnaStatus
-				+ ", qnaOfile=" + qnaOfile + ", qnaRfile=" + qnaRfile + ", qnaTop=" + qnaTop + "]";
+				+ ", qnaOfile=" + qnaOfile + ", qnaRfile=" + qnaRfile + ", qnaTop=" + qnaTop + ", qnaAlarm=" + qnaAlarm
+				+ "]";
 	}
 	
 	

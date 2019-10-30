@@ -1,36 +1,52 @@
 package makebook.model.dao;
 
-import java.sql.*;
+import static common.JDBCTemplate.close;
 
-import static common.JDBCTemplate.*;
-
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import makebook.model.vo.MakeBook;
+import makebook.model.vo.MakeBookBBM;
 import makebook.model.vo.adminMakeBook;
-import mybook.model.vo.adminMyBook;
 
 public class MakeBookDao {
 	
 	public MakeBookDao() {}
 	
 	//참여도서 목록
-	public ArrayList<MakeBook> selectMakeBookList(Connection conn, String userid, int startnum, int endnum){
-		ArrayList<MakeBook> mblist = new ArrayList<MakeBook>();
+	public ArrayList<MakeBookBBM> selectMakeBookList(Connection conn, String userid){
+		ArrayList<MakeBookBBM> mblist = new ArrayList<MakeBookBBM>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from makebook where userid=?";
+		String query = "select * from makebook mb,book b,bookmaking bm "+
+					"where mb.bookcode = b.bookcode and mb.bookcode = bm.bookcode and mb.userid=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				MakeBook mb = new MakeBook();
-				mb.setUserId(userid);
-				mb.setBookCode(rset.getString("bookcode"));
-				mb.setMakeDate(rset.getDate("makedate"));
+				MakeBookBBM mb = new MakeBookBBM();
+				mb.setBookcode(rset.getString("bookcode"));
+				mb.setBooktitle(rset.getString("booktitle"));
+				mb.setBookrimg(rset.getString("bookrimg"));
+				mb.setBookoimg(rset.getString("bookoimg"));
+				mb.setAuthor(rset.getString("author"));
+				mb.setPublisher(rset.getString("publisher"));
+				mb.setPublishdate(rset.getDate("publishdate"));
+				mb.setBookpage(rset.getInt("bookpage"));
+				mb.setMakepage(rset.getInt("makepage"));
+				mb.setMakestatus(rset.getString("makestatus"));
+				mb.setBookdelyn(rset.getString("bookdelyn"));
+				mb.setMakedate(rset.getDate("makedate"));
+				mb.setUserid(userid);
+
 				mblist.add(mb);
 			}
 			
@@ -45,8 +61,25 @@ public class MakeBookDao {
 	}
 	
 	//참여도서 삭제
-	public int deleteMakeBook(Connection conn, String userid, int bookCode) {
-		return 0;
+	public int deleteMakeBook(Connection conn, String userid, String bookcode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "delete from makebook where userid=? and bookcode=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, bookcode);
+			result = pstmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	//제작자 참여도서 개수 조회
