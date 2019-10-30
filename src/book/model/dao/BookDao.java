@@ -21,7 +21,7 @@ public class BookDao {
 	
 	// 관리자용 dao************************************************************************************************
 	
-	// 관리자용 전체 도서 갯수 출력용
+	// 관리자용 전체 도서 리스트카운트용
 	public int getListCountAdmin(Connection conn) {
 		int listCount = 0;
 		Statement stmt = null;
@@ -93,7 +93,7 @@ public class BookDao {
 		}
 		
 		
-		// 도서검색 갯수 출력용
+		// 관리자 검색도서 리스트카운트용
 		public int getListCountSelectBookSearch(Connection conn, String searchtype, String keyword, String makestatus){
 			int listCount = 0;
 			Statement stmt = null;
@@ -254,7 +254,7 @@ public class BookDao {
 			int result = 0;
 			PreparedStatement pstmt = null;
 			
-			String query = "update book set booktitle=?, author=?, publisher=?, publishdate=?, bookpage=?, bookoimg=?, bookrimg=?, bookopdf=?, bookrpdf=? where bookcode=?";
+			String query = "update book set booktitle=?, author=?, publisher=?, publishdate=?, bookpage=?, bookoimg=?, bookrimg=?, bookopdf=?, bookrpdf=?, bookinfo=? where bookcode=?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -267,7 +267,8 @@ public class BookDao {
 				pstmt.setString(7, b.getBookRimg());
 				pstmt.setString(8, b.getBookOpdf());
 				pstmt.setString(9, b.getBookRpdf());
-				pstmt.setString(10, b.getBookCode());
+				pstmt.setString(10, b.getBookInfo());
+				pstmt.setString(11, b.getBookCode());
 				
 				result = pstmt.executeUpdate();
 				

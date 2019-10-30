@@ -57,7 +57,7 @@ public class QuitDao {
 			int listCount = 0;
 			Statement stmt = null;
 			ResultSet rset = null;
-			String query = "select count(*) from quit order by quitdate asc";
+			String query = "select count(*) from quit";
 			
 			try {
 				stmt = conn.createStatement();
@@ -81,7 +81,7 @@ public class QuitDao {
 			ArrayList<Quit> list = new ArrayList<Quit>();
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
-			String query = "select * from (select rownum rnum, userid, quittype, quitreason, quitdate from (select * from quit order by quitdate asc, userid asc)) where rnum between ? and ?";
+			String query = "select * from (select rownum rnum, userid, quittype, quitreason, quitdate from (select * from quit order by quitdate desc, userid asc)) where rnum between ? and ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -197,10 +197,10 @@ public class QuitDao {
 			2-4 아이디 O, 회원유형 O, 탈퇴유형 O*/
 			if(userid == null || userid == "") {
 				if(typenumber.equals("ALL") && quittype.equals("ALL"))				//1-1
-					query = sentence+" where typenumber in (1, 2, 3, 4) and quittype in ('F', 'G') order by quitdate asc, userid asc)) where rnum between ? and ?";
+					query = sentence+" where typenumber in (1, 2, 3, 4) and quittype in ('F', 'G') order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
 				else if(!(typenumber.equals("ALL")) && quittype.equals("ALL")) {		//1-2
-					query = sentence+" where typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate asc, userid asc)) where rnum between ? and ?";
+					query = sentence+" where typenumber = " + typenumber + " and quittype in ('G', 'F') order by quitdate desc, userid asc)) where rnum between ? and ?";
 				
 					if(typenumber.equals("12") && quittype.equals("ALL"))			// 메인 이용자용
 						query= sentence+" where typenumber in (1,2) and quittype in ('G','F') and quitdate like sysdate order by quitdate desc, userid asc)) where rnum between ? and ?";

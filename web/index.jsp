@@ -6,7 +6,7 @@
 	if(loginMember != null){
 		typeNumber = loginMember.getTypeNumber();
 	}
-%>    
+%>     
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,37 +15,76 @@
 <link rel="icon" href="/sori/resources/images/favicon.ico">
 <meta charset="UTF-8">
 <title>소리지음 메인페이지</title>
-<!-- 시맨틱유아이 cdn -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<link rel = "stylesheet" type="text/css" href="/sori/resources/css/main.css">
-
 <script src="/sori/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-$(function(){
+	$(function(){
+    //알림표시할 개수 조회
+    <% if(loginMember != null){ %>
+      $.ajax({
+        url:"/sori/getAlarm",
+        type:"post",
+        data:{userid:"<%= loginMember.getUserId() %>"},
+        success:function(result){
+          $(".floating").text(result);
+        }
+      });
+    <% } %>
+    
+		$("#mainOpen").keyup(function(){	// 메인 처음 접속시 안내 멘트에 대한 값 입력 창
+			var keyV = $(this).val();
+			var audio1 = new Audio("/sori/resources/mp3/mainOpen1.mp3");
+			if(keyV == '1'){				// 처음 접속 시(1번 클릭)
+				audio1.play();
+				$("#mainOpen1").focus();
+				
+				
+			}else if(keyV == '2'){			// 로그인 시
+				location.href="/sori/views/member/memberLoginView.jsp";
+			}
+		})
+		
+		$("#mainOpen1").keyup(function(){	// 처음 접속 후 1번 클릭한 뒤에
+			var keyV2 = $(this).val();
+			if(keyV2 == '1'){
+				location.href="/sori/views/sorijieumIntro.jsp";
+			}else if(keyV2 == '2'){
+				location.href="/sori/views/member/memberEnrollAgree.jsp";
+			}
+		})
+		
+		$("#loginMain").keyup(function(){	// 로그인 후
+			var keyV3 = $(this).val();
+			if(keyV3 == '1'){		// 도서검색
+				location.href="/sori/blist";
+			}else if (keyV3 == '2'){	//도서신청
+				location.href="/sori/views/boardwishbook/wishbookAddForm.jsp";
+			}else if (keyV3 == '3'){	// 마이페이지
+				location.href="/sori/views/member/memberMyPage.jsp";
+			}else if (keyV3 == '4'){	// 공지사항
+				location.href="/sori/nlist";
+			}else if (keyV3 == '5'){	// 문의사항
+				location.href="/sori/views/boardqna/qnaInsertView.jsp";
+			}else if (keyV3 == '6'){	//자주묻는질문
+				location.href="/sori/views/boardfaq/faqListView.jsp";
+			}else if (keyV3 == '7'){	// 사이트소개
+				location.href="/sori/views/sorijieumIntro.jsp";
+			}else if (keyV3 == '8'){	// 없음(값 지우기)
+				$("#loginMain").val("");
+			}else if (keyV3 == '9'){	// 없음(값 지우기)
+				$("#loginMain").val("");
+			}else if (keyV3 == '0'){	// 다시듣기
+				location.reload();
+			}
+		})
+	})
 
-//알림표시할 개수 조회
-<% if(loginMember != null){ %>
-	$.ajax({
-		url:"/sori/getAlarm",
-		type:"post",
-		data:{userid:"<%= loginMember.getUserId() %>"},
-		success:function(result){
-			$(".floating").text(result);
-		}
-	});
-<% } %>
-});
 </script>
-<!-- <style>
-@font-face { font-family: 'S-CoreDream-7ExtraBold'; 
-			 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
-			 font-weight: normal; 
-			 font-style: normal; }
+  <!-- 시맨틱유아이 cdn -->
 
-* { font-family: 'S-CoreDream-7ExtraBold';}
-</style> -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<link rel = "stylesheet" type="text/css" href="/sori/resources/css/main.css">
 <style type="text/css">
 @font-face { font-family: 'S-CoreDream-7ExtraBold'; 
 			 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
@@ -181,9 +220,21 @@ $(function(){
     <div class="image">
       	<img onclick="location.href='/sori/views/boardfaq/faqListView.jsp'" src="/sori/resources/images/FAQ.png">
     </div>
-  </div>  
+  </div>
+</div>
 </div>
 
-</div>
+
+<!-- 음성안내 관련 섹션 -->
+<!-- 소리지음에 오신 것을 환영합니다. 처음 이용하신다면 1번 아니면 2번을 눌러주세요 -->
+<%if(loginMember == null) {%>
+<audio src="/sori/resources/mp3/mainOpen.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/mainOpen.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
+<input type="text" id="mainOpen" autofocus="autofocus"> 
+<input type="text" id="mainOpen1">
+<audio src="/sori/resources/mp3/mainOpen1.mp3" id="mainOpen1"><embed src="/sori/resources/mp3/mainOpen1.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
+<%}else{ %>
+<audio src="/sori/resources/mp3/loginMain.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/loginMain.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
+<input type="text" id="loginMain" autofocus="autofocus"> 
+<%} %>
 </body>
 </html>
