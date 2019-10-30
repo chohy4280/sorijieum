@@ -67,10 +67,12 @@ public class NoticeListServletServlet extends HttpServlet { //공지사항 전�
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("listCount", listCount);
+			
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서 신청 전체 목록 조회 실패!");
+			request.setAttribute("message", "공지사항 전체 목록 조회 실패!");
 			view.forward(request, response);
 		}
 	}

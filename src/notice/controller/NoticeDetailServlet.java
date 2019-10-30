@@ -44,6 +44,7 @@ public class NoticeDetailServlet extends HttpServlet {
 		if(notice != null) {//성공 -->뷰에다 전달
 			view = request.getRequestDispatcher("views/boardnotice/noticeDetailView.jsp");
 			request.setAttribute("notice", notice);
+		
 		}else {//실패 -->에러메세지 전달
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", noticeno + "번 공지 상세보기 실패");

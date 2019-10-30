@@ -35,13 +35,18 @@ public class BookSearchTypeServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		 int currentPage = 1;
+		   
 	       if(request.getParameter("page") !=null) {
 	    	   currentPage = Integer.parseInt(request.getParameter("page"));
 	       }
 	       
+		    String search = request.getParameter("search");
+			   String keyword = request.getParameter("keyword");
+
 	       int limit = 10;  
+	       
 	       BookService bservice = new BookService();
-	       int listCount = bservice.getListCount();
+	       int listCount = bservice.getListCountBookSearch(search, keyword);
 	       
 	       int maxPage = listCount/limit;
 	       if(listCount % limit > 0)
@@ -54,26 +59,27 @@ public class BookSearchTypeServlet extends HttpServlet {
 	       
 	       int startRow = (currentPage * limit)-9;
 	       int endRow = currentPage * limit;
-	       String search = request.getParameter("search");
-		   String keyword = request.getParameter("keyword");
 		   
 		   ArrayList<Book> list = bservice.selectBookTitleAuthor(search,keyword,startRow,endRow);
 	
 	
 		
 		RequestDispatcher view = null;
-		if(list.size()>0) {
+		if(list.size()>=0) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchList.jsp");
 			request.setAttribute("list", list);
+			request.setAttribute("search", search);
+			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("listCount", listCount);
 			view.forward(request, response);
 		}else {
 			view= request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", search + "검색조회 실패");
-		    view.forward(request, response);
+			view.forward(request, response);
 		}	
 		
 	}

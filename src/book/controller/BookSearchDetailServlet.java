@@ -1,6 +1,7 @@
 package book.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import book.model.service.BookService;
 import book.model.vo.Book;
+import likebook.model.vo.LikeBook;
 
 /**
  * Servlet implementation class BookSearchDetailServlet
@@ -36,10 +38,13 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 		
 		String bookcode = request.getParameter("bookcode");
 		String userId = request.getParameter("userId");
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
 		BookService bservice = new BookService();
 		Book book = bservice.selectOne(bookcode);
 		bservice.updateBookReadCount(bookcode);
+		
+		ArrayList<LikeBook> list = bservice.selectLikeBook(bookcode, userId);
 		
 		
 		RequestDispatcher view = null;
@@ -48,6 +53,9 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 			view = request.getRequestDispatcher("views/booksearch/bookSearchDetail.jsp");
 			request.setAttribute("book",book);
 			request.setAttribute("userId", userId);
+			request.setAttribute("list", list);
+			request.setAttribute("currentPage", currentPage);
+		
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서불러오기 실패");

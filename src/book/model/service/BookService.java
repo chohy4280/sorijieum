@@ -1,4 +1,4 @@
-package book.model.service;
+ package book.model.service;
 
 import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.commit;
@@ -12,12 +12,15 @@ import java.util.HashMap;
 import book.model.dao.BookDao;
 import book.model.vo.Book;
 import book.model.vo.BookDV;
+import book.model.vo.BookPlay;
 import bookmaking.model.vo.BookMaking;
+import likebook.model.vo.LikeBook;
 
 public class BookService {
 
 	//의존성 주입
 	public BookDao bDao = new BookDao();
+	
 	
 	public BookService() {}
 	
@@ -138,12 +141,12 @@ public class BookService {
 	  }
 
 		 //도서검색 한개만 불러오기
-		 public Book selectOne(String bookcode) {
-			 Connection conn = getConnection();
-			 Book book = bDao.selectOne(conn,bookcode);
-			 close(conn);
-			 return book;
-		 }
+		public Book selectOne(String bookcode) {
+			Connection conn = getConnection();
+			Book book = bDao.selectOne(conn, bookcode);
+			close(conn);
+			return book;
+		}
 	
 	  
       //도서전체목록 페이징 처리
@@ -153,8 +156,8 @@ public class BookService {
 			close(conn);
 			return list;
 		}
-
-
+		
+        //도서검색용
 		public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
 		     Connection conn = getConnection();
 		     ArrayList<Book> list = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
@@ -163,23 +166,8 @@ public class BookService {
 		}
 
 
-		public Book selectPlayPage(String bookcode) {
-			Connection conn = getConnection();
-			Book book = bDao.selectPlayPage(conn, bookcode);
-			close(conn);
-			
-			return book;
-		}
 
-
-		public Book selectPlay(String bookcode) {
-			Connection conn = getConnection();
-			Book book = bDao.selectPlay(conn, bookcode);
-			close(conn);
-			return book;
-		}
-
-
+     //도서조회수 증가용
 		public void updateBookReadCount(String bookcode) { 
 			Connection conn = getConnection();
 			int result = bDao.updateBookReadCount(conn,bookcode);
@@ -192,7 +180,7 @@ public class BookService {
 			
 		}
 
-
+        //인기도서 5권 출력용
 		public ArrayList<Book> selectTop5() {
 			Connection conn = getConnection();
 			ArrayList<Book> list = bDao.selectTop5(conn);
@@ -200,8 +188,9 @@ public class BookService {
 			return list;
 		}
 
-
-
+	
+	
+        //관심도서에 추가하기
 		public int addLikeBook(String userId, String bookcode) {
 			Connection conn = getConnection();
 			int result = bDao.addLikeBook(conn,userId, bookcode);
@@ -214,20 +203,49 @@ public class BookService {
 			
 		}
 
-	public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
-	     Connection conn = getConnection();
-	     ArrayList<Book> list = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
-	     close(conn);
-		return list;
-	}
 
+		public int addLikeBookDel(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = bDao.addLikeBookDel(conn,userId,bookcode);
+			if(result>0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			return result;
+		}
 
-	public BookMaking selectPlay(String bookcode) {
+		//관심도서의 리스트 목록
+		public ArrayList<LikeBook> selectLikeBook(String bookcode,String userId) {
 		 Connection conn = getConnection();
-		 BookMaking bookmaking = bDao.selectPlay(conn,bookcode);
-		 close(conn);
-		 return bookmaking;
-	}
+		 ArrayList<LikeBook> list = bDao.selectLikeBook(conn, bookcode,userId);
+		 return list;
+		}
+
+         //도서검색 만을 위한 도서카운트
+		public int getListCountBookSearch(String search, String keyword) {
+			Connection conn = getConnection();
+		   	 int listCount = bDao.getListCountBookSearch(conn, search, keyword);
+		   	 close(conn);
+		   	 return listCount;
+		 }
+
+
+		public ArrayList<BookPlay> selectOneBookPlay(String bookcode, String userId) {
+			Connection conn = getConnection();
+			ArrayList<BookPlay> bplist = bDao.getselectOneBookPlay(conn,bookcode,userId);
+			close(conn);
+			return bplist ;
+		}
+
+
+
+
+ 
+		
+
+
+
 
 	//참여도서 불러오기용 *********************************************************************************
 	/*public Book selectMakeBookOne(String bookcode) {
@@ -239,3 +257,4 @@ public class BookService {
 	}*/
 
 }
+

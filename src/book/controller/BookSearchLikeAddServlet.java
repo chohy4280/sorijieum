@@ -41,8 +41,8 @@ public class BookSearchLikeAddServlet extends HttpServlet {//관심도서 추가
 		
 		int result = new BookService().addLikeBook(userId, bookcode);
 		
-		if(result > 0) {
-			response.sendRedirect("sori/blist");
+	if(result > 0) {
+			response.sendRedirect("/sori/blist");
 			
 		}else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");

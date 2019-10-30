@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import = "java.util.ArrayList, book.model.vo.Book,bookmaking.model.vo.BookMaking" %>
+    <%@ page import = "java.util.ArrayList, book.model.vo.Book,
+                       likebook.model.vo.LikeBook" %>
     <% Book book = (Book)request.getAttribute("book");
-    BookMaking bm =(BookMaking)request.getAttribute("bookmaking");
-   
+    ArrayList<LikeBook> list = (ArrayList<LikeBook>)request.getAttribute("list");
+    int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+    
     %>
     
 <!DOCTYPE html>
@@ -19,7 +21,7 @@
 </head>
 <body>
 <section class="my-section">
-
+<!-- 도서 상세보기 시작-->
 <div class="yu-bookdetailimg"style="float: left; width: 25%; height: 350px;">
 
 <img class = detailimg src="/sori/resources/book_upfiles/<%=book.getBookRimg()%>"></div>
@@ -34,27 +36,39 @@
 <div class="yu-bookdetailintro"style="/* border: 1px solid blue; */ float: left; width: 40%; height: 350px;">
 <%= book.getBookInfo() %>
 </div> 
+<!-- 도서 상세보기 끝-->
 <center>
-<!-- 관심도서 추가 -->
+
+<!-- 관심도서 추가 및 취소 버튼 시작-->
+
 <button class ="ui inverted white button" onclick="location.href='/sori/bslike?bookcode=<%= book.getBookCode()%>&userId=<%= loginMember.getUserId() %>'">
 <div class="yu-like">
  <i class="huge orange heart icon" ></i>
 </div>
 </button>
+<button class ="ui inverted white button" onclick="location.href='/sori/like.del?bookcode=<%= book.getBookCode()%>&userId=<%= loginMember.getUserId() %>'">
+<div class="yu-like">
+ <i class="huge orange heart icon" ></i>
+</div>
+</button>
  </center>
+ <!-- 관심도서 추가 및 취소 버튼 끝-->
  
- <!-- 재생버튼 -->
- <button class="ui inverted orange button" style=" height: 60px;" id ="yu-playbutton" onclick="location.href='/sori/bplay?bookcode=<%= book.getBookCode() %>'" >
+ <!-- 도서재생버튼 -->
+ <!-- 도서재생 화면으로 이동하기 -->
+ <button class="ui inverted orange button" style=" height: 60px;" id ="yu-playbutton" onclick="location.href='/sori/bplaypage?bookcode=<%= book.getBookCode()%>'">
  
  <i class="play icon"></i>
  </button>
-  
+   <!-- 도서재생버튼 끝-->
+   
   <!-- 목록버튼 -->
   <center>
-  <button class="ui inverted orange button" onclick="location.href='/sori/blist'">
+  <button class="ui inverted orange button" onclick="location.href='/sori/blist?page=<%=currentPage%>'">
 		    목록
 		  </button>
 		  </center>
+ <!-- 목록버튼 끝-->
  </section>
 </body>
 </html>

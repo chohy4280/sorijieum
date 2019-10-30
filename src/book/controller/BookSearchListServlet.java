@@ -58,14 +58,16 @@ public class BookSearchListServlet extends HttpServlet {
        ArrayList<Book> list = bservice.selectList(startRow,endRow);
        
        RequestDispatcher view = null;
-       if(list.size() > 0) {
+       if(list.size() >= 0) {
     	   view = request.getRequestDispatcher("views/booksearch/bookSearchList.jsp");
     	   request.setAttribute("list", list);
     	   request.setAttribute("maxPage", maxPage);
     	   request.setAttribute("currentPage", currentPage);
     	   request.setAttribute("beginPage",beginPage);
     	   request.setAttribute("endPage", endPage);
+    	   request.setAttribute("listCount",listCount);
     	   view.forward(request, response);
+    	   
        }else {
     	   view = request.getRequestDispatcher("views/common/error.jsp");
     	   request.setAttribute("message", currentPage + "페이지 목록 불러오기 실패");
