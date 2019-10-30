@@ -171,4 +171,41 @@ public class WishBookService {
 		close(conn);
 		return wview;
 	}
+	
+	//내 신청도서 **********************************************************************
+	//내 신청도서 최근 처리된 알림 보낼 리스트
+	public ArrayList<WishBook> selectWishAlarmList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<WishBook> armlist = wbDao.selectWishAlarmList(conn,userid);
+		close(conn);
+		return armlist;
+	}
+
+	//내 신청도서 목록 조회
+	public ArrayList<WishBook> selectMyWishList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<WishBook>  wblist = wbDao.selectMyWishList(conn,userid);
+		close(conn);
+		return wblist;
+	}
+	
+	//내 신청도서 알림 삭제
+	public int deleteAlarm(int wishno) {
+		Connection conn = getConnection();
+		int result = wbDao.deleteAlarm(conn,wishno);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	//상단 알림 개수 조회용
+	public int getAlarmCount(String userid) {
+		Connection conn = getConnection();
+		int result = wbDao.getAlarmCount(conn,userid);
+		close(conn);
+		return result;
+	}
 }

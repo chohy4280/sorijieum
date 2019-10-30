@@ -18,12 +18,13 @@ public class MakeBookBBM implements java.io.Serializable {
 	private String bookdelyn;
 	private int makepage;
 	private Date makedate;
+	private String userid;
 	
 	public MakeBookBBM() {}
-	
+
 	public MakeBookBBM(String bookcode, String booktitle, String author, String publisher, Date publishdate,
 			int bookpage, String bookoimg, String bookrimg, String makestatus, String bookdelyn, int makepage,
-			Date makedate) {
+			Date makedate, String userid) {
 		super();
 		this.bookcode = bookcode;
 		this.booktitle = booktitle;
@@ -37,6 +38,7 @@ public class MakeBookBBM implements java.io.Serializable {
 		this.bookdelyn = bookdelyn;
 		this.makepage = makepage;
 		this.makedate = makedate;
+		this.userid = userid;
 	}
 
 	public String getBookcode() {
@@ -134,13 +136,21 @@ public class MakeBookBBM implements java.io.Serializable {
 	public void setMakedate(Date makedate) {
 		this.makedate = makedate;
 	}
+	
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 
 	@Override
 	public String toString() {
 		return "MakeBookBBM [bookcode=" + bookcode + ", booktitle=" + booktitle + ", author=" + author + ", publisher="
 				+ publisher + ", publishdate=" + publishdate + ", bookpage=" + bookpage + ", bookoimg=" + bookoimg
 				+ ", bookrimg=" + bookrimg + ", makestatus=" + makestatus + ", bookdelyn=" + bookdelyn + ", makepage="
-				+ makepage + ", makedate=" + makedate + "]";
+				+ makepage + ", makedate=" + makedate + ", userid=" + userid + "]";
 	}
 
 }

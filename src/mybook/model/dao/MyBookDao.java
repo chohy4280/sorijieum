@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import mybook.model.vo.MyBook;
+import mybook.model.vo.MyBookMYB;
 import mybook.model.vo.adminMyBook;
 
 public class MyBookDao {
@@ -17,14 +18,65 @@ public class MyBookDao {
 	public MyBookDao() {}
 	
   //내서재 목록
-  public ArrayList<MyBook> selectMyBookList(Connection conn, String userId) {
-    return null;
-  }
+	public ArrayList<MyBookMYB> selectMyBookList(Connection conn, String userid) {
+		ArrayList<MyBookMYB> myblist =  new ArrayList<MyBookMYB>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		  
+		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=?";
+		 
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				MyBookMYB myb = new MyBookMYB();
+				myb.setBookcode(rset.getString("bookcode"));
+				myb.setUserid(rset.getString("userid"));
+				myb.setBooktitle(rset.getString("booktitle"));
+				myb.setAuthor(rset.getString("author"));
+				myb.setPublisher(rset.getString("publisher"));
+				myb.setPublishdate(rset.getDate("publishdate"));
+				myb.setBookpage(rset.getInt("bookpage"));
+				myb.setReadpage(rset.getInt("readpage"));
+				myb.setBookoimg(rset.getString("bookoimg"));
+				myb.setBookrimg(rset.getString("bookrimg"));
+				myb.setReadsdate(rset.getDate("readsdate"));
+				myb.setReadrdate(rset.getDate("readrdate"));
+				myblist.add(myb);
+			}
+		} catch (SQLException e) {
+		e.printStackTrace();
+		} finally {
+		close(rset);
+		close(pstmt);
+		}
+		  	  
+		return myblist;
+	}
 
-  //내서재 삭제
-  public int deleteMyBook(Connection conn, String userid, String bookCode) {
-    return 0;
-  }
+	//내서재 삭제
+	public int deleteMyBook(Connection conn, String userid, String bookcode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "delete from mybook where userid=? and bookcode=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, bookcode);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
   // 관리자용 dao************************************************************************************************
   // 이용자 읽은 도서 조회용

@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
 <%@ include file="/inc/memberSide.jsp"%>
 <script type="text/javascript">
 $(function(){
@@ -49,6 +48,18 @@ $(function(){
 		$("."+cname).slideToggle("normal");
 		$(".qComm").not($("."+cname)).slideUp("normal");
 	});
+	
+	//상단 알림 삭제
+	$(".close.icon").click(function(){
+		$.ajax({
+			url:"qarmdel.my",
+			data:{qnano: $(this).attr("id")},
+			type:"post",
+			success:function(result){
+				$("#"+result).css("display","none");
+			}
+		});
+	});
 
 });
 </script>
@@ -62,19 +73,20 @@ $(function(){
 <body>
 <div class="hy-div">
 <section class="hy-section2" >
-<a class="massive ui yellow label" style="font-size: 30px" href="/sori/qlist">내 Q&A</a>
-<span style="color:#fbbe09; font-weight:600">│</span>
+<a class="massive ui yellow label" style="font-size: 30px" href="/sori/qlist.my?userid=<%= loginMember.getUserId() %>">내 Q&A</a>
+<span style="color:#fbbe09; font-weight:600">│</span> 
 <span style="color:grey">내 문의 내역</span><br>
 <!-- 내 문의 알림은 답변 날짜로부터 일주일까지 표시 -->
 <% if(alarmlist != null){ %>
 <% for(Qna q: alarmlist){ %>
-<br>
-<a href="/sori/qdetail?qnano=<%= q.getQnaNo() %>">
-	<div class="ui yellow message hy-alarmdiv">"<%= q.getQnaTitle() %>" 문의글에 답변이 완료되었습니다.</div>
-</a>
+<div class="ui yellow message hy-alarmdiv" id="div_<%= q.getQnaNo() %>" style="display:block;">
+	<a href="/sori/qdetail?qnano=<%= q.getQnaNo() %>" style="color:#AE7651;">
+	"<%= q.getQnaTitle() %>" 문의글에 답변이 완료되었습니다.</a>
+	<i class="close icon" id="<%= q.getQnaNo() %>"></i>
+</div>
 <% }} %>
-<br>
 <!-- 내 문의 목록 출력 -->
+<br>
 내 문의: <%= listcount %> 개
 <form action="/sori/qdelete.my" method="post">
 <table class="hy-listTable" align="center">

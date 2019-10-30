@@ -165,12 +165,12 @@ public class QnaDao {
 		return result;
 	}
 	
-	//삭제시 답변유무 변경
+	//삭제시 답변유무,알림 변경
 	public int deleteQnaCommYN(Connection conn, int qnano) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update qna set qnastatus='N' where qnano=?";
+		String query = "update qna set qnastatus='N',qnaalarm=null where qnano=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -187,12 +187,12 @@ public class QnaDao {
 		return result;
 	}
 	
-	//답변 등록시 답변유무 변경
+	//답변 등록시 답변유무,알림 변경
 	public int insertQnaCommYN(Connection conn, int qnano) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update qna set qnastatus='Y' where qnano=?";
+		String query = "update qna set qnastatus='Y',qnaalarm='A' where qnano=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -214,7 +214,7 @@ public class QnaDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into qna values(seq_qnano.nextval,?,?,?,sysdate,default,default,default,default,?)";
+		String query = "insert into qna values(seq_qnano.nextval,?,?,?,sysdate,default,default,default,default,?,null)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -389,7 +389,7 @@ public class QnaDao {
 		ResultSet rset = null;
 		
 		String query = "select qnatitle,qna.qnano from qna join qnacomment on qna.qnano = qnacomment.qnano "+
-					"where qnawriter=? and qnastatus='Y' and qnacomdate between to_char(sysdate-7,'YYYYMMDD') and sysdate";
+					"where qnawriter=? and qnastatus='Y' and qnaalarm='A' order by qnacomdate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -445,6 +445,53 @@ public class QnaDao {
 		return list;
 	}
   
+	//마이페이지 내 문의 알림 삭제용
+	public int deleteAlarm(Connection conn, int qnano) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update qna set qnaalarm=null where qnano=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnano);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//상단 알림 개수 조회용
+	public int getAlarmCount(Connection conn, String userid) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		System.out.println(userid);
+		String query = "select count(*) from qna where qnawriter=? and qnaalarm='A'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			if(rset.next()) 
+				result = rset.getInt(1);
+	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	// 관리자용 dao************************************************************************************************
   
 	// 관리자 Q&A 전체조회 리스트카운트

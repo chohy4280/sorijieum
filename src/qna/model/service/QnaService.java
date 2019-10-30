@@ -158,7 +158,24 @@ public class QnaService {
 		return list;
 	}
 
+	//마이페이지 내 문의 알림 삭제
+	public int deleteAlarm(int qnano) {
+		Connection conn = getConnection();
+		int result = qDao.deleteAlarm(conn,qnano);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
 	
+	//상단 알림 개수 조회용
+	public int getAlarmCount(String userid) {
+		Connection conn = getConnection();
+		int result = qDao.getAlarmCount(conn,userid);
+		close(conn);
+		return result;
+	}
 	
 	//관리자 서비스****************************************
 	
@@ -222,5 +239,4 @@ public class QnaService {
 		close(conn);
 		return result;
 	}
-
 }

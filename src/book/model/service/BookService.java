@@ -214,20 +214,6 @@ public class BookService {
 			
 		}
 
-	public ArrayList<Book> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
-	     Connection conn = getConnection();
-	     ArrayList<Book> list = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
-	     close(conn);
-		return list;
-	}
-
-
-	public BookMaking selectPlay(String bookcode) {
-		 Connection conn = getConnection();
-		 BookMaking bookmaking = bDao.selectPlay(conn,bookcode);
-		 close(conn);
-		 return bookmaking;
-	}
 
 	//참여도서 불러오기용 *********************************************************************************
 	/*public Book selectMakeBookOne(String bookcode) {

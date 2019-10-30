@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원 사이드바 </title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <%@ include file="/inc/top.jsp"%>
+<%-- <%@ include file="/../inc/cdn.jsp"%> --%>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
-
 <style>
 @font-face { 
 	font-family: 'S-CoreDream-7ExtraBold'; 
@@ -43,11 +43,11 @@ nav {
     <a style="font-size:20pt">도서</a>
     <div class="menu">
     <% if(loginMember.getTypeNumber()==3){ %>
-    	<a class="item" href="/sori/views/member/makerMakeBook.jsp" style="font-size:13pt">참여도서</a>
+    	<a class="item" href="/sori/makebook.my?userid=<%= loginMember.getUserId() %>" style="font-size:13pt">참여도서</a>
     <% }else { %>
-    	<a class="item" href="/sori/views/member/userMyBook.jsp" style="font-size:13pt">내서재</a>
-    	<a class="item" href="/sori/views/member/userLikeBook.jsp" style="font-size:13pt">관심도서</a>
-    	<a class="item" href="/sori/views/member/userWishBook.jsp" style="font-size:13pt">신청도서</a>
+    	<a class="item" href="/sori/mybook.my?userid=<%= loginMember.getUserId() %>" style="font-size:13pt">내서재</a>
+    	<a class="item" href="/sori/likebook.my?userid=<%= loginMember.getUserId() %>" style="font-size:13pt">관심도서</a>
+    	<a class="item" href="/sori/wishbook.my?userid=<%= loginMember.getUserId() %>" style="font-size:13pt">신청도서</a>
     <% } %>
     </div>
   </div>

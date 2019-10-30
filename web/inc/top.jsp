@@ -2,6 +2,10 @@
     pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
+	int typeNumber = 0;
+	if(loginMember != null){
+		typeNumber = loginMember.getTypeNumber();
+	}
 %>
 <!DOCTYPE html>  
 <head>
@@ -20,6 +24,22 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script src="/sori/resources/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+//알림표시할 개수 조회
+<% if(loginMember != null){ %>
+	$.ajax({
+		url:"/sori/getAlarm",
+		type:"post",
+		data:{userid:"<%= loginMember.getUserId() %>"},
+		success:function(result){
+			console.log(result);
+			$(".floating").text(result);
+		}
+	});
+<% } %>
+});
+</script>
 <!-- css -->
 <style>
 @font-face { font-family: 'S-CoreDream-7ExtraBold'; 
@@ -60,14 +80,45 @@ footer{
   <a class="item" href="/sori/qlist">Q&A</a>
   <div class="right menu">
   <% if(loginMember != null){ %>
-  <div style="float:right;margin-right:0;margin-left:25%;margin-top:10px;display:inline-block;overflow:hidden;">
-	<h2 class="ui header">
-	<img src="/sori/resources/images/error.png" class="ui circular image">
-	<a href="/sori/views/member/memberMyPage.jsp" style="color:black;"><%= loginMember.getUserName() %>님</a>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-	<a href="/sori/memberLogout" style="font-size:10pt;color:grey;text-decoration:underline;">로그아웃</a>
-	</h2>
-  </div>
+<h2 class="ui header">
+<div align="right" style="margin-right:10px;margin-top:3%;width:500px;">
+	<% if(typeNumber==1){ %>
+			<a class="ui grey image big label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+			<%= loginMember.getUserName() %><div class="floating ui red circular label"></div>
+			<div class="detail">
+			이용대기자
+			</div>
+			</a>
+	<% }else if(typeNumber==2){ %>
+			<a class="ui yellow image big label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+			<%= loginMember.getUserName() %><div class="floating ui red circular label"></div>
+			<div class="detail">
+			이용자
+			</div>
+			</a>
+	<% }else if(typeNumber==3){ %>
+			<a class="ui olive image big label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+			<%= loginMember.getUserName() %><div class="floating ui red circular label"></div>
+			<div class="detail">
+			제작자
+			</div>
+			</a>
+	<% }else if(typeNumber==4 || typeNumber==5){ %>
+			<a class="ui teal image big label" href="/sori/admain.ad">
+			<%= loginMember.getUserName() %>
+			<div class="detail">
+			<% if(typeNumber==4){ %>
+			부관리자
+			<% }else{ %>
+			대표관리자
+			<% } %>
+			</div>
+			</a>
+	
+	<% } %>
+<div><a class="ui grey label" href="/sori/memberLogout">로그아웃</a></div>
+</div>
+</h2>
   <% }else { %>
   <div style="margin-top:20px;">
    <button class="ui yellow button" onclick="location.href='/sori/views/member/memberLoginView.jsp'" style="font-family:'S-Core Dream 6';">로그인</button>

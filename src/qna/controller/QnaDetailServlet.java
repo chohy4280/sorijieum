@@ -41,8 +41,6 @@ public class QnaDetailServlet extends HttpServlet {
 		int lastno = qservice.getLastNo(qnano);
 		int nextno = qservice.getNextNo(qnano);
 		
-		System.out.println(lastno+ ", "+ nextno);
-		
 		qservice.updateViews(qnano);
 		Qna qna = qservice.selectQnaOne(qnano);
 		QnaComment qComm = new QnaCommentService().selectQnaComment(qnano);
@@ -52,7 +50,13 @@ public class QnaDetailServlet extends HttpServlet {
 			lastQna = qservice.selectQnaOne(lastno);
 		if(nextno != 0)
 			nextQna = qservice.selectQnaOne(nextno);
-
+		
+		//이전페이지 url주소 받아서 판단
+		String before_address = request.getHeader("referer");
+		System.out.println(before_address);
+		if(before_address.contains("qlist.my")) {
+			qservice.deleteAlarm(qnano);
+		}
 		
 		//4.
 		RequestDispatcher view = null;

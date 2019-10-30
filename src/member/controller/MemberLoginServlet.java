@@ -36,9 +36,13 @@ public class MemberLoginServlet extends HttpServlet {
 		//로그인 처리용 컨트롤러
 		String userid = request.getParameter("userid");	//String 타입이니까 "" 사용, 대소문자 구분함
 		String userpwd = request.getParameter("userpwd");
+		int autologin = 0;
+		if(request.getParameter("autoLogin") != null)
+			autologin = Integer.parseInt(request.getParameter("autoLogin"));	//자동로그인 체크값
 		
 		Member loginMember = new MemberService().loginCheck(userid,userpwd);
 		
+		RequestDispatcher view = null;
 		//4.받은 결과를 가지고 성공/실패에 대한 뷰를 선택해서 내보내기.
 		if(loginMember != null) {
 			//탈퇴여부 확인 하고 로그인세션 부여함
@@ -50,8 +54,11 @@ public class MemberLoginServlet extends HttpServlet {
 				
 				if(loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)
 					response.sendRedirect("/sori/admain.ad");
-				else
-					response.sendRedirect("/sori/index.jsp");
+				else {
+					view = request.getRequestDispatcher("index.jsp");
+					request.setAttribute("autologin", autologin);
+					view.forward(request, response);
+				}
 			}
 			else {
 				response.setContentType("text/html; charset=UTF-8");
@@ -68,7 +75,7 @@ public class MemberLoginServlet extends HttpServlet {
 			//뷰를 지정하고, 뷰한테 값도 함께 내보낼 때 사용함.
 			//상대경로만 사용할 수 있음.(절대경로 사용 못함)
 			//모든 서블릿은 루트(contents directory)에서 실행되고 있음.
-			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
+			view = request.getRequestDispatcher("views/common/error.jsp");
 			//뷰에 출력시킬 값을 request 객체에 기록 저장함.
 			request.setAttribute("message", "로그인 실패!!!!!!");
 			//뷰를 내보냄

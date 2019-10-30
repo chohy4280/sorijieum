@@ -41,20 +41,20 @@ body {
 			<% if(loginMember.getTypeNumber()==1 || loginMember.getTypeNumber()==2) { %>
 			<center>
 				<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-				onclick="location.href='/sori/views/member/userMyBook.jsp'">
+				onclick="location.href='/sori/mybook.my?userid=<%= loginMember.getUserId() %>'">
 					내 서재</button>
 			</center>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-				onclick="location.href='/sori/views/member/userLikeBook.jsp'">
+				onclick="location.href='/sori/likebook.my?userid=<%= loginMember.getUserId() %>'">
 					관심도서</button></center>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-				onclick="location.href='/sori/views/member/userWishBook.jsp'">
+				onclick="location.href='/sori/wishbook.my?userid=<%= loginMember.getUserId() %>'">
 					내 신청도서</button>
 			</center>
 			<% }else { %>
 			<center>
 			<button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-			onclick="location.href='/sori/views/member/makerMakeBook.jsp'">
+			onclick="location.href='/sori/makebook.my?userid=<%= loginMember.getUserId() %>'">
 				참여 도서</button>
 			</center>
 			<% } %>
@@ -65,7 +65,7 @@ body {
 				onclick="location.href='/sori/qlist.my?userid=<%= loginMember.getUserId() %>'">
 					내 문의</button></center>
 			<center><button class="massive ui inverted brown button" style="width:600px;height:180px;margin-bottom:1%;font-size:30pt;" 
-				onclick="location.href='/sori/views/member/memberUpdateView.jsp'">
+				onclick="location.href='/sori/myinfo?userid=<%= loginMember.getUserId() %>'">
 					내 정보 수정</button></center>
 		</div>
 	</div>

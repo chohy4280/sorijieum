@@ -262,4 +262,15 @@ public class MemberService {
 			close(conn);
 			return totalMList;
 		}
+		//임시비밀번호 적용
+		public int updateTempPwd(String userid, String email) {
+			Connection conn = getConnection();
+			int result = mDao.updateTempPwd(conn,userid,email);
+			if(result>0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			return result;
+		}
 }
