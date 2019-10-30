@@ -1,23 +1,27 @@
-package likebook.controller;
+package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import qna.model.service.QnaService;
+
 /**
- * Servlet implementation class UserLikeBookListServlet
+ * Servlet implementation class MemberQnaAlarmDeleteServlet
  */
-@WebServlet("/likebook.my")
-public class UserLikeBookListServlet extends HttpServlet {
+@WebServlet("/qarmdel.my")
+public class MemberQnaAlarmDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserLikeBookListServlet() {
+    public MemberQnaAlarmDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +30,17 @@ public class UserLikeBookListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//마이페이지 내 문의 알림 삭제용 컨트롤러
+		int qnano = Integer.parseInt(request.getParameter("qnano"));
+		
+		int result = new QnaService().deleteAlarm(qnano);
+		
+		if(result>0) {
+			PrintWriter out = response.getWriter();
+			out.write("div_"+qnano);
+			out.flush();
+			out.close();
+		}
 	}
 
 	/**

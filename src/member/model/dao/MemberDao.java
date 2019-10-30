@@ -242,10 +242,11 @@ public class MemberDao {
 	}
 	
 	//임시비밀번호 적용
-	public void updateTempPwd(Connection conn, String userid) {
+	public int updateTempPwd(Connection conn, String userid, String email) {
+		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update member set userpwd=? where userid=?";
+		String query = "update member set userpwd=? where userid=? and email=?";
 		
 		//임시비밀번호 발생
 		int index = 0;  
@@ -266,14 +267,16 @@ public class MemberDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, tempPwd);
 			pstmt.setString(2, userid);
+			pstmt.setString(3, email);
 			
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
+		return result;
 	}
 
 	//비밀번호 찾기
@@ -290,9 +293,7 @@ public class MemberDao {
 			pstmt.setString(2, email);
 			
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				updateTempPwd(conn,userid);
-				
+			if(rset.next()) {				
 				member = new Member();
 				
 				member.setUserId(rset.getString("userid"));

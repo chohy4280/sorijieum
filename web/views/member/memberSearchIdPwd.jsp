@@ -104,7 +104,6 @@ $(function(){
     Or
   </div>
 </div>
-<a href="/sori/views/member/memberSearchFail.jsp">찾기 실패 페이지</a>
 </center>
 </section>
 </body>

@@ -110,49 +110,49 @@ $(function(){
 	
 <!-- 페이징 시작 -->
 	<% if(keyword == null){ %>
-	<div id="pagebox" align="center">
-		<a href="/sori/qlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
-	<% if((beginPage - 10) < 1){ %>
-		<a href="/sori/qlist?page=1"><i class="angle grey left icon"></i></a>
-	<% }else{ %>
-		<a href="/sori/qlist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
-	<% } %>&nbsp;
-	<% for(int p = beginPage; p <= endPage; p++){ 
-			if(p == currentPage){
-	%>
-		<a href="/sori/qlist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-	<% }else{ %>
-		<a href="/sori/qlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-	<% }} %>&nbsp;
-	<% if((endPage +  10) < maxPage){ %>
-		<a href="/sori/qlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
-	<% }else{ %>
-		<a href="/sori/qlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
-	<% } %>&nbsp;
-	<a href="/sori/qlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
-	</div>
+		<div id="pagebox" align="center">
+			<a href="/sori/qlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
+		<% if((beginPage - 10) < 1){ %>
+			<a href="/sori/qlist?page=1"><i class="angle grey left icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/qlist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+		<% } %>&nbsp;
+		<% for(int p = beginPage; p <= endPage; p++){ 
+				if(p == currentPage){
+		%>
+			<a href="/sori/qlist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<% }else{ %>
+			<a href="/sori/qlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<% }} %>&nbsp;
+		<% if((endPage +  10) < maxPage){ %>
+			<a href="/sori/qlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/qlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+		<% } %>&nbsp;
+		<a href="/sori/qlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		</div>
 	<% }else { %>
-	<div id="pagebox" align="center">
-		<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
-	<% if((beginPage - 10) < 1){ %>
-		<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
-	<% }else{ %>
-		<a href="/sori/qsearch?page=<%= beginPage - 10 %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
-	<% } %>&nbsp;
-	<% for(int p = beginPage; p <= endPage; p++){ 
-			if(p == currentPage){
-	%>
-		<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-	<% }else{ %>
-		<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-	<% }} %>&nbsp;
-	<% if((endPage +  10) < maxPage){ %>
-		<a href="/sori/qsearch?page=<%= endPage + 10 %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
-	<% }else{ %>
-		<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
-	<% } %>&nbsp;
-	<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
-	</div>
+		<div id="pagebox" align="center">
+			<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
+		<% if((beginPage - 10) < 1){ %>
+			<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/qsearch?page=<%= beginPage - 10 %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+		<% } %>&nbsp;
+		<% for(int p = beginPage; p <= endPage; p++){ 
+				if(p == currentPage){
+		%>
+			<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<% }else{ %>
+			<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<% }} %>&nbsp;
+		<% if((endPage +  10) < maxPage){ %>
+			<a href="/sori/qsearch?page=<%= endPage + 10 %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+		<% } %>&nbsp;
+		<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		</div>
 	<% } %>
 	
 <!-- 페이징 끝 -->

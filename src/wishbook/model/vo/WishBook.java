@@ -19,6 +19,7 @@ public class WishBook implements java.io.Serializable {
 	private java.sql.Date wishStatusDate;
 	private String wishTop;
 	private String wishbookAdmin;
+	private String wishalarm;
 	
 	
 
@@ -27,7 +28,7 @@ public class WishBook implements java.io.Serializable {
 
 	public WishBook(int wishNo, String wishWriter, String wishBookTitle, String wishBookAuthor, String wishPublisher,
 			Date wishPublishDate, Date wishDate, int wishViews, String wishStatus, String rjctReason,
-			Date wishStatusDate, String wishTop, String wishbookAdmin) {
+			Date wishStatusDate, String wishTop, String wishbookAdmin, String wishalarm) {
 		super();
 		this.wishNo = wishNo;
 		this.wishWriter = wishWriter;
@@ -42,6 +43,7 @@ public class WishBook implements java.io.Serializable {
 		this.wishStatusDate = wishStatusDate;
 		this.wishTop = wishTop;
 		this.wishbookAdmin = wishbookAdmin;
+		this.wishalarm = wishalarm;
 	}
 
 	public WishBook(int wishNo, String wishBookTitle, String wishBookAuthor, String wishPublisher, Date wishPublishDate) {
@@ -191,13 +193,23 @@ public class WishBook implements java.io.Serializable {
 		this.wishbookAdmin = wishbookAdmin;
 	}
 
+	public String getWishalarm() {
+		return wishalarm;
+	}
+
+
+	public void setWishalarm(String wishalarm) {
+		this.wishalarm = wishalarm;
+	}
+
 
 	@Override
 	public String toString() {
 		return "WishBook [wishNo=" + wishNo + ", wishWriter=" + wishWriter + ", wishBookTitle=" + wishBookTitle
-				+ ", wishBookWriter=" + wishBookAuthor + ", wishPublisher=" + wishPublisher + ", wishPublishDate="
+				+ ", wishBookAuthor=" + wishBookAuthor + ", wishPublisher=" + wishPublisher + ", wishPublishDate="
 				+ wishPublishDate + ", wishDate=" + wishDate + ", wishViews=" + wishViews + ", wishStatus=" + wishStatus
-				+ ", rjctReason=" + rjctReason + ", wishStatusDate=" + wishStatusDate + ", wishTop=" + wishTop + ", wishbookAdmin=" + wishbookAdmin +"]";
+				+ ", rjctReason=" + rjctReason + ", wishStatusDate=" + wishStatusDate + ", wishTop=" + wishTop
+				+ ", wishbookAdmin=" + wishbookAdmin + ", wishalarm=" + wishalarm + "]";
 	}
 	
 	

@@ -44,7 +44,7 @@ public class MemberQnaListServlet extends HttpServlet {
 		
 		QnaService qservice = new QnaService();
 		QnaCommentService qcservice = new QnaCommentService();
-		ArrayList<Qna> alarmlist = qservice.selectQnaAlarmList(userid);
+		ArrayList<Qna> alarmlist = qservice.selectQnaAlarmList(userid);	//내 문의글중 답변이 달린글 알림
 		ArrayList<Qna> myqlist = qservice.selectMyQnaList(userid); //내 문의글만 검색
 		int listCount = myqlist.size(); //내 문의 전체 개수
 		ArrayList<QnaComment> myqclist = new ArrayList<QnaComment>();
