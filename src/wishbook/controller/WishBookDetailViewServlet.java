@@ -7,6 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import book.model.vo.BookMakingProgress;
+import bookmaking.model.service.BookMakingService;
+import qna.model.service.QnaService;
+
 import wishbook.model.service.WishBookService;
 import wishbook.model.vo.WishBook;
 
@@ -37,14 +42,21 @@ public class WishBookDetailViewServlet extends HttpServlet {
 		
 		wservice.updateWishViews(wishno);//조회수 증가
 		WishBook wb = wservice.selectWishBookOne(wishno);
-		
+
 		WishBook lastwishbook = null;
 		WishBook nextwishbook = null;
 		if(lastwishno != 0)
 			lastwishbook = wservice.selectWishBookOne(lastwishno);
 		if(nextwishno != 0)
 			nextwishbook = wservice.selectWishBookOne(nextwishno);
-		
+
+		//이전페이지 url주소 받아서 판단
+		String before_address = request.getHeader("referer");
+		System.out.println(before_address);
+		if(before_address.contains("wishbook.my")) {
+			wservice.deleteAlarm(wishno);
+		}
+				
 		RequestDispatcher view = null;
 		if(wb != null) {
 			view = request.getRequestDispatcher("views/boardwishbook/wishbookDetailView.jsp");

@@ -63,22 +63,21 @@
 								• Q&A 게시판에 글을 남겨주시거나 담당자에게 메일(admin01@iei.kr)로 보내주시기 바랍니다.<br>
 								• 오류 화면을 캡쳐후 첨부하시면, 보다 빠르게 처리해 드립니다.</li>
 
-			<li class="question"><i class="bullhorn icon"></i>홈페이지에 로그인이 되지 않는데 어떻게 해야 하나요?</li>
+			<li class="question"><i class="bullhorn icon"></i>사이트 이용이 너무 어려워요.</li>
 		
-		    <li class="answer">• [인터넷 옵션] 정리 후 크롬 브라우저로 재접속하여 로그인하시기 바랍니다.<br>
-								1) 웹브라우저 상단의 메뉴 중 [도구]>[인터넷 옵션] 선택<br>
-								2) [일반]탭의 검색 기록 항목에서 [삭제] 클릭>모든 항목 선택 후 [삭제]<br>
-								3) 열려 있는 모든 브라우저 닫은 후 재접속
+		    <li class="answer">• sorijieum@sori.com 으로 메일을 보내주시거나,
+		    					02-876-5432 번호로 전화를 주시면 담당자가 사이트 이용에 도움을 드리겠습니다.
 		</ul>
 		</nav>
 		</div>
 		
 	<!--공지사항 목록 끝-->
 		
-	
+
+
 	</div>
 	<!--공지사항 끝-->
-	
+	<audio autoplay controls style="display:none"> <source src="/sori/resources/faqmp3/faq.mp3" type="audio/mp3"> </audio>
 	</section>
 	<!-- Content 끝! -->
 </body>

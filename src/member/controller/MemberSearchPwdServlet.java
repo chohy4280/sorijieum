@@ -37,8 +37,12 @@ public class MemberSearchPwdServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		String email = request.getParameter("email");
 	
-		//임시비밀번호 가져오기
-		Member member = new MemberService().selectMemberSearchPwd(userid, email);
+		//비밀번호 가져오기
+		MemberService mservice = new MemberService();
+		int result = mservice.updateTempPwd(userid,email);
+		Member member = null;
+		if(result>0)
+			member = mservice.selectMemberSearchPwd(userid, email);
 		
 		RequestDispatcher view = null;
 		if(member != null) {

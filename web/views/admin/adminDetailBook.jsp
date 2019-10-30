@@ -28,7 +28,7 @@
 			})
 		return false;
 	}}
-	
+
 	//이미지추출 버튼 클릭시 pdf이미지 추출
 	function bpimg(code){
 		$.ajax({
@@ -47,6 +47,7 @@
 			}
 		});
 	 }
+
 </script>
 </head>
 <body>
@@ -59,7 +60,13 @@
 	<!--도서 추가 시작-->
             <i class="big book icon"></i><span style="font:black; font-size:17pt; padding:10px;">《<%= book.getBookTitle() %>》 상세 내역</span>
             <br><br>
-            <div class="lightgreyBox" style="height: 800px; align: center;">
+            <!-- 이미지 미리보기 부분 -->
+            <div style="float: left; margin-right: 0px; margin-left: 20px; margin-top:90px; margin-right:20px;">
+            <img src="/sori/resources/book_upfiles/<%=book.getBookRimg() %>" style="width:250px; height:350px;"/>
+            <p align="center" style="color: #fff; height:40px; background: #4ecdc4; line-height: 40px; font-size: 12pt;"><i class="mini camera icon"></i>도서 이미지 미리보기</p>
+            </div>
+            <!-- 이미지 미리보기 부분 끝-->
+            <div class="lightgreyBox2" style="height: 1100px; align: center;">
             	<table class="detailform">
 					<tr>
 						<th width="30%">도서명</th>
@@ -131,6 +138,7 @@
 					<% }else{ %>
 					&nbsp;
 					<% } %>
+
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 					<br><br><br><button class="small ui red button" onclick="return delBtn();">도서삭제</button>
 					<% } %>

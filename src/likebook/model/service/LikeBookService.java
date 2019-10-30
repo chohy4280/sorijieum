@@ -1,13 +1,12 @@
 package likebook.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import likebook.model.dao.LikeBookDao;
-import likebook.model.vo.LikeBook;
+import likebook.model.vo.LikeBookLB;
 import likebook.model.vo.adminLikeBook;
 
 public class LikeBookService {
@@ -18,13 +17,23 @@ public class LikeBookService {
 	public LikeBookService() {}
 
 	//관심도서 목록
-	public ArrayList<LikeBook> selectLikeBookList(String userid) {
-		return null;
+	public ArrayList<LikeBookLB> selectLikeBookList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<LikeBookLB> lblist = lbDao.selectLikeBookList(conn, userid);
+		close(conn);
+		return lblist;
 	}
 	
 	//관심도서 삭제
 	public int deleteLikeBook(String userid, String bookCode) {
-		return 0;
+		Connection conn = getConnection();
+		int result = lbDao.deleteLikeBook(conn, userid, bookCode);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 
   // 관리자 서비스 *******************************************

@@ -188,7 +188,7 @@ public class AdBookUpdateServlet extends HttpServlet {
 		int result2 = new BookMakingService().updateBookadmin(b);
 		
 		if(result1 > 0 && result2 > 0) {
-			response.sendRedirect("/sori/blist.ad?bookcode="+bookcode+"&page="+currentPage);
+			response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 수정 실패!");

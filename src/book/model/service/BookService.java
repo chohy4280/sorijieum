@@ -31,6 +31,7 @@ public class BookService {
 		return list;
 	}
 	
+	// 관리자 전체도서 리스트카운트용
 	public int getListCountAdmin() {
    	 Connection conn = getConnection();
    	 int listCount = bDao.getListCountAdmin(conn);
@@ -47,6 +48,7 @@ public class BookService {
 		return list;
 	}
 	
+	// 관리자 검색도서 리스트카운트용
 	public int getListCountSelectBookSearch(String searchtype, String keyword, String makestatus) {
 	   	 Connection conn = getConnection();
 	   	 int listCount = bDao.getListCountSelectBookSearch(conn, searchtype, keyword, makestatus);
@@ -213,15 +215,14 @@ public class BookService {
 			return result;
 			
 		}
-
-
+  
 	//참여도서 불러오기용 *********************************************************************************
-	/*public Book selectMakeBookOne(String bookcode) {
+	public Book selectMakeBookOne(String bookcode) {
 		Connection conn = getConnection();
 		Book book = bDao.selectMakeBookOne(conn,bookcode);
 		close(conn);
 		return book;
 		
-	}*/
+	}
 
 }

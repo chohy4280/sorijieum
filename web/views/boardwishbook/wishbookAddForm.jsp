@@ -9,6 +9,19 @@
 <%@ include file="/../inc/cdn.jsp"%>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
+<script type="text/javascript">
+	$(function(){
+		$("#wishbookauthor").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishbookAuthor.mp3");
+			audio.play();
+		});
+		
+		$("#wishpublisher").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishbookPub.mp3");
+			audio.play();
+		});
+	});
+</script>
 </head>
 <body>
 <!-- Content 시작! -->
@@ -25,15 +38,15 @@
 		<table class="my-listTable4" style="width:52%;font-family: 'S-Core Dream 6';">
 			<tr>
 				<th width="20%">제목</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishbooktitle" placeholder="도서명 입력" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishbooktitle" placeholder="도서명 입력" autofocus="autofocus" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 			<tr>
 				<th>저자</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishbookauthor" placeholder="저자명 입력" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishbookauthor" id="wishbookauthor" placeholder="저자명 입력" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 			<tr>
 				<th>출판사</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishpublisher" placeholder="출판사 입력" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublisher" id="wishpublisher" placeholder="출판사 입력" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 			<tr>
 				<th>출판일</th>
@@ -66,5 +79,6 @@
 	
 	</section>
 	<!-- Content 끝! -->
+<audio src="/sori/resources/mp3/wishbookTitle.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/mainOpen.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 </body>
 </html>

@@ -309,6 +309,15 @@ color: inherit;
 	color: #4f4f4f;
 }
 
+.lightgreyBox2{
+	background-color: #eaeaea;
+	width: 60%;
+	margin-left: 20px;
+	margin-bottom:100px;
+	color: #4f4f4f;
+	float: left;
+}
+
 
 .addform{
 	border-top: 1px solid #4ecdc4;

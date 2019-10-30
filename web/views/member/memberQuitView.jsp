@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<script type="text/javascript" src="/sori/resources/js/jquery-3.4.1.min.js"></script>
+<%@ include file="/inc/memberSide.jsp"%>
 <script type="text/javascript">
 $(function(){
 	$("#quitbtn").click(function(){
@@ -22,7 +22,6 @@ $(function(){
 	});
 });
 </script>
-<%@ include file="/inc/memberSide.jsp"%>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 <style type="text/css">
 textarea{

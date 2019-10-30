@@ -31,7 +31,7 @@
 <!-- 상단 바 시작! -->
 	<header>
 		<div class="topbar" style="overflow:hidden;">
-			<span class="topname"><a href="/sori/index.jsp" target="_blank"><i class="home icon"></i></a><a href="/sori/admain.ad">SORIJIEUM</a> <span style="color:#4ecdc4">ADMIN</span></span>
+			<span class="topname"><a href="/sori/admain.ad"><i class="home icon"></i></a><a href="/sori/index.jsp" target="_blank">SORIJIEUM</a> <span style="color:#4ecdc4">ADMIN</span></span>
 			<div id="adminname"><a href="/sori/addetail.ad?userid=<%= loginMember.getUserId() %>&page=1"><%= loginMember.getUserName() %></a> 님!&nbsp;&nbsp;&nbsp;<button class="ui mini teal button" onclick="location.href='/sori/memberLogout'">Logout</button></div>
 		</div>
 	</header>

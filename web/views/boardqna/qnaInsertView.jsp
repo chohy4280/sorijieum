@@ -6,9 +6,6 @@
 <meta charset="UTF-8">
 <title>Q&A 작성</title>
 <%@ include file="/../inc/top.jsp" %>
-<script type="text/javascript">
-$('.ui.checkbox').checkbox('attach events', '.toggle.button');
-</script>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
@@ -47,20 +44,21 @@ $('.ui.checkbox').checkbox('attach events', '.toggle.button');
 					  </div>
 				</td>
 			</tr>
+			<% if(loginMember.getTypeNumber()==4 || loginMember.getTypeNumber()==5){ %>
+			<tr>
+				<td colspan="2" align="left"> 
+				<div class="ui toggle checkbox" align="left">
+					<input type="checkbox" name="top" value="Y">
+					<label>고정글로 등록</label>
+				</div>
+				</td>
+			</tr>
+			<% } %>
 		</table>
 		<input type="hidden" name="userid" value="<%= loginMember.getUserId() %>"> <!-- 작성자 아이디 -->
 	</center>
-	<!--QNA 목록 끝-->
-	<% if(loginMember.getTypeNumber()==4 || loginMember.getTypeNumber()==5){ %>
-	<div class="ui form">
-		<div class="inline field">
-			<div class="ui toggle checkbox">
-				<input type="checkbox" tabindex="0" class="hidden" name="top" value="Y">
-				<label>고정글</label>
-			</div>
-		</div>
-	</div>
-	<% } %>
+	<!--QNA 신청 폼 끝-->
+	
 	
 	<!-- 작성자 제출,리셋 버튼 -->
 	<div align="center">

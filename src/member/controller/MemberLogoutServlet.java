@@ -33,7 +33,7 @@ public class MemberLogoutServlet extends HttpServlet {
 		if(session != null) {
 			//세션 객체가 존재한다면, 없애라.
 			session.invalidate();
-			response.sendRedirect("/sori/index.jsp");
+			response.sendRedirect("/sori/views/member/memberLoginView.jsp");
 		}
 	}
 
