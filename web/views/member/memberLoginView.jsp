@@ -10,7 +10,16 @@
 <title>로그인화면</title>
 <%@ include file="/inc/top.jsp" %>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
-
+<script type="text/javascript">
+	
+	function keyUP(){
+		$("#userid").keyup(function(e){	// 아이디 비밀번호 찾기를 위한 스페이스바 입력
+			if(e.keyCode == 32){				// 스페이스바 입력 시
+				location.href="/sori/views/member/memberSearchIdPwd.jsp";
+		}
+	})
+	}
+</script>
 </head>
 <body>
 <section class="my-section">
@@ -21,7 +30,7 @@
 <div class="ui form" style="margin-top:10px;">
   <div class="inline field">
     <label>아 이 디</label>&nbsp;&nbsp;&nbsp;
-    <input type="text" placeholder="아이디" name="userid" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
+    <input type="text" placeholder="아이디" name="userid" id="userid" autofocus="autofocus" onkeyup="keyUP();" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
   </div>
   <div class="inline field">
     <label>비밀번호</label>&nbsp;&nbsp;
@@ -41,6 +50,9 @@
 
 </center>
 </section>
+
+
+<audio src="/sori/resources/mp3/login.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/login.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 </body>
 
 </html>

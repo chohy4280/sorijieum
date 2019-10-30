@@ -26,6 +26,12 @@
 <head>
 <meta charset="UTF-8">
 <title>소리지음 관리자 시스템</title>
+<script type="text/javascript">
+
+	function emptyAlert(){
+		alert("해당 내역이 없습니다.");
+	}
+</script>
 </head>
 
 <body>
@@ -52,10 +58,21 @@
 	            		<div>완료도서</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todaybook"><a href="/sori/wbslist.ad?page=1&searchtype=wishbooktitle&keyword=&wishstatus=WAIT"><%= wishbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=WAIT"><%= wbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=MAKE"><%= mbList.size() %></span></a> 권</div>
-	            		<div><span class="todaybook"><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=DONE"><%= dbList.size() %></span></a> 권</div>
+	            		<div><span class="todaybook"><%if(wishbList.size() == 0) {%><a href="#" onclick="emptyAlert();">
+								            		<%}else{ %><a href="/sori/wbslist.ad?page=1&searchtype=wishbooktitle&keyword=&wishstatus=WAIT">
+								            		<%} %><%= wishbList.size() %></span></a> 권</div>
+								            		
+	            		<div><span class="todaybook"><%if(wbList.size() == 0) {%><a href="#" onclick="emptyAlert();">
+	            									<%}else{ %><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=WAIT">
+	            									<%} %><%= wbList.size() %></span></a> 권</div>
+	            									
+	            		<div><span class="todaybook"><%if(mbList.size() == 0) {%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=MAKE">
+	            									<%} %><%= mbList.size() %></span></a> 권</div>
+	            									
+	            		<div><span class="todaybook"><%if(dbList.size() == 0) {%><a href="#" onclick="emptyAlert();">
+	            									<%}else{ %><a href="/sori/bslist.ad?page=1&searchtype=bookcode&keyword=&makestatus=DONE">
+	            									<%} %><%= dbList.size() %></span></a> 권</div>
 	            	</div>
 	            </div>
 	            
@@ -71,8 +88,13 @@
 	            		<div>미답변 문의</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?page=1&searchtype=qnatitle&keyword=&qnastatus=ALL&qnadate=sysdate"><%= newQList.size() %></span></a> 건</div>
-	            		<div><span class="todayboard"><a href="/sori/bodslist.ad?page=1&searchtype=qnatitle&keyword=&qnastatus=N&qnadate=null"><%= uaQList.size() %></span></a> 건</div>
+	            		<div><span class="todayboard"><% if(newQList.size() == 0) {%><a href="#" onclick="emptyAlert();">
+	            									<%}else{ %><a href="/sori/bodslist.ad?page=1&searchtype=qnatitle&keyword=&qnastatus=ALL&qnadate=sysdate">
+	            									<%} %><%= newQList.size() %></span></a> 건</div>
+	            									
+	            		<div><span class="todayboard"><% if(uaQList.size() == 0) {%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/bodslist.ad?page=1&searchtype=qnatitle&keyword=&qnastatus=N&qnadate=null">
+	            									<%} %> <%= uaQList.size() %></span></a> 건</div>
 	            	</div>
 	            </div>
 	            
@@ -90,9 +112,17 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">					
-	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=6"><%= newUList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="/sori/qmslist.ad?page=1&typenumber=12&userid=&quittype=ALL"><%= quitUList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser1"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=7"><%= totalUList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser1"><%if(newUList.size() == 0){%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=6">
+	            									<%}%><%= newUList.size() %></span></a> 명</div>
+	            									
+	            		<div><span class="todayuser1"><%if(quitUList.size() == 0){%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/qmslist.ad?page=1&typenumber=12&userid=&quittype=ALL">
+	            									<%}%><%= quitUList.size() %></span></a> 명</div>
+	            									
+	            		<div><span class="todayuser1"><%if(totalUList.size() == 0){%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=7">
+	            									<%}%><%= totalUList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            
@@ -109,9 +139,16 @@
 	            		<div>TOTAL</div>
 	            	</div>
 	            	<div class="data-section3">
-	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=8"><%= newMList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser2"><a href="/sori/qmslist.ad?&page=1&typenumber=33&userid=&quittype=ALL"><%= quitMList.size() %></span></a> 명</div>
-	            		<div><span class="todayuser2"><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=3"><%= totalMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><%if(newMList.size() == 0){%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=8">
+	            									<%}%><%= newMList.size() %></span></a> 명</div>
+	            									
+	            		<div><span class="todayuser2"><%if(quitMList.size() == 0){%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/qmslist.ad?&page=1&typenumber=33&userid=&quittype=ALL">
+	            									<%}%><%= quitMList.size() %></span></a> 명</div>
+	            		<div><span class="todayuser2"><%if(totalMList.size() == 0){%><a href="#" onclick="emptyAlert();">
+	            									<%}else{%><a href="/sori/mslist.ad?page=1&searchtype=userid&keyword=&gender=ALL&typenumber=3">
+	            									<%}%><%= totalMList.size() %></span></a> 명</div>
 	            	</div>
 	            </div>
 	            

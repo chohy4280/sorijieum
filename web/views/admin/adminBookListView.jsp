@@ -20,7 +20,6 @@
 <head>
 <meta charset="UTF-8">
 <title>도서 목록</title>
-<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
 // 체크박스 전체선택 및 전체해제
@@ -41,6 +40,8 @@ $(".chk").click(function(){
 	}	
 });
 
+
+	$("#listTable").tablesorter();
 
 }); // document.ready...
 

@@ -11,6 +11,7 @@
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
 <body>
+<audio src="/sori/resources/mp3/introduce.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/introduce.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 <!-- Content 시작! -->
 	<section class="my-section">
 	<div align="center" style="background:#fff; widht:auto; height:3700px;">

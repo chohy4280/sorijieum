@@ -118,7 +118,7 @@
 						<th width="15%">회원탈퇴일</th>
 					</tr>
 					<% if(list.size() != 0){
-						for(int i = list.size() -1 ; i >= 0 ; i--){
+						for(int i = 0 ; i < list.size() ; i++){
 						Quit q = list.get(i);
 						%>
 					<tr>
