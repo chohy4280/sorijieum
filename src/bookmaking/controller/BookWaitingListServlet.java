@@ -69,7 +69,6 @@ public class BookWaitingListServlet extends HttpServlet {
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
-			request.setAttribute("waitlist", waitlist);
 			request.setAttribute("dcount", dcount);
 			view.forward(request, response);
 			

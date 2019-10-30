@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, book.model.vo.BookMakingProgress" %>
 <%
-	ArrayList<BookMakingProgress> makelist = (ArrayList<BookMakingProgress>)request.getAttribute("makelist");
+	ArrayList<BookMakingProgress> list = (ArrayList<BookMakingProgress>)request.getAttribute("list");
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
@@ -21,6 +21,7 @@
 </script>
 </head>
 <body>
+<br>
 <!-- content 시작 -->
 	<div class="ye-bookstatus">
 		<div class="ye-bookstatus-title">
@@ -39,39 +40,46 @@
 		<div class="ye-book2">
 			<div class="ye-bookmaking2">
 			<a style="font-weight: bold;margin-left:5px;">제작중인 도서</a><br><br>
-			<% for(int i = 0; i < 10; i++){ 
-				int makep = (makelist.get(i).getMakepage());
-				int bookp = (makelist.get(i).getBookPage());
+			<% for(int i = 0; i < list.size(); i++){ 
+				int makep = (list.get(i).getMakepage());
+				int bookp = (list.get(i).getBookPage());
 				int pwidth = (int)(((double)makep / bookp) * 100);
 			%>
+			<%-- <script type="text/javascript">
+				var count = document.getElementsByClassName("ye-bm2").length;
+			</script>
+			<% 
+				int count = <%= count %>;
+				if(count <= 9){ 
+			%> --%>
 			<div class="ye-bm2">
-			<% if(makelist.get(i).getBookTitle().length() < 14){ %>
-			<div class="ui large basic label" align="center" style="width: 210px;"
-			onclick="location.href='/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>'">
-			<p style="text-align:center;font-size:10pt;"><%= makelist.get(i).getBookTitle() %></p>
+			<% if(list.get(i).getBookTitle().length() < 17){ %>
+			<div class="ui large basic label" align="center" style="width: 230px;"
+			onclick="location.href='/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>'">
+			<p style="text-align:center;font-size:1rem;"><%= list.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large basic label" align="center" style="width: 210px;"
-			onclick="location.href='/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>'">
-			<p style="text-align:center;font-size:10pt;"><%= makelist.get(i).getBookTitle().substring(0, 15) %>..</p>
+			<div class="ui large basic label" align="center" style="width: 230px;"
+			onclick="location.href='/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>'">
+			<p style="text-align:center;font-size:1rem;"><%= list.get(i).getBookTitle().substring(0, 17) %>..</p>
 			</div><br>
 			<% } %>
-			<a href="/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>">
-			<img id="여행의 이유" src="/sori/resources/book_upfiles/<%= makelist.get(i).getBookRimg() %>"></a><br><br>
-			<div class="progress" style="width:212px;height:27px;"> 
+			<a href="/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>">
+			<img id="여행의 이유" src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg() %>"></a><br><br>
+			<div class="progress" style="width:230px;height:27px;border-radius:7px 7px 7px 7px;"> 
   			<div class="progress-bar" role="progressbar" 
-  			style="font-size:8pt; background: orange; width:<%= pwidth %>%;" 
-  			aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= makelist.get(i).getBookPage() %>"><%= pwidth %>%</div>
+  			style="font-size:0.9rem; background: orange; width:<%= pwidth %>%;" 
+  			aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= list.get(i).getBookPage() %>"><%= pwidth %>%</div>
 			</div>
 			<br>
 			</div>
-				<% } %>
-				
+			<% } %>
+			
 		</div><!-- bookmaking -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- 페이징 -->
 <div id="pagebox" align="center">
 	<a href="/sori/bmlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
@@ -87,16 +95,16 @@
 <% }else{ %>
 	<a href="/sori/bmlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 <% }} %>&nbsp;
-<% if((endPage + 1) < maxPage){ %>
-	<a href="/sori/bmlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+<% if((endPage + 10) < maxPage){ %>
+	<a href="/sori/bmlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
 <% }else{ %>
-	<a href="/sori/bmlist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
+	<a href="/sori/bmlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 <% } %>&nbsp;
 <a href="/sori/bmlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
 </div><!-- 페이징 -->
 
 <!-- book count -->
-<div class="ye-book-count" style="float:right;bottom:10px;left:500px;align:right;padding:50px;">
+<div class="ye-book-count" style="float:right;bottom:50px;left:500px;align:right;padding:50px;">
 <div class="orange ui statistic" >
     <div class="value" style="font-family:'S-Core Dream 7';">
       <%= dcount %>

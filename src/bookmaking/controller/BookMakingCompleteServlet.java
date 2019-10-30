@@ -1,8 +1,6 @@
 package bookmaking.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,26 +31,19 @@ public class BookMakingCompleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 도서제작  제출 컨트롤러
 		request.setCharacterEncoding("utf-8");
-		
-		String content = request.getParameter("content");
-		String title = request.getParameter("title");
-		int page = Integer.parseInt(request.getParameter("page"));
 		String bookcode = request.getParameter("bookcode");
 		String userid = request.getParameter("userid");
-		/*System.out.println(content + ", " + title + ", " + page + ", " + bookcode + ", " + userid);*/
+		int endpage = Integer.parseInt(request.getParameter("endpage"));
+		int page = Integer.parseInt(request.getParameter("page"));
 		BookMakingService bmservice = new BookMakingService();
-		BookMakingProgress bmp = new BookMakingProgress(bookcode, title, null, content, page, userid);
-		int result = bmservice.inputInsert(bmp);
+		BookMakingProgress bmp = new BookMakingProgress(userid, bookcode);
+		int result = bmservice.insertMakeBook(bmp);
+		int results = bmservice.insertMakePage(bmp, bookcode, page, endpage);
+		int resultss = bmservice.insertCompleteyn(bmp, page, endpage);
 		
-		
-		RequestDispatcher view = null;
-		if (result > 0) {
-			response.sendRedirect("/sori/bmmload?bookcode="+ bookcode + "&userid="+userid);
-		} else {
-			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서제작 페이지 저장 실패");
-			view.forward(request, response);
-		}
+		if (result > 0 && results > 0 && resultss > 0) {
+			response.getWriter().append("ok");
+		} 
 	}
 
 	/**

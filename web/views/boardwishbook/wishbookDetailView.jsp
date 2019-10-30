@@ -3,6 +3,8 @@
 <%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook" %>
 <%
 	WishBook wb = (WishBook)request.getAttribute("wb");
+	WishBook lastwishbook = (WishBook)request.getAttribute("lastwishbook");
+	WishBook nextwishbook = (WishBook)request.getAttribute("nextwishbook");
 %>
 <!DOCTYPE html>
 <html>
@@ -84,17 +86,31 @@ $(function(){
 	<!-- 공통 페이지 이동 버튼 -->
 		<center>
 			<div class="ui buttons">
-		  <button class="ui labeled icon button">
+			<% if(lastwishbook == null){ %>
+			<button class="ui labeled icon button" onclick="last()">
 		    <i class="left chevron icon"></i>
 		    이전글
 		  </button>
+			<% }else{ %>
+		  <button class="ui labeled icon button" onclick="location.href='/sori/wbdview?wishno=<%= lastwishbook.getWishNo() %>'">
+		    <i class="left chevron icon"></i>
+		    이전글
+		  </button>
+		  <% } %>
 		  <button class="ui button" onclick="location.href='/sori/wblist'">
 		    목록
 		  </button>
-		  <button class="ui right labeled icon button">
+		  <% if(nextwishbook == null){ %>
+		  <button class="ui right labeled icon button" onclick="next()">
 		    다음글
 		    <i class="right chevron icon"></i>
 		  </button>
+		  <% }else{ %>
+		  <button class="ui right labeled icon button" onclick="location.href='/sori/wbdview?wishno=<%= nextwishbook.getWishNo() %>'">
+		    다음글
+		    <i class="right chevron icon"></i>
+		  </button>
+		  <% } %>
 		</div>
 		</center>
 

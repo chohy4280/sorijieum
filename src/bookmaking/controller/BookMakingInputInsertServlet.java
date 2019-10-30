@@ -1,8 +1,6 @@
 package bookmaking.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,19 +37,12 @@ public class BookMakingInputInsertServlet extends HttpServlet {
 		int page = Integer.parseInt(request.getParameter("page"));
 		String bookcode = request.getParameter("bookcode");
 		String userid = request.getParameter("userid");
+		int index = Integer.parseInt(request.getParameter("index"));
 		/*System.out.println(content + ", " + title + ", " + page + ", " + bookcode + ", " + userid);*/
-		BookMakingService bmservice = new BookMakingService();
 		BookMakingProgress bmp = new BookMakingProgress(bookcode, title, null, content, page, userid);
-		int result = bmservice.inputInsert(bmp);
-		
-		
-		RequestDispatcher view = null;
-		if (result > 0) {
-			response.sendRedirect("/sori/bmmload?bookcode="+ bookcode + "&userid="+userid);
-		} else {
-			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서제작 페이지 저장 실패");
-			view.forward(request, response);
+		int result = new BookMakingService().inputInsert(bmp, index);
+		if(result>0) {
+			response.getWriter().append("ok");
 		}
 	}
 

@@ -21,10 +21,9 @@
 }
 
 .ye-guide {
-	margin-top:15px;
+	margin-top:10px;
 	padding: 10px;
-	margin-right: 20px;
-	width: 1350px;
+	width: 1550px;
 	float: none;
 }
 
@@ -57,19 +56,22 @@
 }
 
 .ye-book img {
-	width: 170px;
-	height: 240px;
+	width: 230px;
+	height: 320px;
 	border: 1px solid lightgrey;
 }
 
 .ye-bw {
 	float: left;
-	margin-right: 40px;
-	margin-bottom:10px;
+	margin-left: 15px;
+	margin-right: 35px;
+	margin-bottom: 10px;
 }
 
 .ye-bm {
 	float: left;
+	margin-left: 15px;
+	margin-right: 35px;
 	margin-right: 40px;
 }
 
@@ -82,13 +84,13 @@
 /****************/
 .ye-bookimg {
 	margin-top: -25px;
-	margin-left: 40px;
-	padding: 5px;
+	margin-left: 35px;
+	padding: 10px;
 }
 
 .ye-bookimg img {
-	width: 240px;
-	height: 360px;
+	width: 300px;
+	height: 430px;
 	border: 1px solid lightgrey;
 }
 
@@ -101,19 +103,19 @@
 .ye-make-button {
 	position: relative;
 	bottom: -70px;
-	margin-right: 80px;
+	margin-right: 65px;
 }
 
 .ye-make-buttons {
 	position: relative;
 	bottom: -70px;
-	margin-right: 80px;
+	margin-right: 65px;
 }
 
 .ye-book-count {
 	position: relative;
 	bottom: -30px;
-	left: 1010px;
+	left: 1170px;
 	display: auto;
 }
 
@@ -132,16 +134,16 @@
 }
 
 :root {
-  --size: 310px;
-  --bord: 55px;
+  --size: 370px;
+  --bord: 65px;
 }
 
 .chart {
   width: var(--size);
   height: var(--size);
   margin: -1em auto;
-  margin-top: -5.5em;
-  border-radius: 60%;
+  margin-top: -6em;
+  border-radius: 70%;
   background-image: conic-gradient(#ffa500 var(--value), lightgrey var(--value));
   position: relative;
   display: flex;
@@ -164,7 +166,7 @@
 #donut {
   position: relative;
   z-index: 1;
-  font-size: 4.3em;
+  font-size: 5em;
 }
 
 
@@ -226,8 +228,9 @@
 
 .ye-bm2 {
 	float: left;
-	margin-right: 30px;
-	margin-bottom : 35px;
+	margin-left: 15px;
+	margin-right: 35px;
+	margin-bottom: 35px;
 }
 
 .ye-bm2 .progress {
@@ -236,14 +239,15 @@
 
 .ye-bw2 {
 	float: left;
-	margin-right: 30px;
-	margin-bottom : 50px;
+	margin-left: 15px;
+	margin-right: 35px;
+	margin-bottom: 35px;
 	margin-top : 5px;
 }
 
 .ye-book2 img {
-	width: 210px;
-	height: 290px;
+	width: 230px;
+	height: 320px;
 	border: 1px solid lightgrey;
 }
 
