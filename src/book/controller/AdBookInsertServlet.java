@@ -119,8 +119,8 @@ public class AdBookInsertServlet extends HttpServlet {
 		int result1 = new BookService().insertBook(b);
 		// 도서추가시 bookmaking 테이블에도 같이 insert함
 		int result2 = new BookMakingService().insertBook(b);
-		
-		if(result1 > 0 && result2 > 0) {
+		int result3 = new BookMakingService().insertBookMakeCheck(b);
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			response.sendRedirect("/sori/blist.ad");
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

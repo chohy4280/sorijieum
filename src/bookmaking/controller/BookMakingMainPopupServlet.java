@@ -1,6 +1,7 @@
 package bookmaking.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,14 +32,14 @@ public class BookMakingMainPopupServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 도서제작 피디에프 파일의 이미지 도서코드 불러오기 컨트롤러
+		// 도서제작 팝업창 불러오기 컨트롤러
 		String bookcode = request.getParameter("bookcode");
 		String userid = request.getParameter("userid");
-		BookMakingProgress bmp = new BookMakingService().selectBookMakingPopupLoad(bookcode, userid);
+		ArrayList<BookMakingProgress> list = new BookMakingService().selectBookMakingPopupLoad(bookcode, userid);
 		RequestDispatcher view = null;
-		if(bmp != null) {
+		if(list.size() != 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakingpopup.jsp");
-			request.setAttribute("bmp", bmp);
+			request.setAttribute("list", list);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

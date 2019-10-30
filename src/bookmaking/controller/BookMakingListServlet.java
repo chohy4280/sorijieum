@@ -69,7 +69,6 @@ public class BookMakingListServlet extends HttpServlet {
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
-			request.setAttribute("makelist", makelist);
 			request.setAttribute("dcount", dcount);
 			view.forward(request, response);
 			

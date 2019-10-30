@@ -3,6 +3,8 @@
 <%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook" %>
 <%
 	ArrayList<WishBook> list = (ArrayList<WishBook>)request.getAttribute("list");
+	String search = (String)request.getAttribute("search");
+	String keyword = (String)request.getAttribute("keyword");
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
@@ -34,6 +36,12 @@ $(function(){
 		});
 		
 	});
+	
+function bpimg(){
+	alert("이미지를 추출하시겠습니까?");
+	var url = "/sori/bpimg";
+	$(location).attr('href', url);
+}
 </script>
 
 </head>
@@ -55,9 +63,15 @@ $(function(){
 			<option value="wishbooktitle">도서명</option>
 			<option value="wishbookauthor">저자명</option>
 		</select>
+		<% if(keyword != null){ %>
+		<div class="ui small input">
+			<input type="text" class="search" name="keyword" id="keyword" value="<%= keyword %>" placeholder="검색하실 내용을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
+		</div>
+		<% }else { %>
 		<div class="ui small input">
 			<input type="text" class="search" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="font-family:'S-Core Dream 5';width:250px;">
 		</div>
+		<% } %>
 			<input class="ui tiny basic black button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
 		</form>
 		</div>
@@ -75,11 +89,12 @@ $(function(){
 				<th width="10%">진행사항</th>
 				<th width="5%">조회수</th>
 			</tr>
-			<% for(int i = 0; i < list.size(); i++){
+			<% if(!list.isEmpty()){
+				for(int i = 0; i < list.size(); i++){
 				WishBook wb = list.get(i);
-				%>
+			%>
 			<tr>
-				<td><%= i + 1%></td>
+				<td><%= currentPage * 10 - 9 + i %></td>
 				<td><a href="/sori/wbdview?wishno=<%= wb.getWishNo() %>" style="color: #ffbf00;">
 				<%= wb.getWishBookTitle() %></a></td>
 				<td><%= wb.getWishBookAuthor() %></td>
@@ -94,6 +109,10 @@ $(function(){
 				<% } %>
 				<td><%= wb.getWishViews() %></td>
 			</tr>
+			<% } }else{ %>
+			<tr>
+				<td colspan="7" align="center">검색 결과가 없습니다. 다시 검색해주세요.</td>
+			</tr>
 			<% } %>
 		</table>
 	<!--도서신청 목록 끝-->
@@ -105,31 +124,52 @@ $(function(){
 		<br>
 		
 	<!-- 페이징 시작 -->
-<%-- 	<% if() %> --%>
+	<%   if(!list.isEmpty()){ 
+		if(keyword == null){ %>
 		<div id="pagebox" align="center">
 		<a href="/sori/wblist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
-	<% if((beginPage - 1) < 1){ %>
-		<a href="/sori/wblist?page=1"><i class="angle grey left icon"></i></a>
-	<% }else{ %>
-		<a href="/sori/wblist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
-	<% } %>&nbsp;
-	<% for(int p = beginPage; p <= endPage; p++){ 
-			if(p == currentPage){
-	%>
-		<a href="/sori/wblist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-	<% }else{ %>
-		<a href="/sori/wblist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-	<% }} %>&nbsp;
-	<% if((endPage + 1) < maxPage){ %>
-		<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
-	<% }else{ %>
-		<a href="/sori/wblist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
-	<% } %>&nbsp;
-	<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
-	</div>
-	<%-- <% }else{ %>
-	
-	<% } %> --%>
+		<% if((beginPage - 10) < 1){ %>
+			<a href="/sori/wblist?page=1"><i class="angle grey left icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/wblist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+		<% } %>&nbsp;
+		<% for(int p = beginPage; p <= endPage; p++){ 
+				if(p == currentPage){
+		%>
+			<a href="/sori/wblist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<% }else{ %>
+			<a href="/sori/wblist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<% }} %>&nbsp;
+		<% if((endPage + 10) < maxPage){ %>
+			<a href="/sori/wblist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/wblist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
+		<% } %>&nbsp;
+		<a href="/sori/wblist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		</div>
+	 <% }else { %>
+		<div id="pagebox" align="center">
+			<a href="/sori/wbsearch?page=1&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
+		<% if((beginPage - 10) < 1){ %>
+			<a href="/sori/wbsearch?page=1&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/wbsearch?page=<%= beginPage - 10 %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+		<% } %>&nbsp;
+		<% for(int p = beginPage; p <= endPage; p++){ 
+				if(p == currentPage){
+		%>
+			<a href="/sori/wbsearch?page=<%= p %>&search=<%= search %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<% }else{ %>
+			<a href="/sori/wbsearch?page=<%= p %>&search=<%= search %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<% }} %>&nbsp;
+		<% if((endPage + 10) < maxPage){ %>
+			<a href="/sori/wbsearch?page=<%= endPage + 10 %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/wbsearch?page=<%= endPage %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+		<% } %>&nbsp;
+		<a href="/sori/wbsearch?page=<%= maxPage %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		</div>
+	<% } } %> 
 	<!-- 페이징 끝 -->
 <br>
 	</div>

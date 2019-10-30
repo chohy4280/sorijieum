@@ -1,22 +1,20 @@
 package bookmaking.model.dao;
 
-import static common.JDBCTemplate.close;
-
+import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import book.model.vo.Book;
 import book.model.vo.BookMakingProgress;
-import bookmaking.model.vo.BookMaking;
 
 public class BookMakingDao {
 
 	public BookMakingDao() {}
 	
+	//도서제작상세정보용 전체리스트
 	public ArrayList<BookMakingProgress> selectWaitMakeBookAll(Connection conn) {
 		ArrayList<BookMakingProgress> list = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
@@ -31,7 +29,6 @@ public class BookMakingDao {
 				bookmp.setBookCode(rset.getString("bookcode"));
 				bookmp.setBookPage(rset.getInt("bookpage"));
 				bookmp.setMakepage(rset.getInt("makepage"));
-				bookmp.setBookRimg(rset.getString("bookrimg"));
 				bookmp.setBookTitle(rset.getString("booktitle"));
 				bookmp.setAuthor(rset.getString("author"));
 				bookmp.setBookInfo(rset.getString("bookinfo"));
@@ -48,6 +45,7 @@ public class BookMakingDao {
 		return list;
 	}
 	
+	//도서제작 메인 제작해야할 도서 리스트
 	public ArrayList<BookMakingProgress> selectWaitingBook(Connection conn){
 		ArrayList<BookMakingProgress> waitlist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
@@ -73,6 +71,7 @@ public class BookMakingDao {
 		return waitlist;
 	}
 	
+	//도서제작 메인 제작중 도서 리스트
 	public ArrayList<BookMakingProgress> selectMakingBook(Connection conn){
 		ArrayList<BookMakingProgress> makelist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
@@ -102,6 +101,7 @@ public class BookMakingDao {
 		return makelist;
 	}
 	
+	//제작해야할 도서 게시물 카운트
 	public int getListCountWaiting(Connection conn){
 		int wcount = 0;
 		Statement stmt = null;
@@ -123,6 +123,7 @@ public class BookMakingDao {
 		return wcount;
 	}
 	
+	//제작해야할 도서 리스트
 	public ArrayList<BookMakingProgress> selectWaitingBookList(Connection conn, int startRow, int endRow){
 		ArrayList<BookMakingProgress> wlist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
@@ -130,7 +131,7 @@ public class BookMakingDao {
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKRIMG, BOOKTITLE " 
 						+ " FROM (SELECT * FROM BOOK " 
 						+ " WHERE MAKESTATUS = 'WAIT'" 
-						+ "	ORDER BY BOOKDATE ASC)) " 
+						+ "	ORDER BY BOOKDATE DESC)) " 
 						+ "	WHERE RNUM >= ? AND RNUM <= ?";
 
 		try {
@@ -155,6 +156,7 @@ public class BookMakingDao {
 		return wlist;
 	}
 	
+	//제작중 도서 게시물 카운트
 	public int getListCountMaking(Connection conn){
 		int mcount = 0;
 		Statement stmt = null;
@@ -176,6 +178,7 @@ public class BookMakingDao {
 		return mcount;
 	}
 	
+	//제작중 도서 리스트용
 	public ArrayList<BookMakingProgress> selectMakingBookList(Connection conn, int startRow, int endRow){
 		ArrayList<BookMakingProgress> mlist = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
@@ -210,6 +213,7 @@ public class BookMakingDao {
 		return mlist;
 	}
 	
+	//도서 상세정보 
 	public BookMakingProgress selectMakingBookOne(Connection conn, String bookrimg){
 		BookMakingProgress bookmp = null;
 		PreparedStatement pstmt = null;
@@ -241,6 +245,7 @@ public class BookMakingDao {
 		return bookmp;
 	}
 
+	//제작완료 카운트
 	public int getMakedBookCount(Connection conn) {
 		int dcount = 0;
 		Statement stmt = null;
@@ -262,6 +267,7 @@ public class BookMakingDao {
 		return dcount;
 	}
   
+	//도서제작 추출 텍스트 파일 불러오기
 	public ArrayList<Book> selectBookLoadText(Connection conn, String bookcode) {
 		ArrayList<Book> txtlist = new ArrayList<Book>();
 		PreparedStatement pstmt = null;
@@ -287,8 +293,9 @@ public class BookMakingDao {
 		return txtlist;
 	}
 
-	public BookMakingProgress selectBookMakingPopupLoad(Connection conn, String bookcode, String userid) {
-		BookMakingProgress bmp = null;
+	//도서제작 팝업창, 메인창 불러오기
+	public ArrayList<BookMakingProgress> selectBookMakingPopupLoad(Connection conn, String bookcode, String userid) {
+		ArrayList<BookMakingProgress> list = new ArrayList<BookMakingProgress>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -297,13 +304,18 @@ public class BookMakingDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				bmp = new BookMakingProgress();
+			while(rset.next()) {
+				BookMakingProgress bmp = new BookMakingProgress();
 				bmp.setBookCode(rset.getString("bookcode"));
 				bmp.setBookPage(rset.getInt("bookpage"));
 				bmp.setMakepage(rset.getInt("makepage"));
 				bmp.setBookTitle(rset.getString("booktitle"));
+				bmp.setBookmakepage(rset.getInt("bookmakepage"));
 				bmp.setBookmakestartstatus(rset.getString("bookmakestartstatus"));
+				bmp.setBookmaketxt(rset.getString("bookmaketxt"));
+				bmp.setBookcompleteyn(rset.getString("bookcompleteyn"));
+				bmp.setUserid(rset.getString("userid"));
+				list.add(bmp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -311,52 +323,27 @@ public class BookMakingDao {
 			close(rset);
 			close(pstmt);
 		}
-		return bmp;
+		return list;
 	}
 	
-	public BookMakingProgress selectBookMakingMainLoad(Connection conn, String bookcode, String userid) {
-		BookMakingProgress bmp = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from book join bookmaking using (bookcode) join bookmakingcheck using (bookcode) where bookcode = '" + bookcode + "'";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				bmp = new BookMakingProgress();
-				bmp.setBookCode(rset.getString("bookcode"));
-				bmp.setBookPage(rset.getInt("bookpage"));
-				bmp.setMakepage(rset.getInt("makepage"));
-				bmp.setBookTitle(rset.getString("booktitle"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		return bmp;
-	}
-	
+	//도서제작 제작하기 버튼 클릭시 동기화
 	public int bookMakingInsert(Connection conn, String bookcode, String userid) {
 		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = "insert into bookmakingcheck values(?, NULL, 'Y', NULL, DEFAULT, ?)";
+		Statement stmt = null;
+		String query = "UPDATE BOOKMAKINGCHECK SET BOOKMAKESTARTSTATUS = 'Y', USERID = '" + userid 
+					+ "' WHERE BOOKMAKEPAGE = (SELECT MIN(BOOKMAKEPAGE) FROM BOOKMAKINGCHECK WHERE BOOKMAKESTARTSTATUS = 'N' AND BOOKCODE ='" + bookcode + "' )";
 		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bookcode);
-			pstmt.setString(2, userid);
-			result = pstmt.executeUpdate();
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			close(stmt);
 		}
 		return result;
 	}
 	
+	//도서제작 제작 시작시 BOOK TABLE MAKESTATUS MAKE로 변경
 	public int bookMakingUpdate(Connection conn, String bookcode) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -372,26 +359,42 @@ public class BookMakingDao {
 		return result;
 	}
 
-	public int inputInsert(Connection conn, BookMakingProgress bmp) {
+	//도서제작 페이지 입력 저장
+	public int inputInsert(Connection conn, BookMakingProgress bmp, int index) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "update bookmakingcheck set booktitle = ?, bookmaketxt = ?, bookmakepage = ?, userid = ? where bookcode = ?";
+		String query = "";
+		for(int i = index*10+1; i <= index*10+10; i++) {
+		if(bmp.getBookmakepage() == index*10+1) {
+			query = "update bookmakingcheck set booktitle = ?, bookmaketxt = ? where bookcode = ? and bookmakepage = ?";
+		}else {
+			query = "insert into bookmakingcheck values(?, ?, 'Y', ?, ?, ?, DEFAULT)";
+		}
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bmp.getBookTitle());
-			pstmt.setString(2, bmp.getBookmaketxt());
-			pstmt.setInt(3, bmp.getBookmakepage());
-			pstmt.setString(4, bmp.getUserid());
-			pstmt.setString(5, bmp.getBookCode());
+			if(bmp.getBookmakepage() == index*10+1) {
+				pstmt.setString(1, bmp.getBookTitle());
+				pstmt.setString(2, bmp.getBookmaketxt());
+				pstmt.setString(3, bmp.getBookCode());
+				pstmt.setInt(4, bmp.getBookmakepage());
+			}else {
+				pstmt.setString(1, bmp.getBookCode());
+				pstmt.setString(2, bmp.getBookTitle());
+				pstmt.setString(3, bmp.getBookmaketxt());
+				pstmt.setInt(4, bmp.getBookmakepage());
+				pstmt.setString(5, bmp.getUserid());
+			}
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
+		}
 		return result;
 	}
 	
+	//도서제작 페이지 입력 수정
 	public int inputUpdate(Connection conn, BookMakingProgress bmp) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -410,7 +413,8 @@ public class BookMakingDao {
 		return result;
 	}
 	
-	public int inputMakeBook(Connection conn, BookMakingProgress bmp) {
+	//도서제작 제출 후 makebook 추가
+	public int insertMakeBook(Connection conn, BookMakingProgress bmp) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = "insert into makebook values (?, ?, sysdate)";
@@ -427,16 +431,117 @@ public class BookMakingDao {
 		return result;
 	}
 	
-	//************************************************************************************
+	//도서제작 제출 후 bookmaking table makepage 추가
+	public int insertMakePage(Connection conn, BookMakingProgress bmp, String bookcode, int page, int bookendpage) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query ="";
+		if(bmp.getBookCode() == null) {
+			query = "insert into bookmaking values (?, SYSDATE, NULL, NULL, NULL, ?)";
+		}else {
+			query = "update bookmaking set MAKEPAGE = ? where bookcode = '" + bookcode + "'";
+		}if(bmp.getBookCode() == null && page == bookendpage) {
+			query = "update bookmaking set MAKEFIN = SYSDATE, MAKEPAGE = ? where bookcode = '" + bookcode + "'";
+		}
+		try {
+			pstmt = conn.prepareStatement(query);
+			if(bmp.getBookCode() == null) {
+				pstmt.setString(1, bookcode);
+				pstmt.setInt(2, page);
+			}else {
+				pstmt.setInt(1, page);
+			}if(bmp.getBookCode() == null && page == bookendpage) {
+				pstmt.setInt(1, page);
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
+	//제출 성공시 제출yn 추가
+	public int insertCompleteyn(Connection conn, BookMakingProgress bmp, int page, int endpage) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update bookmakingcheck set bookcompleteyn = 'Y' where bookcode = ? and bookmakepage between "+ page + " and " + endpage;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bmp.getBookmaketxt());
+			pstmt.setString(2, bmp.getBookCode());
+			pstmt.setInt(3, bmp.getBookmakepage());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//
+	
+	//도서 제출을 못했는데 저장된 제작데이터가 있을 때 수정처리
+	public int deleteInput(Connection conn, String userid, String bookcode, int index, int bookpage) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "";
+		for(int i = index*10+1; i <= index*10+10; i++) {
+			if(i==bookpage) {
+				break;
+			}else {
+			query = "UPDATE BOOKMAKINGCHECK SET BOOKTITLE = NULL, BOOKMAKESTARTSTATUS = 'N', BOOKMAKETXT = NULL, USERID = NULL WHERE BOOKCODE = '" + bookcode + "' AND BOOKMAKEPAGE = ?";
+			}
+		try {
+			if(i==bookpage) {
+				break;
+			}else {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, i);
+			result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		}
+		return result;
+	}
+	
+	//************************************************************************************
+	// 관리자용
 	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
-		public int insertBook(Connection conn, Book b) {
-			int result = 0;
-			PreparedStatement pstmt = null;
-			
-			/*String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";*/
-			String query = "insert into bookmaking values (?, sysdate, null, null, null, 0)";
-					
+	public int insertBook(Connection conn, Book b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		/*String query = "insert into bookmaking(bookcode) select bookcode from book where bookcode = '" + b.getBookCode() + "'";*/
+		String query = "insert into bookmaking values (?, sysdate, null, null, null, 0)";
+				
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, b.getBookCode());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+		
+	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
+	public int insertBookMakeCheck(Connection conn, Book b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "";
+		for (int i = 0; i <= b.getBookPage(); i++) {
+			if (i % 10 == 0) {
+				query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + i+1 + ", NULL)";
+			}
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, b.getBookCode());
@@ -446,35 +551,9 @@ public class BookMakingDao {
 			} finally {
 				close(pstmt);
 			}
-			return result;
 		}
-		
-	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
-		public int insertBookMakeCheck(Connection conn, Book b) {
-			int result = 0;
-			PreparedStatement pstmt = null;
-			String query = "";
-			for (int i = 0; i <= b.getBookPage(); i++) {
-				if (i % 10 == 0) {
-					query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + i+1 + ", NULL)";
-				}
-	
-				try {
-					pstmt = conn.prepareStatement(query);
-					pstmt.setString(1, b.getBookCode());
-					result = pstmt.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					close(pstmt);
-				}
-			}
-			return result;
-		}
-
-	public BookMaking selectPlay(Connection conn, String bookcode) {
-			return null;
-		}
+		return result;
+	}
 
 	// 관리자 도서수정용
 	public int updateBookadmin(Connection conn, Book b) {
@@ -498,5 +577,6 @@ public class BookMakingDao {
 		}
 		return result;
 	}
+
 
 }

@@ -27,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Copy,Paste,PasteText,PasteFromWord,Link,Unlink,Anchor,Image,HorizontalRule,Source,Strike,Indent,Outdent,About,NumberedList,BulletedList,Styles,Cut,Scayt,Blockquote';
+	config.removeButtons = 'Copy,Paste,PasteText,PasteFromWord,Link,Unlink,Anchor,HorizontalRule,Source,Strike,Indent,Outdent,About,NumberedList,BulletedList,Scayt,Blockquote,Styles';
 
 	config.autoParagraph = true;
 	/*// Set the most common block elements.

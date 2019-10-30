@@ -2,13 +2,8 @@ package wishbook.model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-
-import book.model.vo.BookMakingProgress;
-
 import static common.JDBCTemplate.*;
-
 import wishbook.model.vo.WishBook;
-
 public class WishBookDao {
 	
 	public WishBookDao() {}
@@ -261,7 +256,9 @@ public class WishBookDao {
 	
 	
 	//************************************************************
+	//도서신청 
 	
+	//도서신청 게시물 카운트
 	public int getListCount(Connection conn){
 		int wcount = 0;
 		Statement stmt = null;
@@ -283,6 +280,7 @@ public class WishBookDao {
 		return wcount;
 	}
 	
+	//도서신청 목록
 	public ArrayList<WishBook> selectWishBookList(Connection conn, int startnum, int endnum){
 		ArrayList<WishBook> wlist = new ArrayList<WishBook>();
 		PreparedStatement pstmt = null;
@@ -318,6 +316,7 @@ public class WishBookDao {
 		return wlist;
 	}
 
+	//도서신청 상세보기
 	public WishBook selectWishBookOne(Connection conn, int wishno){
 		WishBook wb = null;
 		PreparedStatement pstmt = null;
@@ -346,7 +345,64 @@ public class WishBookDao {
 		}
 		return wb;
 	}
+	
+	//도서신청 상세보기 이전글
+	public int getLastWishNo(Connection conn, int wishno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select max(wishno) as lastno from wishbook where wishno < ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, wishno);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
+	//도서신청 상세보기 다음글
+	public int getNextWishNo(Connection conn, int wishno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select min(wishno) as nextno from wishbook where wishno > ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, wishno);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+	//도서신청 게시물 수정
 	public int updateWishBook(Connection conn, WishBook wishbook){
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -369,6 +425,7 @@ public class WishBookDao {
 		return result;
 	}
 	
+	//도서신청 게시물 등록
 	public int insertWishBook(Connection conn, WishBook wishbook){
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -391,6 +448,7 @@ public class WishBookDao {
 		return result;
 	}
 	
+	//도서신청 게시물 삭제
 	public int deleteWishBook(Connection conn, int wishno){
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -407,23 +465,17 @@ public class WishBookDao {
 		return result;
 	}
 	
-	
-	public ArrayList<WishBook> selectSearchWishBook(Connection conn, String search, String keyword, int startnum, int endnum){
+	//도서신청 도서명, 저자명 검색
+	public ArrayList<WishBook> selectSearchWishBook(Connection conn, String search, String keyword){
 		ArrayList<WishBook> list = new ArrayList<WishBook>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = null;
 		if(keyword != null) {
-			query = "SELECT * FROM (SELECT ROWNUM RNUM, WISHNO, WISHBOOKTITLE, WISHBOOKAUTHOR, WISHWRITER, WISHDATE, WISHSTATUS, WISHVIEWS " + 
-					"FROM (SELECT * FROM WISHBOOK " + 
-					"WHERE " + search + " LIKE '%" + keyword + "%' "+ 
-					"ORDER BY WISHDATE DESC)) " + 
-					"WHERE RNUM >= ? AND RNUM <= ?";
+			query = "select * from wishbook where " + search + " like '%" + keyword + "%' order by wishdate desc";
 		}
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, startnum);
-			pstmt.setInt(2, endnum);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				WishBook wb = new WishBook();
@@ -445,6 +497,7 @@ public class WishBookDao {
 		return list;
 	}
 
+	/*//도서신청 검색게시물 카운트
 	public int getWishListCount(Connection conn, String search, String keyword) {
 		int wcount = 0;
 		Statement stmt = null;
@@ -465,8 +518,9 @@ public class WishBookDao {
 			close(stmt);
 		}
 		return wcount;
-	}
+	}*/
 	
+	//도서신청글 조회수 증가
 	public int updateWishViews(Connection conn, int wishno) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -483,6 +537,7 @@ public class WishBookDao {
 		}
 		return result;
 	}
+
 
 
 

@@ -23,6 +23,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/bookmaking.css">
+<script type="text/javascript" src="/sori/resources/js/jquery.watermark.min.js"></script>
 </head>
 <body>
 

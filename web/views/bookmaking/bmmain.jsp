@@ -44,24 +44,24 @@ $(function(){
 		</div><!-- guide -->
 		<div class="ye-book">
 			<div class="ye-bookwait">
-			<a style="font-weight: bold;">제작해야할 도서</a>&nbsp;&nbsp;
+			<a style="font-weight: bold;margin-left: 15px;">제작해야할 도서</a>&nbsp;&nbsp;
 			<button class="mini ui icon button" id="mbutton" 
 				onclick="location.href='/sori/bwlist'"
-				style="font-family:'S-Core Dream 6'">
+				style="font-family:'S-Core Dream 6';margin-top: 3px;">
   				더보기 <i class="angle right icon" style="width:10%;height:10%"></i>
 				</button>
 				<br><br>
-			<% for(int i = 0; i < 6; i++){ %>
+			<% for(int i = 0; i < 5; i++){ %>
 			<div class="ye-bw">
-			<% if(waitlist.get(i).getBookTitle().length() < 13){ %>
-			<div class="ui large basic label" align="center" style="width: 170px;">
-			<p style="text-align:center;font-size:10pt;">
+			<% if(waitlist.get(i).getBookTitle().length() < 16){ %>
+			<div class="ui large basic label" align="center" style="width: 230px;">
+			<p style="text-align:center;font-size:1rem;">
 			<%= waitlist.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large basic label" align="center" style="width: 170px;">
-			<p style="text-align:center;font-size:10pt;">
-			<%= waitlist.get(i).getBookTitle().substring(0, 12) %>..</p>
+			<div class="ui large basic label" align="center" style="width: 230px;">
+			<p style="text-align:center;font-size:1rem;">
+			<%= waitlist.get(i).getBookTitle().substring(0, 16) %>..</p>
 			</div><br>
 			<% } %>
 			<a href="/sori/bminfo?bookrimg=<%= waitlist.get(i).getBookRimg() %>">
@@ -69,38 +69,38 @@ $(function(){
 			</div>
 			<% } %>
 			</div><!-- bookwait -->
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<div class="ye-bookmaking">
-			<a style="font-weight: bold;">제작중인 도서</a>&nbsp;&nbsp;
+			<a style="font-weight: bold;margin-left: 15px;">제작중인 도서</a>&nbsp;&nbsp;
 			<button class="mini ui icon button" id="mbutton" 
 				onclick="location.href='/sori/bmlist'"
-				style="font-family:'S-Core Dream 6'">
+				style="font-family:'S-Core Dream 6';margin-top: 3px;">
   				더보기 <i class="angle right icon" style="width:10%;height:10%"></i>
 				</button>
 			<br><br>
-			<% for(int i = 0; i < 6; i++){ 
+			<% for(int i = 0; i < 5; i++){ 
 				int makep = (makelist.get(i).getMakepage());
 				int bookp = (makelist.get(i).getBookPage());
 				int pwidth = (int)(((double)makep / bookp) * 100);
 			%>
 			<div class="ye-bm">
-			<% if(makelist.get(i).getBookTitle().length() < 13){ %>
-			<div class="ui large basic label" align="center" style="width: 170px;">
-			<p style="text-align:center;font-size:10pt;">
+			<% if(makelist.get(i).getBookTitle().length() < 16){ %>
+			<div class="ui large basic label" align="center" style="width: 230px;">
+			<p style="text-align:center;font-size:1rem;">
 			<%= makelist.get(i).getBookTitle() %></p>
 			</div><br>
 			<% }else { %>
-			<div class="ui large basic label" align="center" style="width: 170px;">
-			<p style="text-align:center;font-size:10pt;">
-			<%= makelist.get(i).getBookTitle().substring(0, 12) %>..</p>
+			<div class="ui large basic label" align="center" style="width: 230px;">
+			<p style="text-align:center;font-size:1rem;">
+			<%= makelist.get(i).getBookTitle().substring(0, 16) %>..</p>
 			</div><br>
 			<% } %>
 			<a href="/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>">
 			<img src="/sori/resources/book_upfiles/<%= makelist.get(i).getBookRimg() %>"></a>
 			<br><br>
-			<div class="progress" style="width:170px;height:25px;border-radius:7px 7px 7px 7px;"> 
+			<div class="progress" style="width:230px;height:25px;border-radius:7px 7px 7px 7px;"> 
   			<div class="progress-bar" role="progressbar" 
-  			style="font-size:0.8rem;font-align:center;background:orange;width:<%= pwidth %>%;"
+  			style="font-size:0.9rem;font-align:center;background:orange;width:<%= pwidth %>%;"
   			aria-valuenow="<%= pwidth %>" 
   			aria-valuemin="0" aria-valuemax="<%= makelist.get(i).getBookPage() %>">
   			<%= pwidth %>%</div>

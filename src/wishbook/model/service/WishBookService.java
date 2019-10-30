@@ -3,8 +3,6 @@ package wishbook.model.service;
 import java.sql.*;
 import static common.JDBCTemplate.*;
 import java.util.ArrayList;
-
-import book.model.vo.BookMakingProgress;
 import wishbook.model.dao.WishBookDao;
 import wishbook.model.vo.WishBook;
 
@@ -106,6 +104,20 @@ public class WishBookService {
 		close(conn);
 		return wishbook;
 	}
+	
+	public int getLastWishNo(int wishno) {
+		Connection conn = getConnection();
+		int result = wbDao.getLastWishNo(conn, wishno);
+		close(conn);
+		return result;
+	}
+	
+	public int getNextWishNo(int wishno) {
+		Connection conn = getConnection();
+		int result = wbDao.getNextWishNo(conn, wishno);
+		close(conn);
+		return result;
+	}
 
 	//도서신청 게시물 수정
 	public int updateWishBook(WishBook wishbook){
@@ -145,19 +157,11 @@ public class WishBookService {
 	
 	
 	//도서신청 도서명, 저자명 검색
-	public ArrayList<WishBook> selectSearchWishBook(String search, String keyword, int startnum, int endnum){
+	public ArrayList<WishBook> selectSearchWishBook(String search, String keyword){
 		Connection conn = getConnection();
-		ArrayList<WishBook> list = wbDao.selectSearchWishBook(conn, search, keyword, startnum, endnum);
+		ArrayList<WishBook> list = wbDao.selectSearchWishBook(conn, search, keyword);
 		close(conn);
 		return list;
-	}
-
-	//도서신청 검색게시물 카운트
-	public int getWishListCount(String search, String keyword){
-		Connection conn = getConnection();
-		int wcount = wbDao.getWishListCount(conn, search, keyword);
-		close(conn);
-		return wcount;
 	}
 	
 	//도서신청글 조회수 증가

@@ -25,11 +25,12 @@ public class BookMakingProgress implements java.io.Serializable{
 	private String bookotxt;
 	private String bookrtxt;
 	private int makepage;
-	//bookmakingstart table
+	//bookmakingcheck table
 	private String bookmakestartstatus;
 	private String bookmaketxt;
 	private int bookmakepage;
 	private String userid;
+	private String bookcompleteyn;
 	//makebook table
 	private java.sql.Date makedate;
 	
@@ -39,7 +40,9 @@ public class BookMakingProgress implements java.io.Serializable{
 
 	public BookMakingProgress(String bookCode, String bookTitle, String author, String publisher, int bookPage,
 			String bookInfo, String bookOimg, String bookRimg, String bookOpdf, String bookRpdf, String makeStatus,
-			Date makestart, Date makefin, String bookotxt, String bookrtxt, int makepage) {
+			String bookdelyn, Date makestart, Date makefin, String bookotxt, String bookrtxt, int makepage,
+			String bookmakestartstatus, String bookmaketxt, int bookmakepage, String userid, String bookcompleteyn,
+			Date makedate) {
 		super();
 		this.bookCode = bookCode;
 		this.bookTitle = bookTitle;
@@ -52,11 +55,18 @@ public class BookMakingProgress implements java.io.Serializable{
 		this.bookOpdf = bookOpdf;
 		this.bookRpdf = bookRpdf;
 		this.makeStatus = makeStatus;
+		this.bookdelyn = bookdelyn;
 		this.makestart = makestart;
 		this.makefin = makefin;
 		this.bookotxt = bookotxt;
 		this.bookrtxt = bookrtxt;
 		this.makepage = makepage;
+		this.bookmakestartstatus = bookmakestartstatus;
+		this.bookmaketxt = bookmaketxt;
+		this.bookmakepage = bookmakepage;
+		this.userid = userid;
+		this.bookcompleteyn = bookcompleteyn;
+		this.makedate = makedate;
 	}
 
 	public BookMakingProgress(String bookCode, String bookTitle, String bookmakestartstatus, String bookmaketxt, int bookmakepage, String userid) {
@@ -69,11 +79,10 @@ public class BookMakingProgress implements java.io.Serializable{
 		this.userid = userid;
 	}
 	
-	public BookMakingProgress(String userid, String bookCode, Date makedate) {
+	public BookMakingProgress(String userid, String bookCode) {
 		super();
 		this.userid = userid;
 		this.bookCode = bookCode;
-		this.makedate = makedate;
 	}
 
 	public String getBookCode() {
@@ -251,6 +260,14 @@ public class BookMakingProgress implements java.io.Serializable{
 	public void setMakedate(java.sql.Date makedate) {
 		this.makedate = makedate;
 	}
+	
+	public String getBookcompleteyn() {
+		return bookcompleteyn;
+	}
+
+	public void setBookcompleteyn(String bookcompleteyn) {
+		this.bookcompleteyn = bookcompleteyn;
+	}
 
 	@Override
 	public String toString() {
@@ -260,16 +277,17 @@ public class BookMakingProgress implements java.io.Serializable{
 				+ ", makeStatus=" + makeStatus + ", bookdelyn=" + bookdelyn + ", makestart=" + makestart + ", makefin="
 				+ makefin + ", bookotxt=" + bookotxt + ", bookrtxt=" + bookrtxt + ", makepage=" + makepage
 				+ ", bookmakestartstatus=" + bookmakestartstatus + ", bookmaketxt=" + bookmaketxt + ", bookmakepage="
-				+ bookmakepage + ", userid=" + userid + ", makedate=" + makedate + ", getBookCode()=" + getBookCode()
-				+ ", getBookTitle()=" + getBookTitle() + ", getAuthor()=" + getAuthor() + ", getPublisher()="
-				+ getPublisher() + ", getBookPage()=" + getBookPage() + ", getBookInfo()=" + getBookInfo()
-				+ ", getBookOimg()=" + getBookOimg() + ", getBookRimg()=" + getBookRimg() + ", getBookOpdf()="
-				+ getBookOpdf() + ", getBookRpdf()=" + getBookRpdf() + ", getMakeStatus()=" + getMakeStatus()
-				+ ", getBookdelyn()=" + getBookdelyn() + ", getMakestart()=" + getMakestart() + ", getMakefin()="
-				+ getMakefin() + ", getBookotxt()=" + getBookotxt() + ", getBookrtxt()=" + getBookrtxt()
-				+ ", getMakepage()=" + getMakepage() + ", getBookmakestartstatus()=" + getBookmakestartstatus()
-				+ ", getBookmaketxt()=" + getBookmaketxt() + ", getBookmakepage()=" + getBookmakepage()
-				+ ", getUserid()=" + getUserid() + ", getMakedate()=" + getMakedate() + ", getClass()=" + getClass()
+				+ bookmakepage + ", userid=" + userid + ", bookcompleteyn=" + bookcompleteyn + ", makedate=" + makedate
+				+ ", getBookCode()=" + getBookCode() + ", getBookTitle()=" + getBookTitle() + ", getAuthor()="
+				+ getAuthor() + ", getPublisher()=" + getPublisher() + ", getBookPage()=" + getBookPage()
+				+ ", getBookInfo()=" + getBookInfo() + ", getBookOimg()=" + getBookOimg() + ", getBookRimg()="
+				+ getBookRimg() + ", getBookOpdf()=" + getBookOpdf() + ", getBookRpdf()=" + getBookRpdf()
+				+ ", getMakeStatus()=" + getMakeStatus() + ", getBookdelyn()=" + getBookdelyn() + ", getMakestart()="
+				+ getMakestart() + ", getMakefin()=" + getMakefin() + ", getBookotxt()=" + getBookotxt()
+				+ ", getBookrtxt()=" + getBookrtxt() + ", getMakepage()=" + getMakepage()
+				+ ", getBookmakestartstatus()=" + getBookmakestartstatus() + ", getBookmaketxt()=" + getBookmaketxt()
+				+ ", getBookmakepage()=" + getBookmakepage() + ", getUserid()=" + getUserid() + ", getMakedate()="
+				+ getMakedate() + ", getBookcompleteyn()=" + getBookcompleteyn() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 

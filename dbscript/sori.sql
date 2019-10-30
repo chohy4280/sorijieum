@@ -649,8 +649,6 @@ INSERT INTO BOOK VALUES ('8954655971', '여행의 이유', '김영하', '문학�
 
 INSERT INTO BOOK VALUES ('8937473135', '82년생 김지영', '조남주', '민음사', '2016/10/14', 192, '슬하에 딸을 두고 있는 서른네 살 김지영 씨가 어느 날 갑자기 이상 증세를 보인다. 시댁 식구들이 모여 있는 자리에서 친정 엄마로 빙의해 속말을 뱉어 내고, 남편의 결혼 전 애인으로 빙의해 그를 식겁하게 만들기도 한다. 이를 이상하게 여긴 남편이 김지영 씨의 정신 상담을 주선하고, 지영 씨는 정기적으로 의사를 찾아가 자신의 삶을 이야기한다. 소설은 김지영 씨의 이야기를 들은 담당 의사가 그녀의 인생을 재구성해 기록한 리포트 형식이다. 리포트에 기록된 김지영 씨의 기억은 ''여성''이라는 젠더적 기준으로 선별된 에피소드로 구성된다.', '82년생 김지영_조남주.jpg', '201906131208.jpg', '82년생 김지영_조남주.pdf', '201906140908.pdf', '2019/06/14', DEFAULT, DEFAULT, DEFAULT);
 
-INSERT INTO BOOK VALUES ('8937473097', '보건교사 안은영', '정세랑', '민음사', '2015/12/07',   280, '소설은 제목 그대로 사립 M고의 보건교사 ''안은영''을 주인공으로 한다. 특별한 것 없는 직업과 평범한 이름이지만 안은영은 보통의 보건교사가 아니다. 복 중의 복, 일복 하나는 타고난 그녀는 직업으로 ''보건교사'' 역할에 열심히면서 동시에 자신만이 볼 수 있는 것들을 처치하고 쫓아내며, 또는 위로하는 ''퇴마사''의 운명에도 충실히 복무한다. 여기에 사립 M고의 한문교사이자 학교 설립자의 후손인 홍인표에게 흐르는 거대한 에너지는 안은영의 활약을 돕는 필수적인 영양제 역할을 한다. 에너지(기)를 보충하기 위해, 학교의 평화를 지키기 위해 둘은 내 거 아닌 내 것 같은 사이가 되어 힘을 합한다. 둘 앞에 나타나는 기이한 괴물들, 학생들에게 보이는 미스터리한 현상들, 학교 곳곳에 숨은 괴상한 힘들…… 사립 M고에는 어떤 비밀이 있는 것일까. 무엇보다 안은영과 홍인표의 썸(some)은 어떻게 마무리될까?', '보건교사 안은영_정세랑.jpg', '201908191645.jpg', '보건교사 안은영_정세랑.pdf', '201908201445pdf', '2019/08/20', DEFAULT, DEFAULT, DEFAULT);
-
 INSERT INTO BOOK VALUES ('8982814477', '연금술사', '파울로 코엘료', '문학동네', '2001/12/01', 278, '청년의 가슴속에서, 알 수 없는 기쁨이 솟구쳤다. 자신은 이제 자아의 신화를 위해서, 그리고 파티마를 위해서 죽게 되리라. 낯선 기쁨의 실체는 바로 그것이었다. 표지들이 보여준 것은 끝내 사실이었던 것이다. 눈앞에 칼을 든 적이 있었지만, 그는 죽음을 걱정할 필요가 없었다. 만물의 정기가 그를 기다리고 있었고, 잠시 후면 그 정기의 일부가 될 터였다."이방인이 낯선 땅에서 무엇을 하고 있는가?", "자아의 신화를 찾으러 왔습니다. 당신은 절대 이해하지 못할 어떤 것을 찾아서."',   '연금술사_파울로 코엘료.jpg', '201909261556.jpg', '연금술사_파울로 코엘료.pdf', '201909271556.pdf', '2019/09/27', DEFAULT, DEFAULT, DEFAULT);
 
 INSERT INTO BOOK VALUES ('8983925310', '해리포터와 마법사의 돌 1', 'J. K. 롤링', '문학수첩', '2014/12/18', 244, '어둠의 마왕 볼드모트에게 부모를 잃고 홀로 살아남은 아이, 해리는 안전을 위해 마법사가 아닌 사람인 ‘머글’ 페투니아 이모와 버논 이모부 손에 길러지며 불우한 어린 시절을 보낸다. 열한 번째 생일날, 해그리드를 통해 자신이 마법사라는 사실을 알게 된 해리는 호그와트 마법학교에 입학해 헤르미온느 그레인저, 론 위즐리라는 친구들과 함께 영생을 주는 마법사의 돌을 찾는 엄청난 모험을 시작하게 된다.', '해리포터와_마법사의_돌1.jpg', '201902142136.jpg', '해리포터와_마법사의_돌1.pdf', '201907252115.pdf', '2019/07/25', 55, 'DONE', DEFAULT);
@@ -917,6 +915,8 @@ INSERT INTO BOOK VALUES ('9791187119845', '나는 나로 살기로 했다 ', '�
 "어른이 되어보니 세상은 냉담한 곳이었다." 김수현은 책을 펴내면서 이런 말을 했다. 부조리가 넘쳐났고, 사람들은 불필요할 정도로 서로에게 선을 긋고, 평범한 이들조차 기회가 있으면 차별과 멸시를 즐긴다. 우리는 자본주의 사회에서 철저한 갑과 을이 되어 살아가고 있다. 그것이 우리가 이토록 발버둥 치며 살고 있는 세상이다.', '나는 나로 살기로 했다.jpg', '201910152005.jpg', '나는 나로 살기로 했다.pdf', '201910152005.pdf', '2019/10/15', 0, 'MAKE', DEFAULT);
 INSERT INTO BOOK VALUES ('9791162540640', '아주 작은 습관의 힘 ', '제임스 클리어', '비즈니스북스', '2019/02/26', 360, '[아주 작은 습관의 힘]은 저자의 생생한 경험과 생물학, 뇌과학, 심리학의 최신 연구 결과를 집약해서 습관 하나로 인생을 변화시킬 수 있는 노하우를 제시한다. 만약 당신이 "새해에 운동을 해야지"라고 결심을 했다면 저자의 관점에서 이 목표는 실패할 수밖에 없다. 왜냐하면 습관을 만들기 위해서는 결심이 분명해야 하고(제1법칙), 매력적이어야 하며(제2법칙), 쉬워야 하고(제3법칙), 만족스러워야 하기(제4법칙) 때문이다. 위의 결심은 여기에 단 한 가지도 해당되지 않는다. 정말 변화할 수 있는 습관을 만들기 위해서 당신의 방법은 완전히 달라져야 한다. 이 책에서는 이 네 가지 법칙을 바탕으로 어떻게 하면 빠르고, 효율적이고, 확실하게 변화할 수 있는지 알려준다. 금연, 다이어트에서부터 비즈니스에서 탁월한 성과를 이뤄내기까지, 저자가 제안하는 방법으로 매일 조금씩 좋은 습관을 만든다면 무엇을 결심하든 원하는 것을 얻을 것이다.', '아주 작은 습관의 힘.jpg', '201910152019.jpg', '아주 작은 습관의 힘.pdf', '201910152019.pdf', '2019/10/15', 0, 'MAKE', DEFAULT);
 
+INSERT INTO BOOK VALUES ('8937473097', '보건교사 안은영', '정세랑', '민음사', '2015/12/07', 280, '소설은 제목 그대로 사립 M고의 보건교사 ''안은영''을 주인공으로 한다. 특별한 것 없는 직업과 평범한 이름이지만 안은영은 보통의 보건교사가 아니다. 복 중의 복, 일복 하나는 타고난 그녀는 직업으로 ''보건교사'' 역할에 열심히면서 동시에 자신만이 볼 수 있는 것들을 처치하고 쫓아내며, 또는 위로하는 ''퇴마사''의 운명에도 충실히 복무한다. 여기에 사립 M고의 한문교사이자 학교 설립자의 후손인 홍인표에게 흐르는 거대한 에너지는 안은영의 활약을 돕는 필수적인 영양제 역할을 한다. 에너지(기)를 보충하기 위해, 학교의 평화를 지키기 위해 둘은 내 거 아닌 내 것 같은 사이가 되어 힘을 합한다. 둘 앞에 나타나는 기이한 괴물들, 학생들에게 보이는 미스터리한 현상들, 학교 곳곳에 숨은 괴상한 힘들…… 사립 M고에는 어떤 비밀이 있는 것일까. 무엇보다 안은영과 홍인표의 썸(some)은 어떻게 마무리될까?', '보건교사 안은영_정세랑.jpg', '201908191645.jpg', '보건교사 안은영_정세랑.pdf', '8937473097.pdf', '2019/08/20', DEFAULT, DEFAULT, DEFAULT);
+
 --도서 데이터 수정
 UPDATE BOOK SET MAKESTATUS = 'MAKE'
 WHERE BOOKCODE = '9791188248674';
@@ -947,12 +947,10 @@ INSERT INTO MYBOOK VALUES ('user005', '8983925655', 15, DEFAULT, DEFAULT);
 INSERT INTO LIKEBOOK VALUES ('user003', '8983925442');
 INSERT INTO LIKEBOOK VALUES ('user003', '8936434268');
 INSERT INTO LIKEBOOK VALUES ('user003', '8937473135');
-INSERT INTO LIKEBOOK VALUES ('user003', '8937473097');
 INSERT INTO LIKEBOOK VALUES ('user003', '8954655971');
 INSERT INTO LIKEBOOK VALUES ('user003', '8954641636');
 INSERT INTO LIKEBOOK VALUES ('user005', '8936434268');
 INSERT INTO LIKEBOOK VALUES ('user005', '8937473135');
-INSERT INTO LIKEBOOK VALUES ('user005', '8937473097');
 INSERT INTO LIKEBOOK VALUES ('user005', '8954655971');
 INSERT INTO LIKEBOOK VALUES ('user005', '8954641636');
 INSERT INTO LIKEBOOK VALUES ('user005', '8983925442');
@@ -963,13 +961,11 @@ INSERT INTO MAKEDBOOK VALUES ('user001', '8954655971', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user001', '8954641636', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user001', '8936434268', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user001', '8937473135', DEFAULT);
-INSERT INTO MAKEDBOOK VALUES ('user001', '8937473097', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user001', '8983925531', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user002', '8954655971', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user002', '8954641636', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user002', '8936434268', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user002', '8937473135', DEFAULT);
-INSERT INTO MAKEDBOOK VALUES ('user002', '8937473097', DEFAULT);
 INSERT INTO MAKEDBOOK VALUES ('user002', '8983925531', DEFAULT);
 
 --도서제작 데이터 입력
@@ -978,7 +974,6 @@ INSERT INTO BOOKMAKING VALUES ('8954641636', '2019-03-03', NULL, NULL, NULL, 121
 INSERT INTO BOOKMAKING VALUES ('8983925310', '2019-07-26', '2019-08-01', '해리포터와 마법사의 돌 1.txt', '201908011508.txt', 244);
 INSERT INTO BOOKMAKING VALUES ('8936434268', '2019-01-15', '2019-01-31', '아몬드_손평원.txt', '201901312208.txt', 264);
 INSERT INTO BOOKMAKING VALUES ('8937473135', SYSDATE, NULL, NULL, NULL, DEFAULT);
-INSERT INTO BOOKMAKING VALUES ('8937473097', SYSDATE, NULL, NULL, NULL, DEFAULT);
 INSERT INTO BOOKMAKING VALUES ('8982814477', SYSDATE, NULL, NULL, NULL, DEFAULT);
 INSERT INTO BOOKMAKING VALUES ('1162203625', SYSDATE, NULL, NULL, NULL, DEFAULT);
 INSERT INTO BOOKMAKING VALUES ('9791130620459', '2019-09-14', null, null, null, 20);
@@ -1031,6 +1026,8 @@ INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user002', '아몬드', '손원
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user001', '너무 재밌어서 잠 못 드는 심리학 사전', '스벤야 아이젠브라운', NULL, NULL, '2019/09/10', 3, DEFAULT, NULL, NULL, 'N', NULL);
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user004', '박막례, 이대로 죽을 순 없다', '박막례, 김유라', '위즈덤 하우스', NULL, '2019/09/11', 11, DEFAULT, NULL, NULL, 'N', NULL);
 INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user003', '개미', '베르나르 베르베르', NULL, NULL, '2019/09/11', 7, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user001', '너무 재밌어서 잠 못 드는 심리학 사전', '스벤야 아이젠브라운', NULL, NULL, '19/09/10', 4, DEFAULT, NULL, NULL, 'N', NULL);
+INSERT INTO WISHBOOK VALUES (SEQ_WISHNO.NEXTVAL, 'user002', '소년이 온다', '한강', NULL, NULL, '19/10/18', 12, DEFAULT, NULL, NULL, 'N', NULL);
 
 --qna 데이터 입력
 INSERT INTO QNA VALUES (SEQ_QNANO.NEXTVAL, '한자 작성은 어떻게 하면되나요', 'user002', '도서 중간중간 나오는 한자는 어떻게 작성하면 되나요?', '2019/09/23', 21, 'Y', NULL, NULL, 'N');
@@ -1101,11 +1098,12 @@ DROP TABLE BOOKMAKINGCHECK CASCADE CONSTRAINT;
 
 CREATE TABLE BOOKMAKINGCHECK (
    BOOKCODE   VARCHAR2(15)      NOT NULL,
-   BOOKTITLE  VARCHAR2(200) NOT NULL,
+   BOOKTITLE  VARCHAR2(200)  NULL,
    BOOKMAKESTARTSTATUS VARCHAR2(4) DEFAULT 'N' NOT NULL,
    BOOKMAKETXT   VARCHAR2(4000)      NULL,
    BOOKMAKEPAGE   NUMBER   DEFAULT 0   NOT NULL,
-   USERID   VARCHAR2(20)      NOT NULL
+   USERID   VARCHAR2(20)   NULL,
+   BOOKCOMPLETEYN VARCHAR2(4) DEFAULT 'N' NOT NULL
 );
 
 COMMENT ON COLUMN BOOKMAKINGCHECK.BOOKCODE IS '도서코드';
@@ -1119,6 +1117,8 @@ COMMENT ON COLUMN BOOKMAKINGCHECK.BOOKMAKETXT IS '제작된 내용';
 COMMENT ON COLUMN BOOKMAKINGCHECK.BOOKMAKEPAGE IS '제작된 쪽수';
 
 COMMENT ON COLUMN BOOKMAKINGCHECK.USERID IS '회원아이디';
+
+COMMENT ON COLUMN BOOKMAKINGCHECK.BOOKCOMPLETEYN IS '제출여부';
 
 ALTER TABLE BOOKMAKINGCHECK ADD CONSTRAINT FK_BOOK_TO_BOOKMAKINGCHECK_1 FOREIGN KEY (
    BOOKCODE
@@ -1137,5 +1137,7 @@ REFERENCES MEMBER (
 );
 
 ALTER TABLE BOOKMAKINGCHECK ADD CHECK (BOOKMAKESTARTSTATUS IN('N','Y'));
+
+ALTER TABLE BOOKMAKINGCHECK ADD CHECK (BOOKCOMPLETEYN IN('N','Y'));
 
 COMMIT;

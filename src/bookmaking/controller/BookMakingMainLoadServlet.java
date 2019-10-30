@@ -1,6 +1,8 @@
 package bookmaking.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,21 +32,28 @@ public class BookMakingMainLoadServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 도서제작 제작화면이동 컨트롤러
+		try {
 		String bookcode = request.getParameter("bookcode");
 		String userid = request.getParameter("userid");
-		int currentPage = 1;
-		BookMakingProgress bmp = new BookMakingService().selectBookMakingMainLoad(bookcode, userid);
+		String indexStr = request.getParameter("index");
+		int index = Integer.parseInt(indexStr);
+		/*System.out.println(index);*/
+		ArrayList<BookMakingProgress> list = new BookMakingService().selectBookMakingPopupLoad(bookcode, userid);
 		int result = new BookMakingService().bookMakingInsert(bookcode, userid);
+		int makestatus = new BookMakingService().bookMakingUpdate(bookcode);
 		RequestDispatcher view = null;
-		if(bmp != null && result > 0) {
+		if(list.size() != 0 && result > 0 && makestatus > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakingmain.jsp");
-			request.setAttribute("bmp", bmp);
-			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("list", list);
+			request.setAttribute("index", index);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", " 실패!");
 			view.forward(request, response);
+		}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 	}
 

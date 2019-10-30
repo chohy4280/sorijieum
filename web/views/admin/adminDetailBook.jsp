@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="book.model.vo.BookDV" %>
+<%@ page import="book.model.vo.BookDV, java.io.File" %>
 <%@ include file="/../inc/adminTemplate.jsp" %>
 <%
 	BookDV book = (BookDV)request.getAttribute("book");
@@ -28,6 +28,25 @@
 			})
 		return false;
 	}}
+	
+	//이미지추출 버튼 클릭시 pdf이미지 추출
+	function bpimg(code){
+		$.ajax({
+			type : "POST",
+	        url : "bpimg",
+	        data : {"bookcode": code},
+			success : function(response) {
+				var url = "/sori/blist.ad";
+				$(location).attr('href', url);
+				alert("이미지 추출을 완료하였습니다!");
+			},
+			error : function(request, status, error) {
+				if (request.status != '0') {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			}
+		});
+	 }
 </script>
 </head>
 <body>
@@ -103,6 +122,15 @@
 				<center>
 					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>&nbsp; 
 					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>'">수정</button>
+					<%  String destinationDir = "C:/Users/macbook/git/sorijieum/web/resources/book_pdf_images/" + book.getBookCode(); //폴더 경로
+						File destinationFile = new File(destinationDir);
+						File Folder = new File(destinationDir);
+						if(!Folder.exists()){
+					%>
+					<button id="bpimg" class="small ui teal button" onclick="javascript:bpimg(<%=book.getBookCode() %>)">이미지추출</button>
+					<% }else{ %>
+					&nbsp;
+					<% } %>
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 					<br><br><br><button class="small ui red button" onclick="return delBtn();">도서삭제</button>
 					<% } %>

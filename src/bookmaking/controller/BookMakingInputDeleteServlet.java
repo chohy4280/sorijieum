@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bookmaking.model.service.BookMakingService;
+
 /**
- * Servlet implementation class BookMakedCountServlet
+ * Servlet implementation class BookMakingInputDeleteServlet
  */
-@WebServlet("/bmcnt")
-public class BookMakedCountServlet extends HttpServlet {
+@WebServlet("/bmdel")
+public class BookMakingInputDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BookMakedCountServlet() {
+    public BookMakingInputDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +28,16 @@ public class BookMakedCountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//도서제작 제출 실패시 인풋데이터 수정
+		request.setCharacterEncoding("utf-8");
+		String userid = request.getParameter("userid");
+		String bookcode = request.getParameter("bookcode");
+		int index = Integer.parseInt(request.getParameter("index"));
+		int bookpage = Integer.parseInt(request.getParameter("bookpage"));
+		int result = new BookMakingService().deleteInput(userid, bookcode, index, bookpage);
+		if(result > 0) {
+			response.getWriter().append("ok");
+		}
 	}
 
 	/**

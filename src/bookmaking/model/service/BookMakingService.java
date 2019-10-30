@@ -1,13 +1,16 @@
 package bookmaking.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import book.model.vo.Book;
 import book.model.vo.BookMakingProgress;
 import bookmaking.model.dao.BookMakingDao;
-import bookmaking.model.vo.BookMaking;
 
 public class BookMakingService {
 	//의존성 주입
@@ -79,37 +82,13 @@ public class BookMakingService {
 		return book;
 	}
 	
-	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
-	public int insertBook(Book b) {
-		Connection conn = getConnection();
-		int result = bmDao.insertBook(conn, b);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
-	
-	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
-	public int insertBookMakeCheck(Book b) {
-		Connection conn = getConnection();
-		int result = bmDao.insertBookMakeCheck(conn, b);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
-	
 	//제작완료 카운트
-		public int getMakedBookCount(){
-			Connection conn = getConnection();
-			int dcount = bmDao.getMakedBookCount(conn);
-			close(conn);
-			return dcount;
-		}
+	public int getMakedBookCount(){
+		Connection conn = getConnection();
+		int dcount = bmDao.getMakedBookCount(conn);
+		close(conn);
+		return dcount;
+	}
 	
 	//도서제작 추출 텍스트 파일 불러오기
 	public ArrayList<Book> selectBookLoadText(String bookcode){
@@ -119,18 +98,10 @@ public class BookMakingService {
 		return list;
 	}
 	
-	//도서제작 팝업창 불러오기
-	public BookMakingProgress selectBookMakingPopupLoad(String bookcode, String userid){
+	//도서제작 팝업창, 메인창 불러오기
+	public ArrayList<BookMakingProgress> selectBookMakingPopupLoad(String bookcode, String userid){
 		Connection conn = getConnection();
-		BookMakingProgress list = bmDao.selectBookMakingPopupLoad(conn, bookcode, userid);
-		close(conn);
-		return list;
-	}
-	
-	//도서제작 불러오기
-	public BookMakingProgress selectBookMakingMainLoad(String bookcode, String userid){
-		Connection conn = getConnection();
-		BookMakingProgress list = bmDao.selectBookMakingMainLoad(conn, bookcode, userid);
+		ArrayList<BookMakingProgress> list = bmDao.selectBookMakingPopupLoad(conn, bookcode, userid);
 		close(conn);
 		return list;
 	}
@@ -139,18 +110,6 @@ public class BookMakingService {
 	public int bookMakingInsert(String bookcode, String userid) {
 		Connection conn = getConnection();
 		int result = bmDao.bookMakingInsert(conn, bookcode, userid);
-  if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
-
-	// 관리자 도서 수정용
-	public int updateBookadmin(Book b) {
-		Connection conn = getConnection();
-		int result = bmDao.updateBookadmin(conn, b);
 		if(result > 0)
 			commit(conn);
 		else
@@ -158,8 +117,8 @@ public class BookMakingService {
 		close(conn);
 		return result;
 	}
-	
-	//도서제작 제작하기 버튼 클릭시 BOOK TABLE MAKESTATUS MAKE로 변경
+
+	//도서제작 제작 시작시 BOOK TABLE MAKESTATUS MAKE로 변경
 	public int bookMakingUpdate(String bookcode) {
 		Connection conn = getConnection();
 		int result = bmDao.bookMakingUpdate(conn, bookcode);
@@ -172,9 +131,9 @@ public class BookMakingService {
 	}
 	
 	//도서제작 페이지 입력 저장
-	public int inputInsert(BookMakingProgress bmp) {
+	public int inputInsert(BookMakingProgress bmp, int index) {
 		Connection conn = getConnection();
-		int result = bmDao.inputInsert(conn, bmp);
+		int result = bmDao.inputInsert(conn, bmp, index);
 		if(result > 0)
 			commit(conn);
 		else
@@ -195,10 +154,46 @@ public class BookMakingService {
 		return result;
 	}
 	
-	//도서제작 모든 페이지 저장 후 makebook 추가
-	public int inputMakeBook(BookMakingProgress bmp) {
+	//도서제작 제출 후 makebook 추가
+	public int insertMakeBook(BookMakingProgress bmp) {
 		Connection conn = getConnection();
-		int result = bmDao.inputMakeBook(conn, bmp);
+		int result = bmDao.insertMakeBook(conn, bmp);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//도서제작 제출 후 bookmaking table makepage 추가
+	public int insertMakePage(BookMakingProgress bmp, String bookcode, int page, int bookendpage) {
+		Connection conn = getConnection();
+		int result = bmDao.insertMakePage(conn, bmp, bookcode, page, bookendpage);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//제출 성공시 제출yn 추가
+	public int insertCompleteyn(BookMakingProgress bmp, int page, int endpage) {
+		Connection conn = getConnection();
+		int result = bmDao.insertCompleteyn(conn, bmp, page, endpage);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//도서 제출을 못했는데 저장된 제작데이터가 있을 때 수정처리
+	public int deleteInput(String userid, String bookcode, int index, int bookpage) {
+		Connection conn = getConnection();
+		int result = bmDao.deleteInput(conn, userid, bookcode, index, bookpage);
 		if(result > 0)
 			commit(conn);
 		else
@@ -208,12 +203,40 @@ public class BookMakingService {
 	}
 	
 	//************************************************************************************
-	//도서검색에서 도서재생으로 이동
-	public BookMaking selectPlayPage(String bookcode) {
-		 Connection conn = getConnection();
-		 BookMaking bookmaking = bmDao.selectPlay(conn,bookcode);
-		 close(conn);
-		 return bookmaking;
+	// 관리자
+	// 관리자 도서 추가 시 bookmaking 테이블에도 추가
+		public int insertBook(Book b) {
+			Connection conn = getConnection();
+			int result = bmDao.insertBook(conn, b);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			close(conn);
+			return result;
+		}
+		
+	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
+	public int insertBookMakeCheck(Book b) {
+		Connection conn = getConnection();
+		int result = bmDao.insertBookMakeCheck(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
-
+			
+	// 관리자 도서 수정용
+	public int updateBookadmin(Book b) {
+		Connection conn = getConnection();
+		int result = bmDao.updateBookadmin(conn, b);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 }
