@@ -2,7 +2,6 @@
     pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <%
 	Member member = (Member)request.getAttribute("member");
-	String message = (String)request.getAttribute("message");
 %>    
 <!DOCTYPE html>
 <html>
@@ -23,8 +22,6 @@
 	<%= member.getUserName() %> 님의 아이디는<br>
 	<%= member.getUserId() %> <br>
 	입니다.
-	<% }else { %>
-	<%= message %>
 	<% } %>
 	</div>
 </div>

@@ -46,7 +46,8 @@ public class MemberEnrollServlet extends HttpServlet {
 		member.setGender(request.getParameter("gender"));
 		
 		String birthStr = request.getParameter("birth");
-		Date birth = Date.valueOf(birthStr);
+		String birthDate = birthStr.substring(0,4)+"-"+birthStr.substring(4,6)+"-"+birthStr.substring(6,8);
+		Date birth = Date.valueOf(birthDate);
 		member.setBirth(birth);
 		
 		int result = new MemberService().insertMember(member);

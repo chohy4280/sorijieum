@@ -14,11 +14,12 @@ public class LikeBookLB implements java.io.Serializable {
 	private String userid;
 	private String bookrimg;
 	private String bookoimg;
+	private Date likedate;
 	
 	public LikeBookLB() {}
 
 	public LikeBookLB(String bookcode, String booktitle, String author, String publisher, Date publishdate,
-			String userid, String bookrimg, String bookoimg) {
+			String userid, String bookrimg, String bookoimg, Date likedate) {
 		super();
 		this.bookcode = bookcode;
 		this.booktitle = booktitle;
@@ -28,6 +29,7 @@ public class LikeBookLB implements java.io.Serializable {
 		this.userid = userid;
 		this.bookrimg = bookrimg;
 		this.bookoimg = bookoimg;
+		this.likedate = likedate;
 	}
 
 	public String getBookcode() {
@@ -94,11 +96,19 @@ public class LikeBookLB implements java.io.Serializable {
 		this.bookoimg = bookoimg;
 	}
 
+	public Date getLikedate() {
+		return likedate;
+	}
+
+	public void setLikedate(Date likedate) {
+		this.likedate = likedate;
+	}
+
 	@Override
 	public String toString() {
 		return "LikeBookLB [bookcode=" + bookcode + ", booktitle=" + booktitle + ", author=" + author + ", publisher="
 				+ publisher + ", publishdate=" + publishdate + ", userid=" + userid + ", bookrimg=" + bookrimg
-				+ ", bookoimg=" + bookoimg + "]";
+				+ ", bookoimg=" + bookoimg + ", likedate=" + likedate + "]";
 	}
 
 

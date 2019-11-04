@@ -23,7 +23,7 @@ public class MyBookDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		  
-		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=?";
+		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=? order by readrdate desc";
 		 
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -76,6 +76,52 @@ public class MyBookDao {
 		}
 		
 		return result;
+	}
+	
+	//내서재 검색
+	public ArrayList<MyBookMYB> searchMyBookList(Connection conn, String userid, String type, String keyword) {
+		ArrayList<MyBookMYB> myblist = new ArrayList<MyBookMYB>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=? and ";
+		if(type.equals("title")) 
+			query += "b.booktitle like ? ";
+		else if(type.equals("author"))
+			query += "b.author like ? ";
+		query += "order by readrdate desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+ keyword +"%");
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				MyBookMYB myb = new MyBookMYB();
+				myb.setBookcode(rset.getString("bookcode"));
+				myb.setUserid(rset.getString("userid"));
+				myb.setBooktitle(rset.getString("booktitle"));
+				myb.setAuthor(rset.getString("author"));
+				myb.setPublisher(rset.getString("publisher"));
+				myb.setPublishdate(rset.getDate("publishdate"));
+				myb.setBookpage(rset.getInt("bookpage"));
+				myb.setReadpage(rset.getInt("readpage"));
+				myb.setBookoimg(rset.getString("bookoimg"));
+				myb.setBookrimg(rset.getString("bookrimg"));
+				myb.setReadsdate(rset.getDate("readsdate"));
+				myb.setReadrdate(rset.getDate("readrdate"));
+				myblist.add(myb);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return myblist;
 	}
 
   // 관리자용 dao************************************************************************************************
