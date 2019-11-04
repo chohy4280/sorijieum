@@ -4,6 +4,7 @@
 <%
 	ArrayList<BookMakingProgress> list = (ArrayList<BookMakingProgress>)request.getAttribute("list");
 	Member loginMember = (Member)session.getAttribute("loginMember");
+	String bookcode = (String)request.getAttribute("bookcode");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +22,7 @@ function winOpen(){
 function makeopen(){
 	<% for(int i = 0; i < list.size(); i++){ 
 		BookMakingProgress bmp = list.get(i); 
-		 if(bmp.getBookmakestartstatus().equals("N") && bmp.getBookcompleteyn().equals("N")){ %>
+		 if(bmp.getBookmakestartstatus().equals("N") && bmp.getBookcompleteyn().equals("N") && bmp.getBookCode().equals(bookcode)){ %>
 			window.opener.location.href = "/sori/bmmload?bookcode=<%= bmp.getBookCode() %>&userid=<%= loginMember.getUserId() %>&page=<%= bmp.getBookmakepage() %>&index=<%=i%>";
 			window.self.close();
 		<% 

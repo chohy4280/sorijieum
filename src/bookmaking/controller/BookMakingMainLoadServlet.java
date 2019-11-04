@@ -41,8 +41,9 @@ public class BookMakingMainLoadServlet extends HttpServlet {
 		ArrayList<BookMakingProgress> list = new BookMakingService().selectBookMakingPopupLoad(bookcode, userid);
 		int result = new BookMakingService().bookMakingInsert(bookcode, userid);
 		int makestatus = new BookMakingService().bookMakingUpdate(bookcode);
+		int making = new BookMakingService().insertBookMaking(bookcode);
 		RequestDispatcher view = null;
-		if(list.size() != 0 && result > 0 && makestatus > 0) {
+		if(list.size() != 0 && result > 0 && makestatus > 0 && making > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakingmain.jsp");
 			request.setAttribute("list", list);
 			request.setAttribute("index", index);

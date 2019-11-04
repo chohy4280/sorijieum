@@ -59,6 +59,7 @@
 	width: 230px;
 	height: 320px;
 	border: 1px solid lightgrey;
+	overflow:hidden;
 }
 
 .ye-bw {
@@ -66,6 +67,7 @@
 	margin-left: 15px;
 	margin-right: 35px;
 	margin-bottom: 10px;
+	overflow:hidden;
 }
 
 .ye-bm {
@@ -73,11 +75,13 @@
 	margin-left: 15px;
 	margin-right: 35px;
 	margin-right: 40px;
+	overflow:hidden;
 }
 
 .ye-bm .progress {
 	margin-top: -10px;
 }
+
 
 /****************/
 /* bookinfo.css */
@@ -231,6 +235,7 @@
 	margin-left: 15px;
 	margin-right: 35px;
 	margin-bottom: 35px;
+	overflow:hidden;
 }
 
 .ye-bm2 .progress {
@@ -243,12 +248,30 @@
 	margin-right: 35px;
 	margin-bottom: 35px;
 	margin-top : 5px;
+	overflow:hidden;
+}
+
+.ye-scale {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+.ye-scale:hover {
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
 }
 
 .ye-book2 img {
 	width: 230px;
 	height: 320px;
 	border: 1px solid lightgrey;
+	overflow:hidden;
 }
 
 .ye-book2 a {

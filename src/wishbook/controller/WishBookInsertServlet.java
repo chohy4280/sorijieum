@@ -40,11 +40,18 @@ public class WishBookInsertServlet extends HttpServlet {
 		wishbook.setWishBookAuthor(request.getParameter("wishbookauthor"));
 		wishbook.setWishPublisher(request.getParameter("wishpublisher"));
 		String wishpublishdateStr = request.getParameter("wishpublishdate");
-		Date wishpublishdate = null;
+		Date wpdate = null;
+		if(wishpublishdateStr != null && !wishpublishdateStr.isEmpty()) {
+		String wishpublishdate = wishpublishdateStr.substring(0,4)+"-"+wishpublishdateStr.substring(4,6)+"-"+wishpublishdateStr.substring(6,8);
+		wpdate = Date.valueOf(wishpublishdate);
+	    wishbook.setWishPublishDate(wpdate);
+		}
+		/*Date wishpublishdate = null;
 		if(wishpublishdateStr != null && !wishpublishdateStr.isEmpty()) {
 			wishpublishdate = Date.valueOf(wishpublishdateStr);
 			wishbook.setWishPublishDate(wishpublishdate);
-		}
+		}*/
+		
 		int result = new WishBookService().insertWishBook(wishbook);
 		
 		RequestDispatcher view = null;

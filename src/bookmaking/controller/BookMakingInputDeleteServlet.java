@@ -34,7 +34,9 @@ public class BookMakingInputDeleteServlet extends HttpServlet {
 		String bookcode = request.getParameter("bookcode");
 		int index = Integer.parseInt(request.getParameter("index"));
 		int bookpage = Integer.parseInt(request.getParameter("bookpage"));
-		int result = new BookMakingService().deleteInput(userid, bookcode, index, bookpage);
+		int makepage = Integer.parseInt(request.getParameter("makepage"));
+		System.out.println("controller:" + userid+", "+bookcode+", "+index+", "+bookpage);
+		int result = new BookMakingService().deleteInput(userid, bookcode, index, bookpage, makepage);
 		if(result > 0) {
 			response.getWriter().append("ok");
 		}

@@ -13,10 +13,27 @@
 <title>도서정보</title>
 <%@ include file="/../inc/top.jsp"%>
 <%@ include file="/../inc/cdn.jsp"%>
+<style type="text/css">
+.wrap { position:relative; }
+.over { 
+   position:absolute;
+   bottom:-15%;
+   left:50%;
+}
+</style>
 <script type="text/javascript">
 $(function(){
 	$(".ye-make-buttons").on("click", function(){
 		alert("제작자로 로그인하셔야 제작하실 수 있습니다.");
+	});
+	
+	$(".progress").each(function(){
+		var perc = $(this).attr("id");
+		if(perc == 100)
+			$(this).attr('class','ui yellow progress');
+		$(this).progress({
+			percent: perc
+		});
 	});
 	
 });
@@ -73,19 +90,18 @@ style="font-size:1.1rem;position:relative;bottom:-420px;right:57%;text-align:cen
   <div class="fields">
     <div class="field">
     <label style="font-size:1.2rem;">책 소개</label>
-    <textarea rows="10" cols="60" style="font-size:1rem;" readonly>
+    <textarea rows="10" cols="60" style="font-size:1rem;font-family:'S-Core Dream 6';" readonly>
     <%= bmp.getBookInfo() %>
     </textarea>
   </div>
 </div>
 <!-- progress bar  -->
-<%  int make = (bmp.getMakepage());
-	int book = (bmp.getBookPage());
-	int pwidth = (int)(((double)make / book) * 100);%>
-  <div class="progress" align="left" style="width:515px;height:25px;font-size:1rem;border-radius:7px 7px 7px 7px;">
-  	<div class="progress-bar" role="progressbar" 
-  	style="font-size:0.9rem; background: orange; width:<%= pwidth %>%;" aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= bmp.getBookPage() %>"><%= pwidth %>%</div>
-	</div><strong>제작상태 :</strong> <%= bmp.getMakepage() %>/<%= bmp.getBookPage() %>쪽 진행중
+<%  int per = (int)(((double)bmp.getMakepage() / bmp.getBookPage()) * 100);%>
+  <div class="ui yellow progress wrap" id="<%=per%>" style="width:515px;height:30px;border-radius:7px 7px 7px 7px;">
+  	<div class="bar" style="height:30px;"></div>
+  	<div class="over" style="color:white;font-size:1.1rem;height:30px;font-weight:bolder;"><%= per %>%</div>
+	</div>제작상태 : <%= bmp.getMakepage() %>/<%= bmp.getBookPage() %>쪽 진행중
+	
   </div> <!-- bookinfo 끝 -->
 </div>  <!-- content 끝 -->
 
@@ -126,7 +142,7 @@ style="font-size:1.1rem;position:relative;bottom:-420px;right:57%;text-align:cen
       	우리가 함께 제작한 책
     </div>
 </div>
-  <img src="/sori/views/bookmaking/images/books.png">
+  <img src="/sori/resources/bookmaking_images/books.png">
 </div><!-- book count 끝 -->
 </body>
 <br><br><br><br>
