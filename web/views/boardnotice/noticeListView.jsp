@@ -9,6 +9,9 @@
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
+	String search = (String)request.getAttribute("search");
+	String keyword = (String)request.getAttribute("keyword");
 	
 %>
 <!DOCTYPE html>
@@ -118,7 +121,7 @@ $(function(){
 				<th width="15%">작성일</th>
 				<th width="10%">조회수</th>
 			</tr>
-			<% if(topList.size()!=0){ %>	
+				
 		<% for(Notice n : topList){
 			%>
 			
@@ -131,7 +134,7 @@ $(function(){
 				<td ><%= n.getNoticeDate() %></td>
 				<td  ><%= n.getNoticeViews() %></td>
 			</tr>	
-			<% }} %>
+			<% } %>
 			
 		<% for(Notice n : list){ %>
 			<% if(n.getNoticeTop().equals("N")){ %>
@@ -148,12 +151,17 @@ $(function(){
 		</table>
 	<!--공지사항 목록 끝-->
 		<br>
+		<!--공지사항 글쓰기 버튼 관리자만 보인다.  -->
+	<%-- <% if(loginMember !=null && loginMember.getTypeNumber() == 4 && loginMember.getTypeNumber() == 5){ %> --%>
 		<div align="right"><button onclick="callFunction();">글쓰기</button></div>
-		
+	<%-- 	<% }else{ %> 
+		<div align="right"></div>
+		<% } %> --%>
 		
 	<!-- 페이징 시작 -->
-		<div align="center">
-		<a href="/sori/nlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
+		<div id="pagebox1" align="center">
+<%if(keyword ==null){ %>
+   <a href="/sori/nlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
 <% if((beginPage - 10) < 1){ %>
    <a href="/sori/nlist?page=1"><i class="angle grey left icon"></i></a>
 <% }else{ %>
@@ -167,23 +175,46 @@ $(function(){
    <a href="/sori/nlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 <% }} %>&nbsp;
 <% if((endPage +  10) > maxPage){ %>
-   <a href="/sori/nlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
-<% }else{ %>
    <a href="/sori/nlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+<% }else{ %>
+   <a href="/sori/nlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
 <% } %>&nbsp;
 <a href="/sori/nlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
-		
-		</div>
+</div><!-- 도서 전체 목록 페이징 끝 -->
+<% }else{ %>
+
+<div id="pagebox1" align="center">
+   <a href="/sori/nosearch?page=1&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&nbsp;
+<% if((beginPage - 10) < 1){ %>
+   <a href="/sori/nosearch?page=1&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+<% }else{ %>
+   <a href="/sori/nosearch?page=<%= beginPage - 10 %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+<% } %>&nbsp;
+<% for(int p = beginPage; p <= endPage; p++){ 
+      if(p == currentPage){
+%>
+   <a href="/sori/nosearch?page=<%= p %>&search=<%=search%>&keyword=<%=keyword%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+<% }else{ %>
+   <a href="/sori/nosearch?page=<%= p %>&search=<%=search%>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+<% }} %>&nbsp;
+<% if((endPage +  10) > maxPage){ %>
+   <a href="/sori/nosearch?page=<%= endPage + 10 %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+<% }else{ %>
+   <a href="/sori/nosearch?page=<%= maxPage %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+<% } %>&nbsp;
+<a href="/sori/nosearch?page=<%= maxPage %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&nbsp;
+<% } %>
+</div>
 	<!-- 페이징 끝 -->
 	
 	<br><hr><br>
 	<!-- 검색창 시작 -->
 		<center>
-		<div class="NoticeSearchBox" style="height: 50px; border: 2px solid red;">
-<form action="" method="post">
+		<div class="NoticeSearchBox">
+<form action="/sori/nosearch" method="post">
 <select name="search"  style="border-radius:5px; width:100px; height:40px">
 <option  value="noticetitle">제목명</option>
-<option value="writer">글쓴이</option>
+<option value="noticewriter">글쓴이</option>
 </select>
 <input type="search" name="keyword"  placeholder="내용입력" style="border-radius:5px; width:200px; height:40px;" >
 <input type="submit" value="검색" style="border-radius:5px; width:100px; height:40px;">

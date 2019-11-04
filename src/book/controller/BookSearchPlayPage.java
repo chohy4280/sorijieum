@@ -1,6 +1,7 @@
 package book.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,23 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import book.model.service.BookService;
-import book.model.vo.Book;
 import book.model.vo.BookPlay;
-import likebook.model.vo.LikeBook;
 import mybook.model.service.MyBookService;
 import mybook.model.vo.MyBook;
 
 /**
- * Servlet implementation class BookSearchDetailServlet
+ * Servlet implementation class BookSearchPlayPage
  */
-@WebServlet("/bsdetail")
-public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 보기
+@WebServlet("/bplaypage")
+public class BookSearchPlayPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BookSearchDetailServlet() {
+    public BookSearchPlayPage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,54 +35,45 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//도서 한개 정보 불러오기 
-		request.setCharacterEncoding("utf-8");
+		//도서재생 플레이로 이동하기 컨트롤러
+		// 버튼 누르면 mybook에 userid랑 bookcode랑 readpage=1 저장되게 한다. 
+		//  + sdate rdate sysdate 
+		request.setCharacterEncoding("UTF-8");
 		
 		String bookcode = request.getParameter("bookcode");
 		String userId = request.getParameter("userId");
-		//int currentPage = Integer.parseInt(request.getParameter("page"));
-		
+	    
+	    
+	    
+	   
+		MyBookService myservice = new MyBookService();
+		MyBook mb = myservice.selectBookPage(userId,bookcode); //마이북에 있는 확인용
+		int readpage = 0;
 		
 		BookService bservice = new BookService();
-		BookPlay bp = bservice.selectOne(bookcode, userId);
-
-		int readpage = 1;
-		if(bp != null) {
-		if(bp.getReadpage() != 0) {
-			readpage = bp.getReadpage();
-		    }
+		ArrayList<BookPlay> bplist = new ArrayList<BookPlay>();
+		if (mb == null) {
+			myservice.insertReadPage(userId, bookcode);
+			bservice.getselectOneBookPlay(bookcode,userId,readpage);
+			
+		}else {
+			myservice.updateReadPage(userId, bookcode);
+			bservice.getselectOneBookPlay(bookcode,userId,readpage);
 		}
-		
-		int bookmakepage = 1;
-		if(bp !=null) {
-			if(bp.getBookmakepage() !=0) {
-				bookmakepage = bp.getBookmakepage();
-			}
-		}
-		
-		bservice.updateBookReadCount(bookcode);
-		
-		
-		
+	
 		RequestDispatcher view = null;
-		
-		if(bp !=null) {
-			view = request.getRequestDispatcher("views/booksearch/bookSearchDetail.jsp");
-			request.setAttribute("BookPlay",bp);
-			request.setAttribute("Bookcode", bookcode);
+		if(bplist.size() >= 0) {
+			view = request.getRequestDispatcher("views/booksearch/bookSearchPlay.jsp");
+			
+			request.setAttribute("bplist", bplist);
+			request.setAttribute("bookcode", bookcode);
 			request.setAttribute("userId", userId);
-			//request.setAttribute("currentPage", currentPage);
-			request.setAttribute("readpage", readpage);
-			request.setAttribute("bookmakepage", bookmakepage);
-					
-		
-		
+			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서불러오기 실패");
+			request.setAttribute("message", "도서재생 페이지로 이동 실패!");
+		    view.forward(request, response);
 		}
-		
-		view.forward(request, response);
 	}
 
 	/**
