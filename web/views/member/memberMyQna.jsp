@@ -10,11 +10,13 @@
 	int currentPage = (Integer)request.getAttribute("currentPage");
 	int maxPage = (Integer)request.getAttribute("maxPage");
 	int listcount = (Integer)request.getAttribute("listcount");
+	String keyword = (String)request.getAttribute("keyword");
 %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>내 문의 내역</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -60,7 +62,57 @@ $(function(){
 			}
 		});
 	});
+	
+	<% if(myqlist.size() == 0){ %>
+		$("#pagebox").css("display","none");
+	<% } %>
 
+});
+
+
+
+var voices = [];
+function setVoiceList() {
+	voices = window.speechSynthesis.getVoices();
+}
+setVoiceList();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+	window.speechSynthesis.onvoiceschanged = setVoiceList;
+}
+function speech(txt) {
+	if (!window.speechSynthesis) {
+		alert("음성 재생을 지원하지 않는 브라우저입니다. 크롬, 파이어폭스 등의 최신 브라우저를 이용하세요");
+		return;
+	}
+	var lang = 'ko-KR';
+	var utterThis = new SpeechSynthesisUtterance(txt);
+	utterThis.onend = function(event) {
+		console.log('end');
+	};
+	utterThis.onerror = function(event) {
+		console.log('error', event);
+	};
+	var voiceFound = false;
+	for (var i = 0; i < voices.length; i++) {
+		if (voices[i].lang.indexOf(lang) >= 0
+				|| voices[i].lang.indexOf(lang.replace('-', '_')) >= 0) {
+			utterThis.voice = voices[i];
+			voiceFound = true;
+		}
+	}
+	if (!voiceFound) {
+		alert('voice not found');
+		return;
+	}
+	utterThis.lang = lang;
+	utterThis.pitch = 1;
+	utterThis.rate = 1; //속도
+	window.speechSynthesis.speak(utterThis);
+} 
+document.addEventListener("click", function(e) {
+	var t = e.target.id;
+	var input = document.getElementsByClassName(t)[0].innerText;
+	speech(input);
 });
 </script>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
@@ -73,10 +125,26 @@ $(function(){
 <body>
 <div class="hy-div">
 <section class="hy-section2" >
+<div style="display:flex;justify-content:space-between;">
+<div>
 <a class="massive ui yellow label" style="font-size: 30px" href="/sori/qlist.my?userid=<%= loginMember.getUserId() %>">내 Q&A</a>
 <span style="color:#fbbe09; font-weight:600">│</span> 
 <span style="color:grey">내 문의 내역</span><br>
-<!-- 내 문의 알림은 답변 날짜로부터 일주일까지 표시 -->
+</div>
+<!-- 검색창 시작 -->
+<div style="margin-top:20px;">
+<form action="/sori/myqsearch.my" method="post">
+<input type="hidden" name="userid" value="<%= loginMember.getUserId() %>">
+<% if(keyword != null) { %>
+	<input type="text" name="keyword" id="keyword" value="<%= keyword %>" style="width:200px;">
+<% }else{ %>
+	<input type="text" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="width:200px;">
+<% } %>		
+	<input class="ui tiny basic black button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
+</form>
+</div>
+</div>
+<!-- 내 문의 알림 -->
 <% if(alarmlist != null){ %>
 <% for(Qna q: alarmlist){ %>
 <div class="ui yellow message hy-alarmdiv" id="div_<%= q.getQnaNo() %>" style="display:block;">
@@ -158,27 +226,51 @@ $(function(){
 <button class="mini ui black button" style="font-size:9pt;" onclick="chkDel()">삭제</button></div>
 </form>
 <!-- 페이징 시작 -->
-<div id="pagebox" align="center">
-	<a href="/sori/qlist.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey double left icon"></i></a>&nbsp;
-<% if((beginPage - 10) < 1){ %>
-	<a href="/sori/qlist.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
-<% }else{ %>
-	<a href="/sori/qlist.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
-<% } %>&nbsp;
-<% for(int p = beginPage; p <= endPage; p++){ 
-		if(p == currentPage){
-%>
-	<a href="/sori/qlist.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-<% }else{ %>
-	<a href="/sori/qlist.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-<% }} %>&nbsp;
-<% if((endPage +  10) < maxPage){ %>
-	<a href="/sori/qlist.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
-<% }else{ %>
-	<a href="/sori/qlist.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
-<% } %>&nbsp;
-<a href="/sori/qlist.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey double right icon"></i></a>&nbsp;
-</div>
+<% if(keyword == null){ %>
+	<div id="pagebox" align="center" style="display:block;">
+		<a href="/sori/qlist.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey double left icon"></i></a>&nbsp;
+	<% if((beginPage - 10) < 1){ %>
+		<a href="/sori/qlist.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/qlist.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
+	<% } %>&nbsp;
+	<% for(int p = beginPage; p <= endPage; p++){ 
+			if(p == currentPage){
+	%>
+		<a href="/sori/qlist.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+	<% }else{ %>
+		<a href="/sori/qlist.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+	<% }} %>&nbsp;
+	<% if((endPage +  10) < maxPage){ %>
+		<a href="/sori/qlist.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/qlist.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
+	<% } %>&nbsp;
+	<a href="/sori/qlist.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey double right icon"></i></a>&nbsp;
+	</div>
+<% }else{ %> <!-- 검색시 페이징 -->
+	<div id="pagebox" align="center" style="display:block;">
+		<a href="/sori/myqsearch.my?page=1&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&nbsp;
+	<% if((beginPage - 10) < 1){ %>
+		<a href="/sori/myqsearch.my?page=1&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/myqsearch.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+	<% } %>&nbsp;
+	<% for(int p = beginPage; p <= endPage; p++){ 
+			if(p == currentPage){
+	%>
+		<a href="/sori/myqsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+	<% }else{ %>
+		<a href="/sori/myqsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+	<% }} %>&nbsp;
+	<% if((endPage +  10) < maxPage){ %>
+		<a href="/sori/myqsearch.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/myqsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+	<% } %>&nbsp;
+	<a href="/sori/myqsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&nbsp;
+	</div>
+<% } %>	
 </section>
 </div>
 </body>

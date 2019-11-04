@@ -534,26 +534,27 @@ public class BookMakingDao {
 	}
 		
 	// 관리자 도서 추가시 bookmakingcheck 테이블에도 추가
-	public int insertBookMakeCheck(Connection conn, Book b) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = "";
-		for (int i = 0; i <= b.getBookPage(); i++) {
-			if (i % 10 == 0) {
-				query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + i+1 + ", NULL)";
-			}
-			try {
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, b.getBookCode());
-				result = pstmt.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close(pstmt);
-			}
-		}
-		return result;
-	}
+	   public int insertBookMakeCheck(Connection conn, Book b) {
+	      int result = 0;
+	      PreparedStatement pstmt = null;
+	      String query = "";
+	      for (int i = 0; i < b.getBookPage(); i++) {
+	         if (i % 10 == 0) {
+	            query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + (i+1) + ", NULL, DEFAULT)";
+	         try {
+	            pstmt = conn.prepareStatement(query);
+	            pstmt.setString(1, b.getBookCode());
+	            result = pstmt.executeUpdate();
+	            System.out.println(i+1);
+	         } catch (SQLException e) {
+	            e.printStackTrace();
+	         } finally {
+	            close(pstmt);
+	         }
+	      }
+	   }
+	      return result;
+	   }
 
 	// 관리자 도서수정용
 	public int updateBookadmin(Connection conn, Book b) {

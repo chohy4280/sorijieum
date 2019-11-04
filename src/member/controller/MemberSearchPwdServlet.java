@@ -58,13 +58,13 @@ public class MemberSearchPwdServlet extends HttpServlet {
 						+ "location.href='/sori/views/member/memberSearchIdPwd.jsp';</script>");
 				out.flush();
 				out.close();*/
-				view = request.getRequestDispatcher("views/member/memberSearchPwdComplete.jsp");
+				view = request.getRequestDispatcher("views/member/memberSearchFail.jsp");
 				request.setAttribute("message", "입력하신 정보와 일치하는 회원 정보가 존재하지 않습니다.");
 				view.forward(request, response);
 			}
 		}
 		else {
-			view = request.getRequestDispatcher("views/member/memberSearchPwdComplete.jsp");
+			view = request.getRequestDispatcher("views/member/memberSearchFail.jsp");
 			request.setAttribute("message", "입력하신 정보와 일치하는 회원 정보가 존재하지 않습니다.");
 			view.forward(request, response);
 		}

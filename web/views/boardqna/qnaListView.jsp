@@ -9,6 +9,7 @@
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	int topval = (Integer)request.getAttribute("topval");
 %>    
 <!DOCTYPE html>
 <html>
@@ -18,31 +19,36 @@
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
 $(function(){
+	//공지 숨기기
 	$("input:checkbox[id='topchk']").on("change",function(){
 		if($("input:checkbox[id='topchk']").is(":checked") == true){
 			$(".toplist").css("display","none");
 		}
-		if($("input:checkbox[id='topchk']").is(":checked") == false){
+		else if($("input:checkbox[id='topchk']").is(":checked") == false){
 			$(".toplist").css("display","");
 		}
 	});
 	
-	<%-- <% if(keyword != null){ %>
-		<% if(type == "title"){	
-			String strTitle = "";%>
-			strTitle = $(".sTitle").html();
-			<% strTitle = strTitle.replaceAll(keyword,"<span style='color:blue;'>"+keyword+"</span>"); %>
-			$(".sTitle").html(strTitle);
-		<% } %>
-		<% if(type == "writer"){ 
-			String strWriter = "";%>
-			strWriter = $(".sWriter").html();
-			<% strWriter = strWriter.replaceAll(keyword,"조하"); %>
-			$(".sWriter").html(strWriter);
-		<% } %>
-	<% } %> --%>
-
+	<% if(topval == 1){ %>
+		$("input:checkbox[id='topchk']").prop("checked",true);
+	<% } %>
+	
+	
+	<% if(list.size() == 0){ %>
+		$("#pagebox").css("display","none");
+	<% } %>
 });
+
+function topValSet(){
+	if($("input:checkbox[id='topchk']").is(":checked") == true){
+		<% topval = 1;
+			System.out.println("topval true: "+topval); %>
+	}
+	else if($("input:checkbox[id='topchk']").is(":checked") == false){
+		<% topval = 0;
+		System.out.println("topval false: "+topval); %>
+	}
+}
 </script>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
@@ -53,12 +59,39 @@ $(function(){
 
 <!--QNA 시작-->
 <div class="my-content">
+<div style="display:flex;justify-content:space-between;">
+<div>
 <a class="massive ui yellow label" style="font-size: 30px" href="/sori/qlist">Q&A</a>
 <span style="color:#fbbe09; font-weight:600">│</span>
 <span style="color:grey">소리지음 문의사항 게시판입니다</span>
-	
-	<br><br>
-	<label><input type="checkbox" id="topchk">&nbsp;공지숨기기</label>
+</div>
+<!-- 검색창 시작 -->
+<div style="margin-top:20px;">
+<form action="/sori/qsearch" method="post">
+<input type="hidden" name="topval" value="<%= topval %>">
+<% if(type == null || type.equals("title")){ %>
+	<select class="ui mini simple dropdown" name="type" id="type" style="border-radius:5px;">
+		<option value="title" selected>제목</option>
+		<option value="writer">작성자</option>
+	</select>
+<% }else{ %>
+	<select class="ui mini simple dropdown" name="type" id="type" style="border-radius:5px;">
+		<option value="title">제목</option>
+		<option value="writer" selected>작성자</option>
+	</select>
+<% } %>
+<% if(keyword != null) { %>
+	<input type="text" name="keyword" id="keyword" value="<%= keyword %>" style="width:200px;">
+<% }else{ %>
+	<input type="text" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="width:200px;">
+<% } %>		
+	<input class="ui tiny basic black button" type="submit" value="검색">
+</form>
+</div>
+</div>	
+<br><br>
+<label><input type="checkbox" name="topchk" id="topchk" onclick="topValSet()">&nbsp;공지숨기기</label>
+
 <!-- QNA 목록 시작 -->
 	<table class="my-listTable" align="center">
 		<tr>
@@ -107,78 +140,54 @@ $(function(){
 	<br>
 	<div align="right"><a class="big ui black label" href="/sori/views/boardqna/qnaInsertView.jsp">글쓰기</a></div>
 	<br>
-	
 <!-- 페이징 시작 -->
 	<% if(keyword == null){ %>
 		<div id="pagebox" align="center">
-			<a href="/sori/qlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
+			<a href="/sori/qlist?page=1&topval=<%=topval%>"><i class="angle grey double left icon"></i></a>&nbsp;
 		<% if((beginPage - 10) < 1){ %>
-			<a href="/sori/qlist?page=1"><i class="angle grey left icon"></i></a>
+			<a href="/sori/qlist?page=1&topval=<%=topval%>"><i class="angle grey left icon"></i></a>
 		<% }else{ %>
-			<a href="/sori/qlist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+			<a href="/sori/qlist?page=<%= beginPage - 10 %>&topval=<%=topval%>"><i class="angle grey left icon"></i></a>
 		<% } %>&nbsp;
 		<% for(int p = beginPage; p <= endPage; p++){ 
 				if(p == currentPage){
 		%>
-			<a href="/sori/qlist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+			<a href="/sori/qlist?page=<%= p %>&topval=<%=topval%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
 		<% }else{ %>
-			<a href="/sori/qlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+			<a href="/sori/qlist?page=<%= p %>&topval=<%=topval%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 		<% }} %>&nbsp;
 		<% if((endPage +  10) < maxPage){ %>
-			<a href="/sori/qlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+			<a href="/sori/qlist?page=<%= endPage + 10 %>&topval=<%=topval%>"><i class="angle grey right icon"></i></a>
 		<% }else{ %>
-			<a href="/sori/qlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
+			<a href="/sori/qlist?page=<%= maxPage %>&topval=<%=topval%>"><i class="angle grey right icon"></i></a>
 		<% } %>&nbsp;
-		<a href="/sori/qlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		<a href="/sori/qlist?page=<%= maxPage %>&topval=<%=topval%>"><i class="angle grey double right icon"></i></a>&nbsp;
 		</div>
 	<% }else { %>
 		<div id="pagebox" align="center">
-			<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
+			<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><i class="angle grey double left icon"></i></a>&nbsp;
 		<% if((beginPage - 10) < 1){ %>
-			<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+			<a href="/sori/qsearch?page=1&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><i class="angle grey left icon"></i></a>
 		<% }else{ %>
-			<a href="/sori/qsearch?page=<%= beginPage - 10 %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+			<a href="/sori/qsearch?page=<%= beginPage - 10 %>&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><i class="angle grey left icon"></i></a>
 		<% } %>&nbsp;
 		<% for(int p = beginPage; p <= endPage; p++){ 
 				if(p == currentPage){
 		%>
-			<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+			<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
 		<% }else{ %>
-			<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+			<a href="/sori/qsearch?page=<%= p %>&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 		<% }} %>&nbsp;
 		<% if((endPage +  10) < maxPage){ %>
-			<a href="/sori/qsearch?page=<%= endPage + 10 %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+			<a href="/sori/qsearch?page=<%= endPage + 10 %>&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><i class="angle grey right icon"></i></a>
 		<% }else{ %>
-			<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+			<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><i class="angle grey right icon"></i></a>
 		<% } %>&nbsp;
-		<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		<a href="/sori/qsearch?page=<%= maxPage %>&type=<%= type %>&keyword=<%= keyword %>&topval=<%=topval%>"><i class="angle grey double right icon"></i></a>&nbsp;
 		</div>
 	<% } %>
 	
 <!-- 페이징 끝 -->
-
-<br><hr><br>
-<!-- 검색창 시작 -->
-
-<form action="/sori/qsearch" method="post">
-<div align="center">
-	<% if(type == null || type.equals("title")){ %>
-	<input type="radio" name="type" value="title" checked> 제목 &nbsp; &nbsp; &nbsp; 
-	<input type="radio" name="type" value="writer"> 작성자 <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-	<% }else{ %>
-	<input type="radio" name="type" value="title"> 제목 &nbsp; &nbsp; &nbsp; 
-	<input type="radio" name="type" value="writer" checked> 작성자 <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-	<% } %>
-	<% if(keyword != null) { %>
-	<label><input type="search" name="keyword" value="<%= keyword %>"></label>
-	<% }else{ %>
-	<label><input type="search" name="keyword"></label>
-	<% } %>
-	<input type="submit" value="검색">
-</div>
-</form>
-
-<!-- 검색창 끝 -->
 
 </div>
 <!--QNA 끝-->

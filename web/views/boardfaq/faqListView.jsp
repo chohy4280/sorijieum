@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,24 +7,59 @@
 <title>공지사항 목록</title>
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("li.question").click(function() {
-			$(this).next().slideToggle("fast")
-					.siblings(".answer:visible").slideUp("fast");
-			$(this).toggleClass("active")
-					.siblings("li.question").removeClass("active");
-			});
-	});
+$(document).ready(function(){
+	$("li.question").click(function() {
+		$(this).next().slideToggle("fast")
+				.siblings(".answer:visible").slideUp("fast");
+		$(this).toggleClass("active")
+				.siblings("li.question").removeClass("active");
+		});
+});
+
+<% if(loginMember.getTypeNumber()==1 || loginMember.getTypeNumber()==2){ %>
+var audio= new Audio("/sori/resources/mp3/faq/faq_main.mp3");
+window.onload = function(){
+	audio.play();
+}
+	
+window.onkeyup = function(){
+	if(event.keyCode == 49){
+		audio.pause();
+		audio = new Audio("/sori/resources/mp3/faq/faq_1.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 50){
+		audio.pause();
+		audio = new Audio("/sori/resources/mp3/faq/faq_2.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 51){
+		audio.pause();
+		audio = new Audio("/sori/resources/mp3/faq/faq_3.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 48){
+		audio.pause();
+		audio = new Audio("/sori/resources/mp3/faq/faq_main.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 57){
+		location.href="/sori/index.jsp";
+	}
+	else if(event.keyCode == 27){
+		audio.pause();
+		audio.currentTime = 0;
+	}
+}
+<% } %>
 </script>
 <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
  
 </head>
 <body>
-
 <!-- Content 시작! -->
 	<section class="my-section">
-	
 	<!--공지사항 시작-->
 	<div class="my-content" style="height:900px;">
 		<a class="massive ui yellow label" style="font-size: 30px">FAQ</a>
@@ -72,12 +107,11 @@
 		</div>
 		
 	<!--공지사항 목록 끝-->
-		
-
+	
 
 	</div>
 	<!--공지사항 끝-->
-	<audio autoplay controls style="display:none"> <source src="/sori/resources/faqmp3/faq.mp3" type="audio/mp3"> </audio>
+
 	</section>
 	<!-- Content 끝! -->
 </body>

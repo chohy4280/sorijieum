@@ -40,7 +40,7 @@ public class MemberQnaListServlet extends HttpServlet {
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
-		int limit = 10;  //한 페이지에 출력할 목록 갯수
+		int limit = 5;  //한 페이지에 출력할 목록 갯수
 		
 		QnaService qservice = new QnaService();
 		QnaCommentService qcservice = new QnaCommentService();
@@ -65,12 +65,15 @@ public class MemberQnaListServlet extends HttpServlet {
 		//currentPage가 속한 페이지그룹의 시작페이지숫자와 끝숫자 계산
 		//예) 현재 34페이지이면 31~40이 됨 (페이지그룹의 수를 10개로 한 경우)
 		int beginPage = (currentPage / limit) * limit + 1;
+		if(currentPage % limit == 0) {
+			beginPage -= limit;
+		}
 		int endPage = beginPage + (limit - 1); //+ 9
 		if(endPage > maxPage)
 			endPage = maxPage;
 		
 		//currentPage에 출력할 목록의 조회할 행 번호 계산
-		int startnum = (currentPage * limit) - 9;
+		int startnum = (currentPage * limit) - 4;
 		int endnum = currentPage * limit;
 		
 		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기

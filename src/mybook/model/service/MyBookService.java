@@ -35,6 +35,14 @@ public class MyBookService {
 			rollback(conn);
 		return result;
 	}
+	
+	//내서재 검색
+	public ArrayList<MyBookMYB> searchMyBookList(String userid, String type, String keyword) {
+		Connection conn = getConnection();
+		ArrayList<MyBookMYB> myblist = mbDao.searchMyBookList(conn,userid,type,keyword);
+		close(conn);
+		return myblist;
+	}
   
   	//관리자 서비스****************************************
 	// 이용자 읽은 도서 조회용
@@ -51,4 +59,5 @@ public class MyBookService {
 		close(conn);
 		return listCount;
 	}
+
 }

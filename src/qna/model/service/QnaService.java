@@ -142,6 +142,7 @@ public class QnaService {
 		return lastno;
 	}
 
+//마이페이지*************************************************************************
 	//마이페이지 내 문의 알림용
 	public ArrayList<Qna> selectQnaAlarmList(String userid) {
 		Connection conn = getConnection();
@@ -175,6 +176,14 @@ public class QnaService {
 		int result = qDao.getAlarmCount(conn,userid);
 		close(conn);
 		return result;
+	}
+	
+	//내 문의글 검색
+	public ArrayList<Qna> searchMyQnaList(String userid, String keyword) {
+		Connection conn = getConnection();
+		ArrayList<Qna> list = qDao.searchMyQnaList(conn,userid,keyword);
+		close(conn);
+		return list;
 	}
 	
 	//관리자 서비스****************************************
