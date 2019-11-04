@@ -35,13 +35,6 @@ public class QnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Q&A 리스트 출력용 컨트롤러
-		//고정글 숨기기 유무 구분값
-		int topVal = 0;	//기본값:0 => 보이기
-		if(request.getParameter("topval") != null) {
-			topVal = Integer.parseInt(request.getParameter("topval"));
-			System.out.println("서블릿 if문 안으로 들어옴: "+topVal);
-		}
-		
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
@@ -59,9 +52,6 @@ public class QnaListServlet extends HttpServlet {
 		//currentPage가 속한 페이지그룹의 시작페이지숫자와 끝숫자 계산
 		//예) 현재 34페이지이면 31~40이 됨 (페이지그룹의 수를 10개로 한 경우)
 		int beginPage = (currentPage / limit) * limit + 1;
-		if(currentPage % limit == 0) {
-			beginPage -= limit;
-		}
 		int endPage = beginPage + (limit - 1); //+ 9
 		if(endPage > maxPage)
 			endPage = maxPage;
@@ -83,7 +73,6 @@ public class QnaListServlet extends HttpServlet {
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
-			request.setAttribute("topval", topVal);
 		}
 		else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

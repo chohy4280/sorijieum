@@ -10,17 +10,41 @@
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 <script type="text/javascript">
+
+	var audio = new Audio("/sori/resources/mp3/wishbookTitle.mp3");	// 화면 접속 시 음성안내 자동재생
+	window.onload = function(){
+	   audio.play();
+	   $("#wishbooktitle").focus();
+	}  
+
+	function input_author(){
+		audio.pause();
+		   audio = new Audio("/sori/resources/mp3/wishbookAuthor.mp3");
+		   audio.play();
+	}
+	
+	function input_pub(){
+		audio.pause();
+		   audio = new Audio("/sori/resources/mp3/wishbookPub.mp3");
+		   audio.play();	   
+	}
+	
+	function input_date(){
+		audio.pause();
+		   audio = new Audio("/sori/resources/mp3/wishbookDate.mp3");
+		   audio.play();
+	}
+	
+	
 	$(function(){
-		$("#wishbookauthor").focus(function(){
-			var audio = new Audio("/sori/resources/mp3/wishbookAuthor.mp3");
-			audio.play();
-		});
-		
-		$("#wishpublisher").focus(function(){
-			var audio = new Audio("/sori/resources/mp3/wishbookPub.mp3");
-			audio.play();
-		});
+		$("#wishbooktitle").keyup(function(){	// 처음 접속 후 1번 클릭한 뒤에
+			var keyV1 = $(this).val();
+			if(keyV1 == '9'){
+				location.href="/sori/index.jsp";
+			}
+		})
 	});
+
 </script>
 </head>
 <body>
@@ -38,19 +62,19 @@
 		<table class="my-listTable4" style="width:52%;font-family: 'S-Core Dream 6';">
 			<tr>
 				<th width="20%">제목</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishbooktitle" placeholder="도서명 입력" autofocus="autofocus" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishbooktitle" id="wishbooktitle" placeholder="도서명 입력" autofocus="autofocus" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 			<tr>
 				<th>저자</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishbookauthor" id="wishbookauthor" placeholder="저자명 입력" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishbookauthor" id="wishbookauthor" placeholder="저자명 입력" onfocusin="input_author()" required style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 			<tr>
 				<th>출판사</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishpublisher" id="wishpublisher" placeholder="출판사 입력" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublisher" id="wishpublisher" placeholder="출판사 입력" onfocusin="input_pub()" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 			<tr>
 				<th>출판일</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" placeholder="YYYYMMDD" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" placeholder="YYYYMMDD" onfocusin="input_date()" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 		</table>
 		<input type="hidden" name="wishwriter" value="<%= loginMember.getUserId() %>">	<!-- 신청자 아이디 -->
@@ -79,6 +103,5 @@
 	
 	</section>
 	<!-- Content 끝! -->
-<audio src="/sori/resources/mp3/wishbookTitle.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/mainOpen.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 </body>
 </html>

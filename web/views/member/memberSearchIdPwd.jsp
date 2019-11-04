@@ -36,7 +36,65 @@ $(function(){
 		}	
 		return false;
 	});
+	
+	
+	
+	//***************************음성안내
+	$("#idpwFindPage").keyup(function(){	// 아이디 비밀번호 찾기 중 선택
+		var keyV = $(this).val();
+		if(keyV == '1'){				// 아이디 찾기 시(1번 클릭)
+			$("#username").focus();
+			
+		}else if(keyV == '2'){			// 비밀번호 찾기 시(2번 클릭)
+			$("#userid").focus();
+			
+			
+		}else if(keyV == '9'){			// 메인페이지
+			location.href="/sori/index.jsp";
+		
+		} else{														// 잘못누른경우
+			   audio.pause();
+   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
+   			   audio.play();
+   			$("#idpwFindPage").val('');
+   		   }
+	})
+	
 });
+
+
+
+var audio = new Audio("/sori/resources/mp3/idpwFindPage.mp3");	// 화면 접속 시 음성안내 자동재생
+window.onload = function(){
+   audio.play();
+   $("#idpwFindPage").focus();
+}   
+
+function focus_username(){	//이름창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findidName.mp3");
+   audio.play();
+}
+
+function focus_phone(){	//전화번호창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findidPhone.mp3");
+   audio.play();
+}
+
+function focus_userid(){ // 아이디 창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findpwdid.mp3");
+   audio.play();
+}
+
+function focus_email(){ // 이메일 창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findpwdEmail.mp3");
+   audio.play();
+}
+
+
 </script>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 <style type="text/css">
@@ -106,5 +164,6 @@ $(function(){
 </div>
 </center>
 </section>
+<input type="text" id="idpwFindPage" autofocus="autofocus"> 
 </body>
 </html>

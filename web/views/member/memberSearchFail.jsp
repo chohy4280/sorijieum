@@ -13,6 +13,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 <%@ include file="/inc/top.jsp" %>
+<script type="text/javascript">
+
+	var audio = new Audio("/sori/resources/mp3/searchFail.mp3");	// 화면 접속 시 음성안내 자동재생
+	window.onload = function(){
+   	audio.play();
+	}  
+	
+	 $(function(){
+	    	window.onkeyup = function(){
+	   		   if(event.keyCode == 49 || event.keyCode == 97){		// 1번:다시찾기
+	   			location.href="/sori/views/member/memberSearchIdPwd.jsp";
+	   		   }else if(event.keyCode == 50 || event.keyCode == 98){		// 2번:회원가입
+	   			location.href="/sori/views/member/memberEnrollAgree.jsp";
+	   		   }else if(event.keyCode == 51 || event.keyCode == 99){		// 3번:로그인페이지
+	   			location.href="/sori/views/member/memberLoginView.jsp";
+	   		   }else if(event.keyCode == 52 || event.keyCode == 100){		// 4번:메인페이지
+	   			location.href="/sori/index.jsp";
+	   		   }else{														// 잘못누른경우
+	   			   audio.pause();
+	   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
+	   			   audio.play();
+	   		   }
+	    	}
+	 })
+	    
+
+	
+</script>
 </head>
 <body>
 <section class="my-section" style="margin-top:10%">
