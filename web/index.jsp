@@ -25,7 +25,7 @@
         type:"post",
         data:{userid:"<%= loginMember.getUserId() %>"},
         success:function(result){
-          $(".floating").text(result);
+          $(".alarm.circle").text(result);
         }
       });
     <% } %>
@@ -140,21 +140,21 @@
 <div align="right" style="margin-right:2%;margin-top:1%">
 	<% if(typeNumber==1){ %>
 			<a class="ui grey image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
-			<%= loginMember.getUserName() %><div class="floating ui big red circular label"></div>
+			<%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
 			<div class="detail">
 			이용대기자
 			</div>
 			</a>
 	<% }else if(typeNumber==2){ %>
 			<a class="ui yellow image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
-			<%= loginMember.getUserName() %><div class="floating ui big red circular label"></div>
+			<%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
 			<div class="detail">
 			이용자
 			</div>
 			</a>
 	<% }else if(typeNumber==3){ %>
 			<a class="ui olive image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
-			<%= loginMember.getUserName() %><div class="floating ui big red circular label"></div>
+			<%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
 			<div class="detail">
 			제작자
 			</div>

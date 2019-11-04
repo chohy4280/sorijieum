@@ -1,5 +1,7 @@
 package likebook.model.vo;
 
+import java.sql.Date;
+
 public class adminLikeBook implements java.io.Serializable{
 
 	private static final long serialVersionUID = 3649172862567426958L;
@@ -66,9 +68,5 @@ public class adminLikeBook implements java.io.Serializable{
 		return "adminLikeBook [userId=" + userId + ", bookCode=" + bookCode + ", bookTitle=" + bookTitle + ", author="
 				+ author + ", publisher=" + publisher + "]";
 	}
-	
-	
-	
-	
 
 }

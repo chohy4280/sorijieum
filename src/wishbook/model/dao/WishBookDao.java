@@ -584,7 +584,7 @@ public class WishBookDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from wishbook where wishwriter=?";
+		String query = "select * from wishbook where wishwriter=? order by wishdate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -660,6 +660,50 @@ public class WishBookDao {
 		}
 		
 		return result;
+	}
+
+	//이용자 내 신청도서 검색
+	public ArrayList<WishBook> searchWishBookList(Connection conn, String userid, String type, String keyword) {
+		ArrayList<WishBook>	wblist = new ArrayList<WishBook>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from wishbook where wishwriter=? and ";
+		if(type.equals("title"))
+			query += "wishbooktitle like ? ";
+		else if(type.equals("author"))
+			query += "wishbookauthor like ? ";
+		query += "order by wishdate desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+keyword+"%");
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				WishBook wb = new WishBook();
+				wb.setWishNo(rset.getInt("wishno"));
+				wb.setWishWriter(userid);
+				wb.setWishBookTitle(rset.getString("wishbooktitle"));
+				wb.setWishBookAuthor(rset.getString("wishbookauthor"));
+				wb.setWishPublisher(rset.getString("wishpublisher"));
+				wb.setWishPublishDate(rset.getDate("wishpublishdate"));
+				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishStatus(rset.getString("wishstatus"));
+				wb.setRjctReason(rset.getString("rjctreason"));
+				wb.setWishStatusDate(rset.getDate("wishstatusdate"));
+				wb.setWishbookAdmin(rset.getString("wishbookadmin"));
+				wblist.add(wb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return wblist;
 	}
 
 

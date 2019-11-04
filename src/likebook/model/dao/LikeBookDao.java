@@ -9,10 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import likebook.model.vo.LikeBook;
 import likebook.model.vo.LikeBookLB;
 import likebook.model.vo.adminLikeBook;
-import mybook.model.vo.adminMyBook;
 
 public class LikeBookDao {
 	
@@ -24,7 +22,7 @@ public class LikeBookDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=?";
+		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=? order by likedate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -41,6 +39,7 @@ public class LikeBookDao {
 				lb.setBookoimg(rset.getString("bookoimg"));
 				lb.setBookrimg(rset.getString("bookrimg"));
 				lb.setUserid(userid);
+				lb.setLikedate(rset.getDate("likedate"));
 				lblist.add(lb);
 			}
 		} catch (SQLException e) {
@@ -73,6 +72,48 @@ public class LikeBookDao {
 		}
 		
 		return result;
+	}
+	
+	//관심도서 검색
+	public ArrayList<LikeBookLB> searchLikeBookList(Connection conn, String userid, String type, String keyword) {
+		ArrayList<LikeBookLB> lblist = new ArrayList<LikeBookLB>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=? and ";
+		if(type.equals("title"))
+			query += "b.booktitle like ? ";
+		else if(type.equals("author"))
+			query += "b.author like ? ";
+		query += "order by likedate desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+keyword+"%");
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				LikeBookLB	lb = new LikeBookLB();
+				lb.setBookcode(rset.getString("bookcode"));
+				lb.setBooktitle(rset.getString("booktitle"));
+				lb.setAuthor(rset.getString("author"));
+				lb.setPublisher(rset.getString("publisher"));
+				lb.setPublishdate(rset.getDate("publishdate"));
+				lb.setBookoimg(rset.getString("bookoimg"));
+				lb.setBookrimg(rset.getString("bookrimg"));
+				lb.setUserid(userid);
+				lb.setLikedate(rset.getDate("likedate"));
+				lblist.add(lb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return lblist;		
 	}
 
 	// 관리자용 dao************************************************************************************************

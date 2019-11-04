@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String message = (String)request.getAttribute("message");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +16,13 @@
 </head>
 <body>
 <section class="my-section" style="margin-top:10%">
-<div class="ui raised very padded text container segment" style="width:400px;height:150px;margin-left:40%;display:table;">
+<div class="ui raised very padded text container segment" style="width:450px;height:150px;margin-left:40%;display:table;">
 	<div style="display:table-cell;vertical-align:middle;text-align:center;font-size:15pt;">
-	입력하신 정보와 일치하는<br><br>회원 정보가 존재하지 않습니다.
+	<%= message %>
 	</div>
 </div>
 <center>
-<button class="massive ui button ui yellow button" style="margin-left:50px;">
+<button class="massive ui button ui yellow button" style="margin-left:10px;" onclick="location.href='/sori/views/member/memberLoginView.jsp'">
 	로그인하기
 </button>
 <button class="massive ui button" style="margin-left:10px;">

@@ -36,6 +36,14 @@ public class LikeBookService {
 		return result;
 	}
 
+	//관심도서 검색
+	public ArrayList<LikeBookLB> searchLikeBookList(String userid, String type, String keyword) {
+		Connection conn = getConnection();
+		ArrayList<LikeBookLB> lblist = lbDao.searchLikeBookList(conn, userid, type, keyword);
+		close(conn);
+		return lblist;
+	}
+	
   // 관리자 서비스 *******************************************
 	// 이용자 관심도서 조회용
 	public ArrayList<adminLikeBook> selectUserLikebookList(String userid, int startRow, int endRow){

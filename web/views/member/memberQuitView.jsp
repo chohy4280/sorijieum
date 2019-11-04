@@ -73,7 +73,7 @@ input[type=checkbox]
   		탈퇴하기
 	</button>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<button class="ui yellow button" >
+	<button class="ui yellow button" onclick="history.go(-1); return false;">
   		돌아가기
 	</button>
 </td>

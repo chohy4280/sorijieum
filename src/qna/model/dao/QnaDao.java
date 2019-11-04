@@ -382,6 +382,7 @@ public class QnaDao {
 		return nextno;
 	}
 	
+//마이페이지************************************************************************************	
 	//마이페이지 내 문의 알림용
 	public ArrayList<Qna> selectQnaAlarmList(Connection conn, String userid) {
 		ArrayList<Qna> list = new ArrayList<Qna>();
@@ -472,7 +473,6 @@ public class QnaDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		System.out.println(userid);
 		String query = "select count(*) from qna where qnawriter=? and qnaalarm='A'";
 		
 		try {
@@ -490,6 +490,38 @@ public class QnaDao {
 		}
 		
 		return result;
+	}
+	
+	//내 문의글 검색
+	public ArrayList<Qna> searchMyQnaList(Connection conn, String userid, String keyword) {
+		ArrayList<Qna> list = new ArrayList<Qna>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from qna where qnawriter=? and "+
+					"(qnatitle like ? or qnacontent like ?) order by qnano desc";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+keyword+"%");
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Qna qna = new Qna();
+				qna.setQnaTitle(rset.getString("qnatitle"));
+				qna.setQnaNo(rset.getInt("qnano"));
+				qna.setQnaDate(rset.getDate("qnadate"));
+				qna.setQnaStatus(rset.getString("qnastatus"));
+				qna.setQnaContent(rset.getString("qnacontent"));
+				list.add(qna);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	// 관리자용 dao************************************************************************************************

@@ -12,6 +12,44 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <%@ include file="/inc/top.jsp"%>
+<script type="text/javascript">
+<% if(loginMember.getTypeNumber()==1 || loginMember.getTypeNumber()==2){ %>
+var audio_main = new Audio("/sori/resources/mp3/mypage/mypage_main.mp3");
+window.onload = function(){
+	audio_main.play();
+}
+	
+window.onkeyup = function(){
+	if(event.keyCode == 49){
+		location.href = "/sori/mybook.my?userid=<%= loginMember.getUserId() %>";
+	}
+	else if(event.keyCode == 50){
+		location.href = "/sori/likebook.my?userid=<%= loginMember.getUserId() %>";
+	}
+	else if(event.keyCode == 51){
+		location.href = "/sori/wishbook.my?userid=<%= loginMember.getUserId() %>";
+	}
+	else if(event.keyCode == 52){
+		location.href = "/sori/qlist.my?userid=<%= loginMember.getUserId() %>";
+	}
+	else if(event.keyCode == 53){
+		location.href = "/sori/myinfo?userid=<%= loginMember.getUserId() %>";
+	}
+	else if(event.keyCode == 48){
+		audio_main.pause();
+		audio_main.currentTime = 0;
+		audio_main.play();
+	}
+	else if(event.keyCode == 57){
+		location.href="/sori/index.jsp";
+	}
+	else if(event.keyCode == 27){
+		audio_main.pause();
+		audio_main.currentTime = 0;
+	}
+}
+<% } %>
+</script>
 <style type="text/css">
 @font-face {
 	font-family: 'S-CoreDream-6Bold';

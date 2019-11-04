@@ -8,6 +8,8 @@
 	int currentPage = (Integer)request.getAttribute("currentPage");
 	int maxPage = (Integer)request.getAttribute("maxPage");
 	int listcount = (Integer)request.getAttribute("listcount");
+	String keyword = (String)request.getAttribute("keyword");
+	String type = (String)request.getAttribute("type");
 %>    
 <!DOCTYPE html>
 <html>
@@ -68,15 +70,47 @@ $(function(){
 			}
 		});
 	});
+	
+	//받아온 리스트 없으면 페이징부분 없앰
+	<% if(mywblist.size() == 0){ %>
+		$("#pagebox").css("display","none");
+	<% } %>
 });
 </script>
 </head>
 <body>
 <div class="hy-div">
 <section class="hy-section2" >
+<div style="display:flex;justify-content:space-between;">
+<div>
 <a class="massive ui yellow label" style="font-size: 30px" href="/sori/wishbook.my?userid=<%= loginMember.getUserId() %>">내 신청도서</a>
 <span style="color:#fbbe09; font-weight:600">│</span>
 <span style="color:grey">내 신청도서 목록</span><br>
+</div>
+<!-- 검색창 시작 -->
+<div style="margin-top:20px;">
+<form action="/sori/wbsearch.my" method="post">
+<input type="hidden" name="userid" value="<%= loginMember.getUserId() %>">
+<% if(type == null || type.equals("title")){ %>
+	<select class="ui mini simple dropdown" name="type" id="type" style="border-radius:5px;">
+		<option value="title" selected>도서명</option>
+		<option value="author">저자명</option>
+	</select>
+<% }else{ %>
+	<select class="ui mini simple dropdown" name="type" id="type" style="border-radius:5px;">
+		<option value="title">도서명</option>
+		<option value="author" selected>저자명</option>
+	</select>
+<% } %>
+<% if(keyword != null) { %>
+	<input type="text" name="keyword" id="keyword" value="<%= keyword %>" style="width:200px;">
+<% }else{ %>
+	<input type="text" name="keyword" id="keyword" placeholder="검색하실 내용을 입력하세요" style="width:200px;">
+<% } %>		
+	<input class="ui tiny basic black button" type="submit" value="검색" style="font-family:'S-Core Dream 6';">
+</form>
+</div>
+</div>
 <!-- 내 신청도서 알림은 답변 날짜로부터 일주일까지 표시 -->
 <% if(alarmlist != null){ %>
 <% for(WishBook wb: alarmlist){ %>
@@ -169,27 +203,51 @@ $(function(){
 <button class="mini ui black button" style="font-size:9pt;" onclick="chkDel()">삭제</button></div>
 </form>
 <!-- 페이징 시작 -->
-<div id="pagebox" align="center">
-	<a href="/sori/wishbook.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey double left icon"></i></a>&nbsp;
-<% if((beginPage - 10) < 1){ %>
-	<a href="/sori/wishbook.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
-<% }else{ %>
-	<a href="/sori/wishbook.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
-<% } %>&nbsp;
-<% for(int p = beginPage; p <= endPage; p++){ 
-		if(p == currentPage){
-%>
-	<a href="/sori/wishbook.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-<% }else{ %>
-	<a href="/sori/wishbook.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-<% }} %>&nbsp;
-<% if((endPage +  10) < maxPage){ %>
-	<a href="/sori/wishbook.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
-<% }else{ %>
-	<a href="/sori/wishbook.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
-<% } %>&nbsp;
-<a href="/sori/wishbook.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey double right icon"></i></a>&nbsp;
-</div>
+<% if(keyword == null){ %>
+	<div id="pagebox" align="center" style="display:block;">
+		<a href="/sori/wishbook.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey double left icon"></i></a>&nbsp;
+	<% if((beginPage - 10) < 1){ %>
+		<a href="/sori/wishbook.my?page=1&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/wishbook.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey left icon"></i></a>
+	<% } %>&nbsp;
+	<% for(int p = beginPage; p <= endPage; p++){ 
+			if(p == currentPage){
+	%>
+		<a href="/sori/wishbook.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+	<% }else{ %>
+		<a href="/sori/wishbook.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+	<% }} %>&nbsp;
+	<% if((endPage +  10) < maxPage){ %>
+		<a href="/sori/wishbook.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/wishbook.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey right icon"></i></a>
+	<% } %>&nbsp;
+	<a href="/sori/wishbook.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>"><i class="angle grey double right icon"></i></a>&nbsp;
+	</div>
+<% }else{ %> <!-- 검색시 페이징 -->
+	<div id="pagebox" align="center" style="display:block;">
+		<a href="/sori/wbsearch.my?page=1&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&nbsp;
+	<% if((beginPage - 10) < 1){ %>
+		<a href="/sori/wbsearch.my?page=1&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/wbsearch.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+	<% } %>&nbsp;
+	<% for(int p = beginPage; p <= endPage; p++){ 
+			if(p == currentPage){
+	%>
+		<a href="/sori/wbsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+	<% }else{ %>
+		<a href="/sori/wbsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+	<% }} %>&nbsp;
+	<% if((endPage +  10) < maxPage){ %>
+		<a href="/sori/wbsearch.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+	<% }else{ %>
+		<a href="/sori/wbsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+	<% } %>&nbsp;
+	<a href="/sori/wbsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&nbsp;
+	</div>
+<% } %>	
 <!-- 페이징 끝 -->
 </section>
 </div>
