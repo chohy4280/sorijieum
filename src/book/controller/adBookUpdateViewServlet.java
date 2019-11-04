@@ -33,6 +33,9 @@ public class adBookUpdateViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 도서 수정페이지로 이동 처리하는 컨트롤러
 		request.setCharacterEncoding("utf-8");
+		String searchtype = request.getParameter("searchtype");
+		String keyword = request.getParameter("keyword");
+		String makestatus = request.getParameter("makestatus");
 		
 		String bookcode = request.getParameter("bookcode");
 		int currentPage = Integer.parseInt(request.getParameter("page"));
@@ -45,6 +48,9 @@ public class adBookUpdateViewServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/admin/adminUpdateBookForm.jsp");
 			request.setAttribute("book", book);
 			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("searchtype", searchtype);
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("makestatus", makestatus);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 상세보기 실패!");

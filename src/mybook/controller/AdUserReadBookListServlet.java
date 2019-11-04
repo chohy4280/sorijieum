@@ -70,6 +70,10 @@ public class AdUserReadBookListServlet extends HttpServlet {
 			// 현재 페이지에 보여줄 시작페이지 수
 			// 1, 11, 21, 31,...
 			beginPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+			
+			if(currentPage % limit == 0) {
+		         beginPage -= limit;
+		      }
 
 			// 목록 아래쪽에 보여질 마지막 페이지 수(10, 20, 30, ...)
 			endPage = beginPage + 10 - 1;

@@ -16,19 +16,24 @@
 	// 관리자 삭제
 	function delBtn(){
 		var userid = "<%=m.getUserId() %>";
-		var result = confirm("<%= m.getUserName() %>(<%= m.getUserId() %>)님을 관리자에서 삭제 처리하시겠습니까?\n삭제 후 동일 아이디로 30일동안 관리자 추가가 불가능합니다.");
-		if(result){
+		var str = '<%= m.getUserName() %>(<%= m.getUserId() %>)님을 관리자에서 삭제 처리하시겠습니까?\n강제탈퇴 사유를 입력해주세요.\n(삭제 후 동일 아이디로 30일동안 관리자 추가 불가)';
+		var anwser = prompt(str, "");
+		if(anwser != null && anwser != ""){
 			$.ajax({
 				url: "/sori/mdel.ad",
 				type: "post",
-				data: { userid : userid },
+				data: { userid : userid, anwser : anwser},
 				success : function(data){
 					alert(data);
 					location.href="/sori/adlist.ad?page="+<%=currentPage%>;
 				}
 			})
 		return false;
-	}}
+	}else {
+		alert("강제탈퇴 사유를 입력하셔야 합니다.");
+		return;
+	}
+		}
 </script>
 </head>
 <body>
