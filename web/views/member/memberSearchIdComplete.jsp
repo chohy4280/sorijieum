@@ -23,9 +23,7 @@
 	<%= member.getUserName() %> 님의 아이디는<br>
 	<%= member.getUserId() %> <br>
 	입니다.
-	<% }else { %>
-	<%= message %>
-	<% } %>
+	<% }%>
 	</div>
 </div>
 <center>

@@ -39,6 +39,57 @@ $(function(){
 	});	
 });
 	
+// 음성 tts **********************************************************************
+
+var voices = [];
+function setVoiceList() {
+	voices = window.speechSynthesis.getVoices();
+}
+setVoiceList();
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+	window.speechSynthesis.onvoiceschanged = setVoiceList;
+}
+function speech(txt) {
+	if (!window.speechSynthesis) {
+		alert("음성 재생을 지원하지 않는 브라우저입니다. 크롬, 파이어폭스 등의 최신 브라우저를 이용하세요");
+		return;
+	}
+	var lang = 'ko-KR';
+	var utterThis = new SpeechSynthesisUtterance(txt);
+	utterThis.onend = function(event) {
+		console.log('end');
+	};
+	utterThis.onerror = function(event) {
+		console.log('error', event);
+	};
+	var voiceFound = false;
+	for (var i = 0; i < voices.length; i++) {
+		if (voices[i].lang.indexOf(lang) >= 0
+				|| voices[i].lang.indexOf(lang.replace('-', '_')) >= 0) {
+			utterThis.voice = voices[i];
+			voiceFound = true;
+		}
+	}
+	if (!voiceFound) {
+		alert('voice not found');
+		return;
+	}
+	utterThis.lang = lang;
+	utterThis.pitch = 1;
+	utterThis.rate = 1; //속도
+	window.speechSynthesis.speak(utterThis);
+}
+
+
+$(function(){
+	  var btn = document.getElementById('btn');
+	  var input = document.getElementsByClassName('noticeT').innerText;
+	  btn.addEventListener('click', function(event){
+	    	for(var i = 0; i < input.length; i++){
+	    		alert(input[i]);
+	    	}
+	    })
+});
 
 </script>
 
@@ -47,7 +98,7 @@ $(function(){
 
 <!-- Content 시작! -->
 	<section class="my-section">
-
+<input type="button" id="btn" value="button" />
 	<!--공지사항 시작-->
 	<div class="my-content">
 		<a class="massive ui yellow label" style="font-size: 30px">공지사항</a>
@@ -74,7 +125,7 @@ $(function(){
 			<tr class="toplist" style="display:table-row;">
 			   
 				<td style="color:red;">공지</td>
-				<td style="text-align:left;">
+				<td class="noticeT" style="text-align:left;">
 				<a href="/sori/ndlist?noticeno=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
 				<td ><%= n.getNoticeWriter() %></td>
 				<td ><%= n.getNoticeDate() %></td>
@@ -87,7 +138,7 @@ $(function(){
 		
 			<tr>
 				<td><%= n.getNoticeNo()-1 %></td>
-				<td style="text-align:left;"><a href="/sori/ndlist?noticeno=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
+				<td class="noticeT" style="text-align:left;"><a href="/sori/ndlist?noticeno=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
 				<td><%= n.getNoticeWriter() %></td>
 				<td><%= n.getNoticeDate() %></td>
 				<td><%= n.getNoticeViews() %></td>

@@ -36,6 +36,9 @@ public class AdBookDetailServlet extends HttpServlet {
 		
 		String bookcode = request.getParameter("bookcode");
 		int currentPage = Integer.parseInt(request.getParameter("page"));
+		String searchtype = request.getParameter("searchtype");
+		String keyword = request.getParameter("keyword");
+		String makestatus = request.getParameter("makestatus");
 		
 		BookDV book = new BookService().selectBookOne(bookcode);
 		
@@ -45,6 +48,10 @@ public class AdBookDetailServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/admin/adminDetailBook.jsp");
 			request.setAttribute("book", book);
 			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("searchtype", searchtype);
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("makestatus", makestatus);
+		
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 상세보기 실패!");

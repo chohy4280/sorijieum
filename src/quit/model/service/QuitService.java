@@ -80,9 +80,9 @@ public class QuitService {
 	}
 
 	// 관리자 삭제시 quit테이블에도 추가
-	public int insertMember(String userid) {
+	public int insertMember(String userid, String answer) {
 		Connection conn = getConnection();
-		int result = qDao.insertMember(conn, userid);
+		int result = qDao.insertMember(conn, userid, answer);
 		if(result > 0)
 			commit(conn);
 		else

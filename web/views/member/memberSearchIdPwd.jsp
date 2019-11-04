@@ -36,7 +36,65 @@ $(function(){
 		}	
 		return false;
 	});
+	
+	
+	$("#idpwFindPage").keyup(function(){	// 아이디 비밀번호 찾기 중 선택
+		var keyV = $(this).val();
+		if(keyV == '1'){				// 아이디 찾기 시(1번 클릭)
+			$("#username").focus();
+			
+		}else if(keyV == '2'){			// 비밀번호 찾기 시(2번 클릭)
+			$("#userid").focus();
+			
+			
+		}else if(keyV == '9'){			// 메인페이지
+			location.href="/sori/index.jsp";
+		
+		} else{														// 잘못누른경우
+			   audio.pause();
+   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
+   			   audio.play();
+   			$("#idpwFindPage").val('');
+   		   }
+	})
+	
+	
+	
 });
+
+
+// 음성안내 ********************************
+var audio = new Audio("/sori/resources/mp3/idpwFindPage.mp3");	// 화면 접속 시 음성안내 자동재생
+window.onload = function(){
+   audio.play();
+   $("#idpwFindPage").focus();
+}   
+
+function focus_username(){	//이름창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findidName.mp3");
+   audio.play();
+}
+
+function focus_phone(){	//전화번호창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findidPhone.mp3");
+   audio.play();
+}
+
+function focus_userid(){ // 아이디 창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findpwdid.mp3");
+   audio.play();
+}
+
+function focus_email(){ // 이메일 창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/findpwdEmail.mp3");
+   audio.play();
+}
+
+
 </script>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 <style type="text/css">
@@ -67,11 +125,11 @@ $(function(){
       <div class="ui form" style="margin-right:100px;">
          <div class="inline field">
 		    <label style="font-size:12pt;">이 름</label><br>
-		    <input type="text" name="username" id="username" placeholder="이름 입력" style="width:300px;height:50px;">
+		    <input type="text" name="username" id="username" placeholder="이름 입력" onfocusin="focus_username()" style="width:300px;height:50px;">
 		  </div>
          <div class="inline field">
 		    <p style="font-size:12pt;">전화번호</p><br>
-		    <input type="tel" name="phone" id="phone" placeholder="전화번호 입력" style="width:300px;height:50px;">
+		    <input type="tel" name="phone" id="phone" placeholder="전화번호 입력" onfocusin="focus_phone()"style="width:300px;height:50px;">
 		  </div>
         <div style="margin-left:80px;">
 		<button type="submit" class="ui yellow button" id="idbtn">아이디 찾기</button>
@@ -85,11 +143,11 @@ $(function(){
       <div class="ui form" style="margin-right:100px;">
          <div class="inline field">
 		    <label style="font-size:12pt;">아 이 디</label><br>
-		    <input type="text" name="userid" id="userid" placeholder="아이디 입력" style="width:300px;height:50px;">
+		    <input type="text" name="userid" id="userid" placeholder="아이디 입력" onfocusin="focus_userid()" style="width:300px;height:50px;">
 		  </div>
          <div class="inline field">
 		    <label style="font-size:12pt;">이 메 일</label><br>
-		    <input type="email" name="email" id="email" placeholder="이메일 입력" style="width:300px;height:50px;">
+		    <input type="email" name="email" id="email" placeholder="이메일 입력" onfocusin="focus_email()" style="width:300px;height:50px;">
 		  </div>
         <div style="margin-left:80px;">
         <a href="/sori/views/member/memberSearchPwdComplete.jsp">
@@ -106,5 +164,7 @@ $(function(){
 </div>
 </center>
 </section>
+
+<input type="text" id="idpwFindPage" autofocus="autofocus"> 
 </body>
 </html>

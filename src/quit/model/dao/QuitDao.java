@@ -310,15 +310,16 @@ public class QuitDao {
 		}
   
 		// 관리자 삭제시 quit테이블에도 추가
-		public int insertMember(Connection conn, String userid) {
+		public int insertMember(Connection conn, String userid, String answer) {
 			int result = 0;
 			PreparedStatement pstmt = null;
 			
-			String query = "insert into quit values (?, 'F', '대표 관리자에 의한 강제탈퇴', sysdate)";
+			String query = "insert into quit values (?, 'F', ?, sysdate)";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, userid);
+				pstmt.setString(2, answer);
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

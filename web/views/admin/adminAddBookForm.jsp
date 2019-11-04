@@ -84,6 +84,11 @@ function preview2(input) {
             <div class="lightgreyBox2" style="height: 800px;">
              <form action="/sori/binsert.ad" method="post" enctype="multipart/form-data">
             	<table class="addform">
+            		<tr>
+						<th width="30%">도서코드</th>
+						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode"placeholder="숫자만 입력(추후 수정 불가)" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
+					</tr>
+					
 					<tr>
 						<th width="30%">도서명</th>
 						<td><div class="ui input"><input type="text" name="booktitle" id="booktitle" placeholder="책 제목 입력" required></div></td>
@@ -108,11 +113,6 @@ function preview2(input) {
 						<th width="30%">쪽수</th>
 						<td><div class="ui input"><input type="text" name="bookpage" id="bookpage"placeholder="숫자만 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
 					</tr>
-
-					<tr>
-						<th width="30%">도서코드</th>
-						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode"placeholder="숫자만 입력(추후 수정 불가)" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
-					</tr>
 					
 					<tr>
 						<th width="30%">책 소개</th>
@@ -123,7 +123,8 @@ function preview2(input) {
 					
 					<tr>
 						<th width="30%">도서이미지</th>
-						<td><input type="file" name="bookoimg" id="bookoimg" accept=".jpg,.jpeg,.png" onChange="preview(this, $('#img01'));" required>
+						<td><input type="file" name="bookoimg" id="bookoimg" accept=".jpg,.jpeg,.png" onChange="preview(this, $('#img01'));"
+						 required>
 						</td>
 					</tr>
 					

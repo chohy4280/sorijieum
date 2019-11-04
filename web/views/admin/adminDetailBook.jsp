@@ -5,6 +5,9 @@
 <%
 	BookDV book = (BookDV)request.getAttribute("book");
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	String searchtype = (String)request.getAttribute("searchtype");
+	String keyword = (String)request.getAttribute("keyword");
+	String makestatus = (String)request.getAttribute("makestatus");
 %>
 <!DOCTYPE html>
 <html>
@@ -39,6 +42,7 @@
 				var url = "/sori/blist.ad";
 				$(location).attr('href', url);
 				alert("이미지 추출을 완료하였습니다!");
+				location.href="/sori/bdetail.ad?bookcode="+<%=book.getBookCode() %>+"&page="+<%= currentPage %>;
 			},
 			error : function(request, status, error) {
 				if (request.status != '0') {
@@ -68,6 +72,12 @@
             <!-- 이미지 미리보기 부분 끝-->
             <div class="lightgreyBox2" style="height: 1100px; align: center;">
             	<table class="detailform">
+            	
+					<tr>
+						<th width="30%">도서코드</th>
+						<td><%= book.getBookCode() %></td>
+					</tr>
+					
 					<tr>
 						<th width="30%">도서명</th>
 						<td><%= book.getBookTitle() %></td>
@@ -93,11 +103,6 @@
 						<td><%= book.getBookPage() %> 쪽</td>
 					</tr>
 
-					<tr>
-						<th width="30%">도서코드</th>
-						<td><%= book.getBookCode() %></td>
-					</tr>
-					
 					<tr>
 						<th width="30%">책 소개</th>
 						<td><%= book.getBookInfo() %></div></td>
@@ -127,14 +132,20 @@
 				</table>
 				<br><br>
 				<center>
-					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>&nbsp; 
-					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>'">수정</button>
+				<%if(searchtype!=null || keyword != null || makestatus != null) {%>
+					<button class="small ui teal button" onclick="location.href='/sori/bslist.ad?page=<%= currentPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>'">목록이동</button>&nbsp; 
+					<%}else{ %>
+					<button class="small ui teal button" onclick="location.href='/sori/blist.ad?page=<%= currentPage %>'">목록이동</button>&nbsp; 
+					<%} %>
+					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>'">수정</button>&nbsp; 
 					<%  String destinationDir = "C:/Users/macbook/git/sorijieum/web/resources/book_pdf_images/" + book.getBookCode(); //폴더 경로
 						File destinationFile = new File(destinationDir);
 						File Folder = new File(destinationDir);
 						if(!Folder.exists()){
 					%>
+					
 					<button id="bpimg" class="small ui teal button" onclick="javascript:bpimg(<%=book.getBookCode() %>)">이미지추출</button>
+					
 					<% }else{ %>
 					&nbsp;
 					<% } %>

@@ -44,7 +44,11 @@ public class AdBookUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 도서 수정처리용 컨트롤러
 		
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");;
+		
+		String searchtype = request.getParameter("searchtype");
+		String keyword = request.getParameter("keyword");
+		String makestatus = request.getParameter("makestatus");
 		
 		RequestDispatcher view = null;
 		if(!ServletFileUpload.isMultipartContent(request)) { 
@@ -83,12 +87,19 @@ public class AdBookUpdateServlet extends HttpServlet {
 		
 		
 		if(bimgOriginalFileName != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
-			String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
+			//String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
 			
 			File bimgOriginFile = new File(savePath + "\\" + bimgOriginalFileName);
-			File bimgRenameFile = new File(savePath + "\\" + bimgRenameFileName);
+			
+			String bimgRenameFileName = bookcode + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
 
+			File bimgRenameFile = File(savePath + "\\" + bimgRenameFileName);
+			if(bimgRenameFile != null) {	// 같은 이름의 파일이 있으면 먼저 삭제하고
+				bimgRenameFile.delete();
+			}
+			bimgRenameFile = new File(savePath + "\\" + bimgRenameFileName);	// 새로 저장.
+			
 			if(!bimgOriginFile.renameTo(bimgRenameFile)) {
 				int read = -1;
 				
@@ -105,7 +116,7 @@ public class AdBookUpdateServlet extends HttpServlet {
 					// 리네임 했으니 원본 삭제
 					bimgOriginFile.delete();
 					// 이전 rename 파일도 삭제
-					new File(savePath + "\\" + bookrimg).delete();
+					//new File(savePath + "\\" + bookrimg).delete();	// 위에서 지워줘서 필요없음.
 			}
 			b.setBookOimg(bimgOriginalFileName);
 			b.setBookRimg(bimgRenameFileName);
@@ -116,10 +127,14 @@ public class AdBookUpdateServlet extends HttpServlet {
 
 
 		if(bpdfOriginalFileName != null){
-			String bpdfRenameFileName = bookcode + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
-			
 			File bpdfOriginFile = new File(savePath + "\\" + bpdfOriginalFileName);
-			File bpdfRenameFile = new File(savePath + "\\" + bpdfRenameFileName);
+			
+			String bpdfRenameFileName = bookcode + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
+			File bpdfRenameFile = File(savePath + "\\" + bpdfRenameFileName);
+			if(bpdfRenameFile != null) {
+				bpdfRenameFile.delete();
+			}
+			bpdfRenameFile = new File(savePath + "\\" + bpdfRenameFileName);
 
 			if(!bpdfOriginFile.renameTo(bpdfRenameFile)) {
 				int read = -1;
@@ -135,9 +150,9 @@ public class AdBookUpdateServlet extends HttpServlet {
 					fin2.close();
 					fout2.close();
 					// 리네임 했으니 원본 삭제
-					bpdfOriginFile.delete();
+					bpdfOriginFile.delete(); //이미지 추출을 위해 opdf놔둠
 					// 이전 rename 파일도 삭제
-					new File(savePath + "\\" + bookrpdf).delete();
+					//new File(savePath + "\\" + bookrpdf).delete();
 					
 			}
 			b.setBookOpdf(bpdfOriginalFileName);
@@ -149,11 +164,16 @@ public class AdBookUpdateServlet extends HttpServlet {
 		
 
 		if(btxtOriginalFileName != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
-			String btxtRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
-
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
+			//String btxtRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
 			File btxtOriginFile = new File(savePath + "\\" + btxtOriginalFileName);
-			File btxtRenameFile = new File(savePath + "\\" + btxtRenameFileName);
+			String btxtRenameFileName = bookcode + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
+			File btxtRenameFile = File(savePath + "\\" + btxtRenameFileName);
+			
+			if(btxtRenameFile != null) {
+				btxtRenameFile.delete();
+			}
+			btxtRenameFile = new File(savePath + "\\" + btxtRenameFileName);
 			
 			if(!btxtOriginFile.renameTo(btxtRenameFile)) {
 				int read = -1;
@@ -171,7 +191,7 @@ public class AdBookUpdateServlet extends HttpServlet {
 					// 리네임 했으니 원본 삭제
 					btxtOriginFile.delete();
 					// 이전 rename 파일도 삭제
-					new File(savePath + "\\" + bookrtxt).delete();
+					//new File(savePath + "\\" + bookrtxt).delete();
 			}
 			b.setBookOtxt(btxtOriginalFileName);
 			b.setBookRtxt(btxtRenameFileName);
@@ -188,13 +208,23 @@ public class AdBookUpdateServlet extends HttpServlet {
 		int result2 = new BookMakingService().updateBookadmin(b);
 		
 		if(result1 > 0 && result2 > 0) {
-			response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage);
+			if(searchtype!=null||keyword!=null||makestatus!=null) {
+				response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage+"&searchtype="+searchtype+"&keyword="+keyword+"&makestatus="+makestatus);
+			}else {
+				response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage);
+			}
+
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 수정 실패!");
 			view.forward(request, response);
 	} 
 		
+	}
+
+	private File File(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

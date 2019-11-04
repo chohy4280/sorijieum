@@ -540,8 +540,8 @@ public class BookMakingDao {
 		String query = "";
 		for (int i = 0; i <= b.getBookPage(); i++) {
 			if (i % 10 == 0) {
-				query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + i+1 + ", NULL)";
-			}
+				query = "insert into bookmakingcheck values(?, NULL, DEFAULT, NULL, " + (i+1) + ", NULL, DEFAULT)";
+			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, b.getBookCode());
@@ -550,6 +550,7 @@ public class BookMakingDao {
 				e.printStackTrace();
 			} finally {
 				close(pstmt);
+			}
 			}
 		}
 		return result;
