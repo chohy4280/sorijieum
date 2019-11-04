@@ -49,10 +49,13 @@ public class BookWaitingListServlet extends HttpServlet {
 		//currentPage가 속한 페이지그룹의 시작페이지숫자와 끝숫자 계산
 		//예? 현재 34페이지이면 31~40이 됨 (페이지그룹의 수를 10개로 한 경우)
 		int beginPage = (currentPage / limit) * limit + 1;
+		if(currentPage % limit == 0) {
+	         beginPage -= limit;
+	    	}
 		int endPage = beginPage + (limit - 1); //+ 9
-		if(endPage > maxPage)
+		if(endPage > maxPage) {
 			endPage = maxPage;
-		
+			}
 		//currentPage에 출력할 목록의 조회할 행 번호 계산
 		int startRow = (currentPage * limit) - 9;
 		int endRow = currentPage * limit;

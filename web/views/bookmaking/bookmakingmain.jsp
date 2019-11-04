@@ -27,13 +27,16 @@ function confirmExit() {
   	var userid = '<%= loginMember.getUserId() %>';
   	var bookcode = '<%= bmp.getBookCode() %>';
   	var bookpage = '<%= bmp.getBookPage() %>';
+  	var makepage = '<%= bmp.getBookmakepage() %>';
   	$.ajax({
 		type : "POST",
         url : "bmdel",
         async: false,
-		data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage},
+		data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage, "makepage": makepage},
 		success : function(response) {
-			alert("제작에 실패했습니다.");
+			if(response=="ok"){
+				alert("제작에 실패했습니다.");
+			}
 		},
 		error : function(request, status, error) {
 			if (request.status != '0') {
@@ -256,8 +259,10 @@ $(function(){
 	//제출
 	function complete(page,endpage,code){
 		var result = confirm("제출을 완료하시겠습니까? 제출하시면 수정할 수 없습니다."); 
-		if(result == true){ 
 		var userid = '<%= loginMember.getUserId() %>';
+	  	var bookcode = '<%= bmp.getBookCode() %>';
+	  	var bookpage = '<%= bmp.getBookPage() %>';
+		if(result == true){ 
 		$.ajax({
 			type : "POST",
 	        url : "bmcomp",
@@ -284,7 +289,7 @@ $(function(){
 				type : "POST",
 		        url : "bmdel",
 		        async: false,
-				data : {"userid": userid, "bookcode": code},
+				data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage},
 				success : function(response) {
 					clearInterval(timer);
 					checkUnload = false;

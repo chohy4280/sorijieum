@@ -54,8 +54,8 @@
 			<p style="text-align:center;font-size:1rem;"><%= list.get(i).getBookTitle().substring(0, 17) %>..</p>
 			</div><br>
 			<% } %>
-			<a href="/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>"> 
-			<img src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg() %>"></a>
+			<div class="ye-scale"><a href="/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>"> 
+			<img src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg() %>"></a></div>
 			</div>
 			<% } %>
 				</div>				
@@ -97,7 +97,7 @@
       	우리가 함께 제작한 책
     </div>
 </div>
-  <img src="/sori/views/bookmaking/images/books.png" style="width: 25%;height: 25%;bottom: 10px;">
+  <img src="/sori/resources/bookmaking_images/books.png" style="width: 25%;height: 25%;bottom: 10px;">
 </div><!-- book count 끝 -->
 <br><br><br><br><br>
 	<!-- content 끝 -->

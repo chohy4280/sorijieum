@@ -431,7 +431,6 @@ public class WishBookDao {
 		PreparedStatement pstmt = null;
 		String query = "insert into wishbook values(SEQ_WISHNO.NEXTVAL, ?, ?, ?, ?, ?, "
 						+ "sysdate, default, default, null, null, default, null, null)";
-		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, wishbook.getWishWriter());

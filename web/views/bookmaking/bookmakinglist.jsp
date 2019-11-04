@@ -16,8 +16,25 @@
 <title>제작중인 도서</title>
 <%@ include file="/../inc/top.jsp"%>
 <%@ include file="/../inc/cdn.jsp"%>
+<style type="text/css">
+.wrap { position:relative; }
+.over { 
+   position:absolute;
+   bottom:-15%;
+   left:47%;
+}
+</style>
 <script type="text/javascript">
-
+$(function(){
+	$(".progress").each(function(){
+		var perc = $(this).attr("id");
+		if(perc == 100)
+			$(this).attr('class','ui yellow progress');
+		$(this).progress({
+			percent: perc
+		});
+	});
+});
 </script>
 </head>
 <body>
@@ -43,15 +60,8 @@
 			<% for(int i = 0; i < list.size(); i++){ 
 				int makep = (list.get(i).getMakepage());
 				int bookp = (list.get(i).getBookPage());
-				int pwidth = (int)(((double)makep / bookp) * 100);
+				int per = (int)(((double)makep / bookp) * 100);
 			%>
-			<%-- <script type="text/javascript">
-				var count = document.getElementsByClassName("ye-bm2").length;
-			</script>
-			<% 
-				int count = <%= count %>;
-				if(count <= 9){ 
-			%> --%>
 			<div class="ye-bm2">
 			<% if(list.get(i).getBookTitle().length() < 17){ %>
 			<div class="ui large basic label" align="center" style="width: 230px;"
@@ -64,12 +74,11 @@
 			<p style="text-align:center;font-size:1rem;"><%= list.get(i).getBookTitle().substring(0, 17) %>..</p>
 			</div><br>
 			<% } %>
-			<a href="/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>">
-			<img id="여행의 이유" src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg() %>"></a><br><br>
-			<div class="progress" style="width:230px;height:27px;border-radius:7px 7px 7px 7px;"> 
-  			<div class="progress-bar" role="progressbar" 
-  			style="font-size:0.9rem; background: orange; width:<%= pwidth %>%;" 
-  			aria-valuenow="<%= pwidth %>" aria-valuemin="0" aria-valuemax="<%= list.get(i).getBookPage() %>"><%= pwidth %>%</div>
+			<div class="ye-scale"><a href="/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>">
+			<img src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg() %>"></a></div><br>
+			<div class="ui yellow progress wrap" id="<%=per%>" style="width:230px;height:25px;border-radius:7px 7px 7px 7px;">
+		  	<div class="bar" style="height:25px;"></div>
+		  	<div class="over" style="color:white;font-size:1rem;height:25px;font-weight:bolder;"><%= per %>%</div>
 			</div>
 			<br>
 			</div>
@@ -78,8 +87,8 @@
 		</div><!-- bookmaking -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- 페이징 -->
 <div id="pagebox" align="center">
 	<a href="/sori/bmlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
@@ -113,7 +122,7 @@
       	우리가 함께 제작한 책
     </div>
 </div>
-  <img src="/sori/views/bookmaking/images/books.png" style="width: 25%;height: 25%;bottom: 10px;">
+  <img src="/sori/resources/bookmaking_images/books.png" style="width: 25%;height: 25%;bottom: 10px;">
 </div><!-- book count 끝 -->
 <br><br><br><br><br><br>
 	<!-- content 끝 -->

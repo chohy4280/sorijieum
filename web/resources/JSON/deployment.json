@@ -1,0 +1,58 @@
+{
+  "id": "/subscriptions/e9e34900-edb0-44dd-8c37-ec38cbd49f2a/resourceGroups/PARKYEEUN/providers/Microsoft.Resources/deployments/Microsoft.CognitiveServicesSpeechServices",
+  "name": "Microsoft.CognitiveServicesSpeechServices",
+  "type": "Microsoft.Resources/deployments",
+  "tags": {
+    "marketplaceItemId": "Microsoft.CognitiveServicesSpeechServices",
+    "primaryResourceId": "/subscriptions/e9e34900-edb0-44dd-8c37-ec38cbd49f2a/resourcegroups/PARKYEEUN/providers/Microsoft.CognitiveServices/accounts/PARKYEEUN"
+  },
+  "properties": {
+    "templateHash": "946911863299201236",
+    "parameters": {
+      "name": {
+        "type": "String",
+        "value": "PARKYEEUN"
+      },
+      "location": {
+        "type": "String",
+        "value": "koreacentral"
+      },
+      "apiType": {
+        "type": "String",
+        "value": "SpeechServices"
+      },
+      "sku": {
+        "type": "String",
+        "value": "F0"
+      }
+    },
+    "mode": "Incremental",
+    "debugSetting": {
+      "detailLevel": "None"
+    },
+    "provisioningState": "Succeeded",
+    "timestamp": "2019-11-01T12:19:28.5749283Z",
+    "duration": "PT0.9819251S",
+    "correlationId": "ce27aba3-fde6-42e9-bb98-97379c4c2cf8",
+    "providers": [
+      {
+        "namespace": "Microsoft.CognitiveServices",
+        "resourceTypes": [
+          {
+            "resourceType": "accounts",
+            "locations": [
+              "koreacentral"
+            ]
+          }
+        ]
+      }
+    ],
+    "dependencies": [],
+    "outputResources": [
+      {
+        "id": "/subscriptions/e9e34900-edb0-44dd-8c37-ec38cbd49f2a/resourceGroups/PARKYEEUN/providers/Microsoft.CognitiveServices/accounts/PARKYEEUN"
+      }
+    ],
+    "validationLevel": "Template"
+  }
+}

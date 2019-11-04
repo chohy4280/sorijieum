@@ -50,7 +50,7 @@
 			</tr>
 			<tr>
 				<th>출판일</th>
-				<td width="80%"><div class="ui input"><input type="date" name="wishpublishdate" placeholder="YYYY-MM-DD" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" placeholder="YYYYMMDD" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 		</table>
 		<input type="hidden" name="wishwriter" value="<%= loginMember.getUserId() %>">	<!-- 신청자 아이디 -->

@@ -41,7 +41,7 @@
 			}else if(keyV == '2'){			// 로그인 시
 				location.href="/sori/views/member/memberLoginView.jsp";
 			}
-		})
+		});
 		
 		$("#mainOpen1").keyup(function(){	// 처음 접속 후 1번 클릭한 뒤에
 			var keyV2 = $(this).val();
@@ -50,7 +50,7 @@
 			}else if(keyV2 == '2'){
 				location.href="/sori/views/member/memberEnrollAgree.jsp";
 			}
-		})
+		});
 		
 		$("#loginMain").keyup(function(){	// 로그인 후
 			var keyV3 = $(this).val();
@@ -75,8 +75,8 @@
 			}else if (keyV3 == '0'){	// 다시듣기
 				location.reload();
 			}
-		})
-	})
+		});
+	});
 
 </script>
   <!-- 시맨틱유아이 cdn -->
@@ -181,44 +181,76 @@
 <div class="ui four cards" style="margin:-15px 5% 0 5%">
   <div class="card">
     <div class="image">
-    	<img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png">
+    	<img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png" alt="소리지음">
     </div>
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/sorijieumIntro.jsp'" src="/sori/resources/images/사이트소개.png">
+      	<img onclick="location.href='/sori/views/sorijieumIntro.jsp'" src="/sori/resources/images/사이트소개.png" alt="사이트소개">
     </div>
   </div>
+  <% if(loginMember != null){ %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/blist'" src="/sori/resources/images/도서검색.png">
+      <img onclick="location.href='/sori/blist'" src="/sori/resources/images/도서검색.png" alt="도서검색">
     </div>
   </div>
+  <% }else{ %>
+  <div class="card">
+    <div class="image">
+      <img src="/sori/resources/images/도서검색.png" alt="도서검색">
+    </div>
+  </div>
+  <% } %>
+  <% if(loginMember != null && loginMember.getTypeNumber() > 2){ %>
   <div class="card">
    <div class="image">
-      	<img onclick="location.href='/sori/bmkmain'" src="/sori/resources/images/도서제작.png">
+      <img onclick="location.href='/sori/bmkmain'" src="/sori/resources/images/도서제작.png" alt="도서제작">
     </div>
-  </div>  
+  </div> 
+  <% }else{ %> 
+  <div class="card">
+   <div class="image">
+      <img src="/sori/resources/images/도서제작.png" alt="도서제작">
+    </div>
+  </div> 
+  <% } %>
 </div>
 <div class="ui four cards" style="margin:0 5% 0 5%">
+<% if(loginMember != null){ %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/wblist'" src="/sori/resources/images/도서신청.png">
+      <img onclick="location.href='/sori/wblist'" src="/sori/resources/images/도서신청.png" alt="도서신청">
     </div>
   </div>
+  <% }else{ %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png">
+      <img src="/sori/resources/images/도서신청.png" alt="도서신청">
     </div>
   </div>
+  <% } %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/qlist'" src="/sori/resources/images/QNA.png">
+      	<img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png" alt="공지사항">
     </div>
   </div>
+  <% if(loginMember != null){ %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardfaq/faqListView.jsp'" src="/sori/resources/images/FAQ.png">
+      	<img onclick="location.href='/sori/qlist'" src="/sori/resources/images/QNA.png" alt="문의하기">
+    </div>
+  </div>
+  <% }else{ %>
+  <div class="card">
+    <div class="image">
+      	<img src="/sori/resources/images/QNA.png" alt="문의하기">
+    </div>
+  </div>
+  <% } %>
+  <div class="card">
+    <div class="image">
+      	<img onclick="location.href='/sori/views/boardfaq/faqListView.jsp'" src="/sori/resources/images/FAQ.png" alt="자주묻는 질문">
     </div>
   </div>
 </div>

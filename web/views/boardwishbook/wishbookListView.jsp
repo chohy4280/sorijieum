@@ -117,10 +117,12 @@ function bpimg(){
 		</table>
 	<!--도서신청 목록 끝-->
 		<br>
+		<% if(loginMember != null && loginMember.getTypeNumber() != 3){ %>
 		<div class="ye-label" align="right">
-			<a class="big ui basic black label" href="/sori/views/member/userWishBook.jsp">나의신청내역</a>&nbsp;&nbsp;
+			<a class="big ui basic black label" href="/sori/wishbook.my?userid=<%= loginMember.getUserId() %>">나의신청내역</a>&nbsp;&nbsp;
 			<a class="big ui basic black label" href="/sori/views/boardwishbook/wishbookAddForm.jsp">신청하기</a>
 		</div>
+		<% } %>
 		<br>
 		
 	<!-- 페이징 시작 -->

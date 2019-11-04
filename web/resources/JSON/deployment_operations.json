@@ -1,0 +1,32 @@
+[
+  {
+    "id": "/subscriptions/e9e34900-edb0-44dd-8c37-ec38cbd49f2a/resourceGroups/PARKYEEUN/providers/Microsoft.Resources/deployments/Microsoft.CognitiveServicesSpeechServices/operations/D38523130FE70381",
+    "operationId": "D38523130FE70381",
+    "properties": {
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "timestamp": "2019-11-01T12:19:28.4519861Z",
+      "duration": "PT0.6930448S",
+      "trackingId": "8e49b91c-b737-4437-8a9b-1315c55a4cf5",
+      "statusCode": "Created",
+      "targetResource": {
+        "id": "/subscriptions/e9e34900-edb0-44dd-8c37-ec38cbd49f2a/resourceGroups/PARKYEEUN/providers/Microsoft.CognitiveServices/accounts/PARKYEEUN",
+        "resourceType": "Microsoft.CognitiveServices/accounts",
+        "resourceName": "PARKYEEUN"
+      }
+    }
+  },
+  {
+    "id": "/subscriptions/e9e34900-edb0-44dd-8c37-ec38cbd49f2a/resourceGroups/PARKYEEUN/providers/Microsoft.Resources/deployments/Microsoft.CognitiveServicesSpeechServices/operations/08586289961178846005",
+    "operationId": "08586289961178846005",
+    "properties": {
+      "provisioningOperation": "EvaluateDeploymentOutput",
+      "provisioningState": "Succeeded",
+      "timestamp": "2019-11-01T12:19:28.5565934Z",
+      "duration": "PT0.0442912S",
+      "trackingId": "cf15e04a-9458-44ca-951c-d815f14ee820",
+      "statusCode": "OK",
+      "statusMessage": null
+    }
+  }
+]

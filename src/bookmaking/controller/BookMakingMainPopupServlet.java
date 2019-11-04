@@ -40,6 +40,7 @@ public class BookMakingMainPopupServlet extends HttpServlet {
 		if(list.size() != 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bookmakingpopup.jsp");
 			request.setAttribute("list", list);
+			request.setAttribute("bookcode", bookcode);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

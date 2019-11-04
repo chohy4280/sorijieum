@@ -130,6 +130,19 @@ public class BookMakingService {
 		return result;
 	}
 	
+	//도서제작 제작시 BOOKMAKING TABLE MAKESTART SYSDATE 변경
+	public int insertBookMaking(String bookcode) {
+		Connection conn = getConnection();
+		int result = bmDao.insertBookMaking(conn, bookcode);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
 	//도서제작 페이지 입력 저장
 	public int inputInsert(BookMakingProgress bmp, int index) {
 		Connection conn = getConnection();
@@ -191,9 +204,11 @@ public class BookMakingService {
 	}
 	
 	//도서 제출을 못했는데 저장된 제작데이터가 있을 때 수정처리
-	public int deleteInput(String userid, String bookcode, int index, int bookpage) {
+	public int deleteInput(String userid, String bookcode, int index, int bookpage, int makepage) {
 		Connection conn = getConnection();
-		int result = bmDao.deleteInput(conn, userid, bookcode, index, bookpage);
+		int result = bmDao.deleteInput(conn, userid, bookcode, index, bookpage, makepage);
+		System.out.println("service result:" +result);
+		
 		if(result > 0)
 			commit(conn);
 		else

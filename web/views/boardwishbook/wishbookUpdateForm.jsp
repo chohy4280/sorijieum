@@ -47,9 +47,9 @@
 			<tr>
 				<th>출판일</th>
 				<% if(wb.getWishPublishDate() != null){ %>
-				<td width="80%"><div class="ui input"><input type="date" name="wishpublishdate" placeholder="YYYY/MM/DD" value="<%= wb.getWishPublishDate() %>" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" placeholder="YYYYMMDD" value="<%= wb.getWishPublishDate() %>" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 				<% }else{ %>
-				<td width="80%"><div class="ui input"><input type="date" name="wishpublishdate" placeholder="YYYY/MM/DD" value="" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" placeholder="YYYYMMDD" value="" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			<% } %>
 			</tr>
 			<tr>

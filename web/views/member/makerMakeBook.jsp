@@ -72,7 +72,7 @@ $(function(){
 		<td><input type="checkbox" class="chkbox" name="delChk" value="<%= mb.getBookcode() %>"></td>
 		<td class="bimg" id="<%= mb.getBookcode() %>">
 		<a href="/sori/bminfo?bookrimg=<%= mb.getBookrimg() %>&userid=<%= loginMember.getUserId() %>" style="color:#6d6d6d;">
-			<img src="<%= mb.getBookrimg() %>" alt="<%= mb.getBooktitle() %> 책의 표지">
+			<img src="/sori/resources/book_upfiles/<%= mb.getBookrimg() %>" alt="<%= mb.getBooktitle() %> 책의 표지">
 		</a>
 		</td>
 		<td style="text-align:left;">
