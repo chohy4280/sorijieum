@@ -12,7 +12,15 @@
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
 </head>
 <body>
-<br><br><br><br><br><br>
+<section class="my-section">
+
+<div class="my-content">
+		<a class="massive ui yellow label" style="font-size: 30px">공지사항</a>
+		<span style="color:#fbbe09; font-weight:600">│</span>
+		<span style="color:grey">소리지음 공지사항입니다</span>
+		<br><br>
+		</div>
+
 <form action="/sori/nwrite" method="post" enctype="multipart/form-data"> <!-- 파일을 첨부할때는 무조건 post 방식 -->
 <table class= "yu-noticeWrite" align="center" width="600" height="400" border="1" cellspacing= "0" cellpadding="5">
 <tr><th>제목</th><td><input type="text" name="title" size="50"></td></tr>
@@ -26,5 +34,6 @@
 </th></tr>
 </table>
 </form>
+</section>
 </body>
 </html>

@@ -1,7 +1,6 @@
-package notice.controller;
+package book.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import notice.model.service.NoticeService;
-import notice.model.vo.Notice;
+import book.model.service.BookService;
+import book.model.vo.Book;
+import book.model.vo.BookPlay;
 
 /**
- * Servlet implementation class NoticeSearchTypeServlet
+ * Servlet implementation class BookSearchTypeServlet
  */
-@WebServlet("/nosearch")
-public class NoticeSearchTypeServlet extends HttpServlet {
+@WebServlet("/bsearch")
+public class BookSearchTypeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeSearchTypeServlet() {
+    public BookSearchTypeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,42 +33,42 @@ public class NoticeSearchTypeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("utf-8");
 		
-		int currentPage = 1;
+		 int currentPage = 1;
+		   
+	       if(request.getParameter("page") !=null) {
+	    	   currentPage = Integer.parseInt(request.getParameter("page"));
+	       }
+	       
+		    String search = request.getParameter("search");
+			   String keyword = request.getParameter("keyword");
+
+	       int limit = 10;  
+	       
+	       BookService bservice = new BookService();
+	       int listCount = bservice.getListCountBookSearch(search, keyword);
+	       
+	       int maxPage = listCount/limit;
+	       if(listCount % limit > 0)
+		      maxPage++;
+	       
+	       int beginPage =(currentPage/limit) * limit +1;
+	       int endPage = beginPage + 9;
+	       if(endPage > maxPage)
+	    	   endPage = maxPage;
+	       
+	       int startRow = (currentPage * limit)-9;
+	       int endRow = currentPage * limit;
+		   
+		   ArrayList<BookPlay> bplist = bservice.selectBookTitleAuthor(search,keyword,startRow,endRow);
+	
+	
 		
-		if(request.getParameter("page") !=null) {
-			currentPage = Integer.parseInt(request.getParameter("page"));
-		}
-		
-		String search = request.getParameter("search");
-		String keyword = request.getParameter("keyword");
-		
-		
-		int limit = 5;
-		
-		NoticeService nservice = new NoticeService();
-		int listCount = nservice.getListCountNoticeSearch(search,keyword);
-		
-		int maxPage = listCount/limit;
-		if(listCount % limit > 0)
-			maxPage++;
-		
-		int beginPage = (currentPage/limit) * limit +1;
-		int endPage = beginPage + 4;
-		if(endPage > maxPage)
-			endPage = maxPage;
-		
-		int startnum = (currentPage * limit)-4;
-		int endnum = currentPage * limit;
-		
-		ArrayList<Notice> list = nservice.selectNoitceSearch(search,keyword,startnum, endnum);
-		ArrayList<Notice> toplist = nservice.selectTopFixed();
 		RequestDispatcher view = null;
-		if(list.size() >= 0) {
-			view = request.getRequestDispatcher("views/boardnotice/noticeListView.jsp");
-			request.setAttribute("list", list);
+		if(bplist.size()>=0) {
+			view = request.getRequestDispatcher("views/booksearch/bookSearchList.jsp");
+			request.setAttribute("bplist", bplist);
 			request.setAttribute("search", search);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
@@ -76,7 +76,6 @@ public class NoticeSearchTypeServlet extends HttpServlet {
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("listCount", listCount);
-			request.setAttribute("toplist",toplist);
 			view.forward(request, response);
 		}else {
 			view= request.getRequestDispatcher("views/common/error.jsp");
@@ -85,7 +84,6 @@ public class NoticeSearchTypeServlet extends HttpServlet {
 		}	
 		
 	}
-		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -17,13 +17,13 @@ import notice.model.vo.Notice;
  * Servlet implementation class NoticeListServletServlet
  */
 @WebServlet("/nlist")
-public class NoticeListServletServlet extends HttpServlet { //공지사항 전체 글 목록 보기
+public class NoticeListServlet extends HttpServlet { //공지사항 전체 글 목록 보기
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListServletServlet() {
+    public NoticeListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -67,10 +67,12 @@ public class NoticeListServletServlet extends HttpServlet { //공지사항 전�
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("listCount", listCount);
+			
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서 신청 전체 목록 조회 실패!");
+			request.setAttribute("message", "공지사항 전체 목록 조회 실패!");
 			view.forward(request, response);
 		}
 	}
