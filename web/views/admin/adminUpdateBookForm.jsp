@@ -5,9 +5,6 @@
 <%
 	BookDV book = (BookDV)request.getAttribute("book");
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
-	String searchtype = (String)request.getAttribute("searchtype");
-	String keyword = (String)request.getAttribute("keyword");
-	String makestatus = (String)request.getAttribute("makestatus");
 %>
 <!DOCTYPE html>
 <html>
@@ -95,17 +92,7 @@ function preview2(input) {
             <div class="lightgreyBox2" style="height: 800px; align: center;">
             <form action="/sori/bup.ad" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="page" id="page" value="<%=currentPage%>">
-            	<input type="hidden" name="searchtype" id="page" value="<%=searchtype%>">
-            	<input type="hidden" name="keyword" id="page" value="<%=keyword%>">
-            	<input type="hidden" name="makestatus" id="page" value="<%=makestatus%>">
             	<table class="addform">
-            	
-					<tr>
-						<th width="30%">도서코드</th>
-						<td><%=book.getBookCode() %><div class="ui input">
-						<input type="hidden" name="bookcode" id="bookcode" value="<%=book.getBookCode() %>"></div></td>
-					</tr>
-					
 					<tr>
 						<th width="30%">도서명</th>
 						<td><div class="ui input"><input type="text" name="booktitle" id="booktitle" value="<%=book.getBookTitle() %>" placeholder="책 제목 입력" required></div></td>
@@ -131,6 +118,12 @@ function preview2(input) {
 						<td><div class="ui input"><input type="text" name="bookpage" id="bookpage" value="<%=book.getBookPage() %>" placeholder="숫자만 입력" required></div></td>
 					</tr>
 
+					<tr>
+						<th width="30%">도서코드</th>
+						<td><%=book.getBookCode() %><div class="ui input">
+						<input type="hidden" name="bookcode" id="bookcode" value="<%=book.getBookCode() %>"></div></td>
+					</tr>
+					
 					<tr>
 						<th width="30%">책 소개</th>
 						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="50" rows="10" required><%=book.getBookInfo() %></textarea></div>
@@ -160,7 +153,7 @@ function preview2(input) {
 							<% } else { %>
 							현재 제작중
 							<% } %>
-						<input type="file" name="upbookotxt" accept=".txt"></td>
+						<input type="file" name="upbookotxt"></td>
 						<input type="hidden" name="upbookotxt" id="upbookotxt" value="<%=book.getBookotxt() %>">
 						<input type="hidden" name="upbookrtxt" id="upbookrtxt" value="<%=book.getBookrtxt() %>">
 					</tr>

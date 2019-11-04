@@ -12,19 +12,6 @@
 <head>
 <meta charset="UTF-8">
 <title>신청도서 상세 내역</title>
-<script type="text/javascript">
-
-	// 승인반려처리 확인용
-	function resultChk(){
-		var rtn;
-		rtn = confirm("해당 정보로 처리하시겠습니까?");
-		if(rtn == true){
-			document.wbresultForm.submit();
-		}else{
-			return false;
-		}
-	}	// resultChk() 끝...
-</script>
 </head>
 <body>
 <% if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)) { %>
@@ -80,7 +67,7 @@
 				</table>
 				<br><hr><br>
 				<a class="ui large teal label">관리자 처리</a><br><br>
-				<form action="/sori/wbresult.ad" method="post" name="wbresultForm">
+				<form action="/sori/wbresult.ad" method="post">
 					<input type="hidden" name="wishno" value="<%= wb.getWishNo() %>">
 					<input type="hidden" name="wishbookadmin" value="<%= loginMember.getUserId() %>">
 					<input type="hidden" name="page" value=<%=currentPage %>>
@@ -108,7 +95,7 @@
 					<br><br>
 					<center>
 						<div class="ui buttons">
-							<input type="submit" button class="ui positive button" onclick="return resultChk();" style="width:100px" value="저장"></button>
+							<input type="submit" button class="ui positive button"  style="width:100px" value="저장"></button>
 						 	<div class="or"></div>
 						  	<input type="reset" class="ui button" style="width:100px" value="초기화"></button>
 						</div>

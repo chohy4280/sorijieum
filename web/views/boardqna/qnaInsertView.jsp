@@ -8,44 +8,6 @@
 <%@ include file="/../inc/top.jsp" %>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
-<script type="text/javascript">
-
-//음성안내 ********************************
-<%if(loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2) {%>
-var audio = new Audio("/sori/resources/mp3/qna.mp3");	// 화면 접속 시 음성안내 자동재생
-window.onload = function(){
-   audio.play();
-   $("#title").focus();
-}  
-
-function write_content(){
-	audio.pause();
-	   audio = new Audio("/sori/resources/mp3/qnaContent.mp3");
-	   audio.play();
-}
-
-function qnaOK(){
-		audio.pause();
-	   audio = new Audio("/sori/resources/mp3/qnaFin.mp3");
-	   audio.play();
-
-	return true;
-}
-
-$(function(){
-	$("#title").keyup(function(){	// 처음 접속 후 1번 클릭한 뒤에
-		var keyV1 = $(this).val();
-		if(keyV1 == '9'){
-			location.href="/sori/index.jsp";
-		}
-	})
-
-});
-
-<%}%>
-
-	
-</script>
 </head>
 <body>
 
@@ -68,7 +30,7 @@ $(function(){
 				<td width="70%">
 					<div class="ui form">
 					<div class="field">
-					<textarea rows="1" name="title" id="title" placeholder="문의 제목 입력" autofocus="autofocus"  style="resize:none;" required></textarea>
+					<textarea rows="1" name="title" placeholder="문의 제목 입력" style="resize:none;" required></textarea>
 					</div>
 					</div>
 				</td>
@@ -77,7 +39,7 @@ $(function(){
 				<th>내용</th>
 				<td><div class="ui form">
 					  <div class="field">
-					    <textarea name="content" id="content" style="margin-top:0px;margin-bottom:0px;height:300px;resize:none;" onfocusin="write_content()" placeholder="문의 내용 입력" required></textarea>
+					    <textarea name="content" style="margin-top:0px;margin-bottom:0px;height:300px;resize:none;" placeholder="문의 내용 입력" required></textarea>
 					  </div>
 					  </div>
 				</td>
@@ -101,7 +63,7 @@ $(function(){
 	<!-- 작성자 제출,리셋 버튼 -->
 	<div align="center">
 		<div class="ui buttons">
-			<input type="submit" class="ui positive button" style="width:100px" onclick="return qnaOK();"></button>
+			<input type="submit" class="ui positive button" style="width:100px"></button>
 				<div class="or"></div>
 			<input type="reset" class="ui button" style="width:100px"></button>
 		</div>

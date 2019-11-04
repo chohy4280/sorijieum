@@ -55,9 +55,8 @@ $(function(){
 	
 	// 체크박스 다중삭제
 	function delBtn(){
-		var str = '정말로 해당 관리자들을 삭제하시겠습니까?\n강제탈퇴 사유를 입력해주세요.\n(삭제후 동일 아이디로 30일 간 관리자 추가 불가)';
-		var anwser = prompt(str, "");
-		if(anwser != null && anwser != ""){
+		var result = confirm('정말로 해당 관리자들을 삭제하시겠습니까?\n삭제후 동일 아이디로 30일 간 관리자 추가가 불가능합니다.');
+		if(result){
 			var lists = [];
 			$("input[name='RowCheck']:checked").each(function(i){
 				lists.push($(this).val());
@@ -66,18 +65,14 @@ $(function(){
 			$.ajax({
 				url:"/sori/mdel.ad",
 				type:"post",
-				data:{ lists : list, anwser : anwser },
+				data:{ lists : list },
 				success : function(data){
 					alert(data);
 					location.href="/sori/adlist.ad";
 				}
 			})
 			return false;
-		}else {
-			alert("강제탈퇴 사유를 입력하셔야 합니다.");
-			return;
-		}
-		}
+		}}
 </script>
 </head>
 <body>

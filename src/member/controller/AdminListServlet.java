@@ -60,12 +60,6 @@ public class AdminListServlet extends HttpServlet {
 		// 현재 페이지에 보여줄 시작페이지 수
 		// 1, 11, 21, 31,...
 		beginPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
-		
-		// 현재 페이지=limit와 같은 경우 비긴페이지에서 limit빼주기.
-		// 현재: 10, limit = 10   -> beginPage 11인데 - 10 해서 1페이지. (11페이지 못넘어가게)
-		if(currentPage % limit == 0) {
-	         beginPage -= limit;
-	      }
 
 		// 목록 아래쪽에 보여질 마지막 페이지 수(10, 20, 30, ...)
 		endPage = beginPage + 10 - 1;

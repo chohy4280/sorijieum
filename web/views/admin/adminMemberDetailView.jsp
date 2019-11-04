@@ -73,18 +73,6 @@ $(function(){
 	 
 	}); // document.ready...
 	
-	// 메모삭제 확인용
-	function delChk(){
-		var rtn;
-		var memono = $("#memodel").val();
-		rtn = confirm("해당 메모를 삭제하시겠습니까?");
-		if(rtn == true){
-			location.href='/sori/mmdel.ad?userid=<%= m.getUserId() %>&memono='+memono;
-		}else{
-			return false;
-		}
-	}
-	
 	// 정보수정 확인용
 	function upmemberBtn(){
 		var rtn;
@@ -98,28 +86,7 @@ $(function(){
 	
 	
 	// 회원 삭제
- 	function delBtn(){
-		var userid = "<%=m.getUserId() %>";
-		var str = '<%= m.getUserName() %>(<%= m.getUserId() %>)님을 강제탈퇴 처리하시겠습니까?\n강제탈퇴 사유를 입력해주세요.\n(강제탈퇴 처리 후 동일 아이디로 30일동안 재가입 불가)';
-		var anwser = prompt(str, "");
-		if(anwser != null && anwser != ""){
-			$.ajax({
-				url: "/sori/mdel.ad",
-				type: "post",
-				data: { userid : userid, anwser : anwser },
-				success : function(data){
-					alert(data);
-					location.href="/sori/mlist.ad?page="+<%=currentPage%>;
-				}
-			})
-		return false;
-	} else {
-		alert("강제탈퇴 사유를 입력하셔야 합니다.");
-		return;
-	}
-		} 
-	
-<%-- 	function delBtn(){
+	function delBtn(){
 		var userid = "<%=m.getUserId() %>";
 		var result = confirm('<%= m.getUserName() %>(<%= m.getUserId() %>)님을 강제탈퇴 처리하시겠습니까?\n강제탈퇴 처리 후 동일 아이디로 30일동안 재가입이 불가능합니다.');
 		if(result){
@@ -133,7 +100,7 @@ $(function(){
 				}
 			})
 		return false;
-	}} --%>
+	}}
 	
 
 	// 메모 내용 없이 저장 클릭하면
@@ -236,7 +203,7 @@ $(function(){
 						<th>가입일</th><td><%= m.getEnrollDate() %></td>
 					</tr>
 					<tr>
-						<th>전화번호</th><td><div class="ui input"><input type="text" name="phone" id="phone" value="<%= m.getPhone() %>" placeholder="숫자만 입력(-제외)" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" style="text-align: center" required></div></td>
+						<th>전화번호</th><td><div class="ui input"><input type="text" name="phone" id="phone" value="<%= m.getPhone() %>" placeholder="숫자만 입력(-제외)" style="text-align: center" required></div></td>
 						<th>이메일</th><td><div class="ui input"><input type="email" name="email" id="email" value="<%= m.getEmail() %>" placeholder="ex) sorijieum@gmail.com" style="text-align: center" required></div></td>
 					</tr>
 				</table>
@@ -311,8 +278,7 @@ $(function(){
 						<td><%= memo.getAdminMemo() %></td>
 						<td><%= memo.getAdminId() %></td>
 						<td><%= memo.getMemoDate() %></td>
-						<td><!-- <button class="mini ui grey button" onclick="location.href='/sori/mmdel.ad?userid=<%= m.getUserId() %>&memono=<%=memo.getMemoNo() %>'">삭제</button> -->
-							<button class="mini ui grey button" id="memodel" onclick="return delChk();" value="<%=memo.getMemoNo() %>">삭제</button></td>
+						<td><button class="mini ui grey button" onclick="location.href='/sori/mmdel.ad?userid=<%= m.getUserId() %>&memono=<%=memo.getMemoNo() %>'">삭제</button></td>
 					</tr>
 					<%} %>
 					</table><br>

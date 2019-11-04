@@ -31,7 +31,6 @@
 	function emptyAlert(){
 		alert("해당 내역이 없습니다.");
 	}
-	
 </script>
 </head>
 

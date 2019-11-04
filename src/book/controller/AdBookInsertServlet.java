@@ -72,8 +72,7 @@ public class AdBookInsertServlet extends HttpServlet {
 		
 		if(bimgOriginalFileName != null && bpdfOriginalFileName != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
-			//String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
-			String bimgRenameFileName = bookcode + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
+			String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
 			String bpdfRenameFileName = bookcode + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
 			
 			File bimgOriginFile = new File(savePath + "\\" + bimgOriginalFileName);
@@ -95,7 +94,7 @@ public class AdBookInsertServlet extends HttpServlet {
 					fin.close();
 					fout.close();
 					// 리네임 했으니 원본 삭제
-					bimgOriginFile.delete(); 
+					bimgOriginFile.delete();
 					
 			}else if(!bpdfOriginFile.renameTo(bpdfRenameFile)) {
 				int read = -1;
@@ -111,7 +110,7 @@ public class AdBookInsertServlet extends HttpServlet {
 					fin2.close();
 					fout2.close();
 					// 리네임 했으니 원본 삭제
-					bpdfOriginFile.delete(); 
+					bpdfOriginFile.delete();
 			}
 			
 			b.setBookRimg(bimgRenameFileName);
@@ -122,7 +121,7 @@ public class AdBookInsertServlet extends HttpServlet {
 		int result2 = new BookMakingService().insertBook(b);
 		int result3 = new BookMakingService().insertBookMakeCheck(b);
 		if(result1 > 0 && result2 > 0 && result3 > 0) {
-			response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page=1");
+			response.sendRedirect("/sori/blist.ad");
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서 추가 실패!");

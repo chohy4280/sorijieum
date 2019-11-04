@@ -30,55 +30,29 @@
       });
     <% } %>
     
-    
-    
-    // 음성안내 ***********************************
-    <%if(loginMember == null){%>  // 로그인멤버 X,
-    var audio = new Audio("/sori/resources/mp3/mainOpen.mp3");	// 화면 접속 시 음성안내 자동재생
-    window.onload = function(){
-       audio.play();
-       $("#mainOpen").focus();
-    }   
-    <%}else if(loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2 ) {%> // 이용(대기)자 일때
-    var audio = new Audio("/sori/resources/mp3/loginMain.mp3");	// 화면 접속 시 음성안내 자동재생
-    window.onload = function(){
-       audio.play();
-       $("#loginMain").focus();
-    }   
-    <%}%>
-
-
 		$("#mainOpen").keyup(function(){	// 메인 처음 접속시 안내 멘트에 대한 값 입력 창
 			var keyV = $(this).val();
 			var audio1 = new Audio("/sori/resources/mp3/mainOpen1.mp3");
-			if(keyV == '1'){				// 처음 접속하셨다면 (1번 클릭)
+			if(keyV == '1'){				// 처음 접속 시(1번 클릭)
 				audio1.play();
 				$("#mainOpen1").focus();
-			}else if(keyV == '2'){			// 로그인하시려면(2번 클릭)
+				
+				
+			}else if(keyV == '2'){			// 로그인 시
 				location.href="/sori/views/member/memberLoginView.jsp";
-			}else{														// 잘못누른경우
-				   audio.pause();
-	   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
-	   			   audio.play();
-	   			$("#mainOpen").val('');
-	   		   }
+			}
 		})
 		
-		$("#mainOpen1").keyup(function(){	// 처음 접속 후 1번 입력(사이트소개)
+		$("#mainOpen1").keyup(function(){	// 처음 접속 후 1번 클릭한 뒤에
 			var keyV2 = $(this).val();
 			if(keyV2 == '1'){
 				location.href="/sori/views/sorijieumIntro.jsp";
-			}else if(keyV2 == '2'){			// 처음 접속 후 2번 입력(회원가입)
+			}else if(keyV2 == '2'){
 				location.href="/sori/views/member/memberEnrollAgree.jsp";
-			}else{														// 잘못누른경우
-				   audio.pause();
-	   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
-	   			   audio.play();
-	   			$("#mainOpen1").val('');
-	   		   }
+			}
 		})
 		
-		$("#loginMain").keyup(function(){	// 로그인 후의 메뉴 이동
+		$("#loginMain").keyup(function(){	// 로그인 후
 			var keyV3 = $(this).val();
 			if(keyV3 == '1'){		// 도서검색
 				location.href="/sori/blist";
@@ -100,12 +74,7 @@
 				$("#loginMain").val("");
 			}else if (keyV3 == '0'){	// 다시듣기
 				location.reload();
-			}else{														// 잘못누른경우
-				   audio.pause();
-	   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
-	   			   audio.play();
-	   			$("#loginMain").val('');
-	   		   }
+			}
 		})
 	})
 
@@ -239,7 +208,7 @@
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/nlist'" src="/sori/resources/images/공지사항.png">
+      	<img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png">
     </div>
   </div>
   <div class="card">
@@ -259,10 +228,12 @@
 <!-- 음성안내 관련 섹션 -->
 <!-- 소리지음에 오신 것을 환영합니다. 처음 이용하신다면 1번 아니면 2번을 눌러주세요 -->
 <%if(loginMember == null) {%>
-
+<audio src="/sori/resources/mp3/mainOpen.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/mainOpen.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 <input type="text" id="mainOpen" autofocus="autofocus"> 
 <input type="text" id="mainOpen1">
-<%}else if(loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2){ %>
+<audio src="/sori/resources/mp3/mainOpen1.mp3" id="mainOpen1"><embed src="/sori/resources/mp3/mainOpen1.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
+<%}else{ %>
+<audio src="/sori/resources/mp3/loginMain.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/loginMain.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 <input type="text" id="loginMain" autofocus="autofocus"> 
 <%} %>
 </body>

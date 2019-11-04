@@ -32,13 +32,12 @@ public class AdminDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 삭제용
-		/*request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
 		
 		String userid = request.getParameter("userid");
-		String anwser = request.getParameter("anwser");
 		
 		int result = new MemberService().deleteMember(userid);
-		int result2 = new QuitService().insertMember(userid, anwser);
+		int result2 = new QuitService().insertMember(userid);
 		
 		if(result > 0 && result2 > 0) {
 			response.sendRedirect("/sori/adlist.ad");
@@ -46,7 +45,7 @@ public class AdminDeleteServlet extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "관리자 삭제 실패!");
 			view.forward(request, response);
-		}*/
+		}
 	}
 
 	/**
