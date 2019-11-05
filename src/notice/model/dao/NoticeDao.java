@@ -34,6 +34,7 @@ public class NoticeDao {
 		return result;
 	}
 
+	// 공지사항 전체 조회 
 	public ArrayList<Notice> selectAll(Connection conn, int startnum, int endnum) {
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		PreparedStatement pstmt = null;
@@ -41,8 +42,8 @@ public class NoticeDao {
 		
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE , NOTICEWRITER, "
 				+ " NOTICECONTENT, NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP " + 
-				"FROM (SELECT * FROM NOTICE where noticetop = 'N' " + 
-				"ORDER BY NOTICEDATE DESC, noticeno desc)) " + 
+				"FROM (SELECT * FROM NOTICE " + 
+				"ORDER BY NOTICEDATE DESC)) " + 
 				"WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		try {
@@ -76,7 +77,7 @@ public class NoticeDao {
 		return list;
 	}
 
-
+   //공지사항 글 추가 
 	public int insertNotice(Connection conn, Notice notice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -100,10 +101,11 @@ public class NoticeDao {
 		return result;
 	}
 
-	public Notice selectOne(Connection conn, int noticeno) { //(한개만 조회)
+	 //공지사항 한개만 조회 
+	public Notice selectOne(Connection conn, int noticeno) { 
 		  Notice notice = null;
 		  PreparedStatement pstmt = null;
-	      ResultSet rset = null; //select qeury문
+	      ResultSet rset = null; 
 	      
 	      String query = "select * from notice where noticeno = " + noticeno;
 	      
@@ -111,7 +113,7 @@ public class NoticeDao {
 	    	  pstmt = conn.prepareStatement(query);
 	    	  rset = pstmt.executeQuery();
 	    	  
-	    	  if(rset.next()) {//if로 한칸만 내려서 한 생만 조회해라
+	    	  if(rset.next()) {//if로 한칸만 내려서 한 행만 조회해라
 	    		  notice = new Notice();
 	    		  //안에 파랑색 글자는 DB에 있는 column_name하고 일치 해야 한다.
 	    		  notice.setNoticeNo(rset.getInt("noticeno"));
@@ -141,7 +143,7 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		
 		String query = "update notice set noticetitle = ?, noticecontent = ?, "
-				+ "noticeofile = ?, noticerfile= ? " 
+				+ "noticeofile = ?, noticerfile= ?, noticedate = sysdate " 
                 + "where noticeno = ?";		
 				try {
 			pstmt = conn.prepareStatement(query);
@@ -151,7 +153,7 @@ public class NoticeDao {
 			pstmt.setString(4, notice.getNoticeRfile());
 			pstmt.setInt(5, notice.getNoticeNo());
 			
-			result = pstmt.executeUpdate();   //int result = 0;
+			result = pstmt.executeUpdate(); 
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -162,7 +164,7 @@ public class NoticeDao {
 	}
 
 	  //공지사항 삭제
-	public int deleteNotice(Connection conn, int noticeNo) { //공지사항 삭제하기
+	public int deleteNotice(Connection conn, int noticeNo) { 
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -184,7 +186,7 @@ public class NoticeDao {
 	
 	
    //공지사항 조회수 증가
-	public int updateReadCount(Connection conn, int noticeno) { //조회수 1증가
+	public int updateReadCount(Connection conn, int noticeno) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -206,12 +208,12 @@ public class NoticeDao {
 	}
 
 	 //공지사항 상단 고정
-	/*public ArrayList<Notice> selectTopFixed(Connection conn) {
+	public ArrayList<Notice> selectTopFixed(Connection conn) {
 		ArrayList<Notice> toplist = new ArrayList<Notice>();
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from notice where noticetop = 'Y' ORDER BY NOTICEDATE DESC, noticeno desc";
+		String query = "select * from notice where noticetop = 'Y'";
 		
 		  
 	      try {
@@ -220,9 +222,9 @@ public class NoticeDao {
 	    	  
 	    	 
 	    	  
-	    	  while(rset.next()) {//if로 한칸만 내려서 한 생만 조회해라
+	    	  while(rset.next()) {
 	    		  Notice notice = new Notice();
-	    		  //안에 파랑색 글자는 DB에 있는 column_name하고 일치 해야 한다.
+	    		  
 	    		  notice.setNoticeNo(rset.getInt("noticeno"));
 	    		  notice.setNoticeTitle(rset.getString("noticetitle"));
 	    		  notice.setNoticeWriter(rset.getString("noticewriter"));
@@ -244,9 +246,9 @@ public class NoticeDao {
 		
 		return toplist;
 	}
-*/
-	 //공지사항 검색
-	public ArrayList<Notice> selectNoticeSearch(Connection conn, String keyword, int startnum, int endnum) {
+
+	//공지사항 검색
+	public ArrayList<Notice> selectNoticeSearch(Connection conn, String search, String keyword, int startnum, int endnum) {
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -254,7 +256,7 @@ public class NoticeDao {
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, NOTICEWRITER,NOTICECONTENT,"
 				       + " NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP"+
 		                " FROM(SELECT * FROM NOTICE" +
-				         " WHERE noticetitle LIKE '%" + keyword + "%' " + 
+				         " WHERE " + search + " LIKE '%" + keyword + "%' " + 
 		                 " ORDER BY NOTICENO))" + " WHERE RNUM >= ? AND RNUM <= ?";
 		
 		try {
@@ -285,17 +287,19 @@ public class NoticeDao {
 		return list;
 	}
 
-	public int getListCountNoticeSearch(Connection conn, String keyword) {
+	public int getListCountNoticeSearch(Connection conn, String search, String keyword) {
 		int listCount = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
 		String query = null;
 			
 		    if(keyword != null) {
-				query =  "select count(*) from (select * from notice) where noticetitle like '%" + keyword + "%'";
-		    }else {
-		    	query = "select count(*) from notice";
-		    }
+			if(search.equals("noticetitle")) 
+				query =  "select count(*) from (select * from notice) where " + search + " like '%" + keyword + "%'";
+		
+			if(search.equals("noticewriter"))	
+				query = "select count(*) from (select * from notice) where " + search + " like '%" + keyword + "%'";
+		    } 
 		
 		    try {
 				stmt = conn.createStatement();

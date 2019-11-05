@@ -42,13 +42,14 @@ public class NoticeSearchTypeServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		
+		String search = request.getParameter("search");
 		String keyword = request.getParameter("keyword");
 		
 		
 		int limit = 5;
 		
 		NoticeService nservice = new NoticeService();
-		int listCount = nservice.getListCountNoticeSearch(keyword);
+		int listCount = nservice.getListCountNoticeSearch(search,keyword);
 		
 		int maxPage = listCount/limit;
 		if(listCount % limit > 0)
@@ -62,23 +63,24 @@ public class NoticeSearchTypeServlet extends HttpServlet {
 		int startnum = (currentPage * limit)-4;
 		int endnum = currentPage * limit;
 		
-		ArrayList<Notice> list = nservice.selectNoitceSearch(keyword,startnum, endnum);
-		//ArrayList<Notice> toplist = nservice.selectTopFixed();
+		ArrayList<Notice> list = nservice.selectNoitceSearch(search,keyword,startnum, endnum);
+		ArrayList<Notice> toplist = nservice.selectTopFixed();
 		RequestDispatcher view = null;
 		if(list.size() >= 0) {
 			view = request.getRequestDispatcher("views/boardnotice/noticeListView.jsp");
 			request.setAttribute("list", list);
+			request.setAttribute("search", search);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("beginPage", beginPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("listCount", listCount);
-			//request.setAttribute("toplist",toplist);
+			request.setAttribute("toplist",toplist);
 			view.forward(request, response);
 		}else {
 			view= request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "'" + keyword + "' 검색조회 실패");
+			request.setAttribute("message", search + "검색조회 실패");
 			view.forward(request, response);
 		}	
 		

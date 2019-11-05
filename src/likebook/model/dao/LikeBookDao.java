@@ -174,5 +174,52 @@ public class LikeBookDao {
 		
 		return listCount;
 	}
+	
+	   //관심도서 추가
+		public int addLikeBook(Connection conn, String userId, String bookcode) {
+			int result = 0;
+			PreparedStatement pstmt = null;
 
-}
+			String query = "insert into likebook values(?, ?, sysdate)";
+
+			try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, bookcode);
+
+			result=pstmt.executeUpdate();
+
+			System.out.println("dao : " + query);
+			} catch (SQLException e) {
+			e.printStackTrace();
+			}finally {
+			close(pstmt);
+			}
+			return result;
+			}
+
+		//관심도서 삭제
+		public int addDeleteLikeBook(Connection conn, String userId, String bookcode) {
+				int result = 0;
+				PreparedStatement pstmt = null;
+
+				String query = "delete likebook where bookcode = ? and userId= ?";
+
+				try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				pstmt.setString(2, userId);
+
+
+				result=pstmt.executeUpdate();
+
+				System.out.println("dao : " + query);
+				} catch (SQLException e) {
+				e.printStackTrace();
+				}finally {
+				close(pstmt);
+				} 
+				return result;
+				}
+
+	}

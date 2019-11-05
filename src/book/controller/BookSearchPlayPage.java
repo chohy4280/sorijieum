@@ -39,41 +39,35 @@ public class BookSearchPlayPage extends HttpServlet {
 		// 버튼 누르면 mybook에 userid랑 bookcode랑 readpage=1 저장되게 한다. 
 		//  + sdate rdate sysdate 
 		request.setCharacterEncoding("UTF-8");
-		
+
 		String bookcode = request.getParameter("bookcode");
 		String userId = request.getParameter("userId");
-	    
-	    
-	    
+	    int rpage = Integer.parseInt(request.getParameter("rpage"));
 	   
-		MyBookService myservice = new MyBookService();
-		MyBook mb = myservice.selectBookPage(userId,bookcode); //마이북에 있는 확인용
-		int readpage = 0;
+		System.out.println("controller " + userId + bookcode + rpage);
 		
-		BookService bservice = new BookService();
-		ArrayList<BookPlay> bplist = new ArrayList<BookPlay>();
-		if (mb == null) {
-			myservice.insertReadPage(userId, bookcode);
-			bservice.getselectOneBookPlay(bookcode,userId,readpage);
-			
-		}else {
-			myservice.updateReadPage(userId, bookcode);
-			bservice.getselectOneBookPlay(bookcode,userId,readpage);
-		}
-	
-		RequestDispatcher view = null;
-		if(bplist.size() >= 0) {
+		
+	    MyBookService myservice = new MyBookService();
+	    MyBook mbb = myservice.selectOneMyBookUser(bookcode, userId);
+		int result1 = myservice.insertReadPage(userId, bookcode, mbb, rpage);   //mybook에 아이디, 도서코드, readpage = 1로 추가
+	    int result2 = myservice.updateReadPage(userId, bookcode, mbb, rpage); //mybook에 값이 있으면 rdate를 오늘날짜로 변경
+	     BookService bservice = new BookService();
+	      BookPlay bp = bservice.getselectOneBookPlay(bookcode, rpage);
+	   	
+	      RequestDispatcher view = null;
+		
+		if(result1 > 0  || result2 > 0 && bp != null && mbb!=null) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchPlay.jsp");
-			
-			request.setAttribute("bplist", bplist);
 			request.setAttribute("bookcode", bookcode);
 			request.setAttribute("userId", userId);
-			view.forward(request, response);
-		}else {
+			request.setAttribute("rpage", rpage);
+			request.setAttribute("bp", bp);
+		}else{
 			view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "도서재생 페이지로 이동 실패!");
-		    view.forward(request, response);
+			request.setAttribute("message", "도서불러오기 실패");
 		}
+		
+		view.forward(request, response);
 	}
 
 	/**

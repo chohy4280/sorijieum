@@ -35,9 +35,6 @@ public class AdWishbookDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		int currentPage = Integer.parseInt(request.getParameter("page"));
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
-		String searchtype = request.getParameter("searchtype");
-		String keyword = request.getParameter("keyword");
-		String wishstatus = request.getParameter("wishstatus");
 		
 		WishBook wb = new WishBookService().selectWishBookOneAdmin(wishno);
 		
@@ -47,9 +44,6 @@ public class AdWishbookDetailServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/admin/adminWishBookDetailView.jsp");
 			request.setAttribute("wb", wb);
 			request.setAttribute("currentPage", currentPage);
-			request.setAttribute("searchtype", searchtype);
-			request.setAttribute("keyword", keyword);
-			request.setAttribute("wishstatus", wishstatus);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "신청도서 상세보기 실패!");

@@ -36,6 +36,7 @@ public class UserLikeBookSearchServlet extends HttpServlet {
 		//이용자 관심도서 검색
 		request.setCharacterEncoding("UTF-8");
 		String userid = request.getParameter("userid");
+		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
@@ -44,7 +45,7 @@ public class UserLikeBookSearchServlet extends HttpServlet {
 		int limit = 3;  //한 페이지에 출력할 목록 갯수
 		
 		LikeBookService lbservice = new LikeBookService();
-		ArrayList<LikeBookLB> lblist = lbservice.searchLikeBookList(userid,keyword);
+		ArrayList<LikeBookLB> lblist = lbservice.searchLikeBookList(userid,type,keyword);
 		int listCount = lblist.size();
 		//총 페이지수 계산
 		int maxPage = listCount / limit;
@@ -76,6 +77,7 @@ public class UserLikeBookSearchServlet extends HttpServlet {
 		if(pageList.size()>=0) {
 			view = request.getRequestDispatcher("views/member/userLikeBook.jsp");
 			request.setAttribute("lblist", pageList);
+			request.setAttribute("type", type);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);

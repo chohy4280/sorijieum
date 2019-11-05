@@ -35,14 +35,12 @@ public class QnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Q&A 리스트 출력용 컨트롤러
-		
-		
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		int limit = 10;  //한 페이지에 출력할 목록 갯수
-		
+
 		QnaService qservice = new QnaService();
 		int listCount = qservice.getListCount(); //테이블 전체 목록 개수 조회
 

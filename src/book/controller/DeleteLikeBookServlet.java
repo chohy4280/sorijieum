@@ -1,28 +1,25 @@
-package qna.controller;
+package book.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import qna.model.service.QnaService;
-import qnacomment.model.service.QnaCommentService;
+import likebook.model.service.LikeBookService;
 
 /**
- * Servlet implementation class QnaDeleteServlet
+ * Servlet implementation class DeleteLikeBookServlet
  */
-@WebServlet("/qdelete")
-public class QnaDeleteServlet extends HttpServlet {
+@WebServlet("/dlike")
+public class DeleteLikeBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaDeleteServlet() {
+    public DeleteLikeBookServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +28,18 @@ public class QnaDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Q&A 글 삭제 컨트롤러
-		int qnano = Integer.parseInt(request.getParameter("qnano"));
+		//관심도서 삭제
+		request.setCharacterEncoding("utf-8");
+		    
 		
-		int result = new QnaService().deleteQna(qnano);
+		    String userId = request.getParameter("userid");
+			String bookcode = request.getParameter("bookcode");
 		
-		if(result>0) {			
-			response.sendRedirect("/sori/qlist");
+			int result = new LikeBookService().addDeleteLikeBook(userId, bookcode);
+			if(result>0) {
+				response.getWriter().append("ok"); //메세지를 반환
+			}
 		}
-		else {
-			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", "문의글 삭제 실패");
-			view.forward(request, response);
-		}
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

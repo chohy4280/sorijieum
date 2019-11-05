@@ -33,10 +33,6 @@ public class wishbookResultServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 신청도서 승인반려처리용
 		request.setCharacterEncoding("utf-8");
-		String searchtype = request.getParameter("searchtype");
-		String keyword = request.getParameter("keyword");
-		String wishstatus = request.getParameter("wishstatuss");
-		
 		int currentPage = Integer.parseInt(request.getParameter("page"));
 		WishBook wb = new WishBook();
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
@@ -48,11 +44,7 @@ public class wishbookResultServlet extends HttpServlet {
 		int result = new WishBookService().updatetWishBookResult(wb);
 
 		if(result > 0) {
-			if(searchtype != null || keyword != null || wishstatus != null)
-				response.sendRedirect("/sori/wbdetail.ad?wishno=" + wishno+"&page="+currentPage+"&searchtype="+searchtype+"&keyword="+keyword+"&wishstatus="+wishstatus);
-			else 
-				response.sendRedirect("/sori/wbdetail.ad?wishno=" + wishno+"&page="+currentPage);
-			
+			response.sendRedirect("/sori/wbdetail.ad?wishno=" + wishno+"&page="+currentPage);
 			request.setAttribute("wb", wb);
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
