@@ -657,7 +657,7 @@ public class BookDao {
 			int result = 0;
 			PreparedStatement pstmt = null;
 			
-			String query = "insert into likebook values(?, ?)";
+			String query = "insert into likebook values(?, ?, sysdate)";
 			
 			try {
 				pstmt = conn.prepareStatement(query);

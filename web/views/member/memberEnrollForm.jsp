@@ -66,10 +66,10 @@ $(function(){
       }
       else{
          $("#pwdspan").html("사용 가능한 암호입니다.");
-         focus_userpwd2();
          pwTF = "T";
+         focus_userpwd2();
       }
-      return false;
+     
    });
    
    $("#userpwd2").keyup(function(){
@@ -129,7 +129,7 @@ $(function(){
       if(idTF=="T" && pwTF=="T" && pwEq=="T")
          return true;
       else{
-         alert("입력한 내용을 다시 확인해주세요.");
+         alert("입력한 내용을 다시 확인해주세요.+idTF:"+idTF+",pwTF:"+pwTF+",pwEq:"+pwEq);
          return false;
       }
    });

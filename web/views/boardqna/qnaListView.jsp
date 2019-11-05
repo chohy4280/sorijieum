@@ -10,6 +10,9 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int topval = (Integer)request.getAttribute("topval");
+	int topOk = 1;
+	int topNo = 0;
+	int topSend = 0;
 %>    
 <!DOCTYPE html>
 <html>
@@ -18,7 +21,13 @@
 <title>Q&A 목록</title>
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
-$(function(){
+$(function(){	
+	<% System.out.println("view의 topval: "+topval); %>
+	<% if(topval == 1){ %>
+		$(".toplist").css("display","none");
+		$("input:checkbox[id='topchk']").prop("checked",true);
+	<% } %>
+	
 	//공지 숨기기
 	$("input:checkbox[id='topchk']").on("change",function(){
 		if($("input:checkbox[id='topchk']").is(":checked") == true){
@@ -28,12 +37,7 @@ $(function(){
 			$(".toplist").css("display","");
 		}
 	});
-	
-	<% if(topval == 1){ %>
-		$("input:checkbox[id='topchk']").prop("checked",true);
-	<% } %>
-	
-	
+
 	<% if(list.size() == 0){ %>
 		$("#pagebox").css("display","none");
 	<% } %>
@@ -41,12 +45,7 @@ $(function(){
 
 function topValSet(){
 	if($("input:checkbox[id='topchk']").is(":checked") == true){
-		<% topval = 1;
-			System.out.println("topval true: "+topval); %>
-	}
-	else if($("input:checkbox[id='topchk']").is(":checked") == false){
-		<% topval = 0;
-		System.out.println("topval false: "+topval); %>
+		topSend = 1;
 	}
 }
 </script>
