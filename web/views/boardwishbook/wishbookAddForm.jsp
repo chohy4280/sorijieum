@@ -20,6 +20,21 @@
 			var audio = new Audio("/sori/resources/mp3/wishbookPub.mp3");
 			audio.play();
 		});
+		
+		$("#wishpublishdate").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishpublishdate.mp3");
+			audio.play();
+		});
+		
+		$("#submit").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishsubmit.mp3");
+			audio.play();
+			window.onkeyup = function(){
+				if(event.keyCode == 57){ 
+					location.href="/sori/wblist";
+				}
+			}
+		});
 	});
 </script>
 </head>
@@ -50,14 +65,14 @@
 			</tr>
 			<tr>
 				<th>출판일</th>
-				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" placeholder="YYYYMMDD" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
+				<td width="80%"><div class="ui input"><input type="text" name="wishpublishdate" id="wishpublishdate" placeholder="YYYYMMDD" style="width:450px;text-align:center;font-family:'S-Core Dream 5';"></div></td>
 			</tr>
 		</table>
 		<input type="hidden" name="wishwriter" value="<%= loginMember.getUserId() %>">	<!-- 신청자 아이디 -->
 	<!-- 관리자/작성자 수정삭제 버튼 -->
 	<div align="right">
 		<div class="ui buttons">
-			<input type="submit" class="ui positive button" value="신청" style="width:80px"></button>
+			<input type="submit" class="ui positive button" id="submit" value="신청" style="width:80px"></button>
 				<div class="or"></div>
 			<input type="reset" class="ui button" value="취소" style="width:80px">
 		</div>

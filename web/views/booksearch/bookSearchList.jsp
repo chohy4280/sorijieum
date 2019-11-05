@@ -16,43 +16,52 @@
 <meta charset="UTF-8">
 <title>도서검색</title>
  <%@include file="/../inc/top.jsp"%>
-<script type="text/javascript" src = "resources/js/jquery-3.4.1.min.js"></script>
+ <script src="/sori/resources/js/sorijieum_tts.js"></script>
 <script type ="text/javascript">
-$('.ui.dropdown').dropdown({direction:'auto'});
-
 $(function(){
 	
-	$.ajax({
-		url : "/sori/btop5",
-		type : "get",
-		dataType : "json",
-		success : function(data){
-			var jsonStr = JSON.stringify(data);
-			
-			var json = JSON.parse(jsonStr);
-			
-			var values = ""; //출력할 값을 문자열로 만들어 준다
-			for(var i in json.list){
-				<% if(loginMember != null){ %>
-				values += "<tr><td>" + json.list[i].bcode + 
-					"</td><td><a href='/sori/bsdetail?bookcode=" + json.list[i].bcode + "&page=1'>" + 
-					decodeURIComponent(json.list[i].btitle).replace(/\+/gi, " ") 
-					+ "</a></td><td>" + json.list[i].bviews + "</td></tr>";
-				<% }else{ %>	
-				values += "<tr><td>" + json.list[i].bcode + "</td><td>" + 
-				decodeURIComponent(json.list[i].btitle).replace(/\+/gi, " ") 
-				+ "</td><td>" + json.list[i].bviews + "</td></tr>";
-				<% } %>
-			}
-			
-			//body의 table 에 출력 적용
-			$("#recentTop").html($("#recentTop").html() + values);
-		},
-		error : function(jqXHR, textStatus, errorThrown){
-			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
-		}
-	});  
-	</script>
+	/* $("#booktitle").focus(function(){
+		var audio = new Audio("/sori/resources/mp3/booksearchtitle.mp3");
+		audio.play();
+	});
+	
+	$("#author").focus(function(){
+		var audio = new Audio("/sori/resources/mp3/booksearchauthor.mp3");
+		audio.play();
+	}); */
+	
+});
+
+var audio = new Audio("/sori/resources/mp3/booksearchmain.mp3");
+window.onload = function(){
+   audio.play();
+} 
+window.onkeyup = function(){
+	if(event.keyCode == 27){ //음성멈춤
+		audio.pause();
+	    audio.currentTime = 0;
+	}
+	else if(event.keyCode == 49 || event.keyCode == 97){ //도서명 검색 
+		audio.pause();
+		$("#booktitle").focus();
+		var audio = new Audio("/sori/resources/mp3/booksearchtitle.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 50 || event.keyCode == 98){ //저자명 검색 
+		audio.pause();
+		$("#author").focus();
+		var audio = new Audio("/sori/resources/mp3/booksearchauthor.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 51 || event.keyCode == 99){ //신청글 삭제
+		audio.pause();
+		location.href="/sori/index.jsp";
+	}
+	else if(event.keyCode == 48 || event.keyCode == 96){ //다시듣기
+		audio.play();
+	}
+}
+</script>
 <!-- CUSTOM CSS -->
 	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
 
@@ -73,8 +82,8 @@ $(function(){
 <div class="SearchBox" style="height: 50px;/*  border: 2px solid red */;">
 <form action="/sori/bsearch" method="post">
 <select name="search"  style="border-radius:5px; width:100px; height:40px">
-<option  value="booktitle">도서명</option>
-<option value="author">저자명</option>
+<option id="booktitle" value="booktitle">도서명</option>
+<option id="author" value="author">저자명</option>
 </select>
 <input type="search" name="keyword"  placeholder="내용입력" style="border-radius:5px; width:200px; height:40px;" >
 <input type="submit" value="검색" style="border-radius:5px; width:100px; height:40px;">

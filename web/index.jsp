@@ -52,6 +52,7 @@
 			}
 		});
 		
+		<% if(typeNumber > 1){ %>
 		$("#loginMain").keyup(function(){	// 로그인 후
 			var keyV3 = $(this).val();
 			if(keyV3 == '1'){		// 도서검색
@@ -76,6 +77,32 @@
 				location.reload();
 			}
 		});
+		<% }else if(typeNumber == 1){ %> //이용대기자
+		$("#loginMain").keyup(function(){	// 로그인 후
+			var keyV3 = $(this).val();
+			if(keyV3 == '1'){		// 마이페이지
+				location.href="/sori/views/member/memberMyPage.jsp";
+			}else if (keyV3 == '2'){	//공지사항
+				location.href="/sori/nlist";
+			}else if (keyV3 == '3'){	// 문의사항
+				location.href="/sori/views/boardqna/qnaInsertView.jsp";
+			}else if (keyV3 == '4'){	// 자주묻는질문
+				location.href="/sori/views/boardfaq/faqListView.jsp";
+			}else if (keyV3 == '5'){	// 사이트소개
+				location.href="/sori/views/sorijieumIntro.jsp";
+			}else if (keyV3 == '6'){	// 없음(값 지우기)
+				$("#loginMain").val("");
+			}else if (keyV3 == '7'){	// 없음(값 지우기)
+				$("#loginMain").val("");
+			}else if (keyV3 == '8'){	// 없음(값 지우기)
+				$("#loginMain").val("");
+			}else if (keyV3 == '9'){	// 없음(값 지우기)
+				$("#loginMain").val("");
+			}else if (keyV3 == '0'){	// 다시듣기
+				location.reload();
+			}
+		});
+		<% } %>
 	});
 
 </script>
@@ -189,7 +216,7 @@
       	<img onclick="location.href='/sori/views/sorijieumIntro.jsp'" src="/sori/resources/images/사이트소개.png" alt="사이트소개">
     </div>
   </div>
-  <% if(loginMember != null){ %>
+  <% if(loginMember != null && loginMember.getTypeNumber() > 1){ %>
   <div class="card">
     <div class="image">
       <img onclick="location.href='/sori/blist'" src="/sori/resources/images/도서검색.png" alt="도서검색">
@@ -217,7 +244,7 @@
   <% } %>
 </div>
 <div class="ui four cards" style="margin:0 5% 0 5%">
-<% if(loginMember != null){ %>
+<% if(loginMember != null && loginMember.getTypeNumber() > 1){ %>
   <div class="card">
     <div class="image">
       <img onclick="location.href='/sori/wblist'" src="/sori/resources/images/도서신청.png" alt="도서신청">
@@ -232,7 +259,7 @@
   <% } %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png" alt="공지사항">
+      	<img onclick="location.href='/sori/nlist'" src="/sori/resources/images/공지사항.png" alt="공지사항">
     </div>
   </div>
   <% if(loginMember != null){ %>
@@ -264,9 +291,12 @@
 <input type="text" id="mainOpen" autofocus="autofocus"> 
 <input type="text" id="mainOpen1">
 <audio src="/sori/resources/mp3/mainOpen1.mp3" id="mainOpen1"><embed src="/sori/resources/mp3/mainOpen1.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
-<%}else{ %>
+<%}else if (typeNumber > 1){ %>
 <audio src="/sori/resources/mp3/loginMain.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/loginMain.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 <input type="text" id="loginMain" autofocus="autofocus"> 
-<%} %>
+<%}else if (typeNumber == 1){ %>
+<audio src="/sori/resources/mp3/loginMain2.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/loginMain2.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
+<input type="text" id="loginMain" autofocus="autofocus"> 
+<% } %>
 </body>
 </html>
