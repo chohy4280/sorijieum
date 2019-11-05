@@ -3,7 +3,7 @@
     <%
     Member mb = (Member)request.getAttribute("mb");
     Notice notice = (Notice)request.getAttribute("notice");
-   
+    int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
     %>
 <!DOCTYPE html>
 <html>
@@ -30,16 +30,34 @@
 		<br>
 	<!-- 공지사항 수정 시작 -->
 	<form action = "/sori/nomidi" method = "post" enctype= "multipart/form-data">
+<<<<<<< HEAD
 <input type= "hidden" name="noticeno" value="<%= notice.getNoticeNo() %>"> <!-- 값은 전송은 가지만 안보이게 한다. -->
 <input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
 <input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
 		<!-- 공지사항 수정 테이블 -->
+=======
+	<input type= "hidden" name="noticeno" value="<%= notice.getNoticeNo() %>"> <!-- 값은 전송은 가지만 안보이게 한다. -->
+	<input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
+	<input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
+	<input type="hidden" name="page" value="<%=currentPage%>">
+>>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum
 		<table class="my-listTable" align="center">
+<<<<<<< HEAD
 			<tr><th colspan="4" style="height:60px; font-size: 25px;"><input type="text" name = "noticetitle" placeholder="공지사항 제목" 
 				value="<%= notice.getNoticeTitle() %>" style="width:700px;"></th></tr>
 			<tr style="height:32px; font-size: 17px;">
 				<td><%= loginMember.getUserId() %></td>
 				<td><input type="date" name="noticedate" placeholder= "YYYY/MM/DD" value="<%= notice.getNoticeDate() %>"></td>
+=======
+			<tr>
+			
+				<th colspan="4" style="height:60px; font-size: 25px;"><input type="text" name = "noticetitle" placeholder="공지사항 제목" 
+				value="<%= notice.getNoticeTitle() %>" style="width:700px;"></th>
+			</tr>
+			<tr style="height:20px; font-size: 12px;">
+				<td><%= notice.getNoticeWriter() %></td>
+				<td><%= notice.getNoticeDate() %></td>
+>>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum
 				<td><%= notice.getNoticeViews() %></td>
 				<td><% if(notice.getNoticeRfile() !=null && !notice.getNoticeOfile().equals("null")){ %>
            <a href="/sori/nfdown?ofile=<%= notice.getNoticeOfile() %>
@@ -54,9 +72,12 @@
 		<!-- 공지사항 수정 테이블 끝-->
 		<!-- 공지사항 수정 버튼 -->
 		<div align="right">
+		<%if(loginMember != null &&(loginMember.getTypeNumber()==4 || loginMember.getTypeNumber()==5 )){ %>
 		<div class="ui buttons">
 		<input type="submit" class="ui positive button" value="수정" style="width:80px">
 			</div>
+		<%}else{ %>
+		<%} %>
 			</div>
 			<!-- 공지사항 수정 버튼 -->
 		</form>

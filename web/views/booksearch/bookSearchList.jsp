@@ -22,51 +22,35 @@
  <%@include file="/../inc/top.jsp"%>
  <script src="/sori/resources/js/sorijieum_tts.js"></script>
 <script type ="text/javascript">
-
-$(function(){
-	
-	/* $("#booktitle").focus(function(){
-		var audio = new Audio("/sori/resources/mp3/booksearchtitle.mp3");
-		audio.play();
-	});
-	
-	$("#author").focus(function(){
-		var audio = new Audio("/sori/resources/mp3/booksearchauthor.mp3");
-		audio.play();
-	}); */
-	
-});
-
 var audio = new Audio("/sori/resources/mp3/booksearchmain.mp3");
 window.onload = function(){
    audio.play();
 } 
 window.onkeyup = function(){
-	if(event.keyCode == 27){ //음성멈춤
-		audio.pause();
-	    audio.currentTime = 0;
-	}
-	else if(event.keyCode == 49 || event.keyCode == 97){ //도서명 검색 
-		audio.pause();
-		$("#booktitle").focus();
-		var audio = new Audio("/sori/resources/mp3/booksearchtitle.mp3");
-		audio.play();
-	}
-	else if(event.keyCode == 50 || event.keyCode == 98){ //저자명 검색 
-		audio.pause();
-		$("#author").focus();
-		var audio = new Audio("/sori/resources/mp3/booksearchauthor.mp3");
-		audio.play();
-	}
-	else if(event.keyCode == 51 || event.keyCode == 99){ //신청글 삭제
-		audio.pause();
-		location.href="/sori/index.jsp";
-	}
-	else if(event.keyCode == 48 || event.keyCode == 96){ //다시듣기
-		audio.play();
-	}
+   if(event.keyCode == 27){ //음성멈춤
+      audio.pause();
+       audio.currentTime = 0;
+   }
+   else if(event.keyCode == 49 || event.keyCode == 97){ //도서명 검색 
+      audio.pause();
+      $("#booktitle").focus();
+      var audio = new Audio("/sori/resources/mp3/booksearchtitle.mp3");
+      audio.play();
+   }
+   else if(event.keyCode == 50 || event.keyCode == 98){ //저자명 검색 
+      audio.pause();
+      $("#author").focus();
+      var audio = new Audio("/sori/resources/mp3/booksearchauthor.mp3");
+      audio.play();
+   }
+   else if(event.keyCode == 51 || event.keyCode == 99){ //신청글 삭제
+      audio.pause();
+      location.href="/sori/index.jsp";
+   }
+   else if(event.keyCode == 48 || event.keyCode == 96){ //다시듣기
+      audio.play();
+   }
 }
-
 </script>
 <!-- CUSTOM CSS -->
 	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">

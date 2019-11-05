@@ -77,7 +77,7 @@ function preview2(input) {
             <br><br>
             <!-- 이미지 미리보기 부분 -->
             <div style="float: left; margin-right: 0px; margin-left: 20px; margin-top:90px; margin-right:20px;">
-            <img src="/sori/resources/book_images/addImage.jpg" style="width:250px; height:350px" id='img01'/>
+            <img src="/sori/resources/images/addImage.jpg" style="width:250px; height:350px" id='img01'/>
             <p align="center" style="color: #fff; height:40px; background: #4ecdc4; line-height: 40px; font-size: 12pt;"><i class="mini camera icon"></i>도서 이미지 미리보기</p>
             </div>
             <!-- 이미지 미리보기 부분 끝-->
@@ -116,7 +116,7 @@ function preview2(input) {
 					
 					<tr>
 						<th width="30%">책 소개</th>
-						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="50" rows="10" required></textarea></div>
+						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="40" rows="25" required></textarea></div>
 						<br><span id="counter" style="color:#aaa;">( <span style="color:#4ecdc4">0</span> / 최대 1000자 )</span>
 						</td>
 					</tr>

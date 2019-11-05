@@ -38,8 +38,6 @@ $(function(){
 	});
 	
 	
-	
-	//***************************음성안내
 	$("#idpwFindPage").keyup(function(){	// 아이디 비밀번호 찾기 중 선택
 		var keyV = $(this).val();
 		if(keyV == '1'){				// 아이디 찾기 시(1번 클릭)
@@ -60,10 +58,12 @@ $(function(){
    		   }
 	})
 	
+	
+	
 });
 
 
-
+// 음성안내 ********************************
 var audio = new Audio("/sori/resources/mp3/idpwFindPage.mp3");	// 화면 접속 시 음성안내 자동재생
 window.onload = function(){
    audio.play();
@@ -125,11 +125,11 @@ function focus_email(){ // 이메일 창 포커스
       <div class="ui form" style="margin-right:100px;">
          <div class="inline field">
 		    <label style="font-size:12pt;">이 름</label><br>
-		    <input type="text" name="username" id="username" placeholder="이름 입력" style="width:300px;height:50px;">
+		    <input type="text" name="username" id="username" placeholder="이름 입력" onfocusin="focus_username()" style="width:300px;height:50px;">
 		  </div>
          <div class="inline field">
 		    <p style="font-size:12pt;">전화번호</p><br>
-		    <input type="tel" name="phone" id="phone" placeholder="전화번호 입력" style="width:300px;height:50px;">
+		    <input type="tel" name="phone" id="phone" placeholder="전화번호 입력" onfocusin="focus_phone()"style="width:300px;height:50px;">
 		  </div>
         <div style="margin-left:80px;">
 		<button type="submit" class="ui yellow button" id="idbtn">아이디 찾기</button>
@@ -143,11 +143,11 @@ function focus_email(){ // 이메일 창 포커스
       <div class="ui form" style="margin-right:100px;">
          <div class="inline field">
 		    <label style="font-size:12pt;">아 이 디</label><br>
-		    <input type="text" name="userid" id="userid" placeholder="아이디 입력" style="width:300px;height:50px;">
+		    <input type="text" name="userid" id="userid" placeholder="아이디 입력" onfocusin="focus_userid()" style="width:300px;height:50px;">
 		  </div>
          <div class="inline field">
 		    <label style="font-size:12pt;">이 메 일</label><br>
-		    <input type="email" name="email" id="email" placeholder="이메일 입력" style="width:300px;height:50px;">
+		    <input type="email" name="email" id="email" placeholder="이메일 입력" onfocusin="focus_email()" style="width:300px;height:50px;">
 		  </div>
         <div style="margin-left:80px;">
         <a href="/sori/views/member/memberSearchPwdComplete.jsp">
@@ -164,6 +164,7 @@ function focus_email(){ // 이메일 창 포커스
 </div>
 </center>
 </section>
+
 <input type="text" id="idpwFindPage" autofocus="autofocus"> 
 </body>
 </html>

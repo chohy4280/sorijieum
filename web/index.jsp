@@ -59,6 +59,7 @@ $(function(){
    			$("#mainOpen1").val('');
    		   }
 	});
+
 	<% if(typeNumber > 1){ %>
 	$("#loginMain").keyup(function(){	// 로그인 후의 메뉴 이동
 		var keyV3 = $(this).val();
@@ -89,6 +90,7 @@ $(function(){
    			$("#loginMain").val('');
    		   }
 	});
+
 	<% }else if(typeNumber == 1){ %> //이용대기자
 		$("#loginMain").keyup(function(){	// 로그인 후
 			var keyV3 = $(this).val();

@@ -684,22 +684,18 @@ public class WishBookDao {
 	}
 
 	//이용자 내 신청도서 검색
-	public ArrayList<WishBook> searchWishBookList(Connection conn, String userid, String type, String keyword) {
+	public ArrayList<WishBook> searchWishBookList(Connection conn, String userid, String keyword) {
 		ArrayList<WishBook>	wblist = new ArrayList<WishBook>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from wishbook where wishwriter=? and ";
-		if(type.equals("title"))
-			query += "wishbooktitle like ? ";
-		else if(type.equals("author"))
-			query += "wishbookauthor like ? ";
-		query += "order by wishdate desc";
+		String query = "select * from wishbook where wishwriter=? and (wishbooktitle like ? or wishbookauthor like ?) order by wishdate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+keyword+"%");
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {

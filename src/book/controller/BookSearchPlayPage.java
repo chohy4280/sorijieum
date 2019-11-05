@@ -49,14 +49,20 @@ public class BookSearchPlayPage extends HttpServlet {
 		
 	    MyBookService myservice = new MyBookService();
 	    MyBook mbb = myservice.selectOneMyBookUser(bookcode, userId);
-		int result1 = myservice.insertReadPage(userId, bookcode, mbb, rpage);   //mybook에 아이디, 도서코드, readpage = 1로 추가
-	    int result2 = myservice.updateReadPage(userId, bookcode, mbb, rpage); //mybook에 값이 있으면 rdate를 오늘날짜로 변경
-	     BookService bservice = new BookService();
+		int result = 0;
+	    
+	    if(mbb == null) {
+	    	System.out.println("mbb==null");
+	    result = myservice.insertReadPage(userId, bookcode, mbb, rpage);   //mybook에 아이디, 도서코드, readpage = 1로 추가
+		}else{
+	    result = myservice.updateReadPage(userId, bookcode, mbb, rpage); //mybook에 값이 있으면 rdate를 오늘날짜로 변경
+		}
+	    BookService bservice = new BookService();
 	      BookPlay bp = bservice.getselectOneBookPlay(bookcode, rpage);
-	   	
+	      
 	      RequestDispatcher view = null;
 		
-		if(result1 > 0  || result2 > 0 && bp != null && mbb!=null) {
+		if(result > 0 && bp != null) { 
 			view = request.getRequestDispatcher("views/booksearch/bookSearchPlay.jsp");
 			request.setAttribute("bookcode", bookcode);
 			request.setAttribute("userId", userId);

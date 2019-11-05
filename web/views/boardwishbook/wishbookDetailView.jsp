@@ -130,7 +130,7 @@ function delchk(){
      location.href="/sori/wbdel?wishno=<%= wb.getWishNo() %>&userid=<%= loginMember.getUserId() %>";
      });
 };
-   
+
 </script>
 <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">

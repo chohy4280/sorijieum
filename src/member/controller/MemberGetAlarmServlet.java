@@ -37,7 +37,7 @@ public class MemberGetAlarmServlet extends HttpServlet {
 		int result1 = new QnaService().getAlarmCount(userid);
 		int result2 = new WishBookService().getAlarmCount(userid);
 		int result = result1 + result2;
-;
+
 		PrintWriter out = response.getWriter();
 		out.write(result+" ");
 		out.flush();
