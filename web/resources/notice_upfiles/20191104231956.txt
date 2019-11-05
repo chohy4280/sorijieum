@@ -1,0 +1,181 @@
+[Ajax(Asynchronus javascript and xml)]
+ : 비동기화된 자바스크립트와 xml을 연결하여 서버와 통신하는 기술
+ - 웹문서(html)에서 서버로 서비스를 요청하고, 서버가 처리한 결과를
+  해당 웹문서로 보내서 출력시킬 때, 새로고침(깜빡임)하지 않고
+  처리결과를 출력되게 하고자 원할 때 사용함
+
+ - html 문서 간의 데이터 교환을 가능하게 함
+	* 데이터 전송방식
+	  1. CSV 방식 : 전송값을 하나의 문자열로 보냄
+		받은 쪽에서 문자열을 토큰문자(&, =)로 분리해서
+		각 항목별 값들을 다루어야 함
+	  2. XML 방식 : 각 항목과 값을 엘리먼트로 처리함
+		<객체명>
+			<항목이름>값</항목이름>
+			.....
+		</객체명>
+	  3. JSON(JavaScript Object Notation) 방식
+		: Ajax에서 가장 많이 사용하는 방식임.
+
+		//자바스크립트에서 클래스 만드는 방법
+		//	: 함수명의 첫글자가 대문자여야 함
+		function Book(title, author, publisher, price){
+		 	this.title = title;
+			this.author = author;
+			this.publisher = publisher;
+			this.price = price;
+		}
+
+		//실행시
+		var book = new Book('Ajax 배우기', '홍길동', '스마트출판사', 30000);
+
+		//또는
+		var book = {	'title' : 'Ajax 배우기',
+				'author' : '홍길동',
+				'publisher' : '스마트출판사',
+				'price' : 30000};
+
+		//객체배열일 때
+		var 배열명 = [{'속성': 값, ....}, {}, {}, ...., {}];
+
+ - 웹 서버가 필요함
+	* 리눅스 서버
+	* 윈도우 서버	=> 서버엔진(Tomcat, Resin 등) => 웹서버
+	* 유닉스 서버				   프로그램
+	* 기타 os 서버 : node.js로 서버 만들 수 있음   (java,php,asp)
+
+ - 이클립스에서 톰켓을 구동시켜서, 웹서버처럼 작동시킬 수 있음
+ 	* 웹서버 구조 : 루트(root) 폴더/html,js,css,images,multi
+		     root/WEB-INF/web.xml
+		     root/WEB-INF/classes/*.class
+		     root/META-INF/xml
+ - 자바 개발환경에 대한 웹서버 구축
+	1. JAVA SE(jdk) 다운 설치 + api 다운 (www.oracle.com)
+	2. JAVA EE 다운 설치
+	3. Tomcat 다운 설치 (www.apache.org)
+	4. Eclipse JAVA EE 용 다운 설치 (www.eclipse.org)
+	5. DB Server 준비 (oracle/mysql/mssql/cubrid 등)
+	*** 자바 version 에 모두 맞추어야 함
+	예를 들면, jdk 1.8 > tomcat 8 > eclipse luna
+
+//-----------------------------------------------------------------------------------
+ * 모든 브라우저 안에는 request 객체와 response 객체가 존재함
+	=> 두 객체가 반드시 함께 움직임
+	=> 브라우저에서 해당 웹페이지의 정보(data)를 연결된 서버의
+	   파일 또는 클래스(서블릿)로 전송 요청이 발생하면,
+	   request 객체 안에는 전달된 data 가 저장되고,
+	   response 객체 안에는 서비스 요청한 클라이언트의 정보가 저장되어서 두 개가 같이 서버로 전송됨
+
+ * 자바스크립트에서는 Ajax를 사용할 때 쓸 수 있는 객체로 
+	XMLHttpRequest 객체가 제공됨. : 전송용 객체임
+
+	1. 객체 생성함
+	  var 변수명 = new XMLHttpRequest();
+
+	** IE 5, 6 버전에서는 XMLHttpRequest 생성자함수를 사용못 함
+	   >> ActiveXObject('매개변수') 함수를 사용해야 함
+		매개변수는 2가지 중에서 선택 사용 가능하며,
+		'Msxml2.XMLHTTP.6.0', 'Microsoft.XMLHttp' 있음
+		  최신 것임(버전 3.0~6.0)
+	   >> try ~ catch로 예외처리함
+
+	try {
+                return new XMLHttpRequest();
+            } catch (exception) {
+                var versions = [
+                    'Msxml2.XMLHTTP.6.0',
+                    'Msxml2.XMLHTTP.5.0',
+                    'Msxml2.XMLHTTP.4.0',
+                    'Msxml2.XMLHTTP.3.0',
+                    'Msxml2.XMLHTTP',
+                    'Microsoft.XMLHttp'
+                ];
+                for (var i = 0; i < versions.length; i++) {
+                    try {
+                        return new ActiveXObject(versions[i]);
+                    } catch (e) { }
+                }
+            }
+
+	--------------------------------------------------------------------
+	2. 객체변수를 사용해서 필요한 메소드 실행함
+
+	//정보를 읽어오기 위한 대상 파일을 지정함
+	  변수명.open('전송방식', '연결대상경로', '비동기사용여부');
+
+	>> 전송방식 : get, post, put, delete 이 있음
+	   ** put 방식은 쿼리스트링으로만 값 전송이 됨. **
+
+	//open()에 지정된 대상으로 부터 읽어오기 실행
+	  변수명.send();
+		=> 읽어 들인 정보는 responseText 속성에 저장됨
+	//send('전송데이터'+ 값) 사용하면 서버로 데이터가 전송됨.
+
+	//읽어 들인 값 출력시
+	  변수명.responseText 사용함
+	  => 단, request 객체의 상태가 요청 데이터를 다 읽은 경우에
+		실행되도록 함
+		if(request.readyState == 4){
+			if(request.state == 200){
+			  //읽은 정보 처리함
+			}
+		}
+
+ * Ajax 에서 요청한 데이터별 처리 방법
+
+  1. 그냥 *.html 로 open()에서 연결해서 요청하면
+	=> 해당 html 의 문서 전체를 읽어오게 됨.
+	   자바스크립트로 처리한 결과값에 대해서는 읽어오지 못함
+
+  2. json 데이터 요청 데이터 처리
+	=> 자바스크립트 형태의 문자열임.
+	  var 문자열변수 = request.responseText;
+
+	=> 문자열 형태로 읽은 다음, eval() 함수로 객체로 바꿈
+	  var 객체배열명 = eval('(' + request.responseText + ')');
+
+	=> 자바스크립트의 for in문 사용해서, 객체의 속성과 값 분리 처리함
+	  for(var i = 0; i < 배열명.length; i++){
+		var 객체명 = 배열명[i];
+		for(var 속성변수 in 객체명){
+		   var 값변수 = 객체명[속성변수];
+		}
+	  }
+
+  3. xml 데이터 요청 데이터 처리
+	=> XML Document 객체로 읽어들임.
+	  var 객체명 = request.responseXML;
+
+	=> xml 문서 안에 사용된 엘리먼트에 대한 DOM 트리 구조에 대한
+	  속성과 메소드를 사용함
+	  * DOM 속성
+		nodeValue : 엘리먼트의 값
+		attributes : 엘리먼트 속성
+	  * DOM 메소드
+		getElementById('id명') : id명이 부여된 엘리먼트 선택
+		getElementsByTagName('태그명') : 해당 엘리먼트 선택
+
+	  //각 속성 엘리먼트별로 배열로 추출함
+	  var 배열명 = 객체명.getElementsByTagName('태그명');
+
+	=> for 문 사용해서, 각 노드별 값 분리 처리함
+	  for(var i = 0; i < 배열명.length; i++){
+		var 변수 = 배열명[i].childNodes[0].nodeValue;
+		
+	  }
+
+도움말 페이지 url : 
+http://api.jquery.com/category/ajax/
+
+
+
+
+
+
+
+
+
+
+
+
+	

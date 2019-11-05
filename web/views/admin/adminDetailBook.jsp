@@ -133,23 +133,31 @@
 				<br><br>
 				<center>
 				<%if(searchtype!=null || keyword != null || makestatus != null) {%>
-					<button class="small ui teal button" onclick="location.href='/sori/bslist.ad?page=<%= currentPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>'">목록이동</button>&nbsp; 
+					<button class="small ui teal button" onclick="location.href='/sori/bslist.ad?page=<%= currentPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>'">목록이동</button>&nbsp;
+					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>'">수정</button>&nbsp;  
 					<%}else{ %>
 					<button class="small ui teal button" onclick="location.href='/sori/blist.ad?page=<%= currentPage %>'">목록이동</button>&nbsp; 
-					<%} %>
-					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>'">수정</button>&nbsp; 
-					<%  String destinationDir = "C:/Users/macbook/git/sorijieum/web/resources/book_pdf_images/" + book.getBookCode(); //폴더 경로
-						File destinationFile = new File(destinationDir);
-						File Folder = new File(destinationDir);
-						if(!Folder.exists()){
+					<button class="small ui teal button" onclick="location.href='/sori/bupview.ad?bookcode=<%=book.getBookCode() %>&page=<%= currentPage %>'">수정</button>&nbsp; 
+					<%}
+						
+						String rootPathss = this.getClass().getResource("/").getPath();
+		                String srcs = "/resources/book_pdf_images/" + book.getBookCode();
+		                String pluss = rootPathss+srcs;
+		                String[] splts = pluss.split("/WEB-INF/classes/");
+		                String finSrcs = "";
+		                for(int i=0; i<splts.length; i++){
+		                   finSrcs += splts[i];
+		                }
+		                String destinationDir = finSrcs; //폴더 경로
+		                File destinationFile = new File(destinationDir);
+		                File Folder = new File(destinationDir);
+		                if(!Folder.exists()){
 					%>
-					
-					<button id="bpimg" class="small ui teal button" onclick="javascript:bpimg(<%=book.getBookCode() %>)">이미지추출</button>
-					
+					<button id="bpimg" class="small ui yellow button" onclick="javascript:bpimg(<%=book.getBookCode() %>)">이미지추출</button>
+					<a class="ui yellow tag label">※도서 등록 후 클릭 필수!!※</a>
 					<% }else{ %>
 					&nbsp;
 					<% } %>
-
 					<% if(loginMember != null && loginMember.getTypeNumber() == 5 ) { %>
 					<br><br><br><button class="small ui red button" onclick="return delBtn();">도서삭제</button>
 					<% } %>

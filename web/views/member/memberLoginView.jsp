@@ -97,7 +97,7 @@ function input_userpwd(){	//비밀번호창 포커스
   </div>
   <div class="inline field">
     <label>비밀번호</label>&nbsp;&nbsp;
-    <input type="password" placeholder="비밀번호" name="userpwd" id="userpwd" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
+    <input type="password" placeholder="비밀번호" name="userpwd" id="userpwd" onkeyup="keyUP2();" onfocusin="input_userpwd()" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
   </div>
 </div>
 <br>

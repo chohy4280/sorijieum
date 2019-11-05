@@ -35,6 +35,7 @@ public class NoticeDetailServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
+		int currentPage =Integer.parseInt(request.getParameter("page"));
 		
 		NoticeService nservice = new NoticeService();
 		Notice notice = nservice.selectOne(noticeno);
@@ -44,6 +45,7 @@ public class NoticeDetailServlet extends HttpServlet {
 		if(notice != null) {//성공 -->뷰에다 전달
 			view = request.getRequestDispatcher("views/boardnotice/noticeDetailView.jsp");
 			request.setAttribute("notice", notice);
+			request.setAttribute("currentPage", currentPage);
 		
 		}else {//실패 -->에러메세지 전달
 			view = request.getRequestDispatcher("views/common/error.jsp");

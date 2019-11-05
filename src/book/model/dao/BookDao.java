@@ -431,11 +431,15 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 
-		String query = "select * from book full outer join bookmakingcheck using(bookcode) "
-		+ "full outer join mybook m using(bookcode) where bookdelyn = 'N' and bookcode = '" + bookcode + "' order by bookmakepage";
+		String query = " select * from book" + 
+				" full outer join bookmakingcheck using(bookcode)" + 
+				" full outer join mybook m using(bookcode) where bookdelyn = 'N'" + 
+				" and bookcode = ? and m.userid = ? order by bookmakepage";
 
 		try {
 		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, bookcode);
+		pstmt.setString(2, userId);
 		rset = pstmt.executeQuery();
 		if(rset.next()) {
 		bp = new BookPlay();

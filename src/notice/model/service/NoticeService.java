@@ -87,23 +87,23 @@ public class NoticeService {
 		
 	}
 
-	public ArrayList<Notice> selectTopFixed() {
+	/*public ArrayList<Notice> selectTopFixed() {
 		Connection conn = getConnection();
 		ArrayList<Notice> toplist = nDao.selectTopFixed(conn);
 		close(conn);
 		return toplist;
-	}
+	}*/
 
-	public ArrayList<Notice> selectNoitceSearch(String search, String keyword, int startnum, int endnum) {
+	public ArrayList<Notice> selectNoitceSearch(String keyword, int startnum, int endnum) {
 		Connection conn = getConnection();
-		ArrayList<Notice> list = nDao.selectNoticeSearch(conn, search,keyword,startnum,endnum);
+		ArrayList<Notice> list = nDao.selectNoticeSearch(conn,keyword,startnum,endnum);
 		close(conn);
 		return list;
 	}
 
-	public int getListCountNoticeSearch(String search, String keyword) {
+	public int getListCountNoticeSearch(String keyword) {
 		Connection conn = getConnection();
-		int listCount = nDao.getListCountNoticeSearch(conn,search,keyword);
+		int listCount = nDao.getListCountNoticeSearch(conn,keyword);
 		close(conn);
 		return listCount;
 	}
