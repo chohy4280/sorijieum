@@ -41,8 +41,8 @@ public class NoticeDao {
 		
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE , NOTICEWRITER, "
 				+ " NOTICECONTENT, NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP " + 
-				"FROM (SELECT * FROM NOTICE " + 
-				"ORDER BY NOTICEDATE DESC)) " + 
+				"FROM (SELECT * FROM NOTICE where noticetop = 'N' " + 
+				"ORDER BY NOTICEDATE DESC, noticeno desc)) " + 
 				"WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		try {
@@ -141,7 +141,7 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		
 		String query = "update notice set noticetitle = ?, noticecontent = ?, "
-				+ "noticeofile = ?, noticerfile= ?, noticedate = sysdate " 
+				+ "noticeofile = ?, noticerfile= ? " 
                 + "where noticeno = ?";		
 				try {
 			pstmt = conn.prepareStatement(query);
@@ -206,12 +206,12 @@ public class NoticeDao {
 	}
 
 	 //공지사항 상단 고정
-	public ArrayList<Notice> selectTopFixed(Connection conn) {
+	/*public ArrayList<Notice> selectTopFixed(Connection conn) {
 		ArrayList<Notice> toplist = new ArrayList<Notice>();
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from notice where noticetop = 'Y'";
+		String query = "select * from notice where noticetop = 'Y' ORDER BY NOTICEDATE DESC, noticeno desc";
 		
 		  
 	      try {
@@ -244,9 +244,9 @@ public class NoticeDao {
 		
 		return toplist;
 	}
-
+*/
 	 //공지사항 검색
-	public ArrayList<Notice> selectNoticeSearch(Connection conn, String search, String keyword, int startnum, int endnum) {
+	public ArrayList<Notice> selectNoticeSearch(Connection conn, String keyword, int startnum, int endnum) {
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -254,7 +254,7 @@ public class NoticeDao {
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, NOTICEWRITER,NOTICECONTENT,"
 				       + " NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP"+
 		                " FROM(SELECT * FROM NOTICE" +
-				         " WHERE " + search + " LIKE '%" + keyword + "%' " + 
+				         " WHERE noticetitle LIKE '%" + keyword + "%' " + 
 		                 " ORDER BY NOTICENO))" + " WHERE RNUM >= ? AND RNUM <= ?";
 		
 		try {
@@ -285,19 +285,17 @@ public class NoticeDao {
 		return list;
 	}
 
-	public int getListCountNoticeSearch(Connection conn, String search, String keyword) {
+	public int getListCountNoticeSearch(Connection conn, String keyword) {
 		int listCount = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
 		String query = null;
 			
 		    if(keyword != null) {
-			if(search.equals("noticetitle")) 
-				query =  "select count(*) from (select * from notice) where " + search + " like '%" + keyword + "%'";
-		
-			if(search.equals("noticewriter"))	
-				query = "select count(*) from (select * from notice) where " + search + " like '%" + keyword + "%'";
-		    } 
+				query =  "select count(*) from (select * from notice) where noticetitle like '%" + keyword + "%'";
+		    }else {
+		    	query = "select count(*) from notice";
+		    }
 		
 		    try {
 				stmt = conn.createStatement();

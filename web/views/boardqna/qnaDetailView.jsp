@@ -13,6 +13,7 @@
 <title>FAQ 게시글 보기</title>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
+<script type="text/javascript" src="/sori/resources/js/sorijieum_tts.js"></script>
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
 $(function(){
@@ -57,14 +58,74 @@ function mappingAction(val){
  /*    form.submit(); */
 }
 
-function updateChk(){
-	<% if(qComm != null){ %>
-		alert("문의글 수정은 답변이 없을 경우에만 가능합니다.");
-		return false;
-	<% }else { %>
-		location.href='/sori/qupview?qnano=<%= qna.getQnaNo() %>';
-	<% } %>
-}
+
+// 음성안내 **********************************************
+	<%if(loginMember != null && (loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2)){%>
+		var audio = new Audio("/sori/resources/mp3/qnaContentStart.mp3");
+		window.onload = function(){
+			audio.play();
+			window.onkeyup = function(){
+				   if(event.keyCode == 57 || event.keyCode == 105){		// 9번:입력시 뒤로 페이지 이동
+						history.back();
+				   }else if(event.keyCode == 49 || event.keyCode == 97){	// 1번 : 수정
+					   $("#userupBtn").click();
+				   }else if(event.keyCode == 50 || event.keyCode == 98){	// 2번 : 삭제
+					   $("#qnaDel").click();
+				   }else if(event.keyCode == 48 || event.keyCode == 96){ // 0번 : 다시듣기
+					   location.reload();
+				   }
+			}
+			audio.addEventListener("ended", function(e) {
+				var qnaComm = document.getElementById('qnaComm').value;
+				<%if(qComm != null){%>
+					var comm = document.getElementById('adminComm').value;
+					speech(qnaComm);
+					speech("관리자답변입니다.　　" + comm);
+				<%}else{%>
+					speech(qnaComm);
+					speech("현재 등록된 답변이 없습니다.");
+				<%}%>
+				speech("다시 들으시려면 0번, 수정하시려면 1번, 삭제하시려면 2번, 뒤로 이동하시려면 9번을 눌러주세요.");
+			});
+
+		}
+
+	<%}%>
+	
+	function updateChk(){
+		<% if(qComm != null){ 
+			if(loginMember.getTypeNumber() == 3){
+		%>
+			alert("문의글 수정은 답변이 없을 경우에만 가능합니다.");
+			return false;
+			<%}else if(loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2){%>
+			audio.pause();
+			audio = new Audio("/sori/resources/mp3/qnaNotModify.mp3");
+			audio.play();
+			<%}%>
+			<% }else { %>
+			location.href='/sori/qupview?qnano=<%= qna.getQnaNo() %>';
+		<% } %>
+	}
+	
+	function delChk(){
+		<% if(loginMember.getTypeNumber() == 3){%>
+			var result = confirm('정말로 해당 문의글을 삭제하시겠습니까?\n삭제 후 복구가 불가능합니다.');
+			if(result){
+				location.href='/sori/qdelete?qnano=<%= qna.getQnaNo() %>&typenumber=<%=loginMember.getTypeNumber() %>&userid=<%= loginMember.getUserId() %>';
+			}else{
+				return;
+			}
+
+			<%}else if(loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2){%>
+			audio.pause();
+			audio = new Audio("/sori/resources/mp3/qnaContentDel.mp3");
+			audio.play();
+			audio.addEventListener("ended", function(e) {
+				location.href='/sori/qdelete?qnano=<%= qna.getQnaNo() %>&typenumber=<%=loginMember.getTypeNumber() %>&userid=<%= loginMember.getUserId() %>';
+			});
+			<%}%>		
+	}
 </script>
 
 </head>
@@ -81,6 +142,7 @@ function updateChk(){
 		<br><br>
 	<!-- QNA 목록 시작 -->
 		<table class="my-listTable" align="center">
+		<input type="hidden" id="qnaComm" value="제목　　<%=qna.getQnaTitle() %>, 작성일<%=qna.getQnaDate() %>, 내용　　<%=qna.getQnaContent() %>">
 			<tr>
 				<th colspan="3" style="height:60px; font-size: 25px;"><%= qna.getQnaTitle() %></th>
 			</tr>
@@ -92,12 +154,7 @@ function updateChk(){
 		</table>
 		<div class="my-boardcontent">
 		<%= qna.getQnaContent().replace("\r\n", "<br>") %><br><br><br>
-		<hr>
-		<% if(qna.getQnaOfile() != null){ %>
-		<a href="/sori/qfdown?ofile=<%= qna.getQnaOfile() %>&rfile=<%= qna.getQnaRfile() %>"><%= qna.getQnaOfile() %></a>
-		<% }else { %>
-		첨부파일 없음
-		<% } %>
+		
 		</div>
 
 	<!--QNA 목록 끝-->
@@ -106,9 +163,10 @@ function updateChk(){
 	<% if(loginMember.getTypeNumber()==5 || loginMember.getUserId().equals(qna.getQnaWriter())){ %>
 	<div align="right">
 		<div class="ui buttons">
-			<button class="ui positive button" onclick="updateChk()">수정</button>
+			<button class="ui positive button" onclick="updateChk()" id="userupBtn">수정</button>
 		  	<div class="or"></div>
-			<button class="ui button" onclick="location.href='/sori/qdelete?qnano=<%= qna.getQnaNo() %>'">삭제</button>
+			<!-- <button class="ui button" id="qnaDel" onclick="location.href='/sori/qdelete?qnano=<%= qna.getQnaNo() %>&typenumber=<%=loginMember.getTypeNumber() %>&userid=<%= loginMember.getUserId() %>'">삭제</button> -->
+			<button class="ui button" id="qnaDel" onclick="delChk()">삭제</button>
 		</div>
 	</div>
 	<% } %>
@@ -120,6 +178,7 @@ function updateChk(){
 	<form name="commForm" method="post">
 	<input type="hidden" name="qnano" value="<%= qComm.getQnaNo() %>">
 	<input type="hidden" name="qcwriter" value="<%= loginMember.getUserId() %>">
+	<input type="hidden" id="adminComm" value="<%=qComm.getQnaComments() %>">
 	<table class="my-listTable2" width="100%">
 	<tr>
 		<th width="5%"></th>
@@ -142,7 +201,7 @@ function updateChk(){
 	<!-- 수정버튼 누르면 답변 내용 영역이 로 바뀌면서 수정 가능 -->
 	<tr>
 		<td colspan="4" id="commarea">
-		<div class="showComm" style="display:block;">
+		<div class="showComm" id="showCommContent" style="display:block;">
 		<%= qComm.getQnaComments().replace("\r\n", "<br>") %>
 		</div>
 		<div class="upComm" style="display:none;">

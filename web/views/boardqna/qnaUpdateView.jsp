@@ -10,7 +10,28 @@
 <title>Q&A 수정</title>
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
+<%if(loginMember != null && (loginMember.getTypeNumber() == 4 || loginMember.getTypeNumber() == 5)){%>
 $('.ui.checkbox').checkbox('attach events', '.toggle.button');
+<%}%>
+
+//음성안내 ************************************
+
+<%if(loginMember != null && (loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2)){%>
+		var audio = new Audio("/sori/resources/mp3/qnaModifyTitle.mp3");
+		window.onload = function(){
+			$("#title").select();
+			audio.play();
+		}
+		
+		
+		function focus_content(){
+			$("#content").select();
+				audio.pause();
+			   audio = new Audio("/sori/resources/mp3/qnaModifyContent.mp3");
+			   audio.play();
+
+		}
+<%}%>
 </script>
   <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
@@ -35,7 +56,7 @@ $('.ui.checkbox').checkbox('attach events', '.toggle.button');
 				<td width="70%">
 					<div class="ui form">
 					<div class="field">
-					<textarea rows="1" name="title" style="resize:none;" required><%= qna.getQnaTitle() %></textarea>
+					<textarea rows="1" name="title" id="title" style="resize:none;" required><%= qna.getQnaTitle() %></textarea>
 					</div>
 					</div>
 				</td>
@@ -44,7 +65,7 @@ $('.ui.checkbox').checkbox('attach events', '.toggle.button');
 				<th>내용</th>
 				<td><div class="ui form">
 					  <div class="field">
-					    <textarea name="content" style="margin-top:0px;margin-bottom:0px;height:300px;resize:none;" required><%= qna.getQnaContent() %></textarea>
+					    <textarea name="content" id="content" onfocusin="focus_content()"style="margin-top:0px;margin-bottom:0px;height:300px;resize:none;" required><%= qna.getQnaContent() %></textarea>
 					  </div>
 					  </div>
 				</td>
