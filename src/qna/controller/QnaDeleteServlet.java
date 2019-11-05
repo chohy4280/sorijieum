@@ -33,11 +33,16 @@ public class QnaDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Q&A 글 삭제 컨트롤러
 		int qnano = Integer.parseInt(request.getParameter("qnano"));
+		int typenumber = Integer.parseInt(request.getParameter("typenumber"));
+		String userid = request.getParameter("userid");
 		
 		int result = new QnaService().deleteQna(qnano);
 		
 		if(result>0) {			
-			response.sendRedirect("/sori/qlist");
+			if(typenumber == 1 || typenumber == 2)
+				response.sendRedirect("/sori/mypage?userid="+userid);
+			else
+				response.sendRedirect("/sori/qlist");
 		}
 		else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");

@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, wishbook.model.vo.WishBook" %>
 <%
-	WishBook wb = (WishBook)request.getAttribute("wb");
-	WishBook lastwishbook = (WishBook)request.getAttribute("lastwishbook");
-	WishBook nextwishbook = (WishBook)request.getAttribute("nextwishbook");
+   WishBook wb = (WishBook)request.getAttribute("wb");
+   WishBook lastwishbook = (WishBook)request.getAttribute("lastwishbook");
+   WishBook nextwishbook = (WishBook)request.getAttribute("nextwishbook");
 %>
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,7 @@
 <title>신청도서 상세 보기</title>
 <%@ include file="/../inc/top.jsp" %>
 <%@ include file="/../inc/cdn.jsp"%>
-<script src="/sori/resources/js/sorijieum_tts.js"></script>
+<script type="text/javascript" src="/sori/resources/js/sorijieum_tts.js"></script>
 <script type="text/javascript">
 var title = "";
 var author = "";
@@ -130,6 +130,7 @@ function delchk(){
      location.href="/sori/wbdel?wishno=<%= wb.getWishNo() %>&userid=<%= loginMember.getUserId() %>";
      });
 };
+   
 </script>
 <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
@@ -235,12 +236,6 @@ function delchk(){
 		</center>
 	</div>
 	<!--도서신청 내용 끝-->
-	<%-- <input id="wishbooktitle" type="hidden" value="<%= wb.getWishBookTitle() %>" autocomplete="off" readonly="">
-	<input id="wishbookauthor" type="hidden" value="<%= wb.getWishBookAuthor() %>" autocomplete="off" readonly="">
-	<input id="wishpublisher" type="hidden" value="<%= wb.getWishPublisher() %>" autocomplete="off" readonly="">
-	<input id="wishpublishdate" type="hidden" value="<%= wb.getWishPublishDate() %>" autocomplete="off" readonly="">
-	<input id="wishwriter" type="hidden" value="<%= wb.getWishWriter() %>" autocomplete="off" readonly="">
-	<input id="wishdate" type="hidden" value="<%= wb.getWishDate() %>" autocomplete="off" readonly=""> --%>
 	</section>
 	<!-- Content 끝! -->
 </body>

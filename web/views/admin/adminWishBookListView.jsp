@@ -112,7 +112,12 @@
 					<tr>
 						<td><%= currentPage * 10 - 9 + i%></td>
 						<td><%= wb.getWishWriter() %></td>
-						<td style="text-align: left"><a href="/sori/wbdetail.ad?wishno=<%= wb.getWishNo() %>&page=<%=currentPage%>"><%= wb.getWishBookTitle() %></a></td>
+						<td style="text-align: left"><%if(searchtype!=null||keyword!=null||wishstatus!=null){ %>
+						<a href="/sori/wbdetail.ad?wishno=<%= wb.getWishNo() %>&page=<%=currentPage%>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&wishstatus=<%=wishstatus%>">
+						<%}else{ %>
+						<a href="/sori/wbdetail.ad?wishno=<%= wb.getWishNo() %>&page=<%=currentPage%>">
+						<%} %>
+						<%= wb.getWishBookTitle() %></a></td>
 						<td><%= wb.getWishDate() %></td>
 						<td><% if(wb.getWishStatus().equals("WAIT")) {%>
 							승인대기

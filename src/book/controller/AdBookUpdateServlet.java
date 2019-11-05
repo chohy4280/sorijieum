@@ -28,7 +28,7 @@ import bookmaking.model.service.BookMakingService;
  */
 @WebServlet("/bup.ad")
 public class AdBookUpdateServlet extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,192 +38,203 @@ public class AdBookUpdateServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-   /**
-    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-    */
-   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      // 도서 수정처리용 컨트롤러
-      
-      request.setCharacterEncoding("utf-8");
-      
-      RequestDispatcher view = null;
-      if(!ServletFileUpload.isMultipartContent(request)) { 
-         view = request.getRequestDispatcher("views/common/error.jsp");
-         request.setAttribute("message", "enctype으로 변경하여 폼 전송해야 합니다.");
-         view.forward(request, response);
-      }
-      
-      int maxSize = 1024 * 1024 * 20;
-      
-      String savePath = request.getSession().getServletContext().getRealPath("/resources/book_upfiles");
-      
-      MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "utf-8", new DefaultFileRenamePolicy());
-      
-      Book b = new Book();
-      int currentPage = Integer.parseInt(mrequest.getParameter("page"));
-      String bookcode = mrequest.getParameter("bookcode");
-      b.setBookTitle(mrequest.getParameter("booktitle"));
-      b.setAuthor(mrequest.getParameter("author"));
-      b.setPublisher(mrequest.getParameter("publisher"));
-      b.setPublishDate(Date.valueOf(mrequest.getParameter("pubdate")));
-      b.setBookPage(Integer.parseInt(mrequest.getParameter("bookpage")));
-      b.setBookCode(bookcode);
-      b.setBookInfo(mrequest.getParameter("bookinfo"));
-      
-      String bookoimg = mrequest.getParameter("bookoimg");
-      String bookrimg = mrequest.getParameter("bookrimg");
-      String bookopdf = mrequest.getParameter("bookopdf");
-      String bookrpdf = mrequest.getParameter("bookrpdf");
-      String bookotxt = mrequest.getParameter("bookotxt");
-      String bookrtxt = mrequest.getParameter("bookrtxt");
-      
-      String bimgOriginalFileName = mrequest.getFilesystemName("upbookoimg");
-      String bpdfOriginalFileName = mrequest.getFilesystemName("upbookopdf");
-      String btxtOriginalFileName = mrequest.getFilesystemName("upbookotxt");
-      
-      
-      if(bimgOriginalFileName != null) {
-         //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
-         //String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
-         
-         File bimgOriginFile = new File(savePath + "\\" + bimgOriginalFileName);
-         
-         String bimgRenameFileName = bookcode + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 도서 수정처리용 컨트롤러
+		
+		request.setCharacterEncoding("utf-8");;
+		
+		
+		
+		RequestDispatcher view = null;
+		if(!ServletFileUpload.isMultipartContent(request)) { 
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "enctype으로 변경하여 폼 전송해야 합니다.");
+			view.forward(request, response);
+		}
+		
+		int maxSize = 1024 * 1024 * 20;
+		
+		String savePath = request.getSession().getServletContext().getRealPath("/resources/book_upfiles");
+		
+		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "utf-8", new DefaultFileRenamePolicy());
+		
+		String searchtype = mrequest.getParameter("searchtype");
+		String keyword = mrequest.getParameter("keyword");
+		String makestatus = mrequest.getParameter("makestatus");
+		
+		Book b = new Book();
+		int currentPage = Integer.parseInt(mrequest.getParameter("page"));
+		String bookcode = mrequest.getParameter("bookcode");
+		b.setBookTitle(mrequest.getParameter("booktitle"));
+		b.setAuthor(mrequest.getParameter("author"));
+		b.setPublisher(mrequest.getParameter("publisher"));
+		b.setPublishDate(Date.valueOf(mrequest.getParameter("pubdate")));
+		b.setBookPage(Integer.parseInt(mrequest.getParameter("bookpage")));
+		b.setBookCode(bookcode);
+		b.setBookInfo(mrequest.getParameter("bookinfo"));
+		
+		String bookoimg = mrequest.getParameter("bookoimg");
+		String bookrimg = mrequest.getParameter("bookrimg");
+		String bookopdf = mrequest.getParameter("bookopdf");
+		String bookrpdf = mrequest.getParameter("bookrpdf");
+		String bookotxt = mrequest.getParameter("bookotxt");
+		String bookrtxt = mrequest.getParameter("bookrtxt");
+		
+		String bimgOriginalFileName = mrequest.getFilesystemName("upbookoimg");
+		String bpdfOriginalFileName = mrequest.getFilesystemName("upbookopdf");
+		String btxtOriginalFileName = mrequest.getFilesystemName("upbookotxt");
+		
+		
+		if(bimgOriginalFileName != null) {
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
+			//String bimgRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
+			
+			File bimgOriginFile = new File(savePath + "\\" + bimgOriginalFileName);
+			
+			String bimgRenameFileName = bookcode + "." + bimgOriginalFileName.substring(bimgOriginalFileName.lastIndexOf(".") + 1);
 
-         File bimgRenameFile = File(savePath + "\\" + bimgRenameFileName);
-         if(bimgRenameFile != null) {   // 같은 이름의 파일이 있으면 먼저 삭제하고
-            bimgRenameFile.delete();
-         }
-         bimgRenameFile = new File(savePath + "\\" + bimgRenameFileName);   // 새로 저장.
-         
-         if(!bimgOriginFile.renameTo(bimgRenameFile)) {
-            int read = -1;
-            
-            byte[] buf = new byte[1024];
-            
-            FileInputStream fin = new FileInputStream(bimgOriginFile);
-            FileOutputStream fout = new FileOutputStream(bimgRenameFile);
-            
-            while((read = fin.read(buf, 0, buf.length)) != -1) {
-               fout.write(buf, 0, read);
-            }
-               fin.close();
-               fout.close();
-               // 리네임 했으니 원본 삭제
-               bimgOriginFile.delete();
-               // 이전 rename 파일도 삭제
-               //new File(savePath + "\\" + bookrimg).delete();   // 위에서 지워줘서 필요없음.
-         }
-         b.setBookOimg(bimgOriginalFileName);
-         b.setBookRimg(bimgRenameFileName);
-      }else if(bimgOriginalFileName == null){
-         b.setBookOimg(bookoimg);
-         b.setBookRimg(bookrimg);
-      }
+			File bimgRenameFile = File(savePath + "\\" + bimgRenameFileName);
+			if(bimgRenameFile != null) {	// 같은 이름의 파일이 있으면 먼저 삭제하고
+				bimgRenameFile.delete();
+			}
+			bimgRenameFile = new File(savePath + "\\" + bimgRenameFileName);	// 새로 저장.
+			
+			if(!bimgOriginFile.renameTo(bimgRenameFile)) {
+				int read = -1;
+				
+				byte[] buf = new byte[1024];
+				
+				FileInputStream fin = new FileInputStream(bimgOriginFile);
+				FileOutputStream fout = new FileOutputStream(bimgRenameFile);
+				
+				while((read = fin.read(buf, 0, buf.length)) != -1) {
+					fout.write(buf, 0, read);
+				}
+					fin.close();
+					fout.close();
+					// 리네임 했으니 원본 삭제
+					bimgOriginFile.delete();
+					// 이전 rename 파일도 삭제
+					//new File(savePath + "\\" + bookrimg).delete();	// 위에서 지워줘서 필요없음.
+			}
+			b.setBookOimg(bimgOriginalFileName);
+			b.setBookRimg(bimgRenameFileName);
+		}else if(bimgOriginalFileName == null){
+			b.setBookOimg(bookoimg);
+			b.setBookRimg(bookrimg);
+		}
 
 
-      if(bpdfOriginalFileName != null){
-         File bpdfOriginFile = new File(savePath + "\\" + bpdfOriginalFileName);
-         
-         String bpdfRenameFileName = bookcode + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
-         File bpdfRenameFile = File(savePath + "\\" + bpdfRenameFileName);
-         if(bpdfRenameFile != null) {
-            bpdfRenameFile.delete();
-         }
-         bpdfRenameFile = new File(savePath + "\\" + bpdfRenameFileName);
+		if(bpdfOriginalFileName != null){
+			File bpdfOriginFile = new File(savePath + "\\" + bpdfOriginalFileName);
+			
+			String bpdfRenameFileName = bookcode + "." + bpdfOriginalFileName.substring(bpdfOriginalFileName.lastIndexOf(".") + 1);
+			File bpdfRenameFile = File(savePath + "\\" + bpdfRenameFileName);
+			if(bpdfRenameFile != null) {
+				bpdfRenameFile.delete();
+			}
+			bpdfRenameFile = new File(savePath + "\\" + bpdfRenameFileName);
 
-         if(!bpdfOriginFile.renameTo(bpdfRenameFile)) {
-            int read = -1;
-            
-            byte[] buf2 = new byte[1024];
+			if(!bpdfOriginFile.renameTo(bpdfRenameFile)) {
+				int read = -1;
+				
+				byte[] buf2 = new byte[1024];
 
-            FileInputStream fin2 = new FileInputStream(bpdfOriginFile);
-            FileOutputStream fout2 = new FileOutputStream(bpdfRenameFile);
-            
-            while((read = fin2.read(buf2, 0, buf2.length)) != -1) {
-               fout2.write(buf2, 0, read);
-            }
-               fin2.close();
-               fout2.close();
-               // 리네임 했으니 원본 삭제
-               bpdfOriginFile.delete(); //이미지 추출을 위해 opdf놔둠
-               // 이전 rename 파일도 삭제
-               //new File(savePath + "\\" + bookrpdf).delete();
-               
-         }
-         b.setBookOpdf(bpdfOriginalFileName);
-         b.setBookRpdf(bpdfRenameFileName);
-      }else if(bpdfOriginalFileName == null){
-         b.setBookOpdf(bookopdf);
-         b.setBookRpdf(bookrpdf);
-      }
-      
+				FileInputStream fin2 = new FileInputStream(bpdfOriginFile);
+				FileOutputStream fout2 = new FileOutputStream(bpdfRenameFile);
+				
+				while((read = fin2.read(buf2, 0, buf2.length)) != -1) {
+					fout2.write(buf2, 0, read);
+				}
+					fin2.close();
+					fout2.close();
+					// 리네임 했으니 원본 삭제
+					bpdfOriginFile.delete(); //이미지 추출을 위해 opdf놔둠
+					// 이전 rename 파일도 삭제
+					//new File(savePath + "\\" + bookrpdf).delete();
+					
+			}
+			b.setBookOpdf(bpdfOriginalFileName);
+			b.setBookRpdf(bpdfRenameFileName);
+		}else if(bpdfOriginalFileName == null){
+			b.setBookOpdf(bookopdf);
+			b.setBookRpdf(bookrpdf);
+		}
+		
 
-      if(btxtOriginalFileName != null) {
-         //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
-         //String btxtRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
-         File btxtOriginFile = new File(savePath + "\\" + btxtOriginalFileName);
-         String btxtRenameFileName = bookcode + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
-         File btxtRenameFile = File(savePath + "\\" + btxtRenameFileName);
-         
-         if(btxtRenameFile != null) {
-            btxtRenameFile.delete();
-         }
-         btxtRenameFile = new File(savePath + "\\" + btxtRenameFileName);
-         
-         if(!btxtOriginFile.renameTo(btxtRenameFile)) {
-            int read = -1;
-            
-            byte[] buf3 = new byte[1024];
+		if(btxtOriginalFileName != null) {
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHss");
+			//String btxtRenameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
+			File btxtOriginFile = new File(savePath + "\\" + btxtOriginalFileName);
+			String btxtRenameFileName = bookcode + "." + btxtOriginalFileName.substring(btxtOriginalFileName.lastIndexOf(".") + 1);
+			File btxtRenameFile = File(savePath + "\\" + btxtRenameFileName);
+			
+			if(btxtRenameFile != null) {
+				btxtRenameFile.delete();
+			}
+			btxtRenameFile = new File(savePath + "\\" + btxtRenameFileName);
+			
+			if(!btxtOriginFile.renameTo(btxtRenameFile)) {
+				int read = -1;
+				
+				byte[] buf3 = new byte[1024];
 
-            FileInputStream fin3 = new FileInputStream(btxtOriginFile);
-            FileOutputStream fout3 = new FileOutputStream(btxtRenameFile);
-            
-            while((read = fin3.read(buf3, 0, buf3.length)) != -1) {
-               fout3.write(buf3, 0, read);
-            }
-               fin3.close();
-               fout3.close();
-               // 리네임 했으니 원본 삭제
-               btxtOriginFile.delete();
-               // 이전 rename 파일도 삭제
-               //new File(savePath + "\\" + bookrtxt).delete();
-         }
-         b.setBookOtxt(btxtOriginalFileName);
-         b.setBookRtxt(btxtRenameFileName);
-      }else if(btxtOriginalFileName == null){
-         b.setBookOtxt(bookotxt);
-         b.setBookRtxt(bookrtxt);
-      }
-      
+				FileInputStream fin3 = new FileInputStream(btxtOriginFile);
+				FileOutputStream fout3 = new FileOutputStream(btxtRenameFile);
+				
+				while((read = fin3.read(buf3, 0, buf3.length)) != -1) {
+					fout3.write(buf3, 0, read);
+				}
+					fin3.close();
+					fout3.close();
+					// 리네임 했으니 원본 삭제
+					btxtOriginFile.delete();
+					// 이전 rename 파일도 삭제
+					//new File(savePath + "\\" + bookrtxt).delete();
+			}
+			b.setBookOtxt(btxtOriginalFileName);
+			b.setBookRtxt(btxtRenameFileName);
+		}else if(btxtOriginalFileName == null){
+			b.setBookOtxt(bookotxt);
+			b.setBookRtxt(bookrtxt);
+		}
+		
 
-      
-      // 서비스로 전달하고 결과 받기
-      int result1 = new BookService().updateBook(b);
-      // 도서추가시 bookmaking 테이블에도 같이 insert함
-      int result2 = new BookMakingService().updateBookadmin(b);
-      
-      if(result1 > 0 && result2 > 0) {
-         response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage);
-      } else {
-         view = request.getRequestDispatcher("views/common/error.jsp");
-         request.setAttribute("message", "도서 수정 실패!");
-         view.forward(request, response);
-   } 
-      
-   }
+		
+		// 서비스로 전달하고 결과 받기
+		int result1 = new BookService().updateBook(b);
+		// 도서추가시 bookmaking 테이블에도 같이 insert함
+		int result2 = new BookMakingService().updateBookadmin(b);
+		
+		if(result1 > 0 && result2 > 0) {
+			if(searchtype!=null||keyword!=null||makestatus!=null) {
+				response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage+"&searchtype="+searchtype+"&keyword="+keyword+"&makestatus="+makestatus);
+			}else {
+				response.sendRedirect("/sori/bdetail.ad?bookcode="+bookcode+"&page="+currentPage);
+			}
 
-   private File File(String string) {
-      // TODO Auto-generated method stub
-      return null;
-   }
+		} else {
+			view = request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("message", "도서 수정 실패!");
+			view.forward(request, response);
+	} 
+		
+	}
 
-   /**
-    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-    */
-   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      // TODO Auto-generated method stub
-      doGet(request, response);
-   }
+	private File File(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 }

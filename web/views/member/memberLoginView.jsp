@@ -44,13 +44,44 @@ function autoChk(){
 	return true;
 }
   
-  	function keyUP(){
-		$("#userid").keyup(function(e){	// 아이디 비밀번호 찾기를 위한 스페이스바 입력
-			if(e.keyCode == 32){				// 스페이스바 입력 시
-				location.href="/sori/views/member/memberSearchIdPwd.jsp";
+//음성안내 **************************************************************
+
+var audio = new Audio("/sori/resources/mp3/login.mp3");	// 화면 접속 시 음성안내 자동재생
+window.onload = function(){
+   audio.play();
+   $("#idpwFindPage").focus();
+}   
+
+$(function(){
+	$("#userid").keyup(function(){	// 9번 누르면 메인으로 이동
+		var keyV1 = $(this).val();
+		if(keyV1 == '9'){
+			location.href="/sori/index.jsp";
 		}
 	})
+});
+  
+function input_userpwd(){	//비밀번호창 포커스
+	audio.pause();
+   audio = new Audio("/sori/resources/mp3/password.mp3");
+   audio.play();
+}
+
+	function keyUP(){
+	$("#userid").keyup(function(e){	// 아이디 비밀번호 찾기를 위한 스페이스바 입력
+		if(e.keyCode == 32){				// 아이디창에 스페이스바 입력 시
+			location.href="/sori/views/member/memberSearchIdPwd.jsp";
 	}
+})
+}
+	
+	function keyUP2(){
+	$("#userpwd").keyup(function(e){	// 아이디 비밀번호 찾기를 위한 스페이스바 입력
+		if(e.keyCode == 32){				// 비밀번호 창에 스페이스바 입력 시
+			location.href="/sori/views/member/memberSearchIdPwd.jsp";
+	}
+})
+}
 </script>
 </head>
 <body>
@@ -66,7 +97,7 @@ function autoChk(){
   </div>
   <div class="inline field">
     <label>비밀번호</label>&nbsp;&nbsp;
-    <input type="password" placeholder="비밀번호" name="userpwd" id="userpwd" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
+    <input type="password" placeholder="비밀번호" name="userpwd" id="userpwd" onkeyup="keyUP2();" onfocusin="input_userpwd()" style="width:300px;height:50px;font-family:'S-Core Dream 5';">
   </div>
 </div>
 <br>
@@ -83,8 +114,6 @@ function autoChk(){
 </center>
 </section>
 
-
-<audio src="/sori/resources/mp3/login.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/login.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 </body>
 
 </html>

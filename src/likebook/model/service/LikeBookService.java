@@ -37,9 +37,9 @@ public class LikeBookService {
 	}
 
 	//관심도서 검색
-	public ArrayList<LikeBookLB> searchLikeBookList(String userid, String type, String keyword) {
+	public ArrayList<LikeBookLB> searchLikeBookList(String userid, String keyword) {
 		Connection conn = getConnection();
-		ArrayList<LikeBookLB> lblist = lbDao.searchLikeBookList(conn, userid, type, keyword);
+		ArrayList<LikeBookLB> lblist = lbDao.searchLikeBookList(conn, userid, keyword);
 		close(conn);
 		return lblist;
 	}

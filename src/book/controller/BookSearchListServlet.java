@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import book.model.service.BookService;
-import book.model.vo.Book;
+import book.model.vo.BookPlay;
 
 /**
  * Servlet implementation class BookSearchListServlet
@@ -33,6 +33,9 @@ public class BookSearchListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//도서 전체 목록 보기 출력 처리용 
+		request.setCharacterEncoding("utf-8");
+		
+	  
        int currentPage = 1;
        if(request.getParameter("page") !=null) {
     	   currentPage = Integer.parseInt(request.getParameter("page"));
@@ -48,6 +51,9 @@ public class BookSearchListServlet extends HttpServlet {
 	      maxPage++;
        
        int beginPage =(currentPage/limit) * limit +1;
+       if(currentPage % limit == 0) {
+           beginPage -= limit;
+        }
        int endPage = beginPage + 9;
        if(endPage > maxPage)
     	   endPage = maxPage;
@@ -55,17 +61,19 @@ public class BookSearchListServlet extends HttpServlet {
        int startRow = (currentPage * limit)-9;
        int endRow = currentPage * limit;
        
-       ArrayList<Book> list = bservice.selectList(startRow,endRow);
+       ArrayList<BookPlay> bplist = bservice.selectList(startRow,endRow);
        
        RequestDispatcher view = null;
-       if(list.size() > 0) {
+       if(bplist.size() >= 0) {
     	   view = request.getRequestDispatcher("views/booksearch/bookSearchList.jsp");
-    	   request.setAttribute("list", list);
+    	   request.setAttribute("bplist",bplist);
     	   request.setAttribute("maxPage", maxPage);
     	   request.setAttribute("currentPage", currentPage);
     	   request.setAttribute("beginPage",beginPage);
     	   request.setAttribute("endPage", endPage);
+    	   request.setAttribute("listCount",listCount);
     	   view.forward(request, response);
+    	   
        }else {
     	   view = request.getRequestDispatcher("views/common/error.jsp");
     	   request.setAttribute("message", currentPage + "페이지 목록 불러오기 실패");

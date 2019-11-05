@@ -8,18 +8,15 @@
 	int maxPage = (Integer)request.getAttribute("maxPage");
 	int listcount = (Integer)request.getAttribute("listCount");
 	String keyword = (String)request.getAttribute("keyword");
-	String type = (String)request.getAttribute("type");
 %>      
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>이용자 관심도서</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/member.css">
 <%@ include file="/inc/memberSide.jsp"%>
+<script type="text/javascript" src="/sori/resources/js/sorijieum_tts.js"></script>
 <script type="text/javascript">
 $(function(){	
 	//체크박스 전체 선택
@@ -40,12 +37,123 @@ $(function(){
 		}	
 	});
 	
+	//목록 없으면 페이징 숨기기
 	<% if(lblist.size() == 0){ %>
 		$("#pagebox").css("display","none");
 	<% } %>
+	
+	//검색창이 아닌 곳에서 키 눌렀을 때 이벤트 발생
+	  $("body:not('#keyword')").on("keyup",function(event){
+		var bcode = "";
+		if(event.keyCode == 49 || event.keyCode == 97 ){	//1번(숫자,키패드)
+			bcode = document.getElementById("1code").value;
+			location.href  = "/sori/bsdetail?userId=<%= loginMember.getUserId() %>&bookcode="+bcode;
+		}
+		else if(event.keyCode == 50 || event.keyCode == 98){	//2번(숫자,키패드)
+			bcode = document.getElementById("2code").value;
+			location.href  = "/sori/bsdetail?userId=<%= loginMember.getUserId() %>&bookcode="+bcode;
+		}
+		else if(event.keyCode == 51 || event.keyCode == 99){	//3번(숫자,키패드)
+			bcode = document.getElementById("3code").value;
+			location.href  = "/sori/bsdetail?userId=<%= loginMember.getUserId() %>&bookcode="+bcode;
+		}
+		else if(event.keyCode == 57 || event.keyCode == 105){
+			location.href  = "/sori/mypage?userid=<%= loginMember.getUserId() %>";
+		}
+	});
 });
 
+//처음 페이지 로딩되면 자동으로 출력 할 음성을 audio 변수에 담기
+var audio = new Audio("/sori/resources/mp3/likebook/likebook_main.mp3");
+window.onload = function(){
+	<% if(keyword == null && currentPage == 1){ %>
+		audio.play();								//처음 페이지 로딩시 안내멘트 음성 출력
+	<% }else if(currentPage != 1){ %>
+		speech(<%= currentPage %> + " 페이지 입니다.");		//1페이지가 아닌 페이지 로딩시 자동으로 목록을 음성으로 출력
+		var focusImg = "";
+		var text = "";
+		for(var i=1; i<4; i++){
+			$("#"+i+"tr").focus();
+			text = document.getElementById(i+"info").value;
+			if(i==1)
+				speech("일번, "+text);
+			else if(i==2)
+				speech("이번, "+text);
+			else if(i==3)
+				speech("삼번, "+text);
+		}
+	<% }else if(keyword != null && currentPage == 1){ %>	//검색결과 1페이지 들어올시 출력
+		var keyV = document.getElementById("keyword").value;
+		speech("검색하신, "+keyV+", 가 포함된 목록입니다. 검색된 도서는 총 "+ <%= listcount %> + " 권 입니다.");
+		var focusImg = "";
+		var text = "";
+		for(var i=1; i<4; i++){
+			$("#"+i+"tr").focus();
+			text = document.getElementById(i+"info").value;
+			if(i==1)
+				speech("일번, "+text);
+			else if(i==2)
+				speech("이번, "+text);
+			else if(i==3)
+				speech("삼번, "+text);
+		}
+	<% } %>
+}
 
+window.onkeyup = function(){
+	if(event.keyCode == 38) {	//위쪽키보드 눌렀을 때 (검색창으로 포커스)
+		$("#keyword").focus();
+		audio.pause();
+		audio = new Audio("/sori/resources/mp3/likebook/likebook_search.mp3");
+		audio.play();
+	}
+	else if(event.keyCode == 40){	//아래쪽 키보드 눌렀을 때(목록 책제목,저자명 읽어주기)
+		audio.pause();
+		audio = new Audio("/sori/resources/mp3/likebook/likebook_list.mp3");
+		audio.play();
+		audio.addEventListener("ended", function(e) {
+			var focusImg = "";
+			var text = "";
+			for(var i=1; i<4; i++){
+				text = document.getElementById(i+"info").value;
+				if(i==1)
+					speech("일번, "+text);
+				else if(i==2)
+					speech("이번, "+text);
+				else if(i==3)
+					speech("삼번, "+text);
+			}
+		});
+	}
+	else if(event.keyCode == 27){
+		audio.pause();
+		audio = null;
+	}
+	else if(event.keyCode == 37){
+		<% if(currentPage != 1){ %>
+			<% if(keyword == null){ %>
+				location.href="/sori/likebook.my?page=<%= currentPage-1  %>&userid=<%= loginMember.getUserId() %>";
+			<% }else{ %>
+				location.href="/sori/lbsearch.my?page=<%= currentPage-1 %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>";
+		<% }}else{ %>
+			audio.pause();
+			audio.currentTime = 0;
+			speech("목록의 첫 페이지 입니다.");
+		<% } %>
+	}
+	else if(event.keyCode == 39){
+		<% if(currentPage != maxPage){ %>
+			<% if(keyword == null){ %>
+				location.href="/sori/likebook.my?page=<%= currentPage+1  %>&userid=<%= loginMember.getUserId() %>";
+			<% }else{ %>
+				location.href="/sori/lbsearch.my?page=<%= currentPage+1 %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>";
+		<% }}else{ %>
+			audio.pause();
+			audio.currentTime = 0;
+			speech("목록의 마지막 페이지 입니다.");
+		<% } %>
+	}
+}
 </script>
 </head>
 <body>
@@ -61,17 +169,6 @@ $(function(){
 <div style="margin-top:20px;">
 <form action="/sori/lbsearch.my" method="post">
 <input type="hidden" name="userid" value="<%= loginMember.getUserId() %>">
-<% if(type == null || type.equals("title")){ %>
-	<select class="ui mini simple dropdown" name="type" id="type" style="border-radius:5px;">
-		<option value="title" selected>도서명</option>
-		<option value="author">저자명</option>
-	</select>
-<% }else{ %>
-	<select class="ui mini simple dropdown" name="type" id="type" style="border-radius:5px;">
-		<option value="title">도서명</option>
-		<option value="author" selected>저자명</option>
-	</select>
-<% } %>
 <% if(keyword != null) { %>
 	<input type="text" name="keyword" id="keyword" value="<%= keyword %>" style="width:200px;">
 <% }else{ %>
@@ -105,11 +202,11 @@ $(function(){
 		</a>
 		</td>
 		<td style="text-align:left;">
-			<div class="content">
-				<div style="font-size:16pt;">
+			<div class="content" style="margin-left:5%;">
+				<div style="font-size:30pt;">
 					<%= lb.getBooktitle() %>
-				</div>
-				<div class="meta">
+				</div><br><br>
+				<div class="meta" style="font-size:20pt;">
 					<%= lb.getAuthor() %> 저 | <%= lb.getPublisher() %> | <%= lb.getPublishdate() %>
 				</div>
 			</div>
@@ -154,25 +251,25 @@ $(function(){
 	</div>
 <% }else{ %> <!-- 검색시 페이징 -->
 	<div id="pagebox" align="center" style="display:block;">
-		<a href="/sori/lbsearch.my?page=1&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&nbsp;
+		<a href="/sori/lbsearch.my?page=1&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&nbsp;
 	<% if((beginPage - 10) < 1){ %>
-		<a href="/sori/lbsearch.my?page=1&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+		<a href="/sori/lbsearch.my?page=1&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
 	<% }else{ %>
-		<a href="/sori/lbsearch.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
+		<a href="/sori/lbsearch.my?page=<%= beginPage - 10 %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
 	<% } %>&nbsp;
 	<% for(int p = beginPage; p <= endPage; p++){ 
 			if(p == currentPage){
 	%>
-		<a href="/sori/lbsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<a href="/sori/lbsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
 	<% }else{ %>
-		<a href="/sori/lbsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<a href="/sori/lbsearch.my?page=<%= p %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 	<% }} %>&nbsp;
 	<% if((endPage +  10) < maxPage){ %>
-		<a href="/sori/lbsearch.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+		<a href="/sori/lbsearch.my?page=<%= endPage + 10  %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
 	<% }else{ %>
-		<a href="/sori/lbsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
+		<a href="/sori/lbsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
 	<% } %>&nbsp;
-	<a href="/sori/lbsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&type=<%=type%>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&nbsp;
+	<a href="/sori/lbsearch.my?page=<%= maxPage %>&userid=<%= loginMember.getUserId() %>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&nbsp;
 	</div>
 <% } %>	
 <!-- 페이징 끝 -->

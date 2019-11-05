@@ -54,11 +54,12 @@
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="user icon"></i>사용자</a></li>
 			<ul>
 				<li><a href="/sori/mlist.ad">　회원정보조회</a></li>
-				<li><a href="/sori/qmlist.ad">　회원탈퇴관리</a></li>
+				<li><a href="/sori/qmlist.ad">　탈퇴회원조회</a></li>
 				<li><a href="/sori/adlist.ad">　권한관리</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="clipboard list icon"></i>게시판</a></li>
 			<ul>
+				<li><a href="/sori/nlist" target="_blank">　공지사항관리</a></li>
 				<li><a href="/sori/bodlist.ad">　문의글관리</a></li>
 			</ul>
 	</ul>
@@ -92,11 +93,12 @@
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="user icon"></i>사용자</a></li>
 			<ul>
 				<li><a href="">　회원정보조회</a></li>
-				<li><a href="">　회원탈퇴관리</a></li>
+				<li><a href="">　탈퇴회원조회</a></li>
 				<li><a href="">　권한관리</a></li>
 			</ul>
 		<li style="font-weight: 600; font-size:12pt"><a href=""><i class="clipboard list icon"></i>게시판</a></li>
 			<ul>
+				<li><a href="">　공지사항관리</a></li>
 				<li><a href="">　문의글관리</a></li>
 			</ul>
 	</ul>

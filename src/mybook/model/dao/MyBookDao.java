@@ -79,22 +79,19 @@ public class MyBookDao {
 	}
 	
 	//내서재 검색
-	public ArrayList<MyBookMYB> searchMyBookList(Connection conn, String userid, String type, String keyword) {
+	public ArrayList<MyBookMYB> searchMyBookList(Connection conn, String userid, String keyword) {
 		ArrayList<MyBookMYB> myblist = new ArrayList<MyBookMYB>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=? and ";
-		if(type.equals("title")) 
-			query += "b.booktitle like ? ";
-		else if(type.equals("author"))
-			query += "b.author like ? ";
-		query += "order by readrdate desc";
+		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=? and "+
+					"b.booktitle like ? or b.author like ? order by readrdate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+ keyword +"%");
+			pstmt.setString(3, "%"+ keyword +"%");
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -185,5 +182,79 @@ public class MyBookDao {
 		
 		return listCount;
 	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+   //이용자가 도서를 읽은 적이 있다면 최신날짜 업데이트
+	public int updateReadPage(Connection conn, String bookcode, String userId) {
+		int result = 0;
+   PreparedStatement pstmt = null;
+		
+		String query = "update book set rdate=sysdate where bookcode=? userid =? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bookcode);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+		} catch ( SQLException e) {
+			e.printStackTrace();
+		}finally {
+		close(pstmt);
+		return result;
+			}
 
+	
+}
+	
+	
+
+	
+	   //이용자가 새로운 책을 누른다면 내 서재에 readpage, userid, bookcode 추가
+		public int insertReadPage(Connection conn, String bookcode, String userId) {
+			int result = 0;
+	   PreparedStatement pstmt = null;
+			
+			String query = "insert into mybook valuse(?,?,?,sysdate)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				pstmt.setString(2, userId);
+				pstmt.setInt(3, 1);
+				
+			
+				result = pstmt.executeUpdate();
+			} catch ( SQLException e) {
+				e.printStackTrace();
+			}finally {
+			close(pstmt);
+			return result;
+				}
+		}
+
+		public MyBook selectBookPage(Connection conn, String bookcode, String userId) {
+			MyBook mb = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from mybook where  bookcode = ? userid = ? ";
+					
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bookcode);
+			pstmt.setString (2, userId);
+			
+			rset = pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		close(rset);
+		close(pstmt);
+		}
+
+		return mb;
+		}
 }

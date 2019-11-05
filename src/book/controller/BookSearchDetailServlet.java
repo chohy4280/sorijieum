@@ -1,6 +1,7 @@
 package book.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import book.model.service.BookService;
 import book.model.vo.Book;
+import book.model.vo.BookPlay;
+import likebook.model.vo.LikeBook;
+import mybook.model.service.MyBookService;
+import mybook.model.vo.MyBook;
 
 /**
  * Servlet implementation class BookSearchDetailServlet
@@ -36,18 +41,43 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 		
 		String bookcode = request.getParameter("bookcode");
 		String userId = request.getParameter("userId");
+		//int currentPage = Integer.parseInt(request.getParameter("page"));
+		
 		
 		BookService bservice = new BookService();
-		Book book = bservice.selectOne(bookcode);
+		BookPlay bp = bservice.selectOne(bookcode, userId);
+
+		int readpage = 1;
+		if(bp != null) {
+		if(bp.getReadpage() != 0) {
+			readpage = bp.getReadpage();
+		    }
+		}
+		
+		int bookmakepage = 1;
+		if(bp !=null) {
+			if(bp.getBookmakepage() !=0) {
+				bookmakepage = bp.getBookmakepage();
+			}
+		}
+		
 		bservice.updateBookReadCount(bookcode);
+		
 		
 		
 		RequestDispatcher view = null;
 		
-		if(book !=null) {
+		if(bp !=null) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchDetail.jsp");
-			request.setAttribute("book",book);
+			request.setAttribute("BookPlay",bp);
+			request.setAttribute("Bookcode", bookcode);
 			request.setAttribute("userId", userId);
+			//request.setAttribute("currentPage", currentPage);
+			request.setAttribute("readpage", readpage);
+			request.setAttribute("bookmakepage", bookmakepage);
+					
+		
+		
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서불러오기 실패");

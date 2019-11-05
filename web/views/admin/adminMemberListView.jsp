@@ -44,8 +44,9 @@ $(function(){
 	
 	// 체크박스 다중삭제
 	function delBtn(){
-		var result = confirm('정말로 해당 회원들을 삭제하시겠습니까?\n삭제후 동일 아이디로 30일 간 재가입이 불가능합니다.');
-		if(result){
+		var str = '정말로 해당 회원들을 삭제하시겠습니까?\n강제탈퇴 사유를 입력해주세요.\n(강제탈퇴 처리 후 동일 아이디로 30일동안 재가입 불가)';
+		var anwser = prompt(str, "");
+		if(anwser != null && anwser != ""){
 			var lists = [];
 			$("input[name='RowCheck']:checked").each(function(i){
 				lists.push($(this).val());
@@ -54,14 +55,18 @@ $(function(){
 			$.ajax({
 				url:"/sori/mdel.ad",
 				type:"post",
-				data:{ lists : list },
+				data:{ lists : list, anwser : anwser },
 				success : function(data){
 					alert(data);
 					location.href="/sori/mlist.ad?page="+<%=currentPage%>;
 				}
 			})
 			return false;
-		}}
+		}else {
+			alert("강제탈퇴 사유를 입력하셔야 합니다.");
+			return;
+		}
+			}
 
 </script>
 </head>

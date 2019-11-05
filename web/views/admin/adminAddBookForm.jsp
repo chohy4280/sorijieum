@@ -77,13 +77,18 @@ function preview2(input) {
             <br><br>
             <!-- 이미지 미리보기 부분 -->
             <div style="float: left; margin-right: 0px; margin-left: 20px; margin-top:90px; margin-right:20px;">
-            <img src="/sori/resources/book_images/addImage.jpg" style="width:250px; height:350px" id='img01'/>
+            <img src="/sori/resources/images/addImage.jpg" style="width:250px; height:350px" id='img01'/>
             <p align="center" style="color: #fff; height:40px; background: #4ecdc4; line-height: 40px; font-size: 12pt;"><i class="mini camera icon"></i>도서 이미지 미리보기</p>
             </div>
             <!-- 이미지 미리보기 부분 끝-->
             <div class="lightgreyBox2" style="height: 800px;">
              <form action="/sori/binsert.ad" method="post" enctype="multipart/form-data">
             	<table class="addform">
+            		<tr>
+						<th width="30%">도서코드</th>
+						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode"placeholder="숫자만 입력(추후 수정 불가)" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
+					</tr>
+					
 					<tr>
 						<th width="30%">도서명</th>
 						<td><div class="ui input"><input type="text" name="booktitle" id="booktitle" placeholder="책 제목 입력" required></div></td>
@@ -108,22 +113,18 @@ function preview2(input) {
 						<th width="30%">쪽수</th>
 						<td><div class="ui input"><input type="text" name="bookpage" id="bookpage"placeholder="숫자만 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
 					</tr>
-
-					<tr>
-						<th width="30%">도서코드</th>
-						<td><div class="ui input"><input type="text" name="bookcode" id="bookcode"placeholder="숫자만 입력(추후 수정 불가)" onKeyup="this.value=this.value.replace(/[^0-9]/g, '');" required></div></td>
-					</tr>
 					
 					<tr>
 						<th width="30%">책 소개</th>
-						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="50" rows="10" required></textarea></div>
+						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="40" rows="25" required></textarea></div>
 						<br><span id="counter" style="color:#aaa;">( <span style="color:#4ecdc4">0</span> / 최대 1000자 )</span>
 						</td>
 					</tr>
 					
 					<tr>
 						<th width="30%">도서이미지</th>
-						<td><input type="file" name="bookoimg" id="bookoimg" accept=".jpg,.jpeg,.png" onChange="preview(this, $('#img01'));" required>
+						<td><input type="file" name="bookoimg" id="bookoimg" accept=".jpg,.jpeg,.png" onChange="preview(this, $('#img01'));"
+						 required>
 						</td>
 					</tr>
 					

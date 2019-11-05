@@ -9,12 +9,52 @@
 <%@ include file="/../inc/top.jsp" %>
 <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/board.css">
+<script type="text/javascript">
+	<%if(loginMember == null || loginMember.getTypeNumber() == 1 || loginMember.getTypeNumber() == 2 ) {%> // 이용(대기)자 일때
+    var audio = new Audio("/sori/resources/mp3/introduce.mp3");	// 화면 접속 시 음성안내 자동재생
+    window.onload = function(){
+       audio.play();
+    }
+
+    $(function(){
+    	window.onkeyup = function(){
+   		   if(event.keyCode == 57 || event.keyCode == 105){		// 9번:입력시 메인 페이지 이동
+   			location.href="/sori/index.jsp";
+   		   }else if(event.keyCode == 54 || event.keyCode == 102){	// 6번 : 사이트 소개 처음부터 다시 듣기
+   			location.reload();
+   		   }else if(event.keyCode == 49 || event.keyCode == 97){	// 1번 : 소리지음 설립목적
+   			   audio.pause();
+   			   audio = new Audio("/sori/resources/mp3/introduce1.mp3");
+   			   audio.play();
+   		   }else if(event.keyCode == 50 || event.keyCode == 98){	// 2번 : 소리지음 비전과 미션
+   			   audio.pause();
+   			   audio = new Audio("/sori/resources/mp3/introduce2.mp3");
+   			   audio.play();
+   		   }else if(event.keyCode == 51 || event.keyCode == 99){	// 3번 : 주소와 연락처
+   			   audio.pause();
+   			   audio = new Audio("/sori/resources/mp3/introduce3.mp3");
+   			   audio.play();
+   		   }else if(event.keyCode == 52 || event.keyCode == 100){	// 4번 : 회원등록안내
+   				audio.pause();
+			   audio = new Audio("/sori/resources/mp3/introduce4.mp3");
+			   audio.play();
+   		   }else if(event.keyCode == 53 || event.keyCode == 101){	// 5번 : 회원가입
+   			location.href="/sori/views/member/memberEnrollAgree.jsp";
+   		   }else{														// 잘못누른경우
+   			   audio.pause();
+   			   audio = new Audio("/sori/resources/mp3/wrongNumber.mp3");
+   			   audio.play();
+   		   }
+    	}
+    });
+    
+    <%}%>
+</script>
 </head>
 <body>
-<audio src="/sori/resources/mp3/introduce.mp3" autoplay controls preload="auto"><embed src="/sori/resources/mp3/introduce.mp3"></embed>해당 브라우저에서는 음성이용이 불가능합니다.</audio>
 <!-- Content 시작! -->
 	<section class="my-section">
-	<div align="center" style="background:#fff; widht:auto; height:3700px;">
+	<div align="center" style="background:#fff; widht:auto; height:4000px;">
 		<img src="/sori/resources/images/siteintro1.png">
 		<p style="color:#fbbe09; font-size:30pt;">안녕하세요, 소리지음입니다.</p>
 		<p style="color:#404040; font-size:20pt;">'소리지음'은 '소리를 짓다(만들다)'라는 의미와,<br>
@@ -39,6 +79,19 @@
 		시각 장애인들이 접근할 수 있는 지식과 정보를 놀라운 수준으로 증가시킬 수 있습니다.<br>
 		지식과 정보가 보다 널리 확산되어 시각장애인들의 삶이 더욱 다채로워질 수 있도록<br>
 		당신의 소중한 시간과 능력을 나누어 주세요!</p>
+		<br><br><br><br>
+		
+		
+		<img src="/sori/resources/images/siteintro4.png">
+		<p style="color:#fbbe09; font-size:30pt;">회원등록 안내</p><br>
+		<p style="color:#404040; font-size:20pt;">소리가 보이는 도서관은 시각장애인을 위한 전용 사이트로서<br>
+		도서를 이용하시려면 회원가입 후, 관리자의 승인이 있어야 이용이 가능합니다<br>
+		회원가입을 원하시면 메인화면에서 회원가입 진행 후,<br>
+		복지카드 사본을 팩스로 보내주시기 바랍니다.<br>
+		보내주실 팩스번호는 02-562-2378 입니다.<br>
+		궁금한 점이 있으시면 관리자에게 문의해 주십시오. (02-1234-5678)<br>
+		제작자의 경우, 별도의 승인이 필요하지 않습니다.
+		
 		<br><br><br><br><br><br>
 		<hr><br><br><br><br>
 		
@@ -113,6 +166,7 @@
 	</div>
 	<br><br>
 	</section>
+
 <!-- Content 끝! -->
 </body>
 </html>

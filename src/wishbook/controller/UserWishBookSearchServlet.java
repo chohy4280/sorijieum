@@ -35,7 +35,6 @@ public class UserWishBookSearchServlet extends HttpServlet {
 		//이용자 내 신청도서 검색
 		request.setCharacterEncoding("UTF-8");
 		String userid = request.getParameter("userid");
-		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
@@ -45,7 +44,7 @@ public class UserWishBookSearchServlet extends HttpServlet {
 		
 		WishBookService wbservice = new WishBookService();
 		ArrayList<WishBook> alarmlist = wbservice.selectWishAlarmList(userid);	//내 신청글 중 처리된 글 알림
-		ArrayList<WishBook> wblist = wbservice.searchWishBookList(userid,type,keyword);
+		ArrayList<WishBook> wblist = wbservice.searchWishBookList(userid,keyword);
 		int listCount = wblist.size();
 		//총 페이지수 계산
 		int maxPage = listCount / limit;
@@ -78,7 +77,6 @@ public class UserWishBookSearchServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/member/userWishBook.jsp");
 			request.setAttribute("alarmlist", alarmlist);
 			request.setAttribute("mywblist", pageList);
-			request.setAttribute("type", type);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);

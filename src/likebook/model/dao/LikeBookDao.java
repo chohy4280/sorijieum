@@ -75,22 +75,19 @@ public class LikeBookDao {
 	}
 	
 	//관심도서 검색
-	public ArrayList<LikeBookLB> searchLikeBookList(Connection conn, String userid, String type, String keyword) {
+	public ArrayList<LikeBookLB> searchLikeBookList(Connection conn, String userid, String keyword) {
 		ArrayList<LikeBookLB> lblist = new ArrayList<LikeBookLB>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=? and ";
-		if(type.equals("title"))
-			query += "b.booktitle like ? ";
-		else if(type.equals("author"))
-			query += "b.author like ? ";
-		query += "order by likedate desc";
+		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=? and "+
+					"(b.booktitle like ? or b.author like ?) order by likedate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+keyword+"%");
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
