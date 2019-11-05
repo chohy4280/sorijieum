@@ -57,7 +57,7 @@ $(function(){
 				data:{ lists : list },
 				success : function(data){
 					alert(data);
-					location.href="/sori/bodlist.ad?page="+<%=currentPage%>+"&typenumber="+<%= loginMember.getTypeNumber() %>;
+					location.href="/sori/bodlist.ad?page="+<%=currentPage%>;
 				}
 			})
 			return false;

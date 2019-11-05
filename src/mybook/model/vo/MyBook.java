@@ -23,6 +23,14 @@ public class MyBook implements java.io.Serializable{
 		this.readRdate = readRdate;
 	}
 
+	
+	
+	public MyBook(String userId, String bookCode) {
+		super();
+		this.userId = userId;
+		this.bookCode = bookCode;
+	}
+
 	public String getUserId() {
 		return userId;
 	}

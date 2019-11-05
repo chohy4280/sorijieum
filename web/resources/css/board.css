@@ -17,7 +17,7 @@
 	margin-bottom: 0px;
 }
 
-.my-listTable {
+.my-listTable {  /*공지사항   */
 	border-top: 1px solid #fbbe09;
 	border-bottom: 1px solid #fbbe09;
 	cellspacing: 10px;
@@ -26,10 +26,12 @@
 }
 
 .my-listTable th{
-	height: 30px;
+	width: 200px;
+    height: 30px;
 	background: #fbbe09;
 	color: #fff;
 	text-align: center;
+    
 }
 
 .my-listTable td{

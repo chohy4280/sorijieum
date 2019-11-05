@@ -61,4 +61,27 @@ public class LikeBookService {
 		return listCount;
 	}
 
-}
+	   //관심도서 추가
+		public int addLikeBook(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = lbDao.addLikeBook(conn,userId,bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			    close(conn);
+			    return result;
+		}
+
+		  //관심도서 삭제
+		public int addDeleteLikeBook(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = lbDao.addDeleteLikeBook(conn,userId,bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			    close(conn);
+			    return result;
+		}
+	}

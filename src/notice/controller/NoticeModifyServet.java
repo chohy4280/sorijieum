@@ -62,14 +62,14 @@ public class NoticeModifyServet extends HttpServlet {
 		
 		//4. 파일업로드 실행함
 		//cos.jar는 MultipartRequest 클래스를 사용해서 request를 MulitpartRequset로 바꿈
-		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize,"UTF-8", new DefaultFileRenamePolicy());
+		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize,"UTF-8", 
+				new DefaultFileRenamePolicy());
 		
 		//5. 전송온 값 꺼내서 객체에 저장하기
-		int currentPage = Integer.parseInt(mrequest.getParameter("page"));
-		int noticeno = Integer.parseInt(mrequest.getParameter("noticeno"));
+		
 		Notice notice = new Notice();
 		
-		notice.setNoticeNo(noticeno);
+		notice.setNoticeNo(Integer.parseInt(mrequest.getParameter("noticeno")));
 		notice.setNoticeTitle(mrequest.getParameter("noticetitle"));
 	    notice.setNoticeContent(mrequest.getParameter("content"));
 	    //notice.setNoticeDate(Date.valueOf((mrequest.getParameter("noticedate")))); -->날짜는 Date.valueOf
@@ -121,7 +121,7 @@ public class NoticeModifyServet extends HttpServlet {
 	    
 	    //7. 받은 결과로 성공/실패 페이지 내보내기
 	    if(result > 0) {
-	    	response.sendRedirect("/sori/ndlist?noticeno="+noticeno+"&page="+currentPage);
+	    	response.sendRedirect("/sori/nlist");
 	    	
 	    }else {
 	    	view = request.getRequestDispatcher("views/common/error.jsp");

@@ -35,7 +35,7 @@ public class BookMakingMainServlet extends HttpServlet {
 		ArrayList<BookMakingProgress> waitlist = new BookMakingService().selectWaitingBook();
 		int dcount = new BookMakingService().getMakedBookCount();
 		RequestDispatcher view = null;
-		if(makelist.size() >= 0 && waitlist.size() >= 0) {
+		if(makelist.size() > 0 && waitlist.size() > 0) {
 			view = request.getRequestDispatcher("views/bookmaking/bmmain.jsp");
 			request.setAttribute("makelist", makelist);
 			request.setAttribute("waitlist", waitlist);

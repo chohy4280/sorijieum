@@ -175,18 +175,8 @@ function delBtn(){
 						<td><input type="checkbox" class="chk" name="RowCheck" value="<%= b.getBookCode() %>"></td>
 						<%} %>
 						<td><%= currentPage * 10 - 9 + i %></td>
-						<td><%if(searchtype!=null||keyword!=null||makestatus!=null){ %>
-							<a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>">
-							<%}else{ %>
-							<a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>">
-							<%} %>
-							<%= b.getBookCode() %></a></td>
-						<td style="text-align: left"><%if(searchtype!=null||keyword!=null||makestatus!=null){ %>
-							<a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>">
-							<%}else{ %>
-							<a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>">
-							<%} %>
-							<%= b.getBookTitle() %></a></td>
+						<td><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><%= b.getBookCode() %></a></td>
+						<td style="text-align: left"><a href="/sori/bdetail.ad?bookcode=<%=b.getBookCode() %>&page=<%=currentPage%>&searchtype=<%=searchtype%>&keyword=<%=keyword%>&makestatus=<%=makestatus%>"><%= b.getBookTitle() %></a></td>
 						<td><%= b.getAuthor() %></td>
 						<td><%= b.getPublisher() %></td>
 						<td><% if(b.getMakeStatus().equals("WAIT")) {%>

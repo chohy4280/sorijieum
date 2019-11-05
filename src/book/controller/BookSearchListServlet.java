@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import book.model.service.BookService;
 import book.model.vo.BookPlay;
+import notice.model.service.NoticeService;
 
 /**
  * Servlet implementation class BookSearchListServlet
@@ -45,21 +46,27 @@ public class BookSearchListServlet extends HttpServlet {
        BookService bservice = new BookService();
        
        int listCount = bservice.getListCount();
-       
-       int maxPage = listCount/limit;
-       if(listCount % limit > 0)
-	      maxPage++;
-       
-       int beginPage =(currentPage/limit) * limit +1;
-       if(currentPage % limit == 0) {
-           beginPage -= limit;
-        }
-       int endPage = beginPage + 9;
-       if(endPage > maxPage)
-    	   endPage = maxPage;
-       
-       int startRow = (currentPage * limit)-9;
-       int endRow = currentPage * limit;
+
+		
+		//총 페이지 수 계산
+		int maxPage = listCount / limit;
+		if(listCount % limit > 0)
+			maxPage++;
+		
+		//currentPage가 속한 페이지그룹의 시작페이지숫자와 끝숫자 계산
+				
+				int beginPage = (currentPage / limit) * limit + 1;
+				if(currentPage % limit == 0) {
+			         beginPage -= limit;
+			    	}
+				int endPage = beginPage + (limit - 1); //+ 9
+				if(endPage > maxPage) {
+					endPage = maxPage;
+					}
+				
+				//currentPage에 출력할 목록의 조회할 행 번호 계산
+				int startRow = (currentPage * limit) - 9;
+				int endRow = currentPage * limit;
        
        ArrayList<BookPlay> bplist = bservice.selectList(startRow,endRow);
        

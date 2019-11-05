@@ -347,7 +347,7 @@ $(function(){
 
 					<p style="font-size: 15pt">메모 작성</p>
 					<form action="/sori/mminsert.ad" method="post">
-						<textarea name="adminmemo" id="adminmemo" cols="85" rows="2" placeholder="관리자 메모 내용을 입력하세요.(공백 포함 최대 100자)" style="border-radius: 10px"></textarea>
+						<textarea name="adminmemo" id="adminmemo" cols="150" rows="3" placeholder="관리자 메모 내용을 입력하세요.(공백 포함 최대 100자)" style="border-radius: 10px"></textarea>
 						<input type="hidden" name="userid" value="<%= m.getUserId() %>"/>
 						<input type="hidden" name="adminid" value="<%= loginMember.getUserId() %>"/>
 						<div align="right"><span style="color:#aaa;" id="counter">( <span style="color:#4ecdc4">0</span> / 최대 100자 )</span>

@@ -33,14 +33,12 @@ public class NoticeMoveToModifyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//도서 신청 수정 페이지 이동 컨트롤러
 		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
-		int currentPage = Integer.parseInt(request.getParameter("page"));
 		Notice notice = new NoticeService().selectOne(noticeno);
 		
 		RequestDispatcher view = null;
 		if(notice != null) {
 			view = request.getRequestDispatcher("views/boardnotice/noticeModifyView.jsp");
 			request.setAttribute("notice", notice);
-			request.setAttribute("currentPage", currentPage);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

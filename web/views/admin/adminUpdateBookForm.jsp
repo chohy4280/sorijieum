@@ -94,13 +94,10 @@ function preview2(input) {
             <!-- 이미지 미리보기 부분 끝-->
             <div class="lightgreyBox2" style="height: 800px; align: center;">
             <form action="/sori/bup.ad" method="post" enctype="multipart/form-data">
-            
             	<input type="hidden" name="page" id="page" value="<%=currentPage%>">
-            	<%if(searchtype!=null||keyword!=null||makestatus!=null) {%>
             	<input type="hidden" name="searchtype" id="page" value="<%=searchtype%>">
             	<input type="hidden" name="keyword" id="page" value="<%=keyword%>">
             	<input type="hidden" name="makestatus" id="page" value="<%=makestatus%>">
-            	<%}%>
             	<table class="addform">
             	
 					<tr>
@@ -136,7 +133,7 @@ function preview2(input) {
 
 					<tr>
 						<th width="30%">책 소개</th>
-						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="40" rows="25" required><%=book.getBookInfo() %></textarea></div>
+						<td><div class="ui input"><textarea name="bookinfo" id="bookinfo" placeholder="내용을 입력해주세요" cols="50" rows="10" required><%=book.getBookInfo() %></textarea></div>
 						<br><span id="counter" style="color:#aaa;">( <span style="color:#4ecdc4">0</span> / 최대 1000자 )</span></td>
 					</tr>
 					
