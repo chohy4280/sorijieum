@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="notice.model.vo.Notice, java.util.ArrayList"%>
     <%
     Notice notice = (Notice)request.getAttribute("notice");
-   
+    int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
     %>
 <!DOCTYPE html>
 <html>
@@ -29,8 +29,9 @@
 	<!-- 공지사항 목록 시작 -->
 	<form action = "/sori/nomidi" method = "post" enctype= "multipart/form-data">
 	<input type= "hidden" name="noticeno" value="<%= notice.getNoticeNo() %>"> <!-- 값은 전송은 가지만 안보이게 한다. -->
-<input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
-<input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
+	<input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
+	<input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
+	<input type="hidden" name="page" value="<%=currentPage%>">
 		<table class="my-listTable" align="center">
 			<tr>
 			
@@ -38,8 +39,8 @@
 				value="<%= notice.getNoticeTitle() %>" style="width:700px;"></th>
 			</tr>
 			<tr style="height:20px; font-size: 12px;">
-				<td><input type= "text" name = "noticewriter" placeholder="공지사항 작성자" value="<%= notice.getNoticeWriter() %>"></td>
-				<td><input type="date" name="noticedate" placeholder= "YYYY/MM/DD" value="<%= notice.getNoticeDate() %>"></td>
+				<td><%= notice.getNoticeWriter() %></td>
+				<td><%= notice.getNoticeDate() %></td>
 				<td><%= notice.getNoticeViews() %></td>
 				<td><% if(notice.getNoticeRfile() !=null && !notice.getNoticeOfile().equals("null")){ %>
            <a href="/sori/nfdown?ofile=<%= notice.getNoticeOfile() %>
@@ -59,9 +60,12 @@
 		</textarea></div>
 		
 		<div align="right">
+		<%if(loginMember != null &&(loginMember.getTypeNumber()==4 || loginMember.getTypeNumber()==5 )){ %>
 		<div class="ui buttons">
 			<input type="submit" class="ui positive button" value="수정" style="width:80px"></button>
 			</div>
+		<%}else{ %>
+		<%} %>
 			</div>
 			
 		</form>

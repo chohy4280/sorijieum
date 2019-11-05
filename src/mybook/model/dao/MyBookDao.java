@@ -182,5 +182,79 @@ public class MyBookDao {
 		
 		return listCount;
 	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+   //이용자가 도서를 읽은 적이 있다면 최신날짜 업데이트
+	public int updateReadPage(Connection conn, String bookcode, String userId) {
+		int result = 0;
+   PreparedStatement pstmt = null;
+		
+		String query = "update book set rdate=sysdate where bookcode=? userid =? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bookcode);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+		} catch ( SQLException e) {
+			e.printStackTrace();
+		}finally {
+		close(pstmt);
+		return result;
+			}
 
+	
+}
+	
+	
+
+	
+	   //이용자가 새로운 책을 누른다면 내 서재에 readpage, userid, bookcode 추가
+		public int insertReadPage(Connection conn, String bookcode, String userId) {
+			int result = 0;
+	   PreparedStatement pstmt = null;
+			
+			String query = "insert into mybook valuse(?,?,?,sysdate)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				pstmt.setString(2, userId);
+				pstmt.setInt(3, 1);
+				
+			
+				result = pstmt.executeUpdate();
+			} catch ( SQLException e) {
+				e.printStackTrace();
+			}finally {
+			close(pstmt);
+			return result;
+				}
+		}
+
+		public MyBook selectBookPage(Connection conn, String bookcode, String userId) {
+			MyBook mb = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String query = "select * from mybook where  bookcode = ? userid = ? ";
+					
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bookcode);
+			pstmt.setString (2, userId);
+			
+			rset = pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		close(rset);
+		close(pstmt);
+		}
+
+		return mb;
+		}
 }

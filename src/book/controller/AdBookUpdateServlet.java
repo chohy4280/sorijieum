@@ -46,9 +46,7 @@ public class AdBookUpdateServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");;
 		
-		String searchtype = request.getParameter("searchtype");
-		String keyword = request.getParameter("keyword");
-		String makestatus = request.getParameter("makestatus");
+		
 		
 		RequestDispatcher view = null;
 		if(!ServletFileUpload.isMultipartContent(request)) { 
@@ -62,6 +60,10 @@ public class AdBookUpdateServlet extends HttpServlet {
 		String savePath = request.getSession().getServletContext().getRealPath("/resources/book_upfiles");
 		
 		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "utf-8", new DefaultFileRenamePolicy());
+		
+		String searchtype = mrequest.getParameter("searchtype");
+		String keyword = mrequest.getParameter("keyword");
+		String makestatus = mrequest.getParameter("makestatus");
 		
 		Book b = new Book();
 		int currentPage = Integer.parseInt(mrequest.getParameter("page"));

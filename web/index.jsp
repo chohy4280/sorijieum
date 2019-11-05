@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <%
-	Member loginMember = (Member)session.getAttribute("loginMember");
-	int typeNumber = 0;
-	if(loginMember != null){
-		typeNumber = loginMember.getTypeNumber();
-	}
+   Member loginMember = (Member)session.getAttribute("loginMember");
+   int typeNumber = 0;
+   if(loginMember != null){
+      typeNumber = loginMember.getTypeNumber();
+   }
 %>     
 <!DOCTYPE html>
 <html>
@@ -89,6 +89,7 @@ $(function(){
    			$("#loginMain").val('');
    		   }
 	});
+
 });
 
 // 음성안내 ***********************************
@@ -114,41 +115,41 @@ window.onload = function(){
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/main.css">
 <style type="text/css">
 @font-face { font-family: 'S-CoreDream-7ExtraBold'; 
-			 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
-			 font-weight: normal; 
-			 font-style: normal; }
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff'); 
+          font-weight: normal; 
+          font-style: normal; }
 
 * { font-family: 'S-CoreDream-7ExtraBold';}
 
 .wrapper {
-	z-index:1;
-	position:relative;
-	width:100%;
-	height:100%;
-	}
-	.wrapper:after{
-	width:100%;
-	height:100%;
-	z-index:-1;
-	position:absolute;
-	top:0;
-	left:0;
-	content:"";
-	background-image: url('/sori/resources/images/mainbook.jpg') ;
-	background-repeat:no-repeat;
-	background-position:center;
-	background-size: cover; 
-	background-attachment: scroll;
-	opacity: 1;
-	}
+   z-index:1;
+   position:relative;
+   width:100%;
+   height:100%;
+   }
+   .wrapper:after{
+   width:100%;
+   height:100%;
+   z-index:-1;
+   position:absolute;
+   top:0;
+   left:0;
+   content:"";
+   background-image: url('/sori/resources/images/mainbook.jpg') ;
+   background-repeat:no-repeat;
+   background-position:center;
+   background-size: cover; 
+   background-attachment: scroll;
+   opacity: 1;
+   }
 
 .ui.cards {
-	font-family: 'S-CoreDream-7ExtraBold';
+   font-family: 'S-CoreDream-7ExtraBold';
 }
 
 .ui.cards .card:hover{
-	background: #fbc21b; 
-	background-opacity:0.4;
+   background: #fbc21b; 
+   background-opacity:0.4;
 }
 </style>
 </head>
@@ -165,39 +166,39 @@ window.onload = function(){
 <div align="right">
 <h2 class="ui header">
 <div align="right" style="margin-right:2%;margin-top:1%">
-	<% if(typeNumber==1){ %>
-			<a class="ui grey image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
-			<%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
-			<div class="detail">
-			이용대기자
-			</div>
-			</a>
-	<% }else if(typeNumber==2){ %>
-			<a class="ui yellow image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
-			<%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
-			<div class="detail">
-			이용자
-			</div>
-			</a>
-	<% }else if(typeNumber==3){ %>
-			<a class="ui olive image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
-			<%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
-			<div class="detail">
-			제작자
-			</div>
-			</a>
-	<% }else if(typeNumber==4 || typeNumber==5){ %>
-			<a class="ui teal image huge label" href="/sori/admain.ad">
-			<%= loginMember.getUserName() %>
-			<div class="detail">
-			<% if(typeNumber==4){ %>
-			부관리자
-			<% }else{ %>
-			대표관리자
-			<% } %>
-			</div>
-			</a>
-	<% } %>
+   <% if(typeNumber==1){ %>
+         <a class="ui grey image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+         <%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
+         <div class="detail">
+         이용대기자
+         </div>
+         </a>
+   <% }else if(typeNumber==2){ %>
+         <a class="ui yellow image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+         <%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
+         <div class="detail">
+         이용자
+         </div>
+         </a>
+   <% }else if(typeNumber==3){ %>
+         <a class="ui olive image huge label" href="/sori/mypage?userid=<%= loginMember.getUserId() %>">
+         <%= loginMember.getUserName() %><div class="floating ui big red circular label alarm circle"></div>
+         <div class="detail">
+         제작자
+         </div>
+         </a>
+   <% }else if(typeNumber==4 || typeNumber==5){ %>
+         <a class="ui teal image huge label" href="/sori/admain.ad">
+         <%= loginMember.getUserName() %>
+         <div class="detail">
+         <% if(typeNumber==4){ %>
+         부관리자
+         <% }else{ %>
+         대표관리자
+         <% } %>
+         </div>
+         </a>
+   <% } %>
 <div><a class="ui grey label" href="/sori/memberLogout">로그아웃</a></div>
 </div>
 </h2>
@@ -208,12 +209,12 @@ window.onload = function(){
 <div class="ui four cards" style="margin:-15px 5% 0 5%">
   <div class="card">
     <div class="image">
-    	<img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png" alt="소리지음">
+       <img onclick="location.href='/sori/index.jsp'" src="/sori/resources/images/logo.png" alt="소리지음">
     </div>
   </div>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/sorijieumIntro.jsp'" src="/sori/resources/images/사이트소개.png" alt="사이트소개">
+         <img onclick="location.href='/sori/views/sorijieumIntro.jsp'" src="/sori/resources/images/사이트소개.png" alt="사이트소개">
     </div>
   </div>
   <% if(loginMember != null){ %>
@@ -259,25 +260,25 @@ window.onload = function(){
   <% } %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png" alt="공지사항">
+         <img onclick="location.href='/sori/views/boardnotice/noticeListView.jsp'" src="/sori/resources/images/공지사항.png" alt="공지사항">
     </div>
   </div>
   <% if(loginMember != null){ %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/qlist'" src="/sori/resources/images/QNA.png" alt="문의하기">
+         <img onclick="location.href='/sori/qlist'" src="/sori/resources/images/QNA.png" alt="문의하기">
     </div>
   </div>
   <% }else{ %>
   <div class="card">
     <div class="image">
-      	<img src="/sori/resources/images/QNA.png" alt="문의하기">
+         <img src="/sori/resources/images/QNA.png" alt="문의하기">
     </div>
   </div>
   <% } %>
   <div class="card">
     <div class="image">
-      	<img onclick="location.href='/sori/views/boardfaq/faqListView.jsp'" src="/sori/resources/images/FAQ.png" alt="자주묻는 질문">
+         <img onclick="location.href='/sori/views/boardfaq/faqListView.jsp'" src="/sori/resources/images/FAQ.png" alt="자주묻는 질문">
     </div>
   </div>
 </div>

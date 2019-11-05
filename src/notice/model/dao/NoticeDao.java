@@ -2,7 +2,6 @@ package notice.model.dao;
 
 import static common.JDBCTemplate.*;
 
-import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -42,8 +41,8 @@ public class NoticeDao {
 		
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE , NOTICEWRITER, "
 				+ " NOTICECONTENT, NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP " + 
-				"FROM (SELECT * FROM NOTICE " + 
-				"ORDER BY NOTICEDATE DESC)) " + 
+				"FROM (SELECT * FROM NOTICE where noticetop = 'N' " + 
+				"ORDER BY NOTICEDATE DESC, noticeno desc)) " + 
 				"WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		try {
@@ -135,14 +134,14 @@ public class NoticeDao {
 		return notice;
 	}
 
-	
+	//공지사항 수정 
 	public int modifyNotice(Connection conn, Notice notice) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
 		String query = "update notice set noticetitle = ?, noticecontent = ?, "
-				+ "noticeofile = ?, noticerfile= ?, noticedate = sysdate " 
+				+ "noticeofile = ?, noticerfile= ? " 
                 + "where noticeno = ?";		
 				try {
 			pstmt = conn.prepareStatement(query);
@@ -162,6 +161,7 @@ public class NoticeDao {
 		return result;
 	}
 
+	  //공지사항 삭제
 	public int deleteNotice(Connection conn, int noticeNo) { //공지사항 삭제하기
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -181,7 +181,9 @@ public class NoticeDao {
 		}
 		return result;
 	}
-
+	
+	
+   //공지사항 조회수 증가
 	public int updateReadCount(Connection conn, int noticeno) { //조회수 1증가
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -203,12 +205,13 @@ public class NoticeDao {
 		return result;
 	}
 
-	public ArrayList<Notice> selectTopFixed(Connection conn) {
+	 //공지사항 상단 고정
+	/*public ArrayList<Notice> selectTopFixed(Connection conn) {
 		ArrayList<Notice> toplist = new ArrayList<Notice>();
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from notice where noticetop = 'Y'";
+		String query = "select * from notice where noticetop = 'Y' ORDER BY NOTICEDATE DESC, noticeno desc";
 		
 		  
 	      try {
@@ -241,4 +244,76 @@ public class NoticeDao {
 		
 		return toplist;
 	}
-}
+*/
+	 //공지사항 검색
+	public ArrayList<Notice> selectNoticeSearch(Connection conn, String keyword, int startnum, int endnum) {
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, NOTICEWRITER,NOTICECONTENT,"
+				       + " NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP"+
+		                " FROM(SELECT * FROM NOTICE" +
+				         " WHERE noticetitle LIKE '%" + keyword + "%' " + 
+		                 " ORDER BY NOTICENO))" + " WHERE RNUM >= ? AND RNUM <= ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startnum);
+			pstmt.setInt(2, endnum);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Notice n = new Notice();
+				n.setNoticeNo(rset.getInt("noticeno"));
+				n.setNoticeTitle(rset.getString("noticetitle"));
+				n.setNoticeWriter(rset.getString("noticewriter"));
+				n.setNoticeContent(rset.getString("noticecontent"));
+				n.setNoticeDate(rset.getDate("noticedate"));
+				n.setNoticeViews(rset.getInt("noticeviews"));
+				n.setNoticeOfile(rset.getString("noticeofile"));
+				n.setNoticeRfile(rset.getString("noticerfile"));
+				n.setNoticeTop(rset.getString("noticetop"));
+				list.add(n);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int getListCountNoticeSearch(Connection conn, String keyword) {
+		int listCount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = null;
+			
+		    if(keyword != null) {
+				query =  "select count(*) from (select * from notice) where noticetitle like '%" + keyword + "%'";
+		    }else {
+		    	query = "select count(*) from notice";
+		    }
+		
+		    try {
+				stmt = conn.createStatement();
+				
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(rset);
+				close(stmt);
+			}
+		
+		return listCount;
+		
+	}
+}	
