@@ -75,22 +75,19 @@ public class LikeBookDao {
 	}
 	
 	//관심도서 검색
-	public ArrayList<LikeBookLB> searchLikeBookList(Connection conn, String userid, String type, String keyword) {
+	public ArrayList<LikeBookLB> searchLikeBookList(Connection conn, String userid, String keyword) {
 		ArrayList<LikeBookLB> lblist = new ArrayList<LikeBookLB>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=? and ";
-		if(type.equals("title"))
-			query += "b.booktitle like ? ";
-		else if(type.equals("author"))
-			query += "b.author like ? ";
-		query += "order by likedate desc";
+		String query = "select * from book b join likebook l on b.bookcode=l.bookcode where l.userid=? and "+
+					"(b.booktitle like ? or b.author like ?) order by likedate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+keyword+"%");
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -178,42 +175,17 @@ public class LikeBookDao {
 		return listCount;
 	}
 	
-	
-   //관심도서 추가
-	public int addLikeBook(Connection conn, String userId, String bookcode) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-
-		String query = "insert into likebook values(?, ?, sysdate)";
-
-		try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
-		pstmt.setString(2, bookcode);
-
-		result=pstmt.executeUpdate();
-
-		System.out.println("dao : " + query);
-		} catch (SQLException e) {
-		e.printStackTrace();
-		}finally {
-		close(pstmt);
-		}
-		return result;
-		}
-
-	//관심도서 삭제
-	public int addDeleteLikeBook(Connection conn, String userId, String bookcode) {
+	   //관심도서 추가
+		public int addLikeBook(Connection conn, String userId, String bookcode) {
 			int result = 0;
 			PreparedStatement pstmt = null;
 
-			String query = "delete likebook where bookcode = ? and userId= ?";
+			String query = "insert into likebook values(?, ?, sysdate)";
 
 			try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bookcode);
-			pstmt.setString(2, userId);
-
+			pstmt.setString(1, userId);
+			pstmt.setString(2, bookcode);
 
 			result=pstmt.executeUpdate();
 
@@ -222,8 +194,32 @@ public class LikeBookDao {
 			e.printStackTrace();
 			}finally {
 			close(pstmt);
-			} 
+			}
 			return result;
 			}
 
-}
+		//관심도서 삭제
+		public int addDeleteLikeBook(Connection conn, String userId, String bookcode) {
+				int result = 0;
+				PreparedStatement pstmt = null;
+
+				String query = "delete likebook where bookcode = ? and userId= ?";
+
+				try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, bookcode);
+				pstmt.setString(2, userId);
+
+
+				result=pstmt.executeUpdate();
+
+				System.out.println("dao : " + query);
+				} catch (SQLException e) {
+				e.printStackTrace();
+				}finally {
+				close(pstmt);
+				} 
+				return result;
+				}
+
+	}

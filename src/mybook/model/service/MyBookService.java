@@ -37,9 +37,9 @@ public class MyBookService {
 	}
 	
 	//내서재 검색
-	public ArrayList<MyBookMYB> searchMyBookList(String userid, String type, String keyword) {
+	public ArrayList<MyBookMYB> searchMyBookList(String userid, String keyword) {
 		Connection conn = getConnection();
-		ArrayList<MyBookMYB> myblist = mbDao.searchMyBookList(conn,userid,type,keyword);
+		ArrayList<MyBookMYB> myblist = mbDao.searchMyBookList(conn,userid,keyword);
 		close(conn);
 		return myblist;
 	}
@@ -60,50 +60,54 @@ public class MyBookService {
 		return listCount;
 	}
 
-	//이용자가 책을 읽은적이 있다면 최신날짜만 업데이트
-	public int updateReadPage(String userId, String bookcode, MyBook mbb, int rpage) {
-		Connection conn = getConnection();
-		int result = mbDao.updateReadPage(conn, userId, bookcode, mbb, rpage);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//이용자가 책을 읽은적이 있다면 최신날짜만 업데이트
+public int updateReadPage(String userId, String bookcode, MyBook mbb, int rpage) {
+Connection conn = getConnection();
+int result = mbDao.updateReadPage(conn, userId, bookcode, mbb, rpage);
+if(result > 0)
+commit(conn);
+else
+rollback(conn);
+close(conn);
+return result;
+}
 
 
 
-	//이용자가 책을 읽은 적이 없다면 이어페이지 1추가
-	public int insertReadPage(String userId, String bookcode, MyBook mbb, int rpage) {
-		Connection conn = getConnection();
-		int result = mbDao.insertReadPage(conn, userId, bookcode, mbb, rpage);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
-     
-	
-	//도서상세보기에서 필요한 마이북 아이디
-	public MyBook selectOneMyBookUser(String bookcode, String userId) {
-		Connection conn = getConnection();
-		MyBook mb = mbDao.selectOneMyBookUser(conn, bookcode, userId);
-		close(conn);
-		return mb;
-	}
+//이용자가 책을 읽은 적이 없다면 이어페이지 1추가
+public int insertReadPage(String userId, String bookcode, MyBook mbb, int rpage) {
+Connection conn = getConnection();
+int result = mbDao.insertReadPage(conn, userId, bookcode, mbb, rpage);
+if(result > 0)
+commit(conn);
+else
+rollback(conn);
+close(conn);
+return result;
+}
 
-	public int updatePlayBook(String userId, String bookcode, int rpage) {
-		Connection conn = getConnection();
-		int result = mbDao.updatePlayBook(conn, bookcode, userId, rpage);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
+
+//도서상세보기에서 필요한 마이북 아이디
+public MyBook selectOneMyBookUser(String bookcode, String userId) {
+Connection conn = getConnection();
+MyBook mb = mbDao.selectOneMyBookUser(conn, bookcode, userId);
+close(conn);
+return mb;
+}
+
+public int updatePlayBook(String userId, String bookcode, int rpage) {
+Connection conn = getConnection();
+int result = mbDao.updatePlayBook(conn, bookcode, userId, rpage);
+if(result > 0)
+commit(conn);
+else
+rollback(conn);
+close(conn);
+return result;
+}
 
 }

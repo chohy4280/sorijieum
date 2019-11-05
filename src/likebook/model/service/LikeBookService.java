@@ -37,9 +37,9 @@ public class LikeBookService {
 	}
 
 	//관심도서 검색
-	public ArrayList<LikeBookLB> searchLikeBookList(String userid, String type, String keyword) {
+	public ArrayList<LikeBookLB> searchLikeBookList(String userid, String keyword) {
 		Connection conn = getConnection();
-		ArrayList<LikeBookLB> lblist = lbDao.searchLikeBookList(conn, userid, type, keyword);
+		ArrayList<LikeBookLB> lblist = lbDao.searchLikeBookList(conn, userid, keyword);
 		close(conn);
 		return lblist;
 	}
@@ -62,26 +62,26 @@ public class LikeBookService {
 	}
 
 	   //관심도서 추가
-	public int addLikeBook(String userId, String bookcode) {
-		Connection conn = getConnection();
-		int result = lbDao.addLikeBook(conn,userId,bookcode);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		    close(conn);
-		    return result;
-	}
+		public int addLikeBook(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = lbDao.addLikeBook(conn,userId,bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			    close(conn);
+			    return result;
+		}
 
-	  //관심도서 삭제
-	public int addDeleteLikeBook(String userId, String bookcode) {
-		Connection conn = getConnection();
-		int result = lbDao.addDeleteLikeBook(conn,userId,bookcode);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		    close(conn);
-		    return result;
+		  //관심도서 삭제
+		public int addDeleteLikeBook(String userId, String bookcode) {
+			Connection conn = getConnection();
+			int result = lbDao.addDeleteLikeBook(conn,userId,bookcode);
+			if(result > 0)
+				commit(conn);
+			else
+				rollback(conn);
+			    close(conn);
+			    return result;
+		}
 	}
-}
