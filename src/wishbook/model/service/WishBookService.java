@@ -105,6 +105,14 @@ public class WishBookService {
 		return wishbook;
 	}
 	
+	public int selectwishno() {
+		Connection conn = getConnection();
+		int result = wbDao.selectwishno(conn);
+		System.out.println(result);
+		close(conn);
+		return result;
+	}
+	
 	public int getLastWishNo(int wishno) {
 		Connection conn = getConnection();
 		int result = wbDao.getLastWishNo(conn, wishno);

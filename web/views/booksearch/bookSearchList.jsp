@@ -20,7 +20,7 @@
 <meta charset="UTF-8">
 <title>도서검색</title>
  <%@include file="/../inc/top.jsp"%>
-<script type="text/javascript" src = "resources/js/jquery-3.4.1.min.js"></script>
+ <script src="/sori/resources/js/sorijieum_tts.js"></script>
 <script type ="text/javascript">
 var audio = new Audio("/sori/resources/mp3/booksearchmain.mp3");
 window.onload = function(){
@@ -51,7 +51,6 @@ window.onkeyup = function(){
       audio.play();
    }
 }
-
 </script>
 <!-- CUSTOM CSS -->
 	<link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
@@ -73,8 +72,8 @@ window.onkeyup = function(){
 <div class="SearchBox" style="height: 50px;">
 <form action="/sori/bsearch" method="post">
 <select name="search"  style="border-radius:5px; width:100px; height:40px">
-<option  value="booktitle">도서명</option>
-<option value="author">저자명</option>
+<option id="booktitle" value="booktitle">도서명</option>
+<option id="author" value="author">저자명</option>
 </select>
 <input type="search" name="keyword"  placeholder="내용입력" style="border-radius:5px; width:200px; height:40px;" >
 <input type="submit" value="검색" style="border-radius:5px; width:100px; height:40px;">

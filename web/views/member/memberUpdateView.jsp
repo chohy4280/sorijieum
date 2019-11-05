@@ -76,11 +76,6 @@ $(function(){
 	
 	 $("#btnsub").focusin(function(){   //수정할 정보 입력 후, 수정하기 버튼으로 포커스 왔을 때
       	submit_comp();
-         $(this).keyup(function(){
-            if(event.keyCode == 57){
-               location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
-            }
-         });
 	  });
 	
 	$("#update_main1").keyup(function(){	
@@ -90,25 +85,13 @@ $(function(){
 			$("#userpwd").select();
 		}else if (keyV == '2'){	// 회원탈퇴 창 이동
 			location.href="/sori/views/member/memberQuitView.jsp";
-		}else if (keyV == '3'){	// 없음(값 지우기)
-			$("#update_main1").val("");
-		}else if (keyV == '4'){	// 없음(값 지우기)
-			$("#update_main1").val("");
-		}else if (keyV == '5'){	// 없음(값 지우기)
-			$("#update_main1").val("");
-		}else if (keyV == '6'){	// 없음(값 지우기)
-			$("#update_main1").val("");
-		}else if (keyV == '7'){	// 없음(값 지우기)
-			$("#update_main1").val("");
-		}else if (keyV == '8'){	// 없음(값 지우기)
-			$("#update_main1").val("");
 		}else if (keyV == '9'){	// 마이페이지로 이동
 			location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
 		}else if (keyV == '0'){	// 다시듣기
 			audio.play();
-		}else if (event.keyCode == 27){ //음성 멈춤
-			audio.pause();
-		    audio.currentTime = 0;
+			$("#update_main1").select();
+		}else {	// 없음(값 지우기)
+			$("#update_main1").val("");
 		}
 	});
 });
@@ -117,7 +100,14 @@ if(<%= loginMember.getTypeNumber() < 3 %>){
 var audio = new Audio("/sori/resources/mp3/mypage/update_1main.mp3");
 window.onload = function(){
    audio.play();
-}  
+} 
+
+window.onkeyup = function(){
+	if(event.keyCode == 27){
+		audio.pause();
+	    audio.currentTime = 0;
+	}
+}
 
 function idcomp_userpwd(){   //비밀번호 입력
    audio.pause();

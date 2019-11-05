@@ -267,31 +267,6 @@ public class BookMakingDao {
 		return dcount;
 	}
   
-	//도서제작 추출 텍스트 파일 불러오기
-	public ArrayList<Book> selectBookLoadText(Connection conn, String bookcode) {
-		ArrayList<Book> txtlist = new ArrayList<Book>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from book where bookcode = '" + bookcode + "'";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				Book book = new Book();
-				book.setBookCode(rset.getString("bookcode"));
-				book.setBookRtxt(rset.getString("bookrtxt"));
-				txtlist.add(book);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		return txtlist;
-	}
 
 	//도서제작 팝업창, 메인창 불러오기
 	public ArrayList<BookMakingProgress> selectBookMakingPopupLoad(Connection conn, String bookcode, String userid) {

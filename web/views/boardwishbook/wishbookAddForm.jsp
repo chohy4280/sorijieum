@@ -37,6 +37,30 @@
 	
 	
 	$(function(){
+		$("#wishbookauthor").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishbookAuthor.mp3");
+			audio.play();
+		});
+		
+		$("#wishpublisher").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishbookPub.mp3");
+			audio.play();
+		});
+		
+		$("#wishpublishdate").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishpublishdate.mp3");
+			audio.play();
+		});
+		
+		$("#submit").focus(function(){
+			var audio = new Audio("/sori/resources/mp3/wishsubmit.mp3");
+			audio.play();
+			window.onkeyup = function(){
+				if(event.keyCode == 57){ 
+					location.href="/sori/wblist";
+				}
+			}
+		});
 		$("#wishbooktitle").keyup(function(){	// 처음 접속 후 1번 클릭한 뒤에
 			var keyV1 = $(this).val();
 			if(keyV1 == '9'){
@@ -81,7 +105,7 @@
 	<!-- 관리자/작성자 수정삭제 버튼 -->
 	<div align="right">
 		<div class="ui buttons">
-			<input type="submit" class="ui positive button" value="신청" style="width:80px"></button>
+			<input type="submit" class="ui positive button" id="submit" value="신청" style="width:80px"></button>
 				<div class="or"></div>
 			<input type="reset" class="ui button" value="취소" style="width:80px">
 		</div>

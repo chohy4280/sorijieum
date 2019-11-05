@@ -36,14 +36,7 @@ $(function(){
 		});
 		
 	});
-	
-function bpimg(){
-	alert("이미지를 추출하시겠습니까?");
-	var url = "/sori/bpimg";
-	$(location).attr('href', url);
-}
 </script>
-
 </head>
 <body>
 <!-- Content 시작! -->
@@ -59,9 +52,15 @@ function bpimg(){
 	<!-- 검색창 시작 -->
 		<div style="margin-top:20px;">
 		<form action="/sori/wbsearch" method="post">
-		<select class="ui mini simple dropdown" name="search" id="search" style="border-radius:5px;">
-			<option value="wishbooktitle">도서명</option>
+		
+		<select class="ui mini simple dropdown" name="search" id="search" style="border-radius:5px;font-family:'S-Core Dream 6';">
+			<% if(search == null || search.equals("wishbooktitle")){ %>
+			<option value="wishbooktitle" selected>도서명</option>
 			<option value="wishbookauthor">저자명</option>
+			<% }else if(search.equals("wishbookauthor")){ %>
+			<option value="wishbooktitle">도서명</option>
+			<option value="wishbookauthor" selected>저자명</option>
+			<% } %>
 		</select>
 		<% if(keyword != null){ %>
 		<div class="ui small input">
@@ -86,7 +85,7 @@ function bpimg(){
 				<th width="15%">저자명</th>
 				<th width="15%">신청자ID</th>
 				<th width="10%">신청일</th>
-				<th width="10%">진행사항</th>
+				<th width="10%">처리상태</th>
 				<th width="5%">조회수</th>
 			</tr>
 			<% if(!list.isEmpty()){

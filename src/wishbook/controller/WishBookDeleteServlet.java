@@ -33,9 +33,11 @@ public class WishBookDeleteServlet extends HttpServlet {
 		// 도서신청 삭제 처리 컨트롤러
 		request.setCharacterEncoding("UTF-8");
 		int wishno = Integer.parseInt(request.getParameter("wishno"));
+		String userid = request.getParameter("userid");
 		int result = new WishBookService().deleteWishBook(wishno);
+		System.out.println(userid);
 		if(result > 0) { 
-			response.sendRedirect("/sori/wblist");
+			response.sendRedirect("/sori/wishbook.my?userid="+userid);
 		}else {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", wishno + "번째 도서신청 삭제 실패!");

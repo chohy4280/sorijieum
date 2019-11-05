@@ -336,6 +336,7 @@ public class WishBookDao {
 				wb.setWishPublishDate(rset.getDate("wishpublishdate"));
 				wb.setWishWriter(rset.getString("wishwriter"));
 				wb.setWishDate(rset.getDate("wishdate"));
+				wb.setWishStatus(rset.getString("wishstatus"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -445,6 +446,27 @@ public class WishBookDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	//신청한 wishno 담기
+	public int selectwishno(Connection conn) {
+		int wishno = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "SELECT MAX(WISHNO) FROM WISHBOOK";
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				wishno = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		return wishno;
 	}
 	
 	//도서신청 게시물 삭제
