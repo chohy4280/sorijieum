@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import book.model.service.BookService;
 import book.model.vo.BookDV;
 import book.model.vo.BookPlay;
+import mybook.model.service.MyBookService;
 
 /**
  * Servlet implementation class BookSearchPlay
@@ -34,16 +35,21 @@ public class BookSearchPlay extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	     //도서 재생하기 (페이징 처리)
+	     //페이지 넘길때 마다 이어읽기, 최근 읽은 날짜를 mybook에 추가하는 서블릿
 		request.setCharacterEncoding("utf-8");
 		
 		String bookcode = request.getParameter("bookcode");
-		String userId = request.getParameter("userId");
+		String userId = request.getParameter("userid");
+		int rpage = Integer.parseInt(request.getParameter("rpage"));
 		
-
+		MyBookService myservice = new MyBookService();
+		int result = myservice.updatePlayBook(userId, bookcode, rpage); // 다음 버튼 누를때 마다 readpage, readrdate 추가용
 		
+		if(result>0) {
+			response.getWriter().append("ok"); //결과 반환
+		}
 	}
-	
+		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

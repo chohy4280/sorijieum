@@ -29,7 +29,7 @@
 			
 				<th colspan="4" style="height:60px; font-size: 25px;"><a href="/sori/ndlist?no=<%= notice.getNoticeNo() %>"><%= notice.getNoticeTitle() %></a></td>
 			</tr>
-			<tr style="height:20px; font-size: 12px;">
+			<tr style="height:32px; font-size: 17px;">
 				<td><%= notice.getNoticeWriter() %></td>
 				<td><%= notice.getNoticeDate() %></td>
 				<td><%= notice.getNoticeViews() %></td>
@@ -49,7 +49,6 @@
 	<!--공지사항 목록 끝-->
 	
 	<!-- 관리자 수정삭제 버튼 -->
-	<% if(loginMember !=null && loginMember.getTypeNumber() == 4 && loginMember.getTypeNumber() == 5) {%>
 	<div align="right">
 		<div class="ui buttons">
 			<button class="ui positive button" onclick="location.href='/sori/nomtm?noticeno=<%= notice.getNoticeNo() %>'">수정</button>
@@ -57,9 +56,6 @@
 			<button class="ui button" onclick="location.href='/sori/ndelete?noticeno=<%= notice.getNoticeNo() %>&rfile=<%= notice.getNoticeRfile() %> '">삭제</button>
 		</div>
 	</div>
-	<% }else{ %>
-	<div></div>
-	<% } %>
 	<!--관리자 수정삭제 버튼 끝  -->
 	
 	<!-- 공통 페이지 이동 버튼 -->

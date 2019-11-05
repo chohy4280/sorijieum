@@ -159,52 +159,53 @@ $(function(){
 		<% } %> --%>
 		
 	<!-- 페이징 시작 -->
-		<div id="pagebox1" align="center">
+		
 <%if(keyword ==null){ %>
-   <a href="/sori/nlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
-<% if((beginPage - 10) < 1){ %>
-   <a href="/sori/nlist?page=1"><i class="angle grey left icon"></i></a>
-<% }else{ %>
-   <a href="/sori/nlist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
-<% } %>&nbsp;
-<% for(int p = beginPage; p <= endPage; p++){ 
-      if(p == currentPage){
-%>
-   <a href="/sori/nlist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-<% }else{ %>
-   <a href="/sori/nlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-<% }} %>&nbsp;
-<% if((endPage +  10) > maxPage){ %>
-   <a href="/sori/nlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
-<% }else{ %>
-   <a href="/sori/nlist?page=<%= maxPage %>"><i class="angle grey right icon"></i></a>
-<% } %>&nbsp;
-<a href="/sori/nlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
-</div><!-- 도서 전체 목록 페이징 끝 -->
+<div id="pagebox1" align="center">
+  <a href="/sori/nlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;
+		<% if((beginPage - 10) < 1){ %>
+			<a href="/sori/nlist?page=1"><i class="angle grey left icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/nlist?page=<%= beginPage - 10 %>"><i class="angle grey left icon"></i></a>
+		<% } %>&nbsp;
+		<% for(int p = beginPage; p <= endPage; p++){ 
+				if(p == currentPage){
+		%>
+			<a href="/sori/nlist?page=<%= p %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<% }else{ %>
+			<a href="/sori/nlist?page=<%= p %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<% }} %>&nbsp;
+		<% if((endPage + 10) < maxPage){ %>
+			<a href="/sori/nlist?page=<%= endPage + 10 %>"><i class="angle grey right icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/nlist?page=<%= endPage %>"><i class="angle grey right icon"></i></a>
+		<% } %>&nbsp;
+		<a href="/sori/nlist?page=<%= maxPage %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		</div><!-- 도서 전체 목록 페이징 끝 -->
 <% }else{ %>
 
 <div id="pagebox1" align="center">
-   <a href="/sori/nosearch?page=1&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey double left icon"></i></a>&nbsp;
-<% if((beginPage - 10) < 1){ %>
-   <a href="/sori/nosearch?page=1&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
-<% }else{ %>
-   <a href="/sori/nosearch?page=<%= beginPage - 10 %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey left icon"></i></a>
-<% } %>&nbsp;
-<% for(int p = beginPage; p <= endPage; p++){ 
-      if(p == currentPage){
-%>
-   <a href="/sori/nosearch?page=<%= p %>&search=<%=search%>&keyword=<%=keyword%>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
-<% }else{ %>
-   <a href="/sori/nosearch?page=<%= p %>&search=<%=search%>&keyword=<%=keyword%>"><font color="black"><b><%= p %></b></font></a>&nbsp;
-<% }} %>&nbsp;
-<% if((endPage +  10) > maxPage){ %>
-   <a href="/sori/nosearch?page=<%= endPage + 10 %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
-<% }else{ %>
-   <a href="/sori/nosearch?page=<%= maxPage %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey right icon"></i></a>
-<% } %>&nbsp;
-<a href="/sori/nosearch?page=<%= maxPage %>&search=<%=search%>&keyword=<%=keyword%>"><i class="angle grey double right icon"></i></a>&nbsp;
-<% } %>
-</div>
+   <a href="/sori/nosearch?page=1&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
+		<% if((beginPage - 10) < 1){ %>
+			<a href="/sori/nosearch?page=1&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/nosearch?page=<%= beginPage - 10 %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+		<% } %>&nbsp;
+		<% for(int p = beginPage; p <= endPage; p++){ 
+				if(p == currentPage){
+		%>
+			<a href="/sori/nosearch?page=<%= p %>&search=<%= search %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+		<% }else{ %>
+			<a href="/sori/nosearch?page=<%= p %>&search=<%= search %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+		<% }} %>&nbsp;
+		<% if((endPage + 10) < maxPage){ %>
+			<a href="/sori/nosearch?page=<%= endPage + 10 %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+		<% }else{ %>
+			<a href="/sori/nosearch?page=<%= endPage %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+		<% } %>&nbsp;
+		<a href="/sori/nosearch?page=<%= maxPage %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		</div>
+	<% } %> 
 	<!-- 페이징 끝 -->
 	
 	<br><hr><br>

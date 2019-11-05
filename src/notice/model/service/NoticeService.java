@@ -22,15 +22,16 @@ public class NoticeService {
 	return nocount;
 	}
 	
-	
+	//공지사항 전체조회
 	public ArrayList<Notice> selectAll(int startnum, int endnum) {
 		Connection conn = getConnection();
 		ArrayList<Notice> list =nDao.selectAll(conn, startnum, endnum);
 		close(conn);
 		return list;
 	}
-
-	public int insertNotice(Notice notice) { //새로운  공지사항 글 등록하기
+    
+	//공지사항 글 조회
+	public int insertNotice(Notice notice) { 
 		Connection conn = getConnection();
 		int result = nDao.insertNotice(conn, notice);
 		if(result >0)
@@ -41,13 +42,15 @@ public class NoticeService {
 		return result;
 	}
 
+	//공지사항 한개만 조회
 	public Notice selectOne(int noticeno) {
 		Connection conn = getConnection();
 		Notice notice = nDao.selectOne(conn, noticeno);
 		close(conn);
 		return notice;
 	}
-
+   
+	//공지사항 수정하기
 	public int modifyNotice(Notice notice) {
 		Connection conn = getConnection();
 		int result = nDao.modifyNotice(conn, notice);
@@ -60,6 +63,7 @@ public class NoticeService {
 	
 	}
 
+	//공지사항 삭제하기 
 	public int deleteNotice(int noticeNo) {
 		Connection conn = getConnection();
 		int result = nDao.deleteNotice(conn, noticeNo);
@@ -71,6 +75,7 @@ public class NoticeService {
 	return result;
 	}
 
+	//공지사항 조회수 증가
 	public void updateReadCount(int noticeno) {
 		Connection conn = getConnection();
 		int result = nDao.updateReadCount(conn, noticeno);

@@ -36,48 +36,25 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//도서 한개 정보 불러오기 
+		//도서 한개 정보 불러오기 (도서상세보기)
 		request.setCharacterEncoding("utf-8");
 		
 		String bookcode = request.getParameter("bookcode");
 		String userId = request.getParameter("userId");
-		//int currentPage = Integer.parseInt(request.getParameter("page"));
 		
-		
-		BookService bservice = new BookService();
-		BookPlay bp = bservice.selectOne(bookcode, userId);
+	    BookService bservice = new BookService();
+	    BookPlay bp = bservice.selectOne(bookcode, userId);
+	    
+	   /* MyBookService mservice = new MyBookService();
+	    MyBook mb = mservice.selectOneMyBookUser(bookcode, userId);*/
 
-		int readpage = 1;
-		if(bp != null) {
-		if(bp.getReadpage() != 0) {
-			readpage = bp.getReadpage();
-		    }
-		}
-		
-		int bookmakepage = 1;
-		if(bp !=null) {
-			if(bp.getBookmakepage() !=0) {
-				bookmakepage = bp.getBookmakepage();
-			}
-		}
-		
-		bservice.updateBookReadCount(bookcode);
-		
-		
-		
 		RequestDispatcher view = null;
 		
 		if(bp !=null) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchDetail.jsp");
 			request.setAttribute("BookPlay",bp);
-			request.setAttribute("Bookcode", bookcode);
-			request.setAttribute("userId", userId);
-			//request.setAttribute("currentPage", currentPage);
-			request.setAttribute("readpage", readpage);
-			request.setAttribute("bookmakepage", bookmakepage);
-					
-		
-		
+			/*request.setAttribute("MyBook", mb);*/
+			
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서불러오기 실패");
@@ -85,6 +62,7 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 		
 		view.forward(request, response);
 	}
+		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

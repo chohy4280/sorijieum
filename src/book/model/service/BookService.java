@@ -193,40 +193,6 @@ close(conn);
 return list;
 }
 
-
-
-//관심도서에 추가하기
-public int addLikeBook(String userId, String bookcode) {
-Connection conn = getConnection();
-int result = bDao.addLikeBook(conn,userId, bookcode);
-if(result > 0)
-commit(conn);
-else
-rollback(conn);
-close(conn);
-return result;
-
-}
-
-//관심도서 삭제
-public int addLikeBookDel(String userId, String bookcode) {
-Connection conn = getConnection();
-int result = bDao.addLikeBookDel(conn,userId,bookcode);
-if(result>0)
-commit(conn);
-else
-rollback(conn);
-close(conn);
-return result;
-}
-
-//관심도서의 리스트 목록
-public ArrayList<LikeBook> selectLikeBook(String bookcode,String userId) {
-Connection conn = getConnection();
-ArrayList<LikeBook> list = bDao.selectLikeBook(conn, bookcode,userId);
-return list;
-}
-
 //도서검색 만을 위한 도서카운트
 public int getListCountBookSearch(String search, String keyword) {
 Connection conn = getConnection();
@@ -236,10 +202,11 @@ return listCount;
 }
 
 //책한권 골라와서 재생
-public ArrayList<BookPlay> getselectOneBookPlay(String bookcode, String userId, int readpage) {
+public BookPlay getselectOneBookPlay(String bookcode, int readpage) {
 Connection conn = getConnection();
-ArrayList<BookPlay> bplist = bDao.getselectOneBookPlay(conn,bookcode,userId, readpage);
+BookPlay bp = bDao.getselectOneBookPlay(conn, bookcode, readpage);
+System.out.println(bp);
 close(conn);
-return bplist ;
+return bp;
 }
 }

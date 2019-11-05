@@ -38,22 +38,31 @@ public class NoticeListServlet extends HttpServlet { //공지사항 전체 글 �
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int limit = 5;
+		//한 페이지에 출력할 게시물 수
+		int limit = 10;
 		
 		NoticeService nservice = new NoticeService();
 		int listCount = nservice.getListCount();
 		
+		//총 페이지 수 계산
 		int maxPage = listCount / limit;
 		if(listCount % limit > 0)
 			maxPage++;
 		
-		int beginPage = (currentPage / limit) * limit +1;
-		int endPage = beginPage + (limit - 1);
-		if(endPage > maxPage)
-			endPage = maxPage;
-		
-		int startnum = (currentPage * limit) - 4;
-		int endnum = currentPage * limit;
+		//currentPage가 속한 페이지그룹의 시작페이지숫자와 끝숫자 계산
+				
+				int beginPage = (currentPage / limit) * limit + 1;
+				if(currentPage % limit == 0) {
+			         beginPage -= limit;
+			    	}
+				int endPage = beginPage + (limit - 1); //+ 9
+				if(endPage > maxPage) {
+					endPage = maxPage;
+					}
+				
+				//currentPage에 출력할 목록의 조회할 행 번호 계산
+				int startnum = (currentPage * limit) - 9;
+				int endnum = currentPage * limit;
 	
 		ArrayList<Notice> list = nservice.selectAll(startnum, endnum);
 		ArrayList<Notice> toplist = nservice.selectTopFixed();

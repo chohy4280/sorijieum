@@ -18,21 +18,24 @@
 		<a class="massive ui yellow label" style="font-size: 30px">공지사항</a>
 		<span style="color:#fbbe09; font-weight:600">│</span>
 		<span style="color:grey">소리지음 공지사항입니다</span>
-		<br><br>
 		</div>
 
 <form action="/sori/nwrite" method="post" enctype="multipart/form-data"> <!-- 파일을 첨부할때는 무조건 post 방식 -->
-<table class= "yu-noticeWrite" align="center" width="600" height="400" border="1" cellspacing= "0" cellpadding="5">
-<tr><th>제목</th><td><input type="text" name="title" size="50"></td></tr>
-<tr><th>작성자</th><td><input type="text" name="writer"></td></tr>
-<tr><th>파일첨부</th><td><input type="file" name="upfile"></td></tr>
-<tr><th>내용</th><td><textarea name="content" rows="5" cols="50"></textarea></td></tr>
-<tr><th colspan="2">
+<table class="my-listTable" align="center">
+			<tr>
+			
+				<th colspan="4" style="height:60px; font-size: 25px;"><input type="text" name = "noticetitle" placeholder="공지사항 제목" 
+				style="width:700px;"></th>
+			</tr>
+			<tr style="height:32px; font-size: 17px;">
+				<td><input type= "text" name = "noticewriter" placeholder="공지사항 작성자"></td>
+				<td><input type="date" name="noticedate" placeholder= "YYYY/MM/DD" ></td>
+				<td> <input type="file" name="upfile" placeholder= 파일첨부></td></tr>	
+		</table>	
+			<div class="my-boardcontent">
+		<textarea name="content" cols="150" rows="14"></textarea></div>
       <input type="submit" value="등록하기"> &nbsp;
-      <input type="reset" value="취소"> &nbsp;
-      <input type="button" value="목록" onclick="location.href='noticeListView.jsp'">
-</th></tr>
-</table>
+     <input type="button" value="목록" onclick="location.href='noticeListView.jsp'">
 </form>
 </section>
 </body>

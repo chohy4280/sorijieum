@@ -8,13 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import book.model.vo.Book;
 import book.model.vo.BookDV;
 import book.model.vo.BookPlay;
-import bookmaking.model.vo.BookMaking;
-import likebook.model.vo.LikeBook;
 
 public class BookDao {
 
@@ -436,14 +433,11 @@ PreparedStatement pstmt = null;
 ResultSet rset = null;
 
 String query = "select * from book full outer join bookmakingcheck using(bookcode) "
-+ "full outer join mybook m using(bookcode) where bookdelyn = 'N' and bookcode = ? order by bookmakepage";
++ "full outer join mybook m using(bookcode) where bookdelyn = 'N' and bookcode = '" + bookcode + "' order by bookmakepage";
 
 try {
 pstmt = conn.prepareStatement(query);
-pstmt.setString(1, bookcode);
-
 rset = pstmt.executeQuery();
-
 if(rset.next()) {
 bp = new BookPlay();
 
@@ -457,9 +451,11 @@ bp.setBookRimg(rset.getString("bookrimg"));
 bp.setBookPage(rset.getInt("bookpage"));
 bp.setBookmakepage(rset.getInt("bookmakepage"));
 bp.setBookmaketxt(rset.getString("bookmaketxt"));
+bp.setUserId(rset.getString("userid"));
 bp.setReadpage(rset.getInt("readpage"));
 
 }
+System.out.println("selectOne:"+bp);
 } catch (SQLException e) {
 e.printStackTrace();
 } finally {
@@ -476,16 +472,10 @@ ArrayList<BookPlay> bplist = new ArrayList<BookPlay>();
 PreparedStatement pstmt = null;
 ResultSet rset = null;
 
-String query ="SELECT * FROM (SELECT ROWNUM RNUM, AUTHOR, BOOKCODE,BOOKTITLE, BOOKRIMG, BOOKPAGE, BOOKMAKETXT, READPAGE " + 
-"FROM(SELECT A.BOOKCODE, A.BOOKTITLE, A.AUTHOR, A.BOOKRIMG, A.BOOKPAGE, B.BOOKMAKEPAGE, B.BOOKMAKETXT, C.READPAGE " + 
-"FROM BOOK A " + 
-"FULL OUTER JOIN BOOKMAKINGCHECK B " + 
-"ON A.BOOKCODE = B.BOOKCODE " + 
-"FULL OUTER JOIN MYBOOK C " + 
-"ON B.BOOKCODE = C.BOOKCODE " + 
-"WHERE BOOKDELYN = 'N' AND MAKESTATUS='DONE' " + 
-"ORDER BY BOOKTITLE)) " + 
-"WHERE RNUM >= ? AND RNUM <= ? ";
+String query ="SELECT * FROM(SELECT ROWNUM RNUM, BOOKCODE, BOOKTITLE, AUTHOR, PUBLISHER, PUBLISHDATE, BOOKRIMG "
+		+ "FROM(SELECT * FROM BOOK WHERE BOOKDELYN='N' AND MAKESTATUS = 'DONE' ORDER BY BOOKTITLE)) "
+		+ "WHERE RNUM >= ? AND RNUM <= ? ";
+
 try {
 pstmt = conn.prepareStatement(query);
 pstmt.setInt(1, startRow);
@@ -499,9 +489,6 @@ bp.setBookCode(rset.getString("bookcode"));
 bp.setAuthor(rset.getString("author"));
 bp.setBookTitle(rset.getString("booktitle"));
 bp.setBookRimg(rset.getString("bookrimg"));
-bp.setBookPage(rset.getInt("bookpage"));
-bp.setBookmaketxt(rset.getString("bookmaketxt"));
-bp.setReadpage(rset.getInt("readpage"));
 
 
 bplist.add(bp);
@@ -522,15 +509,10 @@ ArrayList<BookPlay> bplist = new ArrayList<BookPlay>();
 PreparedStatement pstmt = null;
 ResultSet rset = null;
 
-String query = "SELECT * FROM "
-+ "(SELECT ROWNUM RNUM, AUTHOR, BOOKCODE,BOOKTITLE, BOOKRIMG, BOOKPAGE,"
-+ " BOOKMAKETXT, READPAGE FROM"
-+ "(SELECT A.BOOKCODE, A.BOOKTITLE, A.AUTHOR, A.BOOKRIMG, "
-+ "A.BOOKPAGE, B.BOOKMAKEPAGE, B.BOOKMAKETXT, C.READPAGE "
-+ "FROM BOOK A FULL OUTER JOIN BOOKMAKINGCHECK B ON A.BOOKCODE = "
-+ "B.BOOKCODE FULL OUTER JOIN MYBOOK C ON B.BOOKCODE = C.BOOKCODE "
-+ "WHERE A." + search + " LIKE '%" + keyword + "%' AND BOOKDELYN = 'N' "
-+ "AND MAKESTATUS='DONE' ORDER BY BOOKTITLE)) WHERE RNUM >= ? AND RNUM <= ? ";
+String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKTITLE, AUTHOR, PUBLISHER, PUBLISHDATE, BOOKRIMG "
+		+ "FROM(SELECT *FROM BOOK WHERE "+ search + " LIKE '%" + keyword + "%' AND BOOKDELYN = 'N' AND MAKESTATUS='DONE' ORDER BY BOOKTITLE))"
+		+ "WHERE RNUM >= ? AND RNUM <= ? ";
+
 try {
 pstmt = conn.prepareStatement(query);
 pstmt.setInt(1, startRow);
@@ -617,80 +599,6 @@ return list;
 }
 
 
-//관심도서 추가용
-public int addLikeBook(Connection conn, String userId, String bookcode) {
-int result = 0;
-PreparedStatement pstmt = null;
-
-String query = "insert into likebook values(?, ?)";
-
-try {
-pstmt = conn.prepareStatement(query);
-pstmt.setString(1, userId);
-pstmt.setString(2, bookcode);
-
-result=pstmt.executeUpdate();
-
-System.out.println("dao : " + query);
-} catch (SQLException e) {
-e.printStackTrace();
-}finally {
-close(pstmt);
-}
-return result;
-}
-
-//관심도서 삭제
-public int addLikeBookDel(Connection conn, String userId, String bookcode) {
-int result = 0;
-PreparedStatement pstmt = null;
-
-String query = "delete likebook where bookcode = ? and userId= ?";
-
-try {
-pstmt = conn.prepareStatement(query);
-pstmt.setString(1, bookcode);
-pstmt.setString(2, userId);
-
-
-result=pstmt.executeUpdate();
-
-System.out.println("dao : " + query);
-} catch (SQLException e) {
-e.printStackTrace();
-}finally {
-close(pstmt);
-} 
-return result;
-}
-
-//관심도서 추가
-public ArrayList<LikeBook> selectLikeBook(Connection conn, String bookcode, String userId) {
-ArrayList<LikeBook> list = new ArrayList<LikeBook>();
-PreparedStatement pstmt = null;
-ResultSet rset = null;
-
-String query ="SELECT * FROM LIKEBOOK";
-
-try {
-pstmt = conn.prepareStatement(query);
-rset = pstmt.executeQuery();
-while(rset.next()) {
-LikeBook lb = new LikeBook();
-lb.setBookCode(rset.getString("bookcode"));
-lb.setUserId(rset.getString("userId"));
-
-list.add(lb);
-}
-}catch(SQLException e) {
-e.printStackTrace();
-}finally {
-close(rset);
-close(pstmt);
-}
-return list;
-}
-
 //도서검색시 도서만을 위한 카운트
 public int getListCountBookSearch(Connection conn, String search, String keyword) {
 int listCount = 0;
@@ -728,46 +636,41 @@ return listCount;
 
 //도새재생 페이지로 이동할때 
 
-public ArrayList<BookPlay> getselectOneBookPlay(Connection conn, String bookcode, String userId, int readpage) {
-ArrayList<BookPlay> bplist = new ArrayList<BookPlay>();
-Statement stmt = null;
-ResultSet rset = null;
-
-String query = null;
-
-if(readpage <= 1) {
-query = "select * from book full outer join bookmakingcheck using(bookcode) "
-+ "where bookdelyn = 'N'and bookmakepage order by bookmakepage";
-}else {
-query = "select * from book full outer join bookmakingcheck using(bookcode) "
-+ "where bookdelyn = 'N'and bookmakepage order by bookmakepage";
-} 
-try { 
-stmt = conn.createStatement();
-rset = stmt.executeQuery(query);
-
-
-
-while(rset.next()) {
-BookPlay bp = new BookPlay();
-bp.setBookCode(rset.getString("bookcode"));
-bp.setAuthor(rset.getString("author"));
-bp.setBookTitle(rset.getString("booktitle"));
-bp.setBookmakepage(rset.getInt("bookmakepage"));
-bp.setBookmaketxt(rset.getString("bookmaketxt"));
-bp.setBookPage(rset.getInt("bookpage"));
-
-bplist.add(bp);
-}
-}catch(SQLException e) {
-e.printStackTrace();
-}finally {
-close(rset);
-close(stmt);
-}
-return bplist;
-}
-
+public BookPlay getselectOneBookPlay(Connection conn, String bookcode, int readpage) {
+	BookPlay bp = null;
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	String query ="";
+	if(readpage == 0) {
+	query = "select * from book join bookmakingcheck using(bookcode) "
+	+ "where bookdelyn = 'N' and bookmakepage = " + (readpage + 1) + " and bookcode = '" + bookcode + "' order by bookmakepage";
+	}else if(readpage != 0) {
+	query = "select * from book join bookmakingcheck using(bookcode) "
+	+ "where bookdelyn = 'N' and bookmakepage = " + readpage + " and bookcode = '" + bookcode + "' order by bookmakepage";	
+	}
+	try { 
+	pstmt = conn.prepareStatement(query);
+	rset = pstmt.executeQuery();
+	
+	if(rset.next()) {
+	bp = new BookPlay();
+	bp.setBookCode(rset.getString("bookcode"));
+	bp.setAuthor(rset.getString("author"));
+	bp.setBookTitle(rset.getString("booktitle"));
+	bp.setBookmakepage(rset.getInt("bookmakepage"));
+	bp.setBookmaketxt(rset.getString("bookmaketxt"));
+	bp.setBookPage(rset.getInt("bookpage"));
+	
+	System.out.println("dao:" +bp + "," + query);
+	}
+	}catch(SQLException e) {
+	e.printStackTrace();
+	}finally {
+	close(rset);
+	close(pstmt);
+	}
+	return bp;
+	}
 }
 
 
