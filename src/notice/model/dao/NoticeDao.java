@@ -82,7 +82,7 @@ public class NoticeDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into notice values (SEQ_NOTICENO.NEXTVAL, ?, ?, ?, sysdate, default, ?, ?, ?, default)";
+		String query = "insert into notice values (SEQ_NOTICENO.NEXTVAL, ?, ?, ?, sysdate, default, ?, ?, null, default)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, notice.getNoticeTitle());
@@ -90,7 +90,6 @@ public class NoticeDao {
 			pstmt.setString(3, notice.getNoticeContent());
 			pstmt.setString(4, notice.getNoticeOfile());
 			pstmt.setString(5, notice.getNoticeRfile());
-			pstmt.setDate(6, notice.getNoticeRDate());
 			result = pstmt.executeUpdate();   //int result = 0;
 			
 		} catch (SQLException e) {

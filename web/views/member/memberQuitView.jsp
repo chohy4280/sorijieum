@@ -29,27 +29,12 @@ $(function(){
 			audio = new Audio("/sori/resources/mp3/mypage/quit_2info.mp3");
 			audio.play();
 			$("#quit_main2").focus();
-		}else if (keyV == '2'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
-		}else if (keyV == '3'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
-		}else if (keyV == '4'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
-		}else if (keyV == '5'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
-		}else if (keyV == '6'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
-		}else if (keyV == '7'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
-		}else if (keyV == '8'){	// 없음(값 지우기)
-			$("#quit_main1").val("");
 		}else if (keyV == '9'){	// 마이페이지로 이동
 			location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
 		}else if (keyV == '0'){	// 다시듣기
 			audio.play();
-		}else if (event.keyCode == 27){ //음성 멈춤
-			audio.pause();
-		    audio.currentTime = 0;
+		}else {	// 없음(값 지우기)
+			$("#quit_main1").val("");
 		}
 	});
 	
@@ -59,68 +44,66 @@ $(function(){
 			$("input:radio[name='reason']:input[value='1']").attr("checked", true);
 			quitinfochk();
 			$("#quit_main3").focus();
-			quitcheck();
-			$("#qgaree").focus();
 		}else if (keyV2 == '2'){	// 탈퇴사유 2번
 			$("input:radio[name='reason']:input[value='2']").attr("checked", true);
 			quitinfochk();
 			$("#quit_main3").focus();
-			quitcheck();
 		}else if (keyV2 == '3'){	// 탈퇴사유 3번
 			$("input:radio[name='reason']:input[value='3']").attr("checked", true);
 			quitinfochk();
 			$("#quit_main3").focus();
-			quitcheck();
 		}else if (keyV2 == '4'){	// 탈퇴사유 기타사유입력
+			$("input:radio[name='reason']:input[value='4']").attr("checked", true);
 			$("textarea[name='etc']").focus();
-			quitinfosuc();
-			$("#quit_main3").focus();
-			quitcheck();
-		}else if (keyV2 == '5'){	// 없음(값 지우기)
-			$("#quit_main2").val("");
-		}else if (keyV2 == '6'){	// 없음(값 지우기)
-			$("#quit_main2").val("");
-		}else if (keyV2 == '7'){	// 없음(값 지우기)
-			$("#quit_main2").val("");
-		}else if (keyV2 == '8'){	// 없음(값 지우기)
-			$("#quit_main2").val("");
+			quitinfotype();
+			 $("textarea[name='etc']").keydown(function(e) {
+			    if (e.which == 9) {
+			    	quitinfosuc();
+			    	$("#quit_main3").focus();
+			    }
+			}); 
 		}else if (keyV2 == '9'){	// 마이페이지로 이동
 			location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
 		}else if (keyV2 == '0'){	// 다시듣기
 			audio.play();
-		}else if (event.keyCode == 27){ //음성 멈춤
-			audio.pause();
-		    audio.currentTime = 0;
+		}else {	// 없음(값 지우기)
+			$("#quit_main2").val("");
 		}
 	});
 	
 	$("#quit_main3").keyup(function(){
 		var keyV3 = $(this).val();
 		if(keyV3 == '1'){		// 탈퇴동의
-			$("#qgaree").attr("checked", true);
-			submit_quit();
-			$("#quitbtn").focus();
-		}else if (keyV3 == '2'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
-		}else if (keyV3 == '3'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
-		}else if (keyV3 == '4'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
-		}else if (keyV3 == '5'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
-		}else if (keyV3 == '6'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
-		}else if (keyV3 == '7'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
-		}else if (keyV3 == '8'){	// 없음(값 지우기)
-			$("#quit_main3").val("");
+			quitcheck();
+			$("#quit_main4").focus();
 		}else if (keyV3 == '9'){	// 마이페이지로 이동
 			location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
 		}else if (keyV3 == '0'){	// 다시듣기
 			audio.play();
-		}else if (event.keyCode == 27){ //음성 멈춤
-			audio.pause();
-		    audio.currentTime = 0;
+		}else{	// 없음(값 지우기)
+			$("#quit_main3").val("");
+		}
+	});
+	
+	$("#quit_main4").keyup(function(){
+		var keyV4 = $(this).val();
+		if(keyV4 == '1'){		// 탈퇴동의
+			$("#qgaree").attr("checked", true);
+			submit_quit();
+			$("#quit_main5").focus();
+		}else if (keyV4 == '9'){	// 마이페이지로 이동
+			location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
+		}else if (keyV4 == '0'){	// 다시듣기
+			audio.play();
+		}else {	// 없음(값 지우기)
+			$("#quit_main4").val("");
+		}
+	});
+	
+	$("#quit_main5").keyup(function(){
+		var KeyV5 = $(this).val();
+		if(KeyV5 == '9'){
+			location.href="/sori/mypage?userid=<%= loginMember.getUserId() %>";
 		}
 	});
 	
@@ -130,7 +113,20 @@ if(<%= loginMember.getTypeNumber() < 3 %>){
 var audio = new Audio("/sori/resources/mp3/mypage/quit_1main.mp3");
 window.onload = function(){
    audio.play();
+   $("#quit_main1").focus();
 }   
+
+window.onkeyup = function(){
+	if(event.keyCode == 27){ //음성멈춤
+		audio.pause();
+	    audio.currentTime = 0;
+	}
+}
+
+function quitinfotab(){
+	quitinfosuc();
+	$("#quit_main3").focus();
+}
 
 function quitinfochk(){
 	audio.pause();
@@ -138,8 +134,14 @@ function quitinfochk(){
 	audio.play();
 }
 
+function quitinfotype(){
+	audio.pause();
+	audio = new Audio("/sori/resources/mp3/mypage/quit_2infotype.mp3");
+	audio.play();
+}
+
 function quitinfosuc(){
-	audoi.pause();
+	audio.pause();
 	audio = new Audio("/sori/resources/mp3/mypage/quit_2infosuc.mp3");
 	audio.play();
 }
@@ -190,7 +192,7 @@ input[type=checkbox]
 <h5><label><input type="radio" name="reason" value="2">사이트 이용방법이 어렵습니다.</label><br></h5>
 <h5><label><input type="radio" name="reason" value="3">개인정보 유출이 우려됩니다.</label><br></h5>
 <h5><label><input type="radio" name="reason" value="4">기타 사유</label><br></h5>
-<textarea name="etc"></textarea>
+<textarea name="etc" id="textbox"></textarea>
 </div>
 <br>
 <center>
@@ -219,8 +221,10 @@ input[type=checkbox]
 </div>
 <% if(loginMember.getTypeNumber() < 3){ %>
 <input type="text" id="quit_main1" autofocus="autofocus">
-<input type="text" id="quit_main2" autofocus="autofocus">
-<input type="text" id="quit_main3" autofocus="autofocus">
+<input type="text" id="quit_main2" >
+<input type="text" id="quit_main3" >
+<input type="text" id="quit_main4" >
+<input type="text" id="quit_main5" >
 <% } %>
 </body>
 </html>

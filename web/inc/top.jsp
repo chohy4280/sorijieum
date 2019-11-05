@@ -71,12 +71,28 @@ footer{
 	<img src="/sori/resources/images/logo.png" width="100px" height="100px"></a>
   </div>
   <a class="item" href="/sori/views/sorijieumIntro.jsp">사이트 소개</a>
+  <% if(loginMember != null && loginMember.getTypeNumber() > 1){ %>
   <a class="item" href="/sori/blist">도서 검색</a>
+  <% }else{ %>
+  <a class="item">도서 검색</a>
+  <% } %>
+  <% if(loginMember != null && loginMember.getTypeNumber() > 2){ %>
   <a class="item" href="/sori/bmkmain">도서 제작</a>
+  <% }else{ %>
+  <a class="item">도서 제작</a>
+  <% } %>
+  <% if(loginMember != null && loginMember.getTypeNumber() > 1){ %>
   <a class="item" href="/sori/wblist">도서 신청</a>
+  <% }else{ %>
+  <a class="item">도서 신청</a>
+  <% } %>
   <a class="item" href="/sori/nlist">공지사항</a>
   <a class="item" href="/sori/views/boardfaq/faqListView.jsp">FAQ</a>
+  <% if(loginMember != null){ %>
   <a class="item" href="/sori/qlist">Q&A</a>
+  <% }else{ %>
+  <a class="item" >Q&A</a>
+  <% } %>
   <div class="right menu">
   <% if(loginMember != null){ %>
 <h2 class="ui header">

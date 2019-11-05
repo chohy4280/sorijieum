@@ -37,7 +37,7 @@ public class WishBookListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int limit = 10;  //한 페이지에 출력할 목록 갯수
+		int limit = 5;  //한 페이지에 출력할 목록 갯수
 		WishBookService wservice = new WishBookService();
 		int listCount = wservice.getListCount(); //테이블의 전체 목록 갯수 조회
 		//총 페이지수 계산
@@ -57,7 +57,7 @@ public class WishBookListServlet extends HttpServlet {
 			}
 		
 		//currentPage에 출력할 목록의 조회할 행 번호 계산
-		int startnum = (currentPage * limit) - 9;
+		int startnum = (currentPage * limit) - 4;
 		int endnum = currentPage * limit;
 		
 		//조회할 목록의 시작행과 끝행 번호 전달하고 결과받기

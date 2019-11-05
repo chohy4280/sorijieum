@@ -40,10 +40,10 @@ public class WishBookSearchServlet extends HttpServlet {
 		String search = request.getParameter("search");
 		String keyword = request.getParameter("keyword");
 		
-		int limit = 10;  //한 페이지에 출력할 목록 갯수
+		int limit = 5;  //한 페이지에 출력할 목록 갯수
 		
 		//currentPage에 출력할 목록의 조회할 행 번호 계산
-		int startnum = (currentPage * limit) - 9;
+		int startnum = (currentPage * limit) - 4;
 		int endnum = currentPage * limit;
 		
 		WishBookService wservice = new WishBookService();

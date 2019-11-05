@@ -53,10 +53,11 @@ public class WishBookInsertServlet extends HttpServlet {
 		}*/
 		
 		int result = new WishBookService().insertWishBook(wishbook);
-		
+		int wishno = new WishBookService().selectwishno();
+		System.out.println(wishno);
 		RequestDispatcher view = null;
 		if (result > 0) {
-			response.sendRedirect("/sori/wblist");
+			response.sendRedirect("/sori/wbdview?wishno="+wishno);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서신청 실패");

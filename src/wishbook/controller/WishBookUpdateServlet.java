@@ -41,11 +41,12 @@ public class WishBookUpdateServlet extends HttpServlet {
 		}
 		String wishpublishdateStr = "";
 		Date wpdate = null;
-		if(wishpublishdateStr != null) {
+		if(wishpublishdateStr != null && !wishpublishdateStr.isEmpty()) {
 			wishpublishdateStr = request.getParameter("wishpublishdate");
 			String wishpublishdate = wishpublishdateStr.substring(0,4)+"-"+wishpublishdateStr.substring(4,6)+"-"+wishpublishdateStr.substring(6,8);
 		    wpdate = Date.valueOf(wishpublishdate);
 		}
+		System.out.println(wishpublishdateStr);
 		/*Date wishpublishdate = null;
 		if(wishpublishdateStr != null && !wishpublishdateStr.isEmpty()) {
 			wishpublishdate = Date.valueOf(wishpublishdateStr);
@@ -55,7 +56,7 @@ public class WishBookUpdateServlet extends HttpServlet {
 		
 		RequestDispatcher view = null;
 		if (result > 0) {
-			response.sendRedirect("/sori/wblist");
+			response.sendRedirect("/sori/wbdview?wishno="+wishno);
 		} else {
 			view = request.getRequestDispatcher("views/common/error.jsp");
 			request.setAttribute("message", "도서신청 수정 실패");

@@ -90,14 +90,6 @@ public class BookMakingService {
 		return dcount;
 	}
 	
-	//도서제작 추출 텍스트 파일 불러오기
-	public ArrayList<Book> selectBookLoadText(String bookcode){
-		Connection conn = getConnection();
-		ArrayList<Book> list = bmDao.selectBookLoadText(conn, bookcode);
-		close(conn);
-		return list;
-	}
-	
 	//도서제작 팝업창, 메인창 불러오기
 	public ArrayList<BookMakingProgress> selectBookMakingPopupLoad(String bookcode, String userid){
 		Connection conn = getConnection();
