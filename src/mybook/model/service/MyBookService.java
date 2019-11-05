@@ -37,9 +37,9 @@ public class MyBookService {
 	}
 	
 	//내서재 검색
-	public ArrayList<MyBookMYB> searchMyBookList(String userid, String type, String keyword) {
+	public ArrayList<MyBookMYB> searchMyBookList(String userid, String keyword) {
 		Connection conn = getConnection();
-		ArrayList<MyBookMYB> myblist = mbDao.searchMyBookList(conn,userid,type,keyword);
+		ArrayList<MyBookMYB> myblist = mbDao.searchMyBookList(conn,userid,keyword);
 		close(conn);
 		return myblist;
 	}

@@ -9,7 +9,6 @@
 	int beginPage = ((Integer)request.getAttribute("beginPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
-	
 %>    
 <!DOCTYPE html>
 <html>
@@ -18,7 +17,13 @@
 <title>Q&A 목록</title>
 <%@ include file="/../inc/top.jsp" %>
 <script type="text/javascript">
-$(function(){
+$(function(){	
+	<% System.out.println("view의 topval: "+topval); %>
+	<% if(topval == 1){ %>
+		$(".toplist").css("display","none");
+		$("input:checkbox[id='topchk']").prop("checked",true);
+	<% } %>
+	
 	//공지 숨기기
 	$("input:checkbox[id='topchk']").on("change",function(){
 		if($("input:checkbox[id='topchk']").is(":checked") == true){
@@ -28,10 +33,7 @@ $(function(){
 			$(".toplist").css("display","");
 		}
 	});
-	
-	
-	
-	
+
 	<% if(list.size() == 0){ %>
 		$("#pagebox").css("display","none");
 	<% } %>

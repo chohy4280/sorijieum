@@ -18,7 +18,7 @@ import qna.model.vo.Qna;
 /**
  * Servlet implementation class UserMyBookSearchServlet
  */
-@WebServlet("/mybserach.my")
+@WebServlet("/mybsearch.my")
 public class UserMyBookSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,7 +37,6 @@ public class UserMyBookSearchServlet extends HttpServlet {
 		//이용자 내서재 검색
 		request.setCharacterEncoding("UTF-8");
 		String userid = request.getParameter("userid");
-		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
@@ -46,7 +45,7 @@ public class UserMyBookSearchServlet extends HttpServlet {
 		int limit = 3;  //한 페이지에 출력할 목록 갯수
 		
 		MyBookService mybservice = new MyBookService();
-		ArrayList<MyBookMYB> myblist = mybservice.searchMyBookList(userid,type,keyword);
+		ArrayList<MyBookMYB> myblist = mybservice.searchMyBookList(userid,keyword);
 		int listCount = myblist.size();
 		System.out.println("listcount: "+ listCount);
 		//총 페이지수 계산
@@ -80,7 +79,6 @@ public class UserMyBookSearchServlet extends HttpServlet {
 		if(pageList.size()>=0) {
 			view = request.getRequestDispatcher("views/member/userMyBook.jsp");
 			request.setAttribute("myblist", pageList);
-			request.setAttribute("type", type);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);

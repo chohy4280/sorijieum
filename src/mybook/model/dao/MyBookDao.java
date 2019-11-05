@@ -79,22 +79,19 @@ public class MyBookDao {
 	}
 	
 	//내서재 검색
-	public ArrayList<MyBookMYB> searchMyBookList(Connection conn, String userid, String type, String keyword) {
+	public ArrayList<MyBookMYB> searchMyBookList(Connection conn, String userid, String keyword) {
 		ArrayList<MyBookMYB> myblist = new ArrayList<MyBookMYB>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=? and ";
-		if(type.equals("title")) 
-			query += "b.booktitle like ? ";
-		else if(type.equals("author"))
-			query += "b.author like ? ";
-		query += "order by readrdate desc";
+		String query = "select * from book b join mybook my on b.bookcode=my.bookcode where my.userid=? and "+
+					"b.booktitle like ? or b.author like ? order by readrdate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+ keyword +"%");
+			pstmt.setString(3, "%"+ keyword +"%");
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {

@@ -214,9 +214,9 @@ public class WishBookService {
 	}
 
 	//이용자 내 신청도서 검색
-	public ArrayList<WishBook> searchWishBookList(String userid, String type, String keyword) {
+	public ArrayList<WishBook> searchWishBookList(String userid, String keyword) {
 		Connection conn = getConnection();
-		ArrayList<WishBook> wblist = wbDao.searchWishBookList(conn,userid,type,keyword);
+		ArrayList<WishBook> wblist = wbDao.searchWishBookList(conn,userid,keyword);
 		close(conn);
 		return wblist;
 	}
