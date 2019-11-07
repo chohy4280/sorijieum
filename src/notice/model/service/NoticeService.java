@@ -38,7 +38,7 @@ public class NoticeService {
 			commit(conn);
 		else
 			rollback(conn);
-			close(conn);
+		close(conn);
 		return result;
 	}
 

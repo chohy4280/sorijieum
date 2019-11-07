@@ -14,13 +14,11 @@ public class Notice implements java.io.Serializable{
 	private int noticeViews;
 	private String noticeOfile;
 	private String noticeRfile;
-	private java.sql.Date noticeRDate;
-	private String noticeTop;
 	
 	public Notice() {}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeWriter, String noticeContent, Date noticeDate,
-			int noticeViews, String noticeOfile, String noticeRfile, Date noticeRDate, String noticeTop) {
+			int noticeViews, String noticeOfile, String noticeRfile) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -30,8 +28,6 @@ public class Notice implements java.io.Serializable{
 		this.noticeViews = noticeViews;
 		this.noticeOfile = noticeOfile;
 		this.noticeRfile = noticeRfile;
-		this.noticeRDate = noticeRDate;
-		this.noticeTop = noticeTop;
 	}
 
 	public int getNoticeNo() {
@@ -98,28 +94,11 @@ public class Notice implements java.io.Serializable{
 		this.noticeRfile = noticeRfile;
 	}
 
-	public java.sql.Date getNoticeRDate() {
-		return noticeRDate;
-	}
-
-	public void setNoticeRDate(java.sql.Date noticeRDate) {
-		this.noticeRDate = noticeRDate;
-	}
-
-	public String getNoticeTop() {
-		return noticeTop;
-	}
-
-	public void setNoticeTop(String noticeTop) {
-		this.noticeTop = noticeTop;
-	}
-
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeWriter=" + noticeWriter
 				+ ", noticeContent=" + noticeContent + ", noticeDate=" + noticeDate + ", noticeViews=" + noticeViews
-				+ ", noticeOfile=" + noticeOfile + ", noticeRfile=" + noticeRfile + ", noticeRDate=" + noticeRDate
-				+ ", noticeTop=" + noticeTop + "]";
+				+ ", noticeOfile=" + noticeOfile + ", noticeRfile=" + noticeRfile + "]";
 	}
 	
 	

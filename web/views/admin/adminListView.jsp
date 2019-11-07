@@ -87,6 +87,7 @@ $(function(){
 <section class="contentsection">
 	<!--회원 목록 시작-->
             <i class="big users icon"></i></i><span style="font:black; font-size:17pt; padding:10px;">권한관리</span>
+            <span style="color:#aaa; font-size: 9pt;">관리자 추가 순으로 오름차순 정렬된 내역입니다.</span>
             <br><br>
             
             
@@ -153,7 +154,7 @@ $(function(){
 						<th width="14%">등록일</th>
 					</tr>
 					<% if(list.size() != 0){
-						for(int i = list.size()-1; i >= 0 ; i--) { 
+						for(int i = 0; i < list.size() ; i++) { 
 						Member m = list.get(i);
 					%>
 					<tr>

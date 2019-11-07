@@ -70,7 +70,8 @@ public class NoticeNewWriteServlet extends HttpServlet {
 		notice.setNoticeTitle(mrequest.getParameter("title"));   //noticeWriteForm에 있는 name하고
 		                                                                   //getParameter("안에 변수명")일치하게 써야 한다.
 		notice.setNoticeContent(mrequest.getParameter("content"));
-		notice.setNoticeWriter(mrequest.getParameter("writer"));
+		notice.setNoticeWriter(mrequest.getParameter("userid"));
+		
 		
 		//업로드 저장된 파일이름만 추출해서 변수에 기록
 		String originalFileName = mrequest.getFilesystemName("upfile");
@@ -103,7 +104,6 @@ public class NoticeNewWriteServlet extends HttpServlet {
 			  while((read = fin.read(buf, 0, buf.length)) != -1) {} //return 값이 -1 될때 까지 읽어라 //read 한테는 몇바이트 읽었다는 숫자 리턴해라
 		              fout.write(buf); //buf의 0번 index부터 byte index 까지 기록해라 //read 사이즈 만큼 읽어서 기록해라
 		 
-		  
 		  fin.close();
 		  fout.close();
 		  originFile.delete(); //원본 파일 삭제
