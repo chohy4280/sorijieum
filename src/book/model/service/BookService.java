@@ -163,9 +163,9 @@ public class BookService {
 	}
 
 	//도서검색용
-	public ArrayList<BookPlay> selectBookTitleAuthor(String search, String keyword, int startRow, int endRow) {
+	public ArrayList<BookPlay> selectBookTitleAuthor(String keyword, int startRow, int endRow) {
 	Connection conn = getConnection();
-	ArrayList<BookPlay> bplist = bDao.selectBookTitleAuthor(conn, search, keyword, startRow, endRow);
+	ArrayList<BookPlay> bplist = bDao.selectBookTitleAuthor(conn, keyword, startRow, endRow);
 	close(conn);
 	return bplist;
 	}
@@ -194,9 +194,9 @@ public class BookService {
 	}
 
 	//도서검색 만을 위한 도서카운트
-	public int getListCountBookSearch(String search, String keyword) {
+	public int getListCountBookSearch (String keyword) {
 	Connection conn = getConnection();
-	int listCount = bDao.getListCountBookSearch(conn, search, keyword);
+	int listCount = bDao.getListCountBookSearch(conn, keyword);
 	close(conn);
 	return listCount;
 	}

@@ -13,12 +13,16 @@
 <meta charset="UTF-8">
 <title>도서 재생 </title>
 <%@include file="/../inc/top.jsp"%>
+<script type="text/javascript" src="/sori/resources/js/sorijieum_tts.js"></script>
 <!-- CUSTOM CSS -->
 <link rel="stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
 <script type="text/javascript">
 $(function(){
 	
 });
+
+var textbook = document.getElementById('textbook').value;
+speech(textbook);
 
 <% if (bp != null) {%>
 function nextpage(bookcode,userid,rpage){
@@ -55,7 +59,7 @@ function nextpage(bookcode,userid,rpage){
 
 <!-- 도서 넘기기  -->
 <button class ="ui huge inverted orange button" 
-onclick="location.href='/sori/bplaypage?bookcode=<%= bp.getBookCode()%>&userId=<%= loginMember.getUserId() %>&rpage=<%= rpage=1 %>&tpage=<%= bp.getBookPage() %>'">
+onclick="location.href='/sori/bplaypage?bookcode=<%= bp.getBookCode()%>&userId=<%= loginMember.getUserId() %>&rpage=<%= 1 %>&tpage=<%= bp.getBookPage() %>'">
 <div class="yu-bookplay">
 		    처음부터 읽기
 	</div>	

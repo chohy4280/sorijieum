@@ -38,6 +38,13 @@ function speech(txt) {
 	utterThis.pitch = 1;
 	utterThis.rate = 1; //속도
 	window.speechSynthesis.speak(utterThis);
+	
+	utterThis.onpause = function(event) {
+	    var char = event.utterance.text.charAt(event.charIndex);
+	    console.log('Speech paused at character ' + event.charIndex + ' of "' +
+	    event.utterance.text + '", which is "' + char + '".');
+	  }
+	
 }
 /*document.addEventListener("click", function(e) {
 	var t = e.target;

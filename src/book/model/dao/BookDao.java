@@ -431,15 +431,14 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 
-		String query = " select * from book" + 
-				" full outer join bookmakingcheck using(bookcode)" + 
-				" full outer join mybook m using(bookcode) where bookdelyn = 'N'" + 
-				" and bookcode = ? and m.userid = ? order by bookmakepage";
+		String query = " select * from bookmakingcheck" + 
+				" full outer join book using(bookcode)" + 
+				" left join mybook using(bookcode) where bookdelyn = 'N'" + 
+				" and bookcode = ? order by bookmakepage";
 
 		try {
 		pstmt = conn.prepareStatement(query);
 		pstmt.setString(1, bookcode);
-		pstmt.setString(2, userId);
 		rset = pstmt.executeQuery();
 		if(rset.next()) {
 		bp = new BookPlay();
@@ -507,13 +506,13 @@ public class BookDao {
 
 
 		//도서저자명,제목명 검색용
-		public ArrayList<BookPlay> selectBookTitleAuthor(Connection conn,String search, String keyword, int startRow, int endRow) {
+		public ArrayList<BookPlay> selectBookTitleAuthor(Connection conn, String keyword, int startRow, int endRow) {
 		ArrayList<BookPlay> bplist = new ArrayList<BookPlay>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, BOOKCODE, BOOKTITLE, AUTHOR, PUBLISHER, PUBLISHDATE, BOOKRIMG "
-				+ "FROM(SELECT *FROM BOOK WHERE "+ search + " LIKE '%" + keyword + "%' AND BOOKDELYN = 'N' AND MAKESTATUS='DONE' ORDER BY BOOKTITLE))"
+				+ "FROM(SELECT *FROM BOOK WHERE AUTHOR LIKE '%" + keyword + "%' OR BOOKTITLE LIKE '%" + keyword + "%' AND BOOKDELYN = 'N' AND MAKESTATUS='DONE' ORDER BY BOOKTITLE))"
 				+ "WHERE RNUM >= ? AND RNUM <= ? ";
 
 		try {
@@ -603,25 +602,19 @@ public class BookDao {
 
 
 		//도서검색시 도서만을 위한 카운트
-		public int getListCountBookSearch(Connection conn, String search, String keyword) {
+		public int getListCountBookSearch(Connection conn, String keyword) {
 		int listCount = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
-		String query = null;
+		String query = "";
 
 		if(keyword != null) {
-		if(search.equals("booktitle")) 
-		query =  "select count(*) from (select * from book where bookdelyn = 'N') where " + search + " like '%" + keyword + "%' and makestatus = 'DONE'";
-
-		if(search.equals("author"))	
-		query = "select count(*) from (select * from book where bookdelyn = 'N') where " + search + " like '%" + keyword + "%' and makestatus = 'DONE'";
+		query = "select count(*) from (select * from book where bookdelyn = 'N') where author like '%" + keyword + "%' or booktitle like '%" + keyword + "%' and makestatus = 'DONE'";
 		} 
 
 		try {
 		stmt = conn.createStatement();
-
 		rset = stmt.executeQuery(query);
-
 		if(rset.next()){
 		listCount = rset.getInt(1);
 		}
@@ -638,7 +631,6 @@ public class BookDao {
 		}
 
 		//도새재생 페이지로 이동할때 
-
 		public BookPlay getselectOneBookPlay(Connection conn, String bookcode, int readpage) {
 			BookPlay bp = null;
 			PreparedStatement pstmt = null;

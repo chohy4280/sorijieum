@@ -117,7 +117,8 @@ $(function(){
 			  <div class="swiper-wrapper">
 			    <% for(int i = 0; i < waitlist.size(); i++){ %>
 			      <div class="swiper-slide">
-			      <img src="/sori/resources/book_upfiles/<%= waitlist.get(i).getBookRimg() %>">
+			      <a href="/sori/bminfo?bookrimg=<%= waitlist.get(i).getBookRimg() %>">
+			      <img src="/sori/resources/book_upfiles/<%= waitlist.get(i).getBookRimg() %>"></a>
 			      </div>
 			      <% } %>
 			      </div>
@@ -132,7 +133,7 @@ $(function(){
 			  <script type="text/javascript">
 			  var swiper = new Swiper('.swiper-container', {
 			      slidesPerView: 4,
-			      spaceBetween: 30,
+			      spaceBetween: 20,
 			      loop: true,
 			      pagination: {
 			        el: '.swiper-pagination',
@@ -178,7 +179,8 @@ $(function(){
 			  <div class="swiper-wrapper">
 			    <% for(int i = 0; i < makelist.size(); i++){ %>
 			      <div class="swiper-slide" style="width:20px;">
-			      <img src="/sori/resources/book_upfiles/<%= makelist.get(i).getBookRimg() %>">
+			      <a href="/sori/bminfo?bookrimg=<%= makelist.get(i).getBookRimg() %>">
+			      <img src="/sori/resources/book_upfiles/<%= makelist.get(i).getBookRimg() %>"></a>
 			      </div>
 			      <% } %>
 			      </div>

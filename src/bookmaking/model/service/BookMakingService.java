@@ -160,9 +160,9 @@ public class BookMakingService {
 	}
 	
 	//도서제작 제출 후 makebook 추가
-	public int insertMakeBook(BookMakingProgress bmp) {
+	public int insertMakeBook(BookMakingProgress bmp, int page, int bookpage) {
 		Connection conn = getConnection();
-		int result = bmDao.insertMakeBook(conn, bmp);
+		int result = bmDao.insertMakeBook(conn, bmp, page, bookpage);
 		if(result > 0)
 			commit(conn);
 		else

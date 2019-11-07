@@ -87,8 +87,8 @@ $(function(){
 		</div><!-- bookmaking -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- 페이징 -->
 <div id="pagebox" align="center">
 	<a href="/sori/bmlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;

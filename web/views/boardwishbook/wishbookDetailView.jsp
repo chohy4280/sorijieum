@@ -27,6 +27,7 @@ if(<%= loginMember.getTypeNumber() < 3 && wb.getWishWriter().equals(loginMember.
 	var audio = new Audio("/sori/resources/mp3/wishdetail_main.mp3");
 	window.onload = function(){
 	   audio.play();
+	  
 	} 
 	window.onkeyup = function(){
 		if(event.keyCode == 27){ //음성멈춤

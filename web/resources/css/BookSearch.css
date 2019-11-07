@@ -3,7 +3,6 @@
 ul {
 	margin: 0;
 	padding: 0;
-
 }
 
 li {
@@ -29,17 +28,11 @@ color: inherit;
 }
 
 .my-section{
-   padding-top: 130px;
-   padding-bottom: 70px;
+   padding-top: 80px;
+   padding-bottom: 50px;
    padding-left: 30px;
    padding-right: 30px;
    
-}
-.yu-top5{/*신간도서5개 추천영역  */
-    
-    margin-top:10px;
-    text-align:center;
-	
 }
 
 .yu-booklist{/* 책 목록 10개 */
@@ -53,7 +46,6 @@ color: inherit;
 }
 .detailimg{  /* 도서상세보기 에서 보일 이미지 */
 	width: 250px;
-	
 
 }
 
@@ -85,15 +77,6 @@ color: inherit;
    padding : 60px;
    text-align: center;
    font-size: 16px
-}
-
-.yu-ui buttons{
-	
-}
-
-.yu-like{/*관심도서 추가버튼  */
-
-  
 }
 
 #yu-playbutton{

@@ -216,7 +216,7 @@ function submit_comp(){ //수정하기 버튼
 <tr><th>생년월일</th><td>&nbsp;&nbsp;<%= loginMember.getBirth() %></td></tr>
 
 <tr><th colspan="2">
-<a href="/sori/views/member/memberLoginView.jsp"><input type="submit" value="수정하기" id="btnsub"></a> &nbsp;
+<input type="submit" value="수정하기" id="btnsub"> &nbsp;
 <input type="reset" value="수정취소"> &nbsp;
 </th></tr>
 </table>
