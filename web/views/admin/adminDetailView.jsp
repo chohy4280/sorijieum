@@ -90,14 +90,14 @@
 					<% if(loginMember.getUserId().equals(m.getUserId()) || loginMember.getUserId().equals("admin00")) { 
 						if(loginMember.getUserId().equals("admin00")) {//대표 관리자일때만 부관리자 삭제버튼 나타남
 						%>
-						<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>
+						<button class="small ui teal button" onclick="location.href='/sori/adlist.ad?page=<%=currentPage%>'">◀BACK</button>
 						<button class="small ui teal button" onclick="location.href='/sori/adupview.ad?userid=<%= m.getUserId() %>&page=<%=currentPage%>'">수정하기</button><br><br>
 						<button class="small ui red button" onclick="return delBtn();">관리자 삭제</button>
 						<%} else { %>
-						<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>
+						<button class="small ui teal button" onclick="location.href='/sori/adlist.ad?page=<%=currentPage%>'">◀BACK</button>
 						<button class="small ui teal button" onclick="location.href='/sori/adupview.ad?userid=<%= m.getUserId() %>&page=<%=currentPage%>'">수정하기</button>
 					<%}} else{ %>
-					<button class="small ui teal button" onclick="javascript:history.back();">◀BACK</button>
+					<button class="small ui teal button" onclick="location.href='/sori/adlist.ad?page=<%=currentPage%>'">◀BACK</button>
 					<%} %>
 				</center>
             </div>

@@ -155,7 +155,7 @@
 		</div>
 		<br><br>
 		<div>연관사이트
-		<select class="ui mini simple dropdown" name="jump" onchange="location.href=this.value" style="border-radius:5px;">
+		<select class="ui mini simple dropdown" name="jump" onchange="window.open(this.value)" style="border-radius:5px;">
 			<option>선택</option>
 			<option value="http://www.kbuwel.or.kr">한국시각장애인연합회</option>
 			<option value="http://www.soriview.or.kr/sori">소리가보이는도서관</option>

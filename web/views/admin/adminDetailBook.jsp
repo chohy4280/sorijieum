@@ -146,8 +146,8 @@
 		                String[] splts = pluss.split("/WEB-INF/classes/");
 		                String finSrcs = "";
 		                for(int i=0; i<splts.length; i++){
-		                   finSrcs += splts[i];
-		                }
+			                   finSrcs += splts[i];
+			                }
 		                String destinationDir = finSrcs; //폴더 경로
 		                File destinationFile = new File(destinationDir);
 		                File Folder = new File(destinationDir);

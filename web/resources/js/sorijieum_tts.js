@@ -36,7 +36,8 @@ function speech(txt) {
 	}
 	utterThis.lang = lang;
 	utterThis.pitch = 1;
-	utterThis.rate = 1; //속도
+	utterThis.rate = 1.5; //속도
+	utterThis.Volume = 5;
 	window.speechSynthesis.speak(utterThis);
 	
 	utterThis.onpause = function(event) {

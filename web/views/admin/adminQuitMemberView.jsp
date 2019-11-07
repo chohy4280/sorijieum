@@ -27,7 +27,7 @@
 <section class="contentsection">
 	<!--회원 목록 시작-->
             <i class="big user times icon"></i><span style="font:black; font-size:17pt; padding:10px;">회원탈퇴관리</span>
-            <span style="color:#aaa; font-size: 9pt;">탈퇴일로부터 30일 경과 후 자동 삭제됩니다.</span>
+            <span style="color:#aaa; font-size: 9pt;">개인정보 파기 의무에 따라 탈퇴회원의 상세정보 조회가 불가합니다. 탈퇴일로부터 30일 경과 후 자동 삭제됩니다.</span>
             <br><br>
             
             

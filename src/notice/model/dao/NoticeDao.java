@@ -15,7 +15,7 @@ public class NoticeDao {
 		int result = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
-		String query ="select count(*) from notice where noticetop= 'N'";
+		String query ="select count(*) from notice order by noticedate desc";
 		
 		try {
 			stmt = conn.createStatement();
@@ -41,9 +41,8 @@ public class NoticeDao {
 		ResultSet rset = null;
 		
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE , NOTICEWRITER, "
-				+ " NOTICECONTENT, NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP " + 
-				"FROM (SELECT * FROM NOTICE where noticetop = 'N' " + 
-				"ORDER BY NOTICEDATE DESC, noticeno desc)) " + 
+				+ " NOTICECONTENT, NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE " + 
+				"FROM (SELECT * FROM NOTICE ORDER BY NOTICEDATE DESC, NOTICENO DESC)) " + 
 				"WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		try {
@@ -64,7 +63,6 @@ public class NoticeDao {
 				notice.setNoticeViews(rset.getInt("noticeviews"));
 				notice.setNoticeOfile(rset.getString("noticeofile"));
 				notice.setNoticeRfile(rset.getString("noticerfile"));
-				notice.setNoticeTop(rset.getString("noticetop"));
 				list.add(notice);
 ;			}
 			
@@ -82,7 +80,7 @@ public class NoticeDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into notice values (SEQ_NOTICENO.NEXTVAL, ?, ?, ?, sysdate, default, ?, ?, null, default)";
+		String query = "insert into notice values (SEQ_NOTICENO.NEXTVAL, ?, ?, ?, sysdate, default, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, notice.getNoticeTitle());
@@ -90,7 +88,7 @@ public class NoticeDao {
 			pstmt.setString(3, notice.getNoticeContent());
 			pstmt.setString(4, notice.getNoticeOfile());
 			pstmt.setString(5, notice.getNoticeRfile());
-			result = pstmt.executeUpdate();   //int result = 0;
+			result = pstmt.executeUpdate();  
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -259,7 +257,7 @@ public class NoticeDao {
 		ResultSet rset = null;
 		
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, NOTICEWRITER,NOTICECONTENT,"
-				       + " NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE, NOTICETOP"+
+				       + " NOTICEDATE, NOTICEVIEWS, NOTICEOFILE, NOTICERFILE"+
 		                " FROM(SELECT * FROM NOTICE" +
 				         " WHERE noticetitle LIKE '%" + keyword + "%' " + 
 		                 " ORDER BY NOTICENO))" + " WHERE RNUM >= ? AND RNUM <= ?";
@@ -280,7 +278,6 @@ public class NoticeDao {
 				n.setNoticeViews(rset.getInt("noticeviews"));
 				n.setNoticeOfile(rset.getString("noticeofile"));
 				n.setNoticeRfile(rset.getString("noticerfile"));
-				n.setNoticeTop(rset.getString("noticetop"));
 				list.add(n);
 			}
 		}catch(SQLException e) {

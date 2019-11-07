@@ -28,7 +28,6 @@ public class NoticeListServlet extends HttpServlet { //공지사항 전체 글 �
         // TODO Auto-generated constructor stub
     }
 
-
    /**
     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
     */
@@ -66,13 +65,11 @@ public class NoticeListServlet extends HttpServlet { //공지사항 전체 글 �
             int endnum = currentPage * limit;
    
       ArrayList<Notice> list = nservice.selectAll(startnum, endnum);
-      //ArrayList<Notice> toplist = nservice.selectTopFixed();
       
       RequestDispatcher view = null;
       if(list.size() > 0) {
          view = request.getRequestDispatcher("views/boardnotice/noticeListView.jsp");
          request.setAttribute("list", list);
-         //request.setAttribute("toplist", toplist);
          request.setAttribute("maxPage", maxPage);
          request.setAttribute("currentPage", currentPage);
          request.setAttribute("beginPage", beginPage);
@@ -86,7 +83,6 @@ public class NoticeListServlet extends HttpServlet { //공지사항 전체 글 �
          view.forward(request, response);
       }
    }
-
 
    /**
     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

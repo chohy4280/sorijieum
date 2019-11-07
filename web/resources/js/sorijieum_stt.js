@@ -2,18 +2,15 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
+var textbox = document.querySelector("#keyword");
 
-var keyword = document.querySelector('#bsearch');
 
 function testSpeech() {
-
   var grammar = '#JSGF V1.0; grammar phrase;';
   var recognition = new SpeechRecognition();
   var speechRecognitionList = new SpeechGrammarList();
   speechRecognitionList.addFromString(grammar, 1);
   recognition.grammars = speechRecognitionList;
-  
-  recognition.lang = 'en-US';
   recognition.lang = 'ko-KR';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
@@ -30,7 +27,8 @@ function testSpeech() {
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
     var speechResult = event.results[0][0].transcript.toLowerCase();
-    keyword.value = speechResult;
+    textbox.value = speechResult;
+
     console.log('Confidence: ' + event.results[0][0].confidence);
   }
 
@@ -39,7 +37,7 @@ function testSpeech() {
   }
 
   recognition.onerror = function(event) {
-	  console.log("error");
+    diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
   }
   
   recognition.onaudiostart = function(event) {
@@ -82,4 +80,3 @@ function testSpeech() {
       console.log('SpeechRecognition.onstart');
   }
 }
-

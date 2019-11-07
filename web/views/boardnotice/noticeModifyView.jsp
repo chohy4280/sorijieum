@@ -21,68 +21,66 @@
 
 <!-- Content 시작! -->
 	<section class="my-section">
-	
 	<!--공지사항 시작-->
 	<div class="my-content">
-		<a class="massive ui yellow label" style="font-size: 30px">공지사항</a>
+		<a class="massive ui yellow label" style="font-size: 30px" href="/sori/nlist">공지사항</a>
 		<span style="color:#fbbe09; font-weight:600">│</span>
 		<span style="color:grey">소리지음 공지사항입니다</span>
-		<br>
+		<br><br>
+<center>
 	<!-- 공지사항 수정 시작 -->
-	<form action = "/sori/nomidi" method = "post" enctype= "multipart/form-data">
-<<<<<<< HEAD
-<input type= "hidden" name="noticeno" value="<%= notice.getNoticeNo() %>"> <!-- 값은 전송은 가지만 안보이게 한다. -->
-<input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
-<input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
-		<!-- 공지사항 수정 테이블 -->
-=======
+	<form action="/sori/nomidi" method="post" enctype="multipart/form-data"> <!-- 파일을 첨부할때는 무조건 post 방식 -->
+	<input type="hidden" name="userid" value="<%= loginMember.getUserId() %>"> <!-- 작성자 아이디 -->
 	<input type= "hidden" name="noticeno" value="<%= notice.getNoticeNo() %>"> <!-- 값은 전송은 가지만 안보이게 한다. -->
 	<input type="hidden" name="ofile" value="<%= notice.getNoticeOfile() %>">
 	<input type="hidden" name="rfile" value="<%= notice.getNoticeRfile() %>"> 
 	<input type="hidden" name="page" value="<%=currentPage%>">
->>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum
-		<table class="my-listTable" align="center">
-<<<<<<< HEAD
-			<tr><th colspan="4" style="height:60px; font-size: 25px;"><input type="text" name = "noticetitle" placeholder="공지사항 제목" 
-				value="<%= notice.getNoticeTitle() %>" style="width:700px;"></th></tr>
-			<tr style="height:32px; font-size: 17px;">
-				<td><%= loginMember.getUserId() %></td>
-				<td><input type="date" name="noticedate" placeholder= "YYYY/MM/DD" value="<%= notice.getNoticeDate() %>"></td>
-=======
-			<tr>
-			
-				<th colspan="4" style="height:60px; font-size: 25px;"><input type="text" name = "noticetitle" placeholder="공지사항 제목" 
-				value="<%= notice.getNoticeTitle() %>" style="width:700px;"></th>
-			</tr>
-			<tr style="height:20px; font-size: 12px;">
-				<td><%= notice.getNoticeWriter() %></td>
-				<td><%= notice.getNoticeDate() %></td>
->>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum
-				<td><%= notice.getNoticeViews() %></td>
-				<td><% if(notice.getNoticeRfile() !=null && !notice.getNoticeOfile().equals("null")){ %>
-           <a href="/sori/nfdown?ofile=<%= notice.getNoticeOfile() %>
-           &rfile=<%= notice.getNoticeRfile() %>">
-           <%= notice.getNoticeOfile() %></a>
-           <td> <input type="file" name="upfile" placeholder= "파일첨부"></td></tr>	
-                  <% } %>			
-		</table>
-		<div class="my-boardcontent">
-		<textarea name="content" cols="150" rows="14"><%= notice.getNoticeContent() %>
-		</textarea></div>
-		<!-- 공지사항 수정 테이블 끝-->
-		<!-- 공지사항 수정 버튼 -->
-		<div align="right">
-		<%if(loginMember != null &&(loginMember.getTypeNumber()==4 || loginMember.getTypeNumber()==5 )){ %>
-		<div class="ui buttons">
-		<input type="submit" class="ui positive button" value="수정" style="width:80px">
-			</div>
-		<%}else{ %>
-		<%} %>
-			</div>
-			<!-- 공지사항 수정 버튼 -->
-		</form>
-     <!--공지사항 수정 끝-->
 	
+	<table class="my-listTable5" style="width:45%;">
+		<tr>
+			<th width="30%">제목</th>
+			<td width="70%">
+				<div class="ui form">
+				<div class="field">
+				<textarea rows="1" name="title" id="title" autofocus="autofocus"  style="resize:none;" required>
+					<%= notice.getNoticeTitle() %>
+				</textarea>
+				</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><div class="ui form">
+			  <div class="field">
+			    <textarea name="content" id="content" style="margin-top:0px;margin-bottom:0px;height:300px;resize:none;" onfocusin="write_content()" required>
+			    	<%= notice.getNoticeContent() %>
+			    </textarea>
+			  </div>
+			  </div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left"> 
+			<% if(notice.getNoticeOfile() != null){ %>
+				<%= notice.getNoticeOfile() %>
+			<% }else{ %>
+				첨부파일 없음
+			<% } %>
+			 -> <input type="file" name="upfile">
+			</td>
+		</tr>
+	</table>
+	<div align="center">
+		<div class="ui buttons">
+			<input type="submit" class="ui positive button" style="width:100px" value="공지 수정"></button>
+			<div class="or"></div>
+			<input type="reset" class="ui button" style="width:100px" value="취소"></button>
+		</div>
+	</div>
+</form>
+     <!--공지사항 수정 끝-->
+</center>	
 	<!-- 페이지 이동 버튼 시작 -->
 		<center>
 			<div class="ui buttons">
