@@ -41,7 +41,6 @@ $(".chk").click(function(){
 });
 
 
-	$("#listTable").tablesorter();
 
 }); // document.ready...
 

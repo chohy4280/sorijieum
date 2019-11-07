@@ -70,7 +70,7 @@ public class NoticeModifyServet extends HttpServlet {
 		Notice notice = new Notice();
 		
 		notice.setNoticeNo(noticeno);
-		notice.setNoticeTitle(mrequest.getParameter("noticetitle"));
+		notice.setNoticeTitle(mrequest.getParameter("title"));
 	    notice.setNoticeContent(mrequest.getParameter("content"));
 	    //notice.setNoticeDate(Date.valueOf((mrequest.getParameter("noticedate")))); -->날짜는 Date.valueOf
 	    

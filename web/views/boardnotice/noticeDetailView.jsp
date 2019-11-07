@@ -73,10 +73,6 @@
 	<!--공지사항 목록 끝-->
 	
 	<!-- 관리자 수정삭제 버튼 -->
-<<<<<<< HEAD
-=======
-	
->>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum
 	<div align="right">
 	<%if(loginMember != null &&(loginMember.getTypeNumber()==4 || loginMember.getTypeNumber()==5 )){ %>
 		<div class="ui buttons">
@@ -87,10 +83,6 @@
 	<%}else{ %>
 	<%} %>
 	</div>
-<<<<<<< HEAD
-=======
-	
->>>>>>> branch 'master' of https://github.com/chohy4280/sorijieum
 	<!--관리자 수정삭제 버튼 끝  -->
 	
 	<!-- 공통 페이지 이동 버튼 -->

@@ -217,9 +217,9 @@ $(function(){
 										남성<%} %>
 										</td>
 						<th>인증내역</th><td>&ensp;
-										<% if(m.getUserOfile() != null) {%>
+										<% if(m.getUserOfile() != null && !m.getUserOfile().equals("null")) {%>
 										<a href="/sori/mfdown.ad?ofile=<%= m.getUserOfile() %>&rfile=<%= m.getUserRfile() %>"><%= m.getUserOfile() %></a>
-										<%}else{ %>
+										<%}else { %>
 										첨부파일 없음
 										<%} %>
 										
