@@ -77,7 +77,7 @@ function makeopen(){
 <br>
 <div class="wrapper">
 <div align="center" style="margin-top:-20px;">
-<img src="/sori/resources/images/logo.png" style="width:190px;height:190px;" >
+<img src="/sori/resources/images/logo.png" style="width:200px;height:200px;" >
 </div>
 <div align="right" style="margin-right:20px;margin-top:-25px;">
 <i class="yellow large info circle icon"></i>

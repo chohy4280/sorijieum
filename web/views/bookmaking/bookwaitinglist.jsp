@@ -56,14 +56,15 @@
 			<% } %>
 			<div class="ye-scale"><a href="/sori/bminfo?bookrimg=<%= list.get(i).getBookRimg() %>"> 
 			<img src="/sori/resources/book_upfiles/<%= list.get(i).getBookRimg() %>"></a></div>
+			<br>
 			</div>
-			<% } %>
-				</div>				
+			<% } %>	
+							
 		</div><!-- bookwait -->
 		</div> <!-- book끝 -->
 	</div><!-- bookstatus끝 -->
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- 페이징 -->
 <div id="pagebox" align="center">
 	<a href="/sori/bwlist?page=1"><i class="angle grey double left icon"></i></a>&nbsp;

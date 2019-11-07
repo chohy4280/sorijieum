@@ -41,13 +41,12 @@ public class BookSearchTypeServlet extends HttpServlet {
 	    	   currentPage = Integer.parseInt(request.getParameter("page"));
 	       }
 	       
-		    String search = request.getParameter("search");
 			   String keyword = request.getParameter("keyword");
 
 	       int limit = 10;  
 	       
 	       BookService bservice = new BookService();
-	       int listCount = bservice.getListCountBookSearch(search, keyword);
+	       int listCount = bservice.getListCountBookSearch(keyword);
 	       
 	       int maxPage = listCount/limit;
 	       if(listCount % limit > 0)
@@ -61,7 +60,7 @@ public class BookSearchTypeServlet extends HttpServlet {
 	       int startRow = (currentPage * limit)-9;
 	       int endRow = currentPage * limit;
 		   
-		   ArrayList<BookPlay> bplist = bservice.selectBookTitleAuthor(search,keyword,startRow,endRow);
+		   ArrayList<BookPlay> bplist = bservice.selectBookTitleAuthor(keyword,startRow,endRow);
 	
 	
 		
@@ -69,7 +68,6 @@ public class BookSearchTypeServlet extends HttpServlet {
 		if(bplist.size()>=0) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchList.jsp");
 			request.setAttribute("bplist", bplist);
-			request.setAttribute("search", search);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("currentPage", currentPage);
@@ -79,7 +77,7 @@ public class BookSearchTypeServlet extends HttpServlet {
 			view.forward(request, response);
 		}else {
 			view= request.getRequestDispatcher("views/common/error.jsp");
-			request.setAttribute("message", search + "검색조회 실패");
+			request.setAttribute("message", "검색조회 실패");
 			view.forward(request, response);
 		}	
 		

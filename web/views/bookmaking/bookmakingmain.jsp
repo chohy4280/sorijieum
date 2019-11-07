@@ -72,8 +72,8 @@ $(function(){
 		$("#completebtn").css('background','#fbbd08');
 		$("#completebtn").css('color','white');
 	} 
-	var hour = 5;
-	var minute = 0;
+	var hour = 0;
+	var minute = 3;
 	var second = 0;
 		// 초기화
 		$("#hour").val(hour);
@@ -88,25 +88,28 @@ $(function(){
 				clearInterval(timer);  /* 타이머 종료 */ 
 				checkUnload = false;
 				alert("제작자 님, 도서 제작시간이 종료되어 도서제작 메인페이지로 이동됩니다.");
-					var userid = '<%= loginMember.getUserId() %>';
-				  	var bookcode = '<%= bmp.getBookCode() %>';
-				  	var bookpage = '<%= bmp.getBookPage() %>';
-					$.ajax({
-						type : "POST",
-				        url : "bmdel",
-				        async: false,
-						data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage},
-						success : function(response) {
-							var url = "/sori/bmkmain";
-							$(location).attr('href', url);
+				var userid = '<%= loginMember.getUserId() %>';
+			  	var bookcode = '<%= bmp.getBookCode() %>';
+			  	var bookpage = '<%= bmp.getBookPage() %>';
+			  	var makepage = '<%= bmp.getBookmakepage() %>';
+				$.ajax({
+					type : "POST",
+			        url : "bmdel",
+			        async: false,
+					data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage, "makepage": makepage},
+					success : function(response) {
+						var url = "/sori/bmkmain";
+						$(location).attr('href', url);
+						if(response=="ok"){
 							alert("제작에 실패했습니다.");
-						},
-						error : function(request, status, error) {
-							if (request.status != '0') {
-								alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-							}
 						}
-					});
+					},
+					error : function(request, status, error) {
+						if (response!="ok") {
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					}
+				});
 			}else {
 				second--;
 				// 분처리
@@ -197,6 +200,7 @@ $(function(){
 		var data=JSON.stringify(rdata);
  		var json = JSON.parse(data); 
 		var checkcom;*/
+		
  		if(pagenum != page){
  			alert("페이지 번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
  		}else{
@@ -257,57 +261,65 @@ $(function(){
 	}
 	
 	//제출
-	function complete(page,endpage,code){
-		var result = confirm("제출을 완료하시겠습니까? 제출하시면 수정할 수 없습니다."); 
+	function complete(page,endpage,code,bookpage){
 		var userid = '<%= loginMember.getUserId() %>';
 	  	var bookcode = '<%= bmp.getBookCode() %>';
 	  	var bookpage = '<%= bmp.getBookPage() %>';
-		if(result == true){ 
-		$.ajax({
-			type : "POST",
-	        url : "bmcomp",
-	        async: false,
-			data : {"page": page, "endpage": endpage, "userid": userid, "bookcode": code},
-			success : function(response) {
-				clearInterval(timer);
-				checkUnload = false;
-				if(result) { 
-					alert("제출이 완료되었습니다. 제작에 참여해주셔서 감사합니다.");
-					location.replace('/sori/bmkmain'); 
-				}else { 
-					alert("제출이 실패했습니다.");
-				}
-			},
-			error : function(request, status, error) {
-				if (request.status != '0') {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
+		for(i=page; i<endpage; i++){
+			var compbtn = $("#completebtn_"+page).is('[disabled=disabled]');
+			var pagenum=$('#'+page+'_pagenum').val();
+			if(compbtn == true || pagenum == null){
+				alert("모든 페이지를 제작해주셔야 제출이 가능합니다.^^");
+				break;
+			}else{
+				var result = confirm("제출을 완료하시겠습니까? 제출하시면 수정할 수 없습니다.");
+				if(result == true){ 
+					$.ajax({
+						type : "POST",
+				        url : "bmcomp",
+				        async: false,
+						data : {"page": page, "endpage": endpage, "userid": userid, "bookcode": code, "bookpage": bookpage},
+						success : function(response) {
+							clearInterval(timer);
+							checkUnload = false;
+							if(result) { 
+								alert("제출이 완료되었습니다. 제작에 참여해주셔서 감사합니다.");
+								location.replace('/sori/bmkmain'); 
+							}else { 
+								alert("제출이 실패했습니다.");
+							}
+						},
+						error : function(request, status, error) {
+							if (request.status != '0') {
+								alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							}
+						}
+					});
+					}else if(result == false){
+						$.ajax({
+							type : "POST",
+					        url : "bmdel",
+					        async: false,
+							data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage},
+							success : function(response) {
+								clearInterval(timer);
+								checkUnload = false;
+								if(result) { 
+									alert("제출이 실패했습니다.");
+								}
+							},
+							error : function(request, status, error) {
+								if (request.status != '0') {
+									alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								}
+							}
+						});
+					}
 			}
-		});
-		}else if(result == false){
-			$.ajax({
-				type : "POST",
-		        url : "bmdel",
-		        async: false,
-				data : {"userid": userid, "bookcode": bookcode, "index": <%=index%>, "bookpage": bookpage},
-				success : function(response) {
-					clearInterval(timer);
-					checkUnload = false;
-					if(result) { 
-						alert("제출이 실패했습니다.");
-					}
-				},
-				error : function(request, status, error) {
-					if (request.status != '0') {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				}
-			});
+	  	
 		}
 	}
-	
 	$(function($){
-	
 		//Tab
 	  $("#yetabs #item").on("click", function(){
 		  $("#yetabs #item").removeClass('active');
@@ -357,7 +369,7 @@ $(function(){
 		</div><!-- timer end -->
 		<br><br><br>
 		<!-- 쪽수 탭버튼 시작 -->
-		<div id="yetabs" style="width:800px;position:absolute;left:0px;top:180px;">
+		<div id="yetabs" style="width:800px;position:absolute;left:0px;top:168px;">
 			<div class="ui massive yellow ten item top attached tabular menu" >
 				<%  int bookendpage = bmp.getBookPage();
 					int endPage = (bmp.getBookmakepage() + 9);
@@ -433,7 +445,7 @@ $(function(){
 								onclick="javascript:update(<%=i%>,<%= endPage %>,<%=bmp.getBookCode()%>)"
 								disabled="disabled">수정</button>
 								<button id="completebtn_<%=i%>" class="ui yellow button"
-								onclick="javascript:complete(<%=i%>,<%= endPage %>,<%=bmp.getBookCode()%>)" disabled="disabled">
+								onclick="javascript:complete(<%=i-9%>,<%= endPage %>,<%=bmp.getBookCode()%>,<%= bmp.getBookPage() %>)" disabled="disabled">
 								제출</button>
 							<script type="text/javascript">
 							var resizePopup = function(){$('#guide'+<%= i+1 %>).css('max-height', $(window).height());};
@@ -494,13 +506,21 @@ $(function(){
 		//watermark
 		  $('#inputimg_'+<%=i%>).watermark({
 		  	text:'<%= loginMember.getUserName() %>' + '('+'<%= loginMember.getUserId() %>' + ')',
-	 		textWidth: 600,
-	 		textSize: 60,
+	 		textWidth: 700,
+	 		textSize: 65,
 	 		gravity:'w',
 	 		textColor:'white',
-	 		textBg:'rgba(0, 0, 0, 0.05)',
-	 		opacity: 0.5
+	 		textBg:'rgba(0, 0, 0, 0.08)',
+	 		opacity: 0.7
 		});
+		
+		  <%-- $("#"+<%=bmp.getBookCode()%>+"_"+<%= i %>).keyup(function(e){
+				var content = $(this).val();
+				if(content.length < 10){
+					alert("제작자님, 이용자분들을 위해 도서제작에티켓을 지켜주시길 바랍니다.^^");
+				}
+			}); --%>
+			
 		});
 </script>
 		</div>
@@ -567,7 +587,7 @@ $(function(){
 								onclick="javascript:update(<%=i%>,<%= endPage %>,<%=bmp.getBookCode()%>)"
 								disabled="disabled">수정</button>
 								<button id="completebtn_<%=i%>" class="ui yellow button"
-								onclick="javascript:complete(<%=i%>,<%= endPage %>,<%=bmp.getBookCode()%>)" disabled="disabled">
+								onclick="javascript:complete(<%= i-9 %>,<%= endPage %>,<%=bmp.getBookCode()%>,<%= bmp.getBookPage() %>)" disabled="disabled">
 								제출</button>
 							<script type="text/javascript">
 							var resizePopup = function(){$('#guide'+<%= i+1 %>).css('max-height', $(window).height());};
@@ -628,14 +648,22 @@ $(function(){
 		//watermark
 	 $('#inputimg_'+<%=i%>).watermark({
 		text:'<%= loginMember.getUserName() %>' + '('+'<%= loginMember.getUserId() %>' + ')',
- 		textWidth: 600,
- 		textSize: 60,
+		textWidth: 700,
+ 		textSize: 65,
  		gravity:'w',
  		textColor:'white',
- 		textBg:'rgba(0, 0, 0, 0.05)',
- 		opacity: 0.5
+ 		textBg:'rgba(0, 0, 0, 0.08)',
+ 		opacity: 0.7
 		});
-		});
+		
+	 <%-- $("#"+<%=bmp.getBookCode()%>+"_"+<%= i %>).keyup(function(e){
+		var content = $(this).val();
+		if(content.length < 10){
+			alert("제작자님, 이용자분들을 위해 도서제작에티켓을 지켜주시길 바랍니다.^^");
+		}
+	}); --%>
+	 
+});
 </script>
 	</div>
 	<% } } %>

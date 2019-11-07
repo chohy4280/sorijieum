@@ -406,14 +406,20 @@ public class BookMakingDao {
 	}
 	
 	//도서제작 제출 후 makebook 추가
-	public int insertMakeBook(Connection conn, BookMakingProgress bmp) {
+	public int insertMakeBook(Connection conn, BookMakingProgress bmp, int page, int bookpage) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into makebook values (?, ?, sysdate)";
+		String query = "";
+		if(page == bookpage) {
+			query = "insert into makebook values (?, ?, sysdate)";
+		}
 		try {
 			pstmt = conn.prepareStatement(query);
+			if(page == bookpage) {
 			pstmt.setString(1, bmp.getUserid());
 			pstmt.setString(2, bmp.getBookCode());
+			}
+			System.out.println(bmp.getBookmakepage()+bmp.getBookPage());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -461,10 +467,9 @@ public class BookMakingDao {
 		String query = "update bookmakingcheck set bookcompleteyn = 'Y' where bookcode = ? and bookmakepage between "+ page + " and " + endpage;
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bmp.getBookmaketxt());
-			pstmt.setString(2, bmp.getBookCode());
-			pstmt.setInt(3, bmp.getBookmakepage());
+			pstmt.setString(1, bmp.getBookCode());
 			result = pstmt.executeUpdate();
+			System.out.println(bmp.getBookCode()+page+endpage);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

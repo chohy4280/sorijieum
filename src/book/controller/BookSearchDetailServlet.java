@@ -44,16 +44,12 @@ public class BookSearchDetailServlet extends HttpServlet { //도서상세정보 
 		
 	    BookService bservice = new BookService();
 	    BookPlay bp = bservice.selectOne(bookcode, userId);
-	    
-	   /* MyBookService mservice = new MyBookService();
-	    MyBook mb = mservice.selectOneMyBookUser(bookcode, userId);*/
 
 		RequestDispatcher view = null;
 		
 		if(bp !=null) {
 			view = request.getRequestDispatcher("views/booksearch/bookSearchDetail.jsp");
 			request.setAttribute("BookPlay",bp);
-			/*request.setAttribute("MyBook", mb);*/
 			
 		}else {
 			view = request.getRequestDispatcher("views/common/error.jsp");

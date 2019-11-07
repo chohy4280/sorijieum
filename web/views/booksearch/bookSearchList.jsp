@@ -10,7 +10,6 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
-	String search = (String)request.getAttribute("search");
 	String keyword = (String)request.getAttribute("keyword");
 %>
 
@@ -22,6 +21,12 @@
  <%@include file="/../inc/top.jsp"%>
  <script src="/sori/resources/js/sorijieum_tts.js"></script>
 <script type ="text/javascript">
+
+function search(){
+	 speech("검색하실 도서를 말씀해주세요."); 
+	testSpeech();
+}
+
 var audio = new Audio("/sori/resources/mp3/booksearchmain.mp3");
 window.onload = function(){
    audio.play();
@@ -43,10 +48,6 @@ window.onkeyup = function(){
       var audio = new Audio("/sori/resources/mp3/booksearchauthor.mp3");
       audio.play();
    }
-   else if(event.keyCode == 51 || event.keyCode == 99){ //신청글 삭제
-      audio.pause();
-      location.href="/sori/index.jsp";
-   }
    else if(event.keyCode == 48 || event.keyCode == 96){ //다시듣기
       audio.play();
    }
@@ -67,16 +68,13 @@ window.onkeyup = function(){
 
 <h3 align= "center"><a href="/sori/blist">처음으로</a></h3>
 
-
 <!-- 도서검색창 시작 -->
 <div class="SearchBox" style="height: 50px;">
 <form action="/sori/bsearch" method="post">
-<select name="search"  style="border-radius:5px; width:100px; height:40px">
-<option id="booktitle" value="booktitle">도서명</option>
-<option id="author" value="author">저자명</option>
-</select>
-<input type="search" name="keyword"  placeholder="내용입력" style="border-radius:5px; width:200px; height:40px;" >
-<input type="submit" value="검색" style="border-radius:5px; width:100px; height:40px;">
+<input type="text" id="bsearch" name="keyword"  placeholder="내용입력" style="border-radius:5px; width:300px; height:40px;" >
+<i class="big microphone icon" onclick="search();"></i>
+<script src="/sori/resources/js/sorijieum_stt.js"></script>
+<input type="submit" id="sbtn" value="검색" style="border-radius:5px; width:100px; height:40px;">
 </form>
 </div>
 </center>
@@ -93,13 +91,19 @@ if(i%5 == 0){ %>
 <% }else{ %>
 <div class= "yu-booktitle" style="width: 250px; height:40px; "><%=bplist.get(i).getBookTitle()%></div>
 <% } %>
-<div class = "yu-bookimg" style="width: 250px; height:270px;"><img class= "yu-bookimg1"style= "width:250px;
-	height: 270px;"src="/sori/resources/book_upfiles/<%= bplist.get(i).getBookRimg()%>"></div>
+<% if(loginMember != null && loginMember.getTypeNumber() < 3){ %>
+<div class = "yu-bookimg" style="width: 250px; height:310px;">
+<a href="/sori/bsdetail?bookcode=<%=bplist.get(i).getBookCode()%>&userId=<%=loginMember.getUserId() %>">
+<img class= "yu-bookimg1"style= "width:250px;height: 310px;"src="/sori/resources/book_upfiles/<%= bplist.get(i).getBookRimg()%>"></a></div>
+<% }else{ %>
+<div class = "yu-bookimg" style="width: 250px; height:310px;">
+<img class= "yu-bookimg1"style= "width:250px;height: 310px;"src="/sori/resources/book_upfiles/<%= bplist.get(i).getBookRimg()%>"></div>
+<% } %>
 </div>
 <% } %>
 <!-- 도서 전체 결과 리스트 끝 -->
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--도서 페이징 처리 시작 -->
 
 <%if(keyword ==null){ %>
@@ -127,28 +131,29 @@ if(i%5 == 0){ %>
 <% }else{ %>
 
 <div id="pagebox1" align="center">
-   <a href="/sori/bsearch?page=1&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
+   <a href="/sori/bsearch?page=1&keyword=<%= keyword %>"><i class="angle grey double left icon"></i></a>&nbsp;
 		<% if((beginPage - 10) < 1){ %>
-			<a href="/sori/bsearch?page=1&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+			<a href="/sori/bsearch?page=1&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
 		<% }else{ %>
-			<a href="/sori/bsearch?page=<%= beginPage - 10 %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
+			<a href="/sori/bsearch?page=<%= beginPage - 10 %>&keyword=<%= keyword %>"><i class="angle grey left icon"></i></a>
 		<% } %>&nbsp;
 		<% for(int p = beginPage; p <= endPage; p++){ 
 				if(p == currentPage){
 		%>
-			<a href="/sori/bsearch?page=<%= p %>&search=<%= search %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
+			<a href="/sori/bsearch?page=<%= p %>&keyword=<%= keyword %>"><b class="ui small yellow circular label"><%= p %></b></a>&nbsp;
 		<% }else{ %>
-			<a href="/sori/bsearch?page=<%= p %>&search=<%= search %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
+			<a href="/sori/bsearch?page=<%= p %>&keyword=<%= keyword %>"><font color="black"><b><%= p %></b></font></a>&nbsp;
 		<% }} %>&nbsp;
 		<% if((endPage + 10) < maxPage){ %>
-			<a href="/sori/bsearch?page=<%= endPage + 10 %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+			<a href="/sori/bsearch?page=<%= endPage + 10 %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
 		<% }else{ %>
-			<a href="/sori/bsearch?page=<%= endPage %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
+			<a href="/sori/bsearch?page=<%= endPage %>&keyword=<%= keyword %>"><i class="angle grey right icon"></i></a>
 		<% } %>&nbsp;
-		<a href="/sori/bsearch?page=<%= maxPage %>&search=<%= search %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
+		<a href="/sori/bsearch?page=<%= maxPage %>&keyword=<%= keyword %>"><i class="angle grey double right icon"></i></a>&nbsp;
 		</div>
 	<% } %> 
 	<!-- 도서전체목록 페이징 끝 -->
  </section>
+<br><br><br>
 </body>
 </html>

@@ -38,21 +38,25 @@
 	
 	$(function(){
 		$("#wishbookauthor").focus(function(){
+			audio.pause();
 			var audio = new Audio("/sori/resources/mp3/wishbookAuthor.mp3");
 			audio.play();
 		});
 		
 		$("#wishpublisher").focus(function(){
+			audio.pause();
 			var audio = new Audio("/sori/resources/mp3/wishbookPub.mp3");
 			audio.play();
 		});
 		
 		$("#wishpublishdate").focus(function(){
+			audio.pause();
 			var audio = new Audio("/sori/resources/mp3/wishpublishdate.mp3");
 			audio.play();
 		});
 		
 		$("#submit").focus(function(){
+			audio.pause();
 			var audio = new Audio("/sori/resources/mp3/wishsubmit.mp3");
 			audio.play();
 			window.onkeyup = function(){

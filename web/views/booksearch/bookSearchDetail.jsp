@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>책 상세 페이지</title>
 <%@include file="/../inc/top.jsp"%>
+ <script src="/sori/resources/js/sorijieum_tts.js"></script>
 <!-- CUSTOM CSS -->
 <link rel = "stylesheet" type="text/css" href="/sori/resources/css/BookSearch.css">
 <script type="text/javascript">
@@ -106,7 +107,7 @@ function DeleteLike(bookcode,userid) {
    
 <!-- 목록버튼 -->
   <center>
-  <button class="ui inverted orange button" onclick="location.href='/sori/blist'">목록</button></center>
+  <button class="ui inverted orange button" onclick="location.href='/sori/blist'" style="">목록</button></center>
  <!-- 목록버튼 끝-->
  </section>
 </body>

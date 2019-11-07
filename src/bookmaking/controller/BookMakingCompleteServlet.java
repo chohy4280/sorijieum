@@ -35,9 +35,10 @@ public class BookMakingCompleteServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		int endpage = Integer.parseInt(request.getParameter("endpage"));
 		int page = Integer.parseInt(request.getParameter("page"));
+		int bookpage = Integer.parseInt(request.getParameter("bookpage"));
 		BookMakingService bmservice = new BookMakingService();
 		BookMakingProgress bmp = new BookMakingProgress(userid, bookcode);
-		int result = bmservice.insertMakeBook(bmp);
+		int result = bmservice.insertMakeBook(bmp, page, bookpage);
 		int results = bmservice.insertMakePage(bmp, bookcode, page, endpage);
 		int resultss = bmservice.insertCompleteyn(bmp, page, endpage);
 		

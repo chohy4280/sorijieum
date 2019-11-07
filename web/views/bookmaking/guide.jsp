@@ -17,6 +17,7 @@
 <i class="info circle icon"></i>&nbsp;제작시 반드시 숙지해주세요!</h3></p></div>
 <br><br><br><br><br><br>
 <div class="ye-bookguide2">
+<br>
 <p>1-1. 오탈자를 확인해 주세요. </p>
 <p>1-2. 정확한 띄어쓰기를 해 주세요. </p>
 <p>1-3. 한자, 영어만 입력하고 나머지 외국어는 생략해 주세요. </p>
@@ -36,6 +37,7 @@
 <p>6-1. 오른쪽 텍스트 페이지 상단, 또는 하단에 나와 있는 쪽번호 및 제목을 삭제해 주세요. </p>
 <p>6-2. 페이지 번호가 2개 있는 경우에는, 뒤에 있는 더 큰 숫자 하나만 페이지 입력란에 입력해 주세요. </p>
 <p>6-3. 페이지 넘버 입력칸에는 '원본' 페이지의 번호를 입력해 주세요. </p>
+<br>
 </div>
 <div class="ye-make-button2" align="right">
 <button onclick="location.href='/sori/bmkmain'" class="big ui yellow button" style="font-family:'S-Core Dream 6'";>제작하러 가기</button>

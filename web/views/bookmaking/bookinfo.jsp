@@ -42,7 +42,7 @@ function winOpen(){
 	<% if(bmp.getMakepage() == bmp.getBookPage()){ %>
 		alert("제작하실 페이지가 없습니다. 다른 책을 선택해주세요");
 	<% }else{ %>
-	var style = "width=500, height=600, scrollbars=no, resizable=no";
+	var style = "width=550, height=700, scrollbars=yes, resizable=no";
 	window.open("/sori/bmpopup?bookcode=<%=bmp.getBookCode() %>", "도서제작시 안내사항", style );
 	<% } %>
 }

@@ -188,90 +188,90 @@ public class MyBookDao {
 //////////////////////////////////////////////////////////////////////////////////////////
 //이용자가 도서를 읽은 적이 있다면 최신날짜 업데이트
 public int updateReadPage(Connection conn, String userId, String bookcode, MyBook mbb, int rpage) {
-int result = 0;
-PreparedStatement pstmt = null;
-String query = "";
-if (rpage != 0) {
-query = "update mybook set readrdate = sysdate where bookcode = '" + bookcode + "' and userid = '" + userId + "'";
-
-try {
-pstmt = conn.prepareStatement(query);
-result = pstmt.executeUpdate();
-} catch (SQLException e) {
-e.printStackTrace();
-} finally {
-close(pstmt);
-}
-}
-return result;
+	int result = 0;
+	PreparedStatement pstmt = null;
+	String query = "";
+	if (rpage != 0) {
+	query = "update mybook set readrdate = sysdate where bookcode = '" + bookcode + "' and userid = '" + userId + "'";
+	
+	try {
+	pstmt = conn.prepareStatement(query);
+	result = pstmt.executeUpdate();
+	} catch (SQLException e) {
+	e.printStackTrace();
+	} finally {
+	close(pstmt);
+	}
+	}
+	return result;
 }
 
 //이용자가 새로운 책을 누른다면 내 서재에 readpage, userid, bookcode 추가
 public int insertReadPage(Connection conn, String userId, String bookcode, MyBook mbb, int rpage) {
-int result = 0;
-PreparedStatement pstmt = null;
-String query = "";
-if (rpage == 0){
-query = "insert into mybook values(?, ?, 1, sysdate, sysdate)";
-
-try {
-pstmt = conn.prepareStatement(query);
-pstmt.setString(1, userId);
-pstmt.setString(2, bookcode);
-result = pstmt.executeUpdate();
-} catch (SQLException e) {
-e.printStackTrace();
-} finally {
-close(pstmt);
-}
-}
-return result;
+	int result = 0;
+	PreparedStatement pstmt = null;
+	String query = "";
+	if (rpage == 0){
+	query = "insert into mybook values(?, ?, 1, sysdate, sysdate)";
+	
+	try {
+	pstmt = conn.prepareStatement(query);
+	pstmt.setString(1, userId);
+	pstmt.setString(2, bookcode);
+	result = pstmt.executeUpdate();
+	} catch (SQLException e) {
+	e.printStackTrace();
+	} finally {
+	close(pstmt);
+	}
+	}
+	return result;
 }
 
 public MyBook selectOneMyBookUser(Connection conn, String bookcode, String userId) {
-MyBook mb = null;
-PreparedStatement pstmt = null;
-ResultSet rset = null;
-
-String query = "select * from mybook where bookcode = '" + bookcode + "' and userid = '" + userId + "'";
-
-try {
-pstmt = conn.prepareStatement(query);
-rset = pstmt.executeQuery();
-if(rset.next()) {
-mb = new MyBook();
-mb.setBookCode(rset.getString("bookcode"));
-mb.setUserId(rset.getString("userid"));
-mb.setReadPage(rset.getInt("readpage"));
-}
-
-System.out.println("dao selectOneMyBookUser: " + mb);
-
-} catch (SQLException e) {
-e.printStackTrace();
-} finally {
-close(rset);
-close(pstmt);
-}
-return mb;
+	MyBook mb = null;
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	
+	String query = "select * from mybook where bookcode = '" + bookcode + "' and userid = '" + userId + "'";
+	
+	try {
+	pstmt = conn.prepareStatement(query);
+	rset = pstmt.executeQuery();
+	if(rset.next()) {
+	mb = new MyBook();
+	mb.setBookCode(rset.getString("bookcode"));
+	mb.setUserId(rset.getString("userid"));
+	mb.setReadPage(rset.getInt("readpage"));
+	}
+	
+	System.out.println("dao selectOneMyBookUser: " + mb);
+	
+	} catch (SQLException e) {
+	e.printStackTrace();
+	} finally {
+	close(rset);
+	close(pstmt);
+	}
+		return mb;
 
 }
 //도서재생 페이지에서 다음버튼 누를시 mybook에 readpage랑 최근읽은 날짜 추가용
 public int updatePlayBook(Connection conn, String bookcode, String userId, int rpage) {
-int result = 0;
-PreparedStatement pstmt = null;
-
-String query = "update mybook set readrdate = sysdate, readpage = ? where bookcode = '" + bookcode + "' and userid = '" + userId + "'";
-try {
-pstmt = conn.prepareStatement(query);
-pstmt.setInt(1, rpage);
-result = pstmt.executeUpdate();
-} catch (SQLException e) {
-e.printStackTrace();
-} finally {
-close(pstmt);
-}
-return result;
+	int result = 0;
+	PreparedStatement pstmt = null;
+	
+	String query = "update mybook set readrdate = sysdate, readpage = ? where bookcode = '" + bookcode + "' and userid = '" + userId + "'";
+	try {
+	pstmt = conn.prepareStatement(query);
+	pstmt.setInt(1, rpage);
+	result = pstmt.executeUpdate();
+	} catch (SQLException e) {
+	e.printStackTrace();
+	} finally {
+	close(pstmt);
+	}
+	return result;
 }
 
 }
